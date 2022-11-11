@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class FollowUpQuestionnaire extends Model
 {
     use HasFactory;
-    protected $table = "followupquestionnaire";
+    protected $table = "skillsquestionnaire";
 
     public function user()
     {

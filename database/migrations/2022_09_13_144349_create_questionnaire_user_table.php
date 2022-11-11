@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('useremailquestionnaire', function (Blueprint $table) {
+        Schema::create('userquestionnaire', function (Blueprint $table) {
             $table->id();
             $table->string("title_email");
             $table->string("sender_email");
@@ -21,7 +21,6 @@ return new class extends Migration
             $table->unsignedBigInteger("user_id");
             $table->unsignedBigInteger("email_id");
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('email_id')->references('id')->on('emails');
             $table->timestamps();
         });
     }
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('useremailquestionnaire');
+        Schema::dropIfExists('userquestionnaire');
     }
 };
