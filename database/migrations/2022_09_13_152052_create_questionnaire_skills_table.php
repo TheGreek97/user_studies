@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('skillsquestionnaire', function (Blueprint $table) {
+        Schema::create('questionnaire_skills', function (Blueprint $table) {
             $table->id();
 
             //SECTION 4 - CYBERSEC KNOWLEDGE
@@ -44,6 +44,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('skillsquestionnaire');
+        Schema::dropIfExists('questionnaire_skills');
     }
 };

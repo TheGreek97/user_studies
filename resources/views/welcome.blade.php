@@ -3,12 +3,12 @@
         <div class="min-h-screen bg-gray-200 flex justify-center items-center">
             <div class="text-lg p-12 m-10 bg-white rounded-2xl shadow-xl z-20">
                 <div class="text-left font-bold my-3 text-3xl w-full">
-                    Grazie per la partecipazione
+                    Grazie per la tua disponibilità a partecipare
                 </div>
                 <p class="max-w-4xl text-left pt-4">
                     Gentile partecipante, stiamo conducendo una ricerca presso l'Università degli studi di Bari, a cui ti chiediamo di partecipare rispondendo ai quesiti che ti verranno posti in questo questionario.
                     In particolare, la presente ricerca ha l'obiettivo di indagare i modelli mentali degli utenti nella definizione di regole ad alto livello (cioè senza scrivere codice) per proteggere un ambiente intelligente da attacchi informatici.
-                    Il questionario, della durata di X minuti circa, rimarrà del tutto anonimo.
+                    Il questionario, della durata di X minuti circa, rimarrà anonimo.
                 </p>
                 <div class="mt-6 ">Per informazioni contattare <a href="mailto:francesco.greco@uniba.it">francesco.greco@uniba.it</a></div>
 
@@ -47,7 +47,7 @@
                 <div class="text-center mt-10">
                     <div class="w-full">
                         <div>
-                            <button onclick="window.location.replace('{{ route('show', ['folder' => 'eud']) }}')"
+                            <button onclick="window.location.replace('{{ route('show') }}')"
                                     class="py-3 w-full text-lg text-white bg-blue-500 hover:bg-blue-800 rounded-2xl"> Accetta le condizioni ed inizia il test
                             </button>
                         </div>

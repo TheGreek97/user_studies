@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserEmailQuestionnaire extends Model
+class UserQuestionnaire extends Model
 {
     use HasFactory;
-    protected $table = "useremailquestionnaire";
+    protected $table = "questionnaire_user";
 
     public function user()
     {

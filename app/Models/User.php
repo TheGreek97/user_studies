@@ -27,6 +27,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'expertise'
     ];
 
     /**
@@ -61,7 +62,7 @@ class User extends Authenticatable
 
     public function questionnaire()
     {
-        return $this->hasMany(UserEmailQuestionnaire::class);
+        return $this->hasMany(UserQuestionnaire::class);
     }
 
     public function followUpQuestionnaire()

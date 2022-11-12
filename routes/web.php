@@ -22,9 +22,9 @@ Route::get('/', function () {
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
-    'verified'])->group(function (){
-    Route::get('/warning_log', [\App\Http\Controllers\MailController::class, 'warning'])->name('warning_log');
-});
+    'verified']);//->group(function (){
+    //Route::get('/warning_log', [\App\Http\Controllers\MailController::class, 'warning'])->name('warning_log');
+//});
 
 Route::middleware([
     'auth:sanctum',
@@ -33,36 +33,34 @@ Route::middleware([
     'log'
 ])->group(function () {
     Route::get('/welcome', function (){
-        if (Auth::user()->followUpQuestionnaire != null) {
+        /*if (Auth::user()->followUpQuestionnaire != null) {
             return redirect(route('thankyou'));
         } else {
-            /*if (session()->has('welcome_shown'))
+            if (session()->has('welcome_shown'))
                 return redirect(route('show', ['folder' => 'inbox']));
             else {
                 session(['welcome_shown' => '1']);
                 return view('welcome');
-            }*/
-            return view('welcome');
-        }
+            }
+        }*/
+         return view('welcome');
     })->name('welcome');
 
     Route::get('/nextstep/{id?}', function ($id = null){
         if($id === null)
-            return redirect(route('show', ['folder' => 'inbox']));
-        return view("emailquestionnaire");
+            return view("skillsquestionnaire");
+        return redirect(route('questionnaire', ['id' => $id]));
     })->name('next_step');
 
-    Route::post('/nextstep/{mail?}', [\App\Http\Controllers\Questionnaire::class, 'storeEmailQuestionnaire'])->name('next_step');
+    Route::get('/nextstep/{id?}', [\App\Http\Controllers\Questionnaire::class, 'showQuestionnaire'])->name('questionnaire');
+    Route::post('/nextstep/{id?}', [\App\Http\Controllers\Questionnaire::class, 'levelQuestionnaire'])->name('next_step');
+    # Route::post('/nextstep/{mail?}', [\App\Http\Controllers\Questionnaire::class, 'storeEmailQuestionnaire'])->name('next_step');
+
+    Route::get('/skills', [\App\Http\Controllers\Questionnaire::class, 'showFollowUp'])->name('post_test');
+
+    Route::post('/skills', [\App\Http\Controllers\Questionnaire::class, 'storeFollowUp'])->name('show');
 
     Route::get('/finish', function (){
         return view("thank_you_page");
     })->name('thankyou');
-
-    Route::get('/end', [\App\Http\Controllers\Questionnaire::class, 'showFollowUp'])->name('post_test');
-
-    Route::post('/end', [\App\Http\Controllers\Questionnaire::class, 'storeFollowUp']);
-
-    Route::get('/warning_browser', [\App\Http\Controllers\MailController::class, 'warning_browser'])->name('warning_browser');
-
-    Route::get('/{folder?}/{id?}', [\App\Http\Controllers\MailController::class, 'show'])->name('show');
 });
