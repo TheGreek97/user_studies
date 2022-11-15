@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('followupquestionnaire', function (Blueprint $table) {
             $table->id();
             //SECTION 1
-            $table->string('parts_email_suspicious')->nullable();
-            $table->integer('know_email_1')->nullable();
-            $table->integer('know_email_2')->nullable();
+            $table->string('parts_email_suspicious');
+            $table->integer('know_email_1');
+            $table->integer('know_email_2');
             //SECTION 2
             $table->boolean('have_read_warning')->default(false);
             $table->integer('how_warning_useful_identifying_link');
@@ -28,12 +28,12 @@ return new class extends Migration
             $table->longText('explanation_feedback')->nullable();
 
             //SECTION 3 - NASA-TLX
-            $table->integer('nasa_mental_demand')->nullable();
-            $table->integer('nasa_physical_demand')->nullable();
-            $table->integer('nasa_temporal_demand')->nullable();
-            $table->integer('nasa_performance')->nullable();
-            $table->integer('nasa_effort')->nullable();
-            $table->integer('nasa_frustration_level')->nullable();
+            $table->integer('nasa_mental_demand');
+            $table->integer('nasa_physical_demand');
+            $table->integer('nasa_temporal_demand');
+            $table->integer('nasa_performance');
+            $table->integer('nasa_effort');
+            $table->integer('nasa_frustration_level');
             //SECTION 4 - CYBERSEC KNOWLEDGE
             $table->string('cyber_1');
             $table->string('cyber_2');

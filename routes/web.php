@@ -36,13 +36,12 @@ Route::middleware([
         if (Auth::user()->followUpQuestionnaire != null) {
             return redirect(route('thankyou'));
         } else {
-            /*if (session()->has('welcome_shown'))
+            if (session()->has('welcome_shown'))
                 return redirect(route('show', ['folder' => 'inbox']));
             else {
                 session(['welcome_shown' => '1']);
                 return view('welcome');
-            }*/
-            return view('welcome');
+            }
         }
     })->name('welcome');
 

@@ -9,7 +9,6 @@
             <div class="pt-12 px-12 m-10 bg-white rounded-2xl shadow-xl z-20">
                 <form action="{{ Request::url() }}" method="POST" x-data="load()" id="form" style="display:none;">
                     @csrf
-
                     <div>
                         <h1 x-show="step !== 0 && step !== 6"
                             class="text-3xl font-bold text-center mb-4 cursor-pointer">Post-test questionnaire</h1>
