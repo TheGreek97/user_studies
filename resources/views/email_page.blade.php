@@ -1,9 +1,9 @@
 <?php
-if (\Illuminate\Support\Facades\Auth::id() % 2 == 0)
+//if (\Illuminate\Support\Facades\Auth::id() % 2 == 0)
     $random_warning_explanation = "warning_explanation_1";
-else
+/*else
     $random_warning_explanation = "warning_explanation_2";
-
+*/
 ?>
 <x-app-layout>
     <x-slot name="slot">
@@ -30,9 +30,9 @@ else
                                                                        fill="none" viewBox="0 0 24 24"
                                                                        stroke="currentColor"
                                                                        stroke-width="2">
-  <path stroke-linecap="round" stroke-linejoin="round"
-        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
-</svg></span>
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                            </svg></span>
                         </button>
                         <!-- Compose modal -->
                         <div id="compose_modal" tabindex="-1" aria-hidden="true"
@@ -726,19 +726,7 @@ else
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
-                @if(\Illuminate\Support\Facades\Auth::id() % 2 == 0)
-                $("#tooltip_image").text("In the e-mail there is an image, a typical element of possible malicious e-mails. There is a potential risk to your personal data if you continue.");
-                $("#tooltip_dear").text("Suspicious words such as \"remove\" or \"dear\" were found in the content of the e-mail. This is typical of fraudulent emails. Your private information is at risk.");
-                $("#tooltip_link").text("The URL in the email leads to a website created N days ago. Young websites are famous for criminal activity. There is a potential risk if you proceed. Link goes to:").append(" <a href=\"#\" id=\"phishing_link\" style=\"text-decoration: underline;\"><span class=\"s2\">www.facebook-password.com.br</span></a>");
-                $("#tooltip_button").text("The URL in the email leads to a site hosted on a dangerous domain that is about to expire. This is typical of websites used only for criminal activity. It is possible that your private information will be stolen. Link goes to:").append(" <a id=\"phishing_link\" href=\"#\" style=\"text-decoration: underline;\"><span class=\"s2\">www.trenItalia.com.br</span></a>");
-                $("#tooltip_grammar").text("There are many grammatical errors in this email, typical feature of a scam email. Your personal data could be stolen.");
-                @else
-                $("#tooltip_image").text("There are one or more images in the email. This is a way used by malicious people to create fraudulent emails. Proceed with caution because your data may be at risk.");
-                $("#tooltip_dear").text("The text of the email contains suspicious words such as \"remove\" or \"dear\". This behavior is typical of fraudulent emails. Your personal data is at risk.");
-                $("#tooltip_link").text("The link in the email leads to a site created N days ago. These sites are created specifically to pretend to be authorities or banks and steal your data. If you proceed with navigation you expose yourself to multiple risks. Link goes to:").append(" <a id=\"phishing_link\" href=\"#\" style=\"text-decoration: underline;\"><span class=\"s2\">www.facebook-password.com.br</span></a>");
-                $("#tooltip_button").text("The link in the email leads to an expiring site that could be potentially dangerous. These sites are used to pretend to be authorities or banks and steal your data. By proceeding you expose yourself to multiple risks. Link goes to:").append(" <a id=\"phishing_link\" href=\"#\" style=\"text-decoration: underline;\"><span class=\"s2\">www.trenItalia.com.br</span></a>");
-                $("#tooltip_grammar").text("The text of the email contains grammatical errors. This happens because the text has been translated or generated automatically. The email could be fraudulent. Do not disclose your personal data as it could be stolen.");
-                @endif
+
 
             @if(isset($selected_email))
                 @if($selected_email->warning_type == null || $selected_email->warning_type == "popup_email")
@@ -792,6 +780,10 @@ else
                         window.location.href = '{{ route('next_step', $selected_email->id) }}?nolink';
                     });
                 });
+            @elseif($selected_email->warning_type == "base_passive")
+                banner = $("#passive_banner"); // TODO implement passive banners (if needed)
+                banner.show();
+                banner.innerHTML = {{$selected_email->$random_warning_explanation}}
             @elseif($selected_email->warning_type == "tooltip")
                 let message_sent = [];
                 $(".tooltip").mouseover(function () {
