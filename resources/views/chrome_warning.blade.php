@@ -1790,7 +1790,7 @@
     function primary_button_click (){
         // Create an XMLHttpRequest object
         var xhr = new XMLHttpRequest();
-        var url = ("{{ route('warning_log') }}?email_id={{ $email_id }}&warning_type=browser_native&msg=Cliccato pulsante 'Back to safety'&url=" + window.location.href).replace(/%20/g, '+');
+        var url = ("{{ route('warning_log') }}?email_id={{ $email_id }}&warning_type=browser_native&msg=back_safety&url=" + window.location.href).replace(/%20/g, '+');
         xhr.onreadystatechange = function() {
             window.location.href = "/nextstep/{{ $_GET['email_id'] }}?nolink";
         };
@@ -1801,9 +1801,9 @@
     function details_button_click (){
         var xhr = new XMLHttpRequest();
         if(document.getElementById("details-button").getAttribute("aria-expanded") == "true")
-            var url = ("{{ route('warning_log') }}?email_id={{ $email_id }}&warning_type=browser_native&msg=Cliccato pulsante 'Hide details'&url=" + window.location.href).replace(/%20/g, '+');
+            var url = ("{{ route('warning_log') }}?email_id={{ $email_id }}&warning_type=browser_native&msg=hide_details&url=" + window.location.href).replace(/%20/g, '+');
         else
-            var url = ("{{ route('warning_log') }}?email_id={{ $email_id }}&warning_type=browser_native&msg=Cliccato pulsante 'Details'&url=" + window.location.href).replace(/%20/g, '+');
+            var url = ("{{ route('warning_log') }}?email_id={{ $email_id }}&warning_type=browser_native&msg=show_details&url=" + window.location.href).replace(/%20/g, '+');
 
         xhr.open('GET', url);
         xhr.send();
@@ -1812,7 +1812,7 @@
     document.getElementById("proceed-link").addEventListener('click', function (e) {
         e.preventDefault();
         var xhr = new XMLHttpRequest();
-        var url = ("{{ route('warning_log') }}?email_id={{ $email_id }}&warning_type=browser_native&msg=Warning bypassato&url=" + window.location.href).replace(/%20/g, '+');
+        var url = ("{{ route('warning_log') }}?email_id={{ $email_id }}&warning_type=browser_native&msg=warning_ignored&url=" + window.location.href).replace(/%20/g, '+');
         xhr.onreadystatechange = function() {
             window.location.href = "/nextstep/{{ $_GET['email_id'] }}";
         };

@@ -31,7 +31,7 @@ class CreateTestUsers extends Seeder
                 'name' => 'User',
                 'email' => 'user' . $i . '@mail.com',
                 'password' => Hash::make('uwhfsih89w3hfw' . $i),
-                'warning_type' => 'browser_native'
+                'warning_type' => 'popup_email'
             ]);
         }
 
@@ -40,7 +40,7 @@ class CreateTestUsers extends Seeder
                 'name' => 'User',
                 'email' => 'user' . $i . '@mail.com',
                 'password' => Hash::make('uwhfsih89w3hfw' . $i),
-                'warning_type' => 'popup_email'
+                'warning_type' => 'tooltip'
             ]);
         }
 
@@ -49,7 +49,7 @@ class CreateTestUsers extends Seeder
                 'name' => 'User',
                 'email' => 'user' . $i . '@mail.com',
                 'password' => Hash::make('uwhfsih89w3hfw' . $i),
-                'warning_type' => 'popup_link'
+                'warning_type' => 'popup_email'
             ]);
         }
 
@@ -69,13 +69,13 @@ class CreateTestUsers extends Seeder
             'name' => Str::random(10),
             'email' => 'popup.link@mail.com',
             'password' => Hash::make('12345678'),
-            'warning_type' => 'popup_link'
+            'warning_type' => 'tooltip'
         ]);
         DB::table('users')->insert([
             'name' => Str::random(10),
             'email' => 'browser.native@mail.com',
             'password' => Hash::make('12345678'),
-            'warning_type' => 'browser_native'
+            'warning_type' => 'popup_email'
         ]);
     }
 }

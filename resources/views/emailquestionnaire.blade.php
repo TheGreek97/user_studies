@@ -15,10 +15,14 @@
                         <p class="font-bold pb-1">Who is the sender of the email?</p>
                         <input type="text" name="sender_email" placeholder="Answer here..." class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required/>
                     </div>
+                    @if($warning_type != "popup_email")
                     <div class="my-5">
                         <p class="font-bold pb-1">How many hyperlinks are in the email?</p>
-                        <input type="text" name="how_many_hyperlinks" placeholder="Answer here..." class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required/>
-                    </div>
+                        <input type="number" name="how_many_hyperlinks" placeholder="Answer here..." class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" value="1" min="0" required/>
+                    </div
+                    @else
+                        <input type="hidden" name="how_many_hyperlinks" value="1"/>
+                    @endif
                     <div class="text-center mt-6">
                         <button id="submit_btn" class="py-3 w-64 text-xl text-white bg-blue-500 rounded-2xl">Continue the test</button>
                     </div>

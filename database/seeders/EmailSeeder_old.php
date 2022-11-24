@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class EmailSeeder_only_warnings extends Seeder
+class EmailSeederOld extends Seeder
 {
     /**
      * Run the database seeds.
@@ -413,123 +413,237 @@ class EmailSeeder_only_warnings extends Seeder
         // Tooltip
         // 1
         $email = new Email();
-        $email->subject = "New device login detected";
-        $email->from_name = "TikTok";
-        $email->from_email = "noreply@tiktok.com";
-        $email->preview_text = 'Hi, we\'re writing to inform you that we detected a login to your account from a new device.';
-        $email->content = '<div><p class="p1"><strong><img style="display: block; margin-left: auto; margin-right: auto;" src="/assets/img/email/tiktok.jpeg" alt="" width="300" height="165" /></strong><strong>Hey user,</strong></p>
-        <p> </p>
-        <p class="p1">We\'re writing to inform you that we detected a login to your account from a new device.<br /><br /></p>
-        <p class="p1"><strong>When:</strong></p>
-        <p class="p1"><em>10/08/2022 17:38 CEST</em></p>
-        <p class="p1"><strong>Device:</strong></p>
-        <p class="p1"><em>Huawei P30 Pro</em></p>
-        <p class="p1"><strong>Near:<span class="Apple-converted-space"> </span></strong></p>
-        <p class="p1"><em>Nashik, India<br /><br /></em></p>
-        <p class="p1"><strong>If this was you</strong>, you can ignore this message.<br /><br /></p>
-        <p class="p1"><strong>If this wasn\'t you</strong>, click the link below and reset your password to be safe.
-        <a href="http://92.233.24.33/tiktok/login.php" style="text-decoration: underline; color:#3366CC; margin:auto; border: 4px solid  #b80000;">tiktok.com/reset</span>.</a></p>
-        <span id="tooltip_link" class="tooltiptext">The target URL <b>http://92.233.24.33/tiktok/login.php</b> is an imitation of the original one, <b>https://tiktok.com</b>. This site might be intended to take you to a different place. You might be disclosing private information.
-        Link goes to: <a href="#" style="text-decoration: underline;/* color: #0001F1; */"><span class="s2">http://92.233.24.33/tiktok/login.php</span></a>
-        </span>
-        </div>';
-        $email->date = Carbon::parse('2022-08-10 17:38')->toDateTimeString();
+        $email->from_name = "Trenitalia";
+        $email->from_email = "trenitalia-discount-cupon@mymail.cd.com";
+        $email->subject = "Customer, € 10 for you. Use them now!";
+        $email->preview_text = 'Congratulations! We would like to offer you a discount voucher worth 10 €';
+        $email->content = "<div><p class=\"p1\">Congratulations!<br /><br />For you who have already had the opportunity to appreciate our services, here is a discount voucher worth 10 €. To get the discount voucher click on the button and insert your personal data.</p>
+        <p class=\"p2\" style=\"text-align: center;\">
+        <br/>
+        <table class=\"tooltip\" style=\"padding:3px;border: 4px solid  #b80000;\" data=\"pulsante link trenitalia\" data-tool=\"classico\" >
+                                                            <tbody>
+                                                               <tr>
+                                                                  <td>
+
+
+        <div style=\"margin-left: auto; margin-right: auto; font-weight: bold; border-radius: 5px; background-color: #c41329; color: #ffffff; font-size: 14px; display: inline-block; text-align: center;\" align=\"center\"><a style=\"color: #ffffff; text-decoration: none; display: block; padding: 14px 30px 15px;pointer-events: none;\" href=\"#\"> Activate the discount cupon </a></div>
+            <span id=\"tooltip_button\" class=\"tooltiptext\"></span>
+              </td>
+                                                               </tr>
+                                                            </tbody>
+                                                        </table>
+        </p>
+        <p class=\"p2\" style=\"text-align: center;\"> </p>
+        <table class=\"tooltip\" style=\"padding:3px; border: 4px solid  #b80000;\" data=\"testo trenitalia\" data-tool=\"classico\">
+            <tbody>
+                                                               <tr>
+                                                                  <td>
+        <p class=\"p1\">The discount vaucher can be activated until 31/09/2023. Activate it and use it immidiately on your next purchase.</p>
+         <span id=\"tooltip_grammar\" class=\"tooltiptext\"></span>
+         </td>
+                                                               </tr>
+                                                            </tbody>
+                                                        </table>
+        <p class=\"p1\"><br />The discount vaucher code has a value of <strong>€ 10</strong> and can <strong>only be used by you customer, Carta FRECIA ,</strong> to purchase single journey tickets of any type.<br /><br />You can use the discount coupon for purchases at the ticket office, at the self-service, at the travel agency, on the website <a id=\"phishing_link\" href=\"#\"><span class=\"s2\">www.trenitalia.com</span></a> (Postoclick and Postoblu booking services are excluded), on the Trenitalia APP or by calling the Call Center 892021 (paid number).<br /><br /><strong>Book your next trip now!</strong></p>
+        </div>";
+        $email->date = Carbon::today()->subDays(mt_rand(0, 365))->toDateTimeString();
         $email->type = 'inbox';
         $email->warning_type = 'tooltip';
         $email->save();
         // 2
-        $phish_url = "amazonservices.sc03osd.cz/account.php";
+        $email = new Email();
+        $email->subject = "Security notice relating to your facebook account";
+        $email->from_name = "Facebook";
+        $email->from_email = "facebook.com-sse23002@faceb00kjred.us";
+        $email->preview_text = 'A new login to your Facebook Account has been detected.';
+        $email->content = '<div>
+                        <p class="p1">
+                            <table class="tooltip" style="margin:auto;border: 4px solid  #b80000;" data="immagine facebook" data-tool="classico" >
+                                <tbody>
+                                   <tr>
+                                      <td>
+                                           <img style="display: block; margin-left: auto; margin-right: auto;" src="/assets/img/email/meta.jpeg" alt="" width="465" height="175" />   <span id="tooltip_image" class="tooltiptext"></span>
+                                      </td>
+                                   </tr>
+                                </tbody>
+                            </table>
+                        </span></p><br />
+                        <p class="p1"><table class="tooltip" data="generic facebook presentation" style="border: 4px solid  #b80000;">
+                                <tbody>
+                                   <tr>
+                                      <td>Dear Customer,
+                                             <span id="tooltip_dear" class="tooltiptext"></span>
+                                      </td>
+                                   </tr>
+                                </tbody>
+                            </table><br /></p>
+                        <p class="p1"><span class="s1">A new login to your Facebook Account has been detected on a <strong>Galaxy S22</strong> device. If it was you, ignore the message. </span><span class="s1"><strong>If not, we\'ll help you protect your account by changing your password</strong>.</span></p>
+                        <p class="p1"><br /><table class="tooltip" data="facebook link"  style="border: 4px solid  #b80000;">
+                                <tbody>
+                                   <tr>
+                                      <td><a href="#" style="text-decoration: underline; color: #0001F1;pointer-events: none;"><span class="s2">Update your password now</span></a>
+                                            <span id="tooltip_link" class="tooltiptext">The link in the email leads to a site created not many days ago. These sites are created specifically to pretend to be authorities or banks and steal your data. If you proceed with navigation you expose yourself to multiple risks.
+                                            Link goes to: <a href="#" style="text-decoration: underline;/* color: #0001F1; */"><span class="s2">www.facebook-password.com.br</span></a> </span> </td>
+                                   </tr>
+                                </tbody>
+                            </table></p>
+                        </div>';
+        $email->warning_type = 'tooltip'; //TOOLTIP
+        $email->date = Carbon::today()->subDays(mt_rand(0, 365))->toDateTimeString();
+        $email->type = 'inbox';
+        $email->save();
+
+
+        // Popup before
+        // 1
+        $email = new Email();
+        $email->subject = "BRT - Pending Package";
+        $email->from_name = "Bartolini Italia";
+        $email->from_email = "bartoliniitalynoreply@createmyfreemail.xyz";
+        $email->preview_text = 'Hello, we have a pending package for you.';
+        $email->content = "<div class=\"m_6879120796728852673WordSection1\"><pre><span style=\"font-size: 11.5pt; font-family: 'Calibri',sans-serif;\">Dear customer,<u></u><u></u></span></pre><p><strong>we have a pending package for you.</strong></p><p>We were unable to deliver your package as there was no one who could sign the delivery receipt.</p><p>We are here to let you know that we need an @ddress confirmation to resend the package.</p><p> </p><table style=\"border-collapse: collapse; border: none;\" border=\"1\" cellspacing=\"0\" cellpadding=\"0\"><tbody><tr style=\"height: 108.766px;\"><td style=\"width: 505.6pt; border: 1pt solid windowtext; padding: 0cm 5.4pt; height: 108.766px;\" valign=\"top\" width=\"640\"><pre> <u></u><u></u></pre><table style=\"border-collapse: collapse; border: none; height: 66px;\" border=\"1\" width=\"526\" cellspacing=\"0\" cellpadding=\"0\"><tbody><tr style=\"height: 114px;\"><td style=\"width: 183.695px; border: 1pt solid white; padding: 0cm 5.4pt; text-align: left; height: 114px;\" valign=\"top\"><pre><span style=\"font-family: Calibri, sans-serif;\"><span style=\"font-size: 15.3333px;\"><strong>Insert address here:</strong></span></span></pre></td><td style=\"width: 309.539px; border-top: 1pt solid white; border-right: 1pt solid white; border-bottom: 1pt solid white; border-image: initial; border-left: none; padding: 0cm 5.4pt; height: 114px;\" valign=\"top\"><p><a href=\"" . route('next_step') . "\" style=\"text-decoration: underline; color: blue;\">Insert address</a><u></u></p></td></tr></tbody></table></td></tr></tbody></table><pre> </pre><pre> <u></u><u></u></pre><pre><span style=\"font-size: 11.5pt; font-family: 'Calibri',sans-serif;\">For any information visit our website <a href=\"http://127.0.0.1/nextstep\">www.brt.it</a><u></u><u></u></span></pre><pre> <u></u><u></u></pre><pre><span style=\"font-size: 11.5pt; font-family: 'Calibri',sans-serif;\">Best regards<u></u><u></u></span></pre><pre> <u></u><u></u></pre><pre><span style=\"font-size: 11.5pt; font-family: 'Calibri',sans-serif;\">BRT<u></u></span></pre><br /><br /></div>";
+        $email->date = Carbon::today()->subDays(mt_rand(0, 365))->toDateTimeString();
+        $email->type = 'inbox';
+        $email->warning_type = 'popup_email';
+        $email->warning_explanation_1 = "Special characters have been detected in the email body. This increases the likelihood of the risk of having received a fake email. There is a potential risk of being scammed if you proceed.";
+        $email->warning_explanation_2 = "Special characters have been detected in the email. Malicious people use them to disguise text and deceive you. Your data could be stolen.";
+        $email->save();
+        // 2
         $email = new Email();
         $email->subject = "Problem with your account";
         $email->from_name = "Amazon";
         $email->from_email = "amazon.it@amazonservices.sc03osd.cz";
         $email->preview_text = 'Hello customer, We have faced some problems with your account.';
         $email->content = '<div><p class="p1"><img src="/assets/img/email/amazon.jpg" alt="" width="100" /></p>
-        <p class="p1">Dear Customer,<br /><br />
-        We are sorry to inform you that we have registered some problems related to your account. As a consequence, you need to update your account details.
-        Unless you update your details within 24 hours (since the opening of this email), your account will be officially and <b>permanently disabled</b>,
-        as mentioned in our <i>Terms of Use and Conditions</i>.
-        <br>
-        You can proceed to the updating procedure by clicking the link below:</p>
-        <br>
-        <div style="margin-left: auto; margin-right: auto; border-radius: 5px; background-color: #ffd814; color: #000000; display: inline-block; text-align: center;" align="center">
-        <table class="tooltip" data="amazon link"  style="border: 4px solid  #b80000;">
-            <tbody>
-               <tr>
-                  <td>
-                    <a style="color: #000000; text-decoration: none; display: block; padding: 14px 30px 15px;" href="'. $phish_url .'"> Update now </a>
-                    <span id="tooltip_link" class="tooltiptext">
-                    The target URL <b>'. $phish_url .'</b> is an imitation of the original one, <b>https://amazon.com</b>. This site might be intended to take you to a different place. You might be disclosing private information.
-                    Link goes to: <a href="#" style="text-decoration: underline;/* color: #0001F1; */"><span class="s2">'. $phish_url .'</span></a>
-                    </span>
-                  </td>
-               </tr>
-           </tbody>
-        </table>
-        </div>
+        <p class="p1">Hello Customer,<br /><br />We have faceed some problems with your account. So please updat your account detail. Unless you update your details within 24 hours (from opening this mail) the account will be officially <b>permanently disabled.</b></p>
+        <br><div style="margin-left: auto; margin-right: auto; border-radius: 5px; background-color: #ffd814; color: #000000; display: inline-block; text-align: center;" align="center"><a style="color: #000000; text-decoration: none; display: block; padding: 14px 30px 15px;" href="#"> Update now </a></div>
         <br><br><p class="p1">Thank you for being part of the Amazon community,<span class="Apple-converted-space"> </span></p>
         <p class="p1">we look forward to hearing from you soon.</p><br>
-        <p class="p1">Best regards, <br>Amazon Customer Service</p></div>';
-        $email->warning_type = 'tooltip';
-        $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        <p class="p1">Best regards</p></div>';
+        $email->warning_type = 'popup_email';
+        $email->warning_explanation_1 = 'This email has many grammatical errors, a typical feature of a scam email. Your data could be stolen.';
+        $email->warning_explanation_2 = 'The text of the email contains grammatical errors. This happens because the text has been translated or generated automatically. The email could be fraudulent. Please do not disclose your data as it could be stolen.';
+        $email->date = Carbon::today()->subDays(mt_rand(0, 365))->toDateTimeString();
         $email->type = 'inbox';
         $email->save();
 
-        // Other warnings
-        foreach (['popup_link', 'popup_email', 'base_passive', 'no_warning'] as $type) {
-            // Email 1
-            $email = new Email();
-            $email->subject = "New device login detected";
-            $email->from_name = "TikTok";
-            $email->from_email = "noreply@tiktok.com";
-            $email->preview_text = 'Hi, we\'re writing to inform you that we detected a login to your account from a new device.';
-            $email->content = '<div><p class="p1"><strong><img style="display: block; margin-left: auto; margin-right: auto;" src="/assets/img/email/tiktok.jpeg" alt="" width="300" height="165" /></strong><strong>Hey user,</strong></p>
-            <p> </p>
-            <p class="p1">We\'re writing to inform you that we detected a login to your account from a new device.<br /><br /></p>
-            <p class="p1"><strong>When:</strong></p>
-            <p class="p1"><em>10/08/2022 17:38 CEST</em></p>
-            <p class="p1"><strong>Device:</strong></p>
-            <p class="p1"><em>Huawei P30 Pro</em></p>
-            <p class="p1"><strong>Near:<span class="Apple-converted-space"> </span></strong></p>
-            <p class="p1"><em>Nashik, India<br /><br /></em></p>
-            <p class="p1"><strong>If this was you</strong>, you can ignore this message.<br /><br /></p>
-            <p class="p1"><strong>If this wasn\'t you</strong>, click the link below and reset your password to be safe.
-            <a href="http://92.233.24.33/tiktok/login.php" style="text-decoration: underline; color:#3366CC;">tiktok.com/reset</span>.</a></p>
-            </div>';
-            $email->date = Carbon::parse('2022-08-10 17:38')->toDateTimeString();
-            $email->type = 'inbox';
-            if ($type != ['no_warning']) {
-                $email->warning_explanation_1 = "The target URL <b>http://92.233.24.33/tiktok/login.php</b> is an imitation of the original one, <b>https://tiktok.com</b>. This site might be intended to take you to a different place. You might be disclosing private information.";
-            }
-            $email->warning_type = $type;
-            $email->save();
 
-            // Email 2
-            $email = new Email();
-            $email->subject = "Problem with your account";
-            $email->from_name = "Amazon";
-            $email->from_email = "amazon.it@amazonservices.sc03osd.cz";
-            $email->preview_text = 'Hello customer, We have faced some problems with your account.';
-            $email->content = '<div><p class="p1"><img src="/assets/img/email/amazon.jpg" alt="" width="100" /></p>
-            <p class="p1">Dear Customer,<br /><br />
-            We are sorry to inform you that we have registered some problems related to your account. As a consequence, you need to update your account details.
-            Unless you update your details within 24 hours (since the opening of this email), your account will be officially and <b>permanently disabled</b>,
-            as mentioned in our <i>Terms of Use and Conditions</i>.
-            <br>
-            You can proceed to the updating procedure by clicking the link below:</p>
-            <br>
-            <div style="margin-left: auto; margin-right: auto; border-radius: 5px; background-color: #ffd814; color: #000000; display: inline-block; text-align: center;" align="center">
-            <a style="color: #000000; text-decoration: none; display: block; padding: 14px 30px 15px;" href="https://amazonservices.sc03osd.cz/account.php"> Update now </a></div>
-            <br><br><p class="p1">Thank you for being part of the Amazon community,<span class="Apple-converted-space"> </span></p>
-            <p class="p1">we look forward to hearing from you soon.</p><br>
-            <p class="p1">Best regards, <br>Amazon Customer Service</p></div>';
-            if ($type != ['no_warning']) {
-                $email->warning_explanation_1 = "The target URL <b>https://amazonservices.sc03osd.cz/account.php</b> is an imitation of the original one, <b>https://amazon.com</b>. This site might be intended to take you to a different place. You might be disclosing private information.";
-            }
-            $email->warning_type = $type;
-            $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
-            $email->type = 'inbox';
-            $email->save();
-        }
+        // Popup After
+        // 1
+        $email = new Email();
+        $email->from_name = "Poste.it";
+        $email->from_email = "p0ste.1t_burxzddw324hlt@asia.us.com";
+        $email->subject = "Your package has arrived";
+        $email->preview_text = 'Dear customer, your package has arrived and will be delivered to you after...';
+        $email->content = '<div><p class="p1">Dear customer,</p>
+        <br/>
+        <p class="p1">your package has arrived and will be delivered to you <strong>after the requested shipment will be fully paid for</strong>!</p>
+        <br/><p class="p1"><strong>Confirm the payment within 48 hours to confirm the package!</strong></p>
+        <br/><p class="p1">Click on the link to visit the page of payment.</p>
+        <br><p class="p1"><a href="http://www.poste-italiane.asia.us/" style="text-decoration: underline;color: #0001F1;">http://www.poste-italiane.asia.us/package/112676859336</a></p>
+        <br><p class="p1">Kind regards,</p>
+        <p class="p1">Poste italiane</p></div>';
+        $email->date = Carbon::today()->subDays(mt_rand(0, 365))->toDateTimeString();
+        $email->type = 'inbox';
+        $email->warning_type = 'popup_link';
+        $email->warning_explanation_1 = 'The target URL <b>http://www.poste-italiane.asia.us/</b> is an imitation of the original one, <b>https://poste.it</b>. This site might be intended to take you to a different place. You might be disclosing private information.';
+        $email->warning_explanation_2 = 'The target URL <b>http://www.poste-italiane.asia.us/</b> looks like the original one but is a fake <b>https://poste.it</b>. This might happen when a website tries to take you to a fraudulent one. Your private information is at risk.';
+        $email->save();
+        // 2
+        $email = new Email();
+        $email->subject = "New device login detected";
+        $email->from_name = "TikTok";
+        $email->from_email = "noreply@tiktok.com";
+        $email->preview_text = 'Hi, we\'re writing to inform you that we detected a login to your account from a new device.';
+        $email->content = "<div><p class=\"p1\"><strong><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"/assets/img/email/tiktok.jpeg\" alt=\"\" width=\"300\" height=\"165\" /></strong><strong>Hey user,</strong></p>
+        <p> </p>
+        <p class=\"p1\">We're writing to inform you that we detected a login to your account from a new device.<br /><br /></p>
+        <p class=\"p1\"><strong>When:</strong></p>
+        <p class=\"p1\"><em>10/08/2022 17:38 CEST</em></p>
+        <p class=\"p1\"><strong>Device:</strong></p>
+        <p class=\"p1\"><em>Samsung Galaxy S20 FE 5G</em></p>
+        <p class=\"p1\"><strong>Near:<span class=\"Apple-converted-space\"> </span></strong></p>
+        <p class=\"p1\"><em>Puglia<br /><br /></em></p>
+        <p class=\"p1\"><strong>If this was you</strong>, you can ignore this message.<br /><br /></p>
+        <p class=\"p1\"><strong>If this wasn't you</strong>, click the link and reset your password to be safe. <a href=\"http://92.233.24.33/tiktokuser_scam/login.php\" style=\"text-decoration: underline; color:#3366CC;\">RESET</span>.</a></p>
+        </div>";
+        $email->date = Carbon::parse('2022-08-10 17:38')->toDateTimeString();
+        $email->type = 'inbox';
+        $email->warning_explanation_1 = "Usually, the email uses the URL instead of the IP address to make it easier for you to browse the web. However, an IP address was found in the email. Similar e-mail is harmful and steals private information. There is a potential risk of being cheated if you proceed.";
+        $email->warning_explanation_2 = "In this mail there is a link formed by an IP address (92.233.24.33) instead of a URL. The web uses URLs to make it easier for you to navigate. This kind of practice is used in fraudulent emails to steal your data.";
+        $email->warning_type = 'popup_link';
+        $email->save();
+
+
+        // Browser native
+        // 1
+        $email = new Email();
+        $email->subject = "Update your payment Method";
+        $email->from_name = "Netfl1x";
+        $email->from_email = "netflix.com-def42@43t5yu65jre03osd.co.uk";
+        $email->preview_text = 'Dear customer, we are having some troubles with your current billing information.';
+        $email->content = '<p class="p1"><img style="display: block; margin-left: auto; margin-right: auto;" src="/assets/img/email/netflix.png" alt="" width="169" height="95" /></p>
+        <p class="p1">Dear Customer,<br /><br />We are having some troubles with your current billing information. While we try again we’d like to suggest you to update your payment details.<br /><br /><a href="http://netflix.accountmanagement-aedeasf.co.uk/phishinglink" style="text-decoration: underline; color: #0001F1;"><span class="s1">Update your account now</span></a></p>';
+        $email->warning_type = 'browser_native';
+        $email->date = Carbon::today()->subDays(mt_rand(0, 365))->toDateTimeString();
+        $email->type = 'inbox';
+        $email->save();
+        // 2
+        $email = new Email();
+        $email->subject = "iPhone as a gift";
+        $email->from_name = "Apple Computers";
+        $email->from_email = "applecomputers.com@myiphonetactics.gift.com";
+        $email->preview_text = 'You have won an iPhone 14 pro! Redeem it now!';
+        $email->content = '<div dir="ltr"><br />
+<table style="max-width: 100%;" role="presentation" cellspacing="0" cellpadding="0" align="center">
+<tbody>
+<tr>
+<td width="600">
+<table style="max-width: 600px;" role="presentation" width="100%" cellspacing="0" cellpadding="0" align="center">
+<tbody>
+<tr>
+<td valign="top">
+<table style="line-height: 26px; font-size: 18px; border: 4px solid #ff6700; border-color: red; border-radius: 10px 10px 0px 0px; font-family: Lato,sans-serif;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="0" bgcolor="#fcfffe">
+<tbody>
+<tr>
+<td style="padding: 25px 20px 35px 15px; font-size: 50px; color: red;" align="center" valign="top"><strong> iPhone 14 Pro </strong></td>
+</tr>
+<tr>
+<td style="padding: 30px 25px; font-size: 35px; line-height: 36px; font-weight: bold; color: #ffffff;" align="center" valign="middle" bgcolor="red"><strong>Congratulations!</strong></td>
+</tr>
+<tr>
+<td style="padding: 0px 25px 15px;" align="left" valign="top"><br />
+<div style="font-size: 25px; line-height: 36px;"><center>You have been chosen to participate in our Loyalty Program: FREE! <br /><br />It will take you just a minute and you will receive a fantastic prize: <span style="font-weight: bold; color: #3399ff; font-size: 35px;">iPhone 14 Pro</span></center></div>
+</td>
+</tr>
+<tr>
+<td style="padding: 20px 15px 30px;" align="center" valign="top">
+<table role="presentation" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td style="border-radius: 5px;" align="center" valign="middle" bgcolor="red"><span style="display: inline-block; line-height: 28px; padding: 10px 25px; border: 2px solid #f0ba5c; border-radius: 5px;"><strong><a style="text-decoration-line: none; color: white; font-size: 26px;" href="http://iphonewin.calweb.com">CONTINUE FOR FREE»</a></strong></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If you no longer wish to receive these emails, you may unsubscribe by <a href="http://iphonewin.calweb.com">clicking here</a></p>
+<p>The advertiser does not manage your subscription. <br /> If you prefer not to receive further communication please unsubscribe <a href="http://iphonewin.calweb.com">here</a><br />Or write to: 34 N Franklin Ave Ste 687#2043, Pinedale, WY, 82941</p>
+</div>';
+        $email->date = Carbon::today()->subDays(mt_rand(0, 365))->toDateTimeString();
+        $email->type = 'inbox';
+        $email->warning_type = 'browser_native';
+        $email->save();
+
     }
 }

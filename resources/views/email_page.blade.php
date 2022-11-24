@@ -734,7 +734,7 @@
                     $(this).on('click', (e) => {
                         e.preventDefault();
                         $.ajax({
-                            url: ("{{ route('warning_log') }}?email_id={{$selected_email->id}}&warning_type={{$selected_email->warning_type}}&msg=Cliccato link nella mail&url=" + window.location.href).replace(/%20/g, '+'),
+                            url: ("{{ route('warning_log') }}?email_id={{$selected_email->id}}&warning_type={{$selected_email->warning_type}}&msg=clicked_link&url=" + window.location.href).replace(/%20/g, '+'),
                             type: 'GET',
                             dataType: 'json',
                             complete: function (data) {
@@ -781,7 +781,7 @@
                     });
                 });
             @elseif($selected_email->warning_type == "base_passive")
-                banner = $("#passive_banner"); // TODO implement passive banners (if needed)
+                banner = $("#passive_banner"); // To do: Implement passive banners (if needed)
                 banner.show();
                 banner.innerHTML = {{$selected_email->$random_warning_explanation}}
             @elseif($selected_email->warning_type == "tooltip")
@@ -790,7 +790,7 @@
                     if (!message_sent.includes($(this).attr('data'))) {
                         message_sent.push($(this).attr('data'));
                         $.ajax({
-                            url: ("{{ route('warning_log') }}?email_id={{ $selected_email->id }}&warning_type=tooltip&msg=Tooltip " + $(this).attr("data") + " mostrato&url=" + window.location.href).replace(/%20/g, '+'),
+                            url: ("{{ route('warning_log') }}?email_id={{ $selected_email->id }}&warning_type=tooltip&msg=tooltip_shown_" + $(this).attr("data") + "&url=" + window.location.href).replace(/%20/g, '+'),
                             type: 'GET',
                             dataType: 'json'
                         });
@@ -798,7 +798,7 @@
                 });
                 $("#phishing_link, #tooltip_link").on("click", () => {
                     $.ajax({
-                        url: ("{{ route('warning_log') }}?email_id={{$selected_email->id}}&warning_type=tooltip&msg=Cliccato link nella tooltip&url=" + window.location.href).replace(/%20/g, '+'),
+                        url: ("{{ route('warning_log') }}?email_id={{$selected_email->id}}&warning_type=tooltip&msg=tooltip_click&url=" + window.location.href).replace(/%20/g, '+'),
                         type: 'GET',
                         dataType: 'json',
                         complete: function (data) {
@@ -830,14 +830,14 @@
                     @endif
                 @endif
                 $.ajax({
-                    url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=Warning mostrato&url=" + window.location.href).replace(/%20/g, '+'),
+                    url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=warning_shown&url=" + window.location.href).replace(/%20/g, '+'),
                     type: 'GET',
                     dataType: 'json'
                 });
                 $("#warning_unsafe_link").on('click', (e) => {
                     e.preventDefault();
                     $.ajax({
-                        url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=Warning bypassato&url=" + window.location.href).replace(/%20/g, '+'),
+                        url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=warning_ignored&url=" + window.location.href).replace(/%20/g, '+'),
                         type: 'GET',
                         dataType: 'json',
                         complete: function (data) {
@@ -855,7 +855,7 @@
                         $("#button-advanced").text("Hide advanced");
                         $("#div-advanced").show();
                         $.ajax({
-                            url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=Cliccato pulsante 'Advanced'&url=" + window.location.href).replace(/%20/g, '+'),
+                            url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=advanced&url=" + window.location.href).replace(/%20/g, '+'),
                             type: 'GET',
                             dataType: 'json'
                         });
@@ -863,7 +863,7 @@
                         $("#button-advanced").text("Advanced");
                         $("#div-advanced").hide();
                         $.ajax({
-                            url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=Cliccato pulsante 'Hide advanced'&url=" + window.location.href).replace(/%20/g, '+'),
+                            url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=hide_advanced&url=" + window.location.href).replace(/%20/g, '+'),
                             type: 'GET',
                             dataType: 'json'
                         });
@@ -871,7 +871,7 @@
                 });
                 $("#button_hide_modal").on('click', () => {
                     $.ajax({
-                        url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=Cliccato pulsante 'Go back to the safe zone'&url=" + window.location.href).replace(/%20/g, '+'),
+                        url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=go_back&url=" + window.location.href).replace(/%20/g, '+'),
                         type: 'GET',
                         dataType: 'json'
                     });

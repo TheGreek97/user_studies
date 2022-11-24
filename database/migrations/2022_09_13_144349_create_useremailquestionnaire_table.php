@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string("title_email");
             $table->string("sender_email");
-            $table->string("how_many_hyperlinks");
+            $table->string("how_many_hyperlinks")->default(1);
             $table->unsignedBigInteger("user_id");
             $table->unsignedBigInteger("email_id");
             $table->foreign('user_id')->references('id')->on('users');

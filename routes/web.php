@@ -48,7 +48,7 @@ Route::middleware([
     Route::get('/nextstep/{id?}', function ($id = null){
         if($id === null)
             return redirect(route('show', ['folder' => 'inbox']));
-        return view("emailquestionnaire");
+        return view("emailquestionnaire")->with('warning_type', Auth::user()->warning_type);
     })->name('next_step');
 
     Route::post('/nextstep/{mail?}', [\App\Http\Controllers\Questionnaire::class, 'storeEmailQuestionnaire'])->name('next_step');
