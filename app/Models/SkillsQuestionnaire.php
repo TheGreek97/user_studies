@@ -5,16 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserQuestionnaire extends Model
+class SkillsQuestionnaire extends Model
 {
     use HasFactory;
-    protected $table = "questionnaire_user";
-    protected $fillable = [
-        'answer_1',
-        'answer_1_rationale',
-        'answer_1_alt',
-        'answer_2'
-    ];
+    protected $table = "questionnaire_skills";
 
     public function user()
     {

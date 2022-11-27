@@ -6,555 +6,339 @@
                  style="display: none; opacity: 0;" role="alert">
                 <span class="font-medium">Per favore, rispondi a tutte le domande.</span>
             </div>
-            <div class="pt-12 px-12 m-10 bg-white rounded-2xl shadow-xl z-20">
+            <div class="pt-12 px-12 m-10 bg-white rounded-2xl shadow-xl z-20l" style="max-width: 90%">
                 <form action="{{ Request::url() }}" method="POST" x-data="load()" id="form" style="display:none;">
-                    @csrf
-
-                    <div>
-                        <h1 x-show="step !== 0 && step !== 6"
-                            class="text-3xl font-bold text-center mb-4 cursor-pointer">Introduzione: Regole Evento-Condizione-Azione (ECA)</h1>
-                    </div>
-                    <!--- DISCLAIMER SECTION 0 --->
-                    <div x-show="step === 0" id="section-0">
-                        <p class="text-xl max-w-2xl text-left pt-3">
-                            Per specificare comportamenti personalizzati, le cosiddette regole "ECA" (Event Condition Action) sono le più utilizzate all'interno di software per la domotica, data la loro espressività e al contempo semplicità per gli utenti.&nbsp;
+                @csrf
+                <!--- SECTION 0 --->
+                    <div x-show="step === 0" id="section-0" class="text-xl max-w-2xl text-left pt-3">
+                        <div>
+                            <h1 class="text-3xl font-bold text-center mb-4 cursor-pointer">
+                                Introduzione: Regole <br>Evento-Condizione-Azione (ECA)</h1>
+                        </div>
+                        <p>
+                            Nelle cosiddette smart home ("case intelligenti") ci sono diversi dispositivi che comunicano fra loro per diversi scopi, quali aumentare la qualità della vita degli abitanti della casa, ridurre sprechi energetici, aumentare la sicurezza.
                         </p>
-                        <div>Una regola ECA, come il nome suggerisce, è composta da&nbsp;<b>3 parti</b>:</div>
+                        <p>
+                            In una smart home, gli utenti devono avere la possibilità di definire il comportamento dei loro dispositivi (luci, videocamere, elettrodomestici, etc.), ad esempio per rispondere a comandi vocali (es., "Alexa, accendi la luce nel soggiorno") o per eseguire automaticamente specifiche azioni (es., chiudere le finestre in caso di pioggia).
+                        </p>
+                        <p>
+                            Per specificare comportamenti personalizzati, le cosiddette regole "ECA" (Event-Condition-Action, ovvero "Evento-Condizione-Azione") sono le più utilizzate all'interno di software per la domotica, data la loro espressività e al contempo semplicità per gli utenti.
+                        </p>
+                        <div class="mt-3">Una regola ECA, come il nome suggerisce, è composta da&nbsp;<b>3 parti</b>:</div>
                         <div>
                             <ol>
-                                <li><b>EVENTO </b>- che cosa deve succedere per far attivare la regola?</li>
-                                <li><b>CONDIZIONE </b>- in che stato si deve trovare il sistema affinché la regola si attivi?</li>
-                                <li><b>AZIONE </b>- cosa succederà in seguito all'attivazione della regola?</li>
+                                <li>&#x2022; <b>EVENTO </b>- che cosa deve succedere per far attivare la regola?</li>
+                                <li>&#x2022; <b>CONDIZIONE (o STATO) </b>- in che stato si deve trovare il sistema affinché la regola si attivi?</li>
+                                <li>&#x2022; <b>AZIONE </b>- cosa succederà in seguito all'attivazione della regola?</li>
                             </ol>
                         </div>
-                        <div>Possiamo differenziare tra EVENTO e CONDIZIONE semplicemente pensando all'aspetto del <i><b>tempo</b>:</i></div>
-                        <div>
-                            <ul>
-                                <li>Un EVENTO si verifica in uno specifico momento, <br>es.:&nbsp;<i>Comincia a piovere, </i>oppure&nbsp;<i>Suonano al campanello</i></li>
-                                <li>Una CONDIZIONE è uno stato dell'ambiente che persiste per un certo periodo di tempo, <br>es.: <i>Sta piovendo, </i>oppure&nbsp;<i>Qualcuno è alla porta</i></li>
-                            </ul>
-                        </div>
-                        <div>
+                        <div class="mt-3">
                             <div>Una regola ECA può essere scritta sostanzialmente come:&nbsp;</div>
                             <div><i>"SE succede qualcosa (E una specifica condizione è vera), ALLORA fai qualcosa"</i></div>
                         </div>
+                        <div class="mt-3">Possiamo differenziare tra EVENTO e CONDIZIONE semplicemente pensando all'aspetto del <i><b>tempo</b>:</i></div>
+                        <div>
+                            <ul>
+                                <li>- Un EVENTO si verifica in uno specifico momento, <br>es.:&nbsp;<i>Comincia a piovere, </i>oppure&nbsp;<i>Smette di piovere</i></li>
+                                <li>- Una CONDIZIONE persiste nel tempo, <br>es.: <i>Sta piovendo, </i>oppure&nbsp;<i>Non sta piovendo</i></li>
+                            </ul>
+                        </div>
+                        <br>
+
                         <div><i><br></i></div>
                         <div>Per capire meglio, prendiamo un esempio di regola ECA per evitare sprechi di elettricità in casa:</div>
                         <div>
-                            <ol>
+                            <ol class="text-center mt-2">
                                 <li><b>SE </b><i>esco dalla cucina</i></li>
-                                <li><b>E </b><i>non è rimasto nessun altro in cucina</i></li>
+                                <li><b>E </b><i>non c'è nessuno in cucina</i></li>
                                 <li><b>ALLORA </b><i>spegni la luce della cucina&nbsp;</i>&nbsp;</li>
                             </ol>
-                            <div>Possiamo anche pensare a regole che non comprendano il punto 2, ovvero si attivano sempre in seguito a uno specifico evento, incondizionatamente:</div>
-                            <div>
-                                <ol>
-                                    <li><b>SE </b>ho una emergenza medica</li>
-                                    <li>&nbsp;-</li>
-                                    <li><b>ALLORA </b>chiama i soccorsi</li>
-                                </ol>
-                                <div><br></div>
-                            </div>
-                            <div>D'altro canto, possiamo anche voler definire comportamenti più complessi nella nostra smart home, comprendenti <u><i>più </i>condizioni</u> e/o<u> <i>più </i>azioni</u>&nbsp;come ad esempio un sistema per aprire le finestre automaticamente al nostro risveglio:</div>
-                            <div>
-                                <ol>
-                                    <li><b>SE </b>mi sveglio&nbsp;</li>
-                                    <li><b>E </b>è mattina, <i>e</i> non sta piovendo, <i>e</i> la temperatura è maggiore a 20°C</li>
-                                    <li><b>ALLORA </b>apri le finestre della camera, <i>e</i> alza la tapparella della camera al 75%</li>
-                                </ol>
-                                <div><br></div>
+                        </div>
+                        <div class="mt-3">Possiamo anche pensare a regole che non comprendano il punto 2, ovvero si attivano sempre in seguito a uno specifico evento, incondizionatamente:</div>
+                        <div>
+                            <ol class="text-center mt-2">
+                                <li><b>SE </b><i>scoppia un incendio</i></li>
+                                <li><b>ALLORA </b><i>attiva l'impianto antincendio</i></li>
+                            </ol>
+                            <div><br></div>
+                        </div>
+                        <div class="mt-3">Infine, possiamo anche voler definire comportamenti più complessi nella nostra smart home, comprendenti <u><i>più </i>condizioni</u> e/o<u> <i>più </i>azioni</u>&nbsp;
+                            come ad esempio un sistema per aprire le finestre automaticamente al nostro risveglio, accertandosi che ci siano le giuste condizioni per farlo:</div>
+                        <div>
+                            <ol class="text-center mt-2">
+                                <li><b>SE </b><i>mi sveglio</i></li>
+                                <li> <b>E </b><i>è mattina, </i>e<i> non sta piovendo, </i>e<i> la temperatura è maggiore a 20°C</i></li>
+                                <li> <b>ALLORA </b><i>apri le finestre della camera, </i>e<i> alza la tapparella</i></li>
+                            </ol>
+                            <br>
+                            <div class="mt-4">
+                                Come vedi, le regole ECA possono davvero essere un potente strumento per esprimere comportamenti anche complessi in maniera semplice.
                             </div>
                         </div>
                     </div>
                     <!-- SECTION 1 -->
-                    <div x-show="step === 1" id="section-1">
-                        <p class="text-2xl w-full text-center">1 su 2</p>
-                        <div class="my-5">
-                            <p class="font-bold pb-1">In una scala da 1 a 5, come definiresti il tuo livello di conoscenze in Informatica?</p>
-                            <label for="steps-range"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
-                                <div>
-                                    1 (Scarso)
-                                </div>
-                                <div class="flex-1"></div>
-                                <div>
-                                    5 (Esperto)
-                                </div>
-                            </label>
-                            <div class="w-full">
-                                <input type="range" list="level_informatics" value="1" min="1" max="5"
-                                       step="1"
-                                       name="level_informatics" class="w-full">
-                                <datalist id="level_informatics">
-                                    <option value="1"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="4"></option>
-                                    <option value="5"></option>
-                                </datalist>
-                            </div>
-                        </div>
-
-                        <div class="my-5">
-                            <p class="font-bold pb-1">In una scala da 1 a 5, come definiresti il tuo livello di conoscenze in Cybersecurity?</p>
-                            <label for="steps-range"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
-                                <div>
-                                    1 (Scarso)
-                                </div>
-                                <div class="flex-1"></div>
-                                <div>
-                                    5 (Esperto)
-                                </div>
-                            </label>
-                            <div class="w-full">
-                                <input type="range" list="level_cybersecurity" value="1" min="1" max="5"
-                                       step="1"
-                                       name="level_cybersecurity" class="w-full">
-                                <datalist id="level_cybersecurity">
-                                    <option value="1"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="4"></option>
-                                    <option value="5"></option>
-                                </datalist>
-                            </div>
-                        </div>
-
-                        <div class="my-5">
-                            <p class="font-bold pb-1">In una scala da 1 a 5 qual è il tuo livello di esperienza con dispositivi IoT all'interno di ambienti intelligenti?</p>
-                            <label for="steps-range"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
-                                <div>
-                                    1 (Scarso)
-                                </div>
-                                <div class="flex-1"></div>
-                                <div>
-                                    5 (Esperto)
-                                </div>
-                            </label>
-                            <div class="w-full">
-                                <input type="range" list="level_iot" value="1" min="1" max="5"
-                                       step="1"
-                                       name="level_iot" class="w-full">
-                                <datalist id="level_iot">
-                                    <option value="1"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="4"></option>
-                                    <option value="5"></option>
-                                </datalist>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!-- SECTION 2 -->
-                    <div x-show="step === 2" id="section-2">
-                        <p class="text-2xl w-full text-center">2 su 2</p>
-                        <div class="my-8">
-                            <p class="font-bold pb-1">Cosa denota la scritta “https://” all'inizio di un URL, rispetto a
-                                http:// (senza la “s”)?</p>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_0_1" type="radio" value="That the site has special high definition" name="cyber_1"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_0_1"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Che il sito ha un'alta definizione speciale</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_0_2" type="radio" value="That information entered into the site is encrypted" name="cyber_1"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_0_2"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Che i dati inseriti dall'utente all'interno sito sono criptati</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_0_3" type="radio" value="That the site is the newest version available" name="cyber_1"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_0_3"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Che il sito è aggiornato alla versione più recente disponibile</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_0_4" type="radio" value="That the site is not accessible to certain computers" name="cyber_1"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_0_4"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300"> Che il sito non è accessibile da certi computer</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_0_5" type="radio" value="None of the above" name="cyber_1"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_0_5"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300"> Nessuna delle risposte precedenti</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_0_6" type="radio" value="Not sure" name="cyber_1"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_0_6"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300"> Non so </label>
-                            </div>
-                        </div>
-                        <div class="my-8">
-                            <p class="font-bold pb-1">Quale dei seguenti è un esempio di attacco di “phishing”</p>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_1-1" type="radio" value="Sending someone an email that contains a malicious link that is disguised to look like an email from someone the person knows" name="cyber_2"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_1-1"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Mandare una mail contenente un link malevolo ad una persona ignara, affinché la mail sembri provenire da una persona che conosce
-                                </label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_1-2" type="radio" value="Creating a fake website that looks nearly identical to a real website in order to trick users into entering their login information" name="cyber_2"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_1-2"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Creare un sito web fasullo quasi identico ad un sito reale, con lo scopo di ingannare gli utenti e fargli inserire le loro credenziali di login
-                                </label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_1-3" type="radio" value="Sending someone a text message that contains a malicious link that is disguised to look like a notification that the person has won a contest" name="cyber_2"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_1-3"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Mandare un messaggio a qualcuno contente un link malevolo, affinché sembri una notifica riportante che l'utente in questione è vincitore di un contest
-                                </label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_1-4" type="radio" value="All of the above" name="cyber_2"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_1-4"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Tutte le risposte precedenti
-                                </label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_1-5" type="radio" value="Not sure" name="cyber_2"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_1-5"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Non so</label>
-                            </div>
-                        </div>
-                        <div class="my-8">
-                            <p class="font-bold pb-1">Un insieme di computer collegati e utilizzati da criminali per rubare informazioni si chiama... </p>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_2_1" type="radio" value="Botnet" name="cyber_3"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_2_1"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Botnet</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_2_2" type="radio" value="Rootkit" name="cyber_3"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_2_2"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Rootkit</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_2_3" type="radio" value="DDoS" name="cyber_3"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_2_3"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">DDoS</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_2_4" type="radio" value="Operating system" name="cyber_3"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_2_4"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300"> Sistema Operativo</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_2_5" type="radio" value="Not sure" name="cyber_3"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_2_5"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Non so</label>
-                            </div>
-                        </div>
-                        <div class="my-8">
-                            <p class="font-bold pb-1">
-                                Alcuni siti web e servizi online utilizzano un processo di sicurezza chiamato "Autenticazione a 2 fattori".
-                                Quali delle seguenti immagini è un esempio di autenticazione a due fattori?</p>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_3_1" type="radio" value="0" name="cyber_4"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_3_1" class="w-full"><img class="max-h-64 ml-2"
-                                                                        src="{{ url('assets/img/cyber_4_1.png') }}"></label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_3_2" type="radio" value="1" name="cyber_4"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_3_2" class="w-full"><img class="max-h-64 ml-2"
-                                                                        src="{{ url('assets/img/cyber_4_2.webp') }}"></label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_3_3" type="radio" value="2" name="cyber_4"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_3_3" class="w-full"><img class="max-h-64 ml-2"
-                                                                        src="{{ url('assets/img/cyber_4_3.png') }}"></label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_3_4" type="radio" value="3" name="cyber_4"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_3_4" class="w-full"><img class="max-h-64 ml-2"
-                                                                        src="{{ url('assets/img/cyber_4_4.png') }}"></label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_3_5" type="radio" value="4" name="cyber_4"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_3_5"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Nessuna delle precedenti</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_3_6" type="radio" value="5" name="cyber_4"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_3_6"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300"> Non so</label>
-                            </div>
-                        </div>
-                        <div class="my-8">
-                            <p class="font-bold pb-1">Quale tra le seguenti password è la più sicura?</p>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_4_1" type="radio" value="Boat123" name="cyber_5"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_4_1"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Barca123</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_4_2" type="radio" value="WTh!5Z" name="cyber_5"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_4_2"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">WTh!5Z</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_4_3" type="radio" value="into*48" name="cyber_5"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_4_3"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">into*48</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_4_4" type="radio" value="123456" name="cyber_5"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_4_4"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">123456</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_4_5" type="radio" value="Not sure" name="cyber_5"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_4_5"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Non so
-                                </label>
-                            </div>
-                        </div>
-                        <div class="my-8">
-                            <p class="font-bold pb-1"> I cyber-criminali talvolta accedono in modo illecito nel computer di un utente e effettuano una criptazione dei suoi dati e file personali.
-                                L'utente non può accedere a questi dati a meno che non paghi i criminali affinché decriptino i file.
-                                Questa pratica è chiamata...</p>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_5_1" type="radio" value="Botnet" name="cyber_6"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_5_1"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Botnet</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_5_2" type="radio" value="Ransomware" name="cyber_6"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_5_2"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Ransomware</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_5_3" type="radio" value="Driving" name="cyber_6"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_5_3"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Driving</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_5_4" type="radio" value="Spam" name="cyber_6"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_5_4"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Spam</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_5_5" type="radio" value="None of the above" name="cyber_6"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_5_5"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Nessuna delle precedenti</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_5_6" type="radio" value="Not sure" name="cyber_6"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_5_6"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300"> Non so</label>
-                            </div>
-                        </div>
-                        <div class="my-8">
-                            <p class="font-bold pb-1">
-                                La "navigazione in incognito" è una funzione di molti browser web che permette agli utenti di accedere a pagine web senza che le loro informazioni
-                                (come la cronologia) sia memorizzata dal browser stesso.
-                                Un fornitore di servizi Internet (es., Telecom, Fastweb, etc.) può vedere le attività online di un loro cliente quando questi
-                                utilizza la navigazione in incognito?</p>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_6_1" type="radio" value="Yes" name="cyber_7"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_6_1"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Sì</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_6_2" type="radio" value="No" name="cyber_7"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_6_2"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">No</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_6_3" type="radio" value="Not sure" name="cyber_7"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_6_3"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Non so</label>
-                            </div>
-                        </div>
-                        <div class="my-8">
-                            <p class="font-bold pb-1">
-                                Spegnere la funzionalità GPS sul tuo smartphone previene qualsiasi tracciamento della posizione del tuo telefono.
+                    <div x-show="step === 1" id="section-1" class="text-xl text-left pt-3">
+                        <p class="text-2xl w-full text-center">1 su <span class="num_slides"></span></p>
+                        <div>
+                            <p class="pt-4">
+                                Immagina di essere Marco, un avvocato con la passione per la domotica. All'interno della sua casa, Marco ha diversi dispositivi intelligenti: diverse luci smart (presenti sia all'interno che all'esterno della casa), un televisore smart, un computer, un robot aspirapolvere, tre finestre automatiche, una lavatrice smart, e due telecamere di sicurezza per controllare l'ingresso della casa ed il suo studio. Marco ha uno smartphone, che utilizza sia per lavoro che per la sua vita privata ed uno smartwatch ad esso collegato, che può anche contare i suoi passi, monitorare il sonno ed il battito cardiaco, etc. Infine, possiede un router per la connessione ad Internet.
                             </p>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_7_1" type="radio" value="True" name="cyber_8"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_7_1"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Vero</label>
+                            <img style="float: right; max-width: 50%;" src="{{url('assets/img/alexa.jpg')}}">
+                            <div class="my-3">
+                                Per comandare i suoi oggetti smart, Marco utilizza <b>Alexa</b>, il famoso assistente vocale di Amazon che gli permette, ad esempio, di spegnere e accendere le luci, regolarne l'intensità, programmare i lavaggi della sua lavatrice, visualizzare i video delle telecamere di sicurezza, e molto altro.
                             </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_7_2" type="radio" value="False" name="cyber_8"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_7_2"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Falso</label>
+                            <div class="my-3">
+                                Recentemente, Marco ha sentito che Alexa permetterà, in un prossimo aggiornamento, di definire vocalmente regole Evento-Condizione-Azione per gestire il comportamento degli oggetti intelligenti all'interno della casa. Essendo appassionato di domotica, Marco trova la notizia entusiasmante, dato che sarà in grado di definire comportamenti personalizzati del tipo:
                             </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_7_3" type="radio" value="Not sure" name="cyber_8"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_7_3"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Non so</label>
+                            <div class="my-3">
+                                <i>"Alexa, SE piove ALLORA chiudi la finestra della cucina"</i>
                             </div>
-                        </div>
-                        <div class="my-8">
-                            <p class="font-bold pb-1">
-                                Se una rete Wi-Fi pubblica (come in un aeroporto o un bar) richiede una password per accedere,
-                                generalmente è sicuro utilizzare tale rete per attività sensibili come online banking (es., immettere dati della carta di credito)
-                            </p>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_8_1" type="radio" value="Yes, it is safe" name="cyber_9"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_8_1"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300"> Sì, è sicuro</label>
+                            <div class="mt-5">
+                                Sentendo parlare sempre più spesso di attacchi informatici, Marco decide di voler aumentare la sicurezza del suo impianto domotico; d'altronde, essendo un avvocato, ritiene di essere una figura ancora più suscettibile ad attacchi mirati rispetto ad altri.<br>
+                                Per proteggersi da attacchi informatici, Marco installa un'estensione di Alexa che permette di controllare tutte le attività che si verificano sulla rete di casa. Con questo programma, Alexa è in grado di controllare le connessioni in entrata e in uscita da ciascun dispositivo.
                             </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_8_2" type="radio" value="No, it is not safe" name="cyber_9"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_8_2"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">No, non è sicuro</label>
+                            <div class="my-5">
+                                In particolare è in grado di rilevare diversi tipi di attacchi ed eventi sospetti, come, ad esempio:
+                                <ol style="list-style: decimal; margin-left:1%; padding: 20px;">
+                                    <li>Qualcuno cerca di sovraccaricare un dispositivo; questo tipo di attacco (chiamato "attacco DoS") ha lo scopo di rendere il dispositivo temporaneamente inutilizzabile, sovraccaricandolo di richieste Internet;</li>
+                                    <li>Un virus infetta un dispositivo; un virus è un programma malevolo che può compromettere sia il funzionamento di un dispositivo, che la privacy dell'utente (ad es., può rubare file e password). </li>
+                                    <li>Qualcuno cerca di rubare dati privati da un dispositivo; un furto di dati può portare alla diffusione di dati sensibili dell'utente (come credenziali o file privati), video di sorveglianza (provenienti da una telecamera di sicurezza), e persino la mappa di casa (se il bersaglio è il robot aspirapolvere).</li>
+                                    <li>Un hacker entra in maniera illecita nella rete o in un dispositivo; un utente non autorizzato può infatti provare ad accedere ad un dispositivo con lo scopo di danneggiarlo o rubare dati. </li>
+                                    <li>Ci sono possibili minacce provenienti dall'esterno della rete; questo può indicare tentativi di attacco o di accesso alla rete, come ad esempio una scansione della rete in cerca di vulnerabilità e punti di accesso.</li>
+                                    <li>Si verificano connessioni sospette all'interno della rete, oppure attività sospetta (es., ad orari insoliti).</li>
+                                </ol>
                             </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_8_3" type="radio" value="Not sure" name="cyber_9"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_8_3"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Non so</label>
+                            <div class="my-5">Oltre a rilevare questi eventuali attacchi, Alexa ora può anche permetterti di proteggerti da tali attacchi in diverse maniere:
+                                <ul>
+                                    <li>&#x2022; Mandarti notifiche del possibile pericolo (sullo smartphone, SMS, e-mail, etc.);</li>
+                                    <li>&#x2022; Chiederti di cambiare le credenziali per accedere ad un dispositivo;</li>
+                                    <li>&#x2022; Bloccare eventuali connessioni sospette, chiudere i punti di accesso del router non essenziali;</li>
+                                    <li>&#x2022; Creare copie sicure dei dati di un dispositivo;</li>
+                                    <li>&#x2022; Isolare o spegnere del tutto un dispositivo.</li>
+                                </ul>
                             </div>
-                        </div>
-                        <div class="my-8">
-                            <p class="font-bold pb-1">
-                                Che genere di rischio di sicurezza può essere minimizzato utilizzando una VPN (Virtual Private Network)
-                            </p>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_9_1" type="radio" value="Use of insecure Wi-Fi networks" name="cyber_10"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_9_1"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Uso di reti Wi-Fi non sicure</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_9_2" type="radio" value="Key-logging" name="cyber_10"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_9_2"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Key-logging (registrazione della tastiera)</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_9_3" type="radio" value="De-anonymization by network operators"
-                                       name="cyber_10"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_9_3"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">De-anonimizzazione da parte di operatori di rete</label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_9_4" type="radio" value="Phishing attacks" name="cyber_10"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_9_4"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Attacchi di phishing
-                                </label>
-                            </div>
-                            <div
-                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_9_5" type="radio" value="Not sure" name="cyber_10"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="cb_9_5"
-                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Non so
-                                </label>
+                            <div>
+                                Ora ti porremo delle domande a cui ti chiediamo di rispondere in maniera creativa. Ci teniamo a ricordarti che non esistono risposte giuste o sbagliate, perciò rispondi semplicemente nella maniera che ti sembra più sensata!
                             </div>
                         </div>
                     </div>
+                    <!-- SECTION 2 -->
+                    <div x-show="step === 2" id="section-2" class="text-xl text-left pt-3">
+                        <p class="text-2xl w-full text-center">2 su <span class="num_slides"></span></p>
+                        <div class="my-5">
+                            <div class="font-bold mb-5">Attacchi <i>DoS</i></div>
+                            <p class="pb-2">
+                                Alexa è in grado di riconoscere attacchi che possono limitare il funzionamento di un dispositivo.<br>
+                                Un criminale, infatti, può lanciare un attacco del genere (in gergo chiamato "DoS") per intasare un dispositivo con dati inutili e causarne un blocco temporaneo, rendendolo inutilizzabile.<br>
+                                Per proteggersi, si può intervenire, ad esempio, isolando il dispositivo, bloccandone le comunicazioni in entrata.<br>
+                                Una telecamera di sicurezza in casa di Marco potrebbe essere un bersaglio per malintenzionati con l'intento di violare il perimetro della casa.<br>
+                                - Come completeresti questa regola ECA per proteggere le telecamere di sicurezza da attacchi simili?
+                            </p>
+                            <div class="my-4 text-center font-bold text-xl">
+                                <span>"Alexa, SE rilevi un attacco alle telecamere di sicurezza [...]"</span>
+                            </div>
+                            <textarea rows="10" name="question_1" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
+                            <p class="pt-12 pb-2">
+                                <span>- Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
+                            </p>
+                            <textarea rows="3" name="question_1_rationale" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
+
+                            <p class="pt-12 pb-2">
+                                <span>- (Opzionale) Riguardo questo attacco, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
+                                    Motiva eventualmente la tua risposta.
+                                </span>
+                            </p>
+                            <textarea rows="3" name="question_1_alt" placeholder="Scrivi qui..."
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
+                        </div>
+                    </div>
+                    <!-- SECTION 3 -->
+                    <div x-show="step === 3" id="section-3" class="text-xl text-left pt-3">
+                        <p class="text-2xl w-full text-center">3 su <span class="num_slides"></span></p>
+                        <div class="my-5">
+                            <div class="font-bold mb-5">Protezione da Virus</div>
+                            <p class="pb-2">
+                                Un hacker potrebbe voler inserire del codice malevolo, come un virus, su un dispositivo nella smart home di Marco. Alexa è in grado di riconoscere eventuale codice malevolo all'interno della rete e può mettere in sicurezza i suoi dispositivi, ad esempio, mettendo in quarantena i file infetti.
+                                <br>
+                                Cosa potrebbe dire Marco ad Alexa per proteggere la sua smart TV da virus? Completa la seguente regola ECA:
+                            </p>
+                            <div class="my-4 text-center font-bold text-xl">
+                                <span>"Alexa, SE [...] ALLORA metti in quarantena i file sulla smart TV e fai una copia di backup dei dati"</span>
+                            </div>
+                            <textarea rows="10" name="question_2" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
+
+                            <p class="pt-12 pb-2">
+                                <span>- Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
+                            </p>
+                            <textarea rows="3" name="question_2_rationale" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
+
+                            <p class="pt-12 pb-2">
+                                <span>- (Opzionale) Riguardo questo attacco, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
+                                    Motiva eventualmente la tua risposta.
+                                </span>
+                            </p>
+                            <textarea rows="3" name="question_2_alt" placeholder="Scrivi qui..."
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
+                        </div>
+                    </div>
+                    <!-- SECTION 4 -->
+                    <div x-show="step === 4" id="section-4" class="text-xl text-left pt-3">
+                        <p class="text-2xl w-full text-center">4 su <span class="num_slides"></span></p>
+                        <div class="my-5">
+                            <div class="font-bold mb-5">Furti di dati</div>
+                            <p class="pb-2">
+                                Alexa può analizzare le comunicazioni nella rete e capire se ci sono possibili furti di dati. Ad esempio, si può accorgere che le telecamere di sicurezza stanno inviando i loro dati verso un dispositivo sconosciuto; questo significherebbe che qualcuno di non autorizzato riesce a visualizzare i video di sorveglianza delle telecamere di Marco.
+                                <br>
+                                Un altro dispositivo che un hacker potrebbe attaccare è il robot aspirapolvere: infatti, questo dispositivo raccoglie dati che possono essere utilizzati per ricostruire una mappa della casa di Marco ed eventualmente aiutare un ladro a pianificare furti con scasso.
+                                <br>
+                                - Come completeresti la seguente regola ECA per proteggere il robot aspirapolvere da furti di dati?
+                            </p>
+                            <div class="my-4 text-center font-bold text-xl">
+                                <span>"Alexa, SE rilevi un furto di dati dal robot aspirapolvere, ALLORA [...]"</span>
+                            </div>
+                            <textarea rows="10" name="question_3" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
+
+                            <p class="pt-12 pb-2">
+                                <span>- Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
+                            </p>
+                            <textarea rows="3" name="question_3_rationale" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
+
+                            <p class="pt-12 pb-2">
+                                <span>- (Opzionale) Riguardo questo attacco, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
+                                    Motiva eventualmente la tua risposta.
+                                </span>
+                            </p>
+                            <textarea rows="3" name="question_3_alt" placeholder="Scrivi qui..."
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 5 -->
+                    <div x-show="step === 5" id="section-5" class="text-xl text-left pt-3">
+                        <p class="text-2xl w-full text-center">5 su <span class="num_slides"></span></p>
+                        <div class="my-5">
+                            <div class="font-bold mb-5">Accessi illeciti</div>
+                            <p class="pb-2">
+                                Un malintenzionato potrebbe tentare di entrare in uno dei dispositivi smart di Marco provando ad accedervi provando svariate combinazioni di username e password. Alexa può rilevare questi tentativi di accesso illeciti ed impedire che un hacker riesca a trovare la combinazione giusta di username e password per accedere ai dati di un dispositivo.
+                                <br/>Un modo per proteggersi da un attacco simile potrebbe essere bloccare i tentativi di autenticazione dopo che un utente sbaglia le credenziali tante volte di fila.
+                                <br/>- Cosa potrebbe dire Marco ad Alexa per proteggersi da attacchi del genere? Prova a definire una regola ECA (o anche più, se lo ritieni necessario):
+                            </p>
+                            <div class="my-4 text-center font-bold text-xl">
+                                <span>"Alexa, SE [...] ALLORA [...]"</span>
+                            </div>
+                            <textarea rows="10" name="question_4" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
+
+                            <p class="pt-12 pb-2">
+                                <span>- Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
+                            </p>
+                            <textarea rows="3" name="question_4_rationale" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
+
+                            <p class="pt-12 pb-2">
+                                <span>- (Opzionale) Riguardo questo attacco, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
+                                    Motiva eventualmente la tua risposta.
+                                </span>
+                            </p>
+                            <textarea rows="3" name="question_4_alt" placeholder="Scrivi qui..."
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 6 -->
+                    <div x-show="step === 6" id="section-6" class="text-xl text-left pt-3">
+                        <p class="text-2xl w-full text-center">6 su <span class="num_slides"></span></p>
+                        <div class="my-5">
+                            <div class="font-bold mb-5">Scansione della rete</div>
+                            <p class="pb-2">
+                                 Il router di casa garantisce a Marco una connessione ad Internet, ma potrebbe sfortunatamente avere qualche vulnerabilità dovuta ad una configurazione non corretta. Qualcuno, probabilmente un hacker, potrebbe scansionare la rete di casa in cerca di punti di accesso.
+                                <br/>Alexa è in grado di riconoscere scansioni di questo tipo e può mettere in sicurezza la rete di Marco chiudendo, ad esempio, i punti di accesso del router non essenziali per l'accesso ad Internet.
+                                <br/>- Cosa può dire Marco ad Alexa per proteggersi da attacchi del genere? Prova a definire una regola ECA (o anche più, se lo ritieni necessario):
+                            </p>
+                            <div class="my-4 text-center font-bold text-xl">
+                                <span>"Alexa, SE [...] ALLORA [...]"</span>
+                            </div>
+                            <textarea rows="10" name="question_5" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
+
+                            <p class="pt-12 pb-2">
+                                <span>- Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
+                            </p>
+                            <textarea rows="3" name="question_5_rationale" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
+
+                            <p class="pt-12 pb-2">
+                                <span>- (Opzionale) Riguardo questo attacco, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
+                                    Motiva eventualmente la tua risposta.
+                                </span>
+                            </p>
+                            <textarea rows="3" name="question_5_alt" placeholder="Scrivi qui..."
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 7 -->
+                    <div x-show="step === 7" id="section-7" class="text-xl text-left pt-3">
+                        <p class="text-2xl w-full text-center">7 su <span class="num_slides"></span></p>
+                        <div class="my-5">
+                            <div class="font-bold mb-5">Attività insolite</div>
+                            <p class="pb-2">
+                                Marco è solito andare a letto entro mezzanotte, e quindi non controlla mai i suoi dispositivi dalle 00:00 alle 07:30, orario in cui si sveglia abitualmente. Alexa è in grado di riconoscere attività insolite sui dispositivi di casa: ad esempio, un accesso alle finestre per aprirle in piena notte, mentre Marco dorme (e per giunta in inverno!), può essere considerata un'attività sospetta e in quanto tale potenzialmente pericolosa.
+                                <br/>- Cosa può dire Marco ad Alexa per proteggersi da attacchi del genere? Prova a definire una regola ECA (o anche più, se lo ritieni necessario):
+                            </p>
+                            <div class="my-4 text-center font-bold text-xl">
+                                <span>"Alexa, SE [...] ALLORA [...]"</span>
+                            </div>
+                            <textarea rows="10" name="question_6" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
+
+                            <p class="pt-12 pb-2">
+                                <span>- Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
+                            </p>
+                            <textarea rows="3" name="question_6_rationale" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
+
+                            <p class="pt-12 pb-2">
+                                <span>- (Opzionale) Riguardo questo attacco, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
+                                    Motiva eventualmente la tua risposta.
+                                </span>
+                            </p>
+                            <textarea rows="3" name="question_6_alt" placeholder="Scrivi qui..."
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Loading section -->
+                    <div x-show="step === 8" class="pt-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor" class="w-12 h-12 mx-auto stroke-green-500 animate-spin">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/>
+                        </svg>
+                        <div class="text-center text-green-500 font-bold my-3 text-xl w-full">
+                            Caricamento
+                        </div>
+                    </div>
                     <div class="text-center mt-14 mb-10">
-                        <div x-show="step !== 6" class="flex flex-row w-full" :class="{'space-x-6' : step > 0}">
-                            <!--<div x-show="step > 0">
+                        <div x-show="step !== 8" class="flex flex-wrap w-full" :class="{'space-x-6' : step > 0}">
+                            <div x-show="step > 0">
                                 <button type="button" id="back" @click="previous()"
-                                        class="py-3 w-64 text-lg text-black bg-gray-300 hover:bg-gray-400 rounded-2xl">
-                                    Previous
+                                        class="shrink py-3 w-64 text-lg text-black bg-gray-300 hover:bg-gray-400 rounded-2xl">
+                                    Indietro
                                 </button>
-                            </div>-->
+                            </div>
                             <div x-show="step > 0" class="flex-1"></div>
                             <div :class="{'flex-1 w-full': step === 0}">
                                 <button type="button" id="next" @click="next()"
-                                        :class="{'w-full' : step === 0, 'w-64' : step > 0}"
-                                        class="py-3 text-lg text-white bg-blue-500 hover:bg-blue-800 rounded-2xl">Successivo
+                                        :class="{'flex-1 w-full' : step === 0, 'flex-initial w-64' : step > 0}"
+                                        class=" py-3 text-lg text-white bg-blue-500 hover:bg-blue-800 rounded-2xl">Avanti
                                 </button>
                             </div>
                         </div>
@@ -564,125 +348,80 @@
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
-            let last_section = 3
+            let alert_modal = $("#alert")
+            let form_html = $("#form")
+            let next_btn = $("#next")
+
             function load() {
-                $("#form").show();
+                let last_section = 8
+                $(".num_slides").each (function(){
+                    $(this).html(last_section-1)
+                })
+                form_html.show();
                 return {
                     step: 0,
                     previous(e) {
                         if (this.step > 0)
                             this.step--;
 
-                        $("#alert").hide();
+                        alert_modal.hide();
 
                         $(window).scrollTop(0);
 
-                        if (this.step < 5) {
-                            $("#next").text("Next");
+                        if (this.step < last_section-1) {
+                            next_btn.text("Successivo");
                         }
                     },
                     next(e) {
-                        let check = true;
-                        switch (this.step) {
-                            case 1:
-                                $("#section-1 :input").each(function () {
-                                    check = ($(this).val() != "" && check);
-                                    if ($(this).val() == "") {
-                                        $(this).addClass('border-red-500');
-                                        $(this).change(_ => $(this).removeClass('border-red-500'));
-                                    } else
-                                        $(this).removeClass('border-red-500');
-                                });
-                                break;
-                            case 2:
-                                for (let i = 1; i <= 10; i++) {
-                                    let input = 'input[name=cyber_' + i + ']';
-                                    if (!$(input).is(':checked')) {
-                                        check = false;
-                                        $(input).parent().removeClass('border-gray-300');
-                                        $(input).parent().addClass('border-red-500');
-                                        $(input).change(_ => {
-                                            $(input).parent().removeClass('border-red-500');
-                                            $(input).parent().addClass('border-gray-300');
-                                        });
-                                    } else
-                                        check = (check && true);
+                        let check_input = function (field) {
+                            let min_length = 20  // minimo 20 caratteri nelle risposte
+                            let check = true
+                            if (field !== undefined) {
+                                field.placeholder = `Scrivi qui... (almeno ${min_length} caratteri)`
+                                let answer = field.value
+                                if (answer === "" || (answer !== undefined && answer.length < min_length)) {
+                                    check = false;
+                                    field.classList.remove('border-gray-300');
+                                    field.classList.add('border-red-500');
+                                    field.onchange = () => {
+                                        field.classList.remove('border-red-500');
+                                        field.classList.add('border-gray-300');
+                                    }
+                                } else {
+                                    check = (check && true)
                                 }
-                                break;
-                            case 4:
-                                if (!$("input[name=have_read_warning]").is(':checked')) {
-                                    check = false;
-                                    $("input[name=have_read_warning]").removeClass('border-gray-300');
-                                    $("input[name=have_read_warning]").addClass('border-red-500');
-                                    $('input[name=have_read_warning]').change(_ => {
-                                        $("input[name=have_read_warning]").removeClass('border-red-500');
-                                        $("input[name=have_read_warning]").addClass('border-gray-300');
-                                    });
-                                } else
-                                    check = (check && true);
-                                break;
-                            case 5:
-                                if (!$("input[name=gender]").is(':checked')) {
-                                    check = false;
-                                    $("input[name=gender]").removeClass('border-gray-300');
-                                    $("input[name=gender]").addClass('border-red-500');
-                                    $('input[name=gender]').change(_ => {
-                                        $("input[name=gender]").removeClass('border-red-500');
-                                        $("input[name=gender]").addClass('border-gray-300');
-                                    });
-                                } else
-                                    check = (check && true);
-
-                                if ($('input[name=age]').val() < 14 || $('input[name=age]').val() > 100) {
-                                    check = false;
-                                    $("input[name=age]").removeClass('border-gray-300');
-                                    $("input[name=age]").addClass('border-red-500');
-                                    $('input[name=age]').change(_ => {
-                                        $("input[name=age]").removeClass('border-red-500');
-                                        $("input[name=age]").addClass('border-gray-300');
-                                    });
-                                } else
-                                    check = (check && true);
-
-                                if ($('input[name=num_hours_day_internet]').val() < 0) {
-                                    check = false;
-                                    $("input[name=num_hours_day_internet]").removeClass('border-gray-300');
-                                    $("input[name=num_hours_day_internet]").addClass('border-red-500');
-                                    $('input[name=num_hours_day_internet]').change(_ => {
-                                        $("input[name=num_hours_day_internet]").removeClass('border-red-500');
-                                        $("input[name=num_hours_day_internet]").addClass('border-gray-300');
-                                    });
-                                } else
-                                    check = (check && true);
-
-                                break;
+                            }
+                            return check
                         }
 
-                        if (!check) {
-                            $("#alert").show();
-                            $("#alert").fadeTo("fast", 1, function () {
+                        let input_field = $('textarea[name=question_' + (this.step-1) + ']')[0]
+                        let input_field_rationale = $('textarea[name=question_' + (this.step-1) + '_rationale]')[0]
+
+                        let check = check_input(input_field) & check_input(input_field_rationale)
+                        if (! check) {
+                            alert_modal.show();
+                            alert_modal.fadeTo("fast", 1, function () {
                                 setTimeout(function () {
-                                    $("#alert").fadeTo("fast", 0, function () {
-                                        $("#alert").hide();
+                                    alert_modal.fadeTo("fast", 0, function () {
+                                        alert_modal.hide();
                                     });
                                 }, 10000);
                             });
-
                         }
 
-                        if (this.step !== last_section && check) { //!==5
+                        if (this.step !== last_section && check) {
                             this.step++;
-                            $("#alert").hide();
+                            alert_modal.hide();
                         }
 
                         $(window).scrollTop(0);
 
                         if (this.step === last_section-1) {
-                            $("#next").text("Sezione successiva");
+                            next_btn.text("Sezione successiva");
                         }
 
                         if (this.step === last_section) {
-                            $("#form").submit();
+                            form_html.submit();
                         }
                     }
                 }

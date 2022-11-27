@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Questionnaire;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -62,12 +63,17 @@ class User extends Authenticatable
 
     public function questionnaire()
     {
-        return $this->hasMany(UserQuestionnaire::class);
+        return $this->hasOne(UserQuestionnaire::class);
     }
 
-    public function followUpQuestionnaire()
+    public function advancedQuestionnaire()
     {
-        return $this->hasOne(FollowUpQuestionnaire::class);
+        return $this->hasOne(AdvancedQuestionnaire::class);
+    }
+
+    public function skillsQuestionnaire()
+    {
+        return $this->hasOne(SkillsQuestionnaire::class);
     }
 
     public function logs()

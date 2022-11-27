@@ -8,94 +8,35 @@
             </div>
             <div class="pt-12 px-12 m-10 bg-white rounded-2xl shadow-xl z-20l" style="max-width: 90%">
                 <form action="{{ Request::url() }}" method="POST" x-data="load()" id="form" style="display:none;">
-                    @csrf
-                    <!--- SECTION 0 --->
-                    <div x-show="step === 0" id="section-0" class="text-xl max-w-2xl text-left pt-3">
-                        <div>
-                            <h1 class="text-3xl font-bold text-center mb-4 cursor-pointer">
-                                Introduzione: Regole <br>Evento-Condizione-Azione (ECA)</h1>
-                        </div>
-                        <p>
-                            Per specificare comportamenti personalizzati, le cosiddette regole "ECA" (Event Condition Action) sono le più utilizzate all'interno di software per la domotica, data la loro espressività e al contempo semplicità per gli utenti.&nbsp;
-                        </p>
-                        <div class="mt-3">Una regola ECA, come il nome suggerisce, è composta da&nbsp;<b>3 parti</b>:</div>
-                        <div>
-                            <ol>
-                                <li>&#x2022; <b>EVENTO </b>- che cosa deve succedere per far attivare la regola?</li>
-                                <li>&#x2022; <b>CONDIZIONE </b>- in che stato si deve trovare il sistema affinché la regola si attivi?</li>
-                                <li>&#x2022; <b>AZIONE </b>- cosa succederà in seguito all'attivazione della regola?</li>
-                            </ol>
-                        </div>
-                        <div class="mt-3">Possiamo differenziare tra EVENTO e CONDIZIONE semplicemente pensando all'aspetto del <i><b>tempo</b>:</i></div>
-                        <div>
-                            <ul>
-                                <li>- Un EVENTO si verifica in uno specifico momento, <br>es.:&nbsp;<i>Comincia a piovere, </i>oppure&nbsp;<i>Suonano al campanello</i></li>
-                                <li>- Una CONDIZIONE è uno stato dell'ambiente che persiste per un certo periodo di tempo, <br>es.: <i>Sta piovendo, </i>oppure&nbsp;<i>Qualcuno è alla porta</i></li>
-                            </ul>
-                        </div>
-                        <br>
-                        <div class="mt-3">
-                            <div>Una regola ECA può essere scritta sostanzialmente come:&nbsp;</div>
-                            <div><i>"SE succede qualcosa (E una specifica condizione è vera), ALLORA fai qualcosa"</i></div>
-                        </div>
-                        <div><i><br></i></div>
-                        <div>Per capire meglio, prendiamo un esempio di regola ECA per evitare sprechi di elettricità in casa:</div>
-                        <div>
-                            <ol class="text-center mt-2">
-                                <li><b>SE </b><i>esco dalla cucina</i></li>
-                                <li><b>E </b><i>non è rimasto nessun altro in cucina</i></li>
-                                <li><b>ALLORA </b><i>spegni la luce della cucina&nbsp;</i>&nbsp;</li>
-                            </ol>
-                        </div>
-                        <div class="mt-3">Possiamo anche pensare a regole che non comprendano il punto 2, ovvero si attivano sempre in seguito a uno specifico evento, incondizionatamente:</div>
-                        <div>
-                            <ol class="text-center mt-2">
-                                <li><b>SE </b><i>ho una emergenza medica</i></li>
-                                <li><b>ALLORA </b><i>chiama i soccorsi</i></li>
-                            </ol>
-                            <div><br></div>
-                        </div>
-                        <div class="mt-3">Infine, possiamo anche voler definire comportamenti più complessi nella nostra smart home, comprendenti <u><i>più </i>condizioni</u> e/o<u> <i>più </i>azioni</u>&nbsp;come ad esempio un sistema per aprire le finestre automaticamente al nostro risveglio:</div>
-                        <div>
-                            <ol class="text-center mt-2">
-                                <li><b>SE </b><i>mi sveglio</i></li>
-                                <li> <b>E </b><i>è mattina, </i>e<i> non sta piovendo, </i>e<i> la temperatura è maggiore a 20°C</i></li>
-                                <li> <b>ALLORA </b><i>apri le finestre della camera, </i>e<i> alza la tapparella della camera al 75%</i></li>
-                            </ol>
-                            <div><br></div>
-                        </div>
-                    </div>
+                @csrf
                     <!-- SECTION 1 -->
-                    <div x-show="step === 1" id="section-1" class="text-xl text-left pt-3">
-                        <div><p class="w-full text-center">1 su <span class="num_slides"></span></p></div>
+                    <div x-show="step === 0" id="section-0" class="text-xl text-left pt-3">
                         <div>
-                            <p class="pt-3">
-                               Ora ti chiediamo di immedesimarti in Alice, una programmatrice informatica con la passione per la domotica.&nbsp;
+                            <p class="pt-4">
+                                Data la tua conoscenza in ambito di sicurezza informatica, vorremmo porti qualche altra domanda un po' più tecnica. Se pensi di non saper rispondere ad una domanda, lasciala pure in bianco, oppure scrivi "Non so".
                             </p>
-                            <div>
-                                Alice lavora per un'importante azienda informatica e, perciò, rischia giornalmente di essere vittima di attacchi informatici da parte di eventuali criminali con l'intento di danneggiare la sua azienda.
-                                <div>Se da un lato i dispositivi intelligenti all'interno di casa sua le permettono di avere più comodità, dall'altro la espongono maggiormente ad attacchi.&nbsp;</div>
-                                <div>Perciò, vuole mettere in sicurezza la sua casa da possibili attacchi informatici ed acquista <i class="font-bold">Intrusion Defender</i>,
-                                    un <span>dispositivo di sicurezza in grado di monitorare la rete di casa e proteggerla da minacce esterne.&nbsp;</span></div>
-                                <div><i>Intrusion&nbsp;</i><i>Defender </i>è in grado di monitorare la rete al quale è collegato, ascoltando tutte le comunicazioni in entrata e in uscita da ciascun dispositivo. </div>
+                            <img style="float: right; max-width: 50%;" src="{{url('assets/img/ids.webp')}}">
+                            <div class="my-3">
+                                Per implementare i comportamenti di sicurezza descritti nella scorsa sezione, è necessario collegare ad Alexa un dispositivo di protezione in grado di monitorare la rete chiamato IDS (Intrusion Defender System).
                             </div>
+
                             <div class="my-5">
-                                In particolare è in grado di rilevare diversi tipi di attacchi ed eventi sospetti, come, ad esempio:
-                                <ul>
-                                    <li>&#x2022; Se un dispositivo è infetto da codice malevolo (es., virus, ransomware, etc.),</li>
-                                    <li>&#x2022; Se qualcuno sta cercando di rendere inutilizzabile un dispositivo con un attacco DoS (Denial of Service),</li>
-                                    <li>&#x2022; Se si verificano comunicazioni sospette all'interno della rete (es., presenza di connessione insolite),</li>
-                                    <li>&#x2022; Se si verificano comunicazioni sospette provenienti dall'esterno della rete (es., scansione delle porte),</li>
-                                    <li>&#x2022; Se c'è un tentativo di esfiltrazione di dati da uno dei dispositivi,</li>
-                                    <li>&#x2022; Se c'è un tentativo di autenticazione o un'autenticazione anomala su un dispositivo.</li>
-                                </ul>
+                                Come suggerito dalla sezione precedente, questo dispositivo è in grado di monitorare la rete al quale è collegato, ascoltando tutte le comunicazioni in entrata e in uscita da ciascun dispositivo. Entrando più nello specifico, è in grado di rilevare diversi tipi di attacchi ed eventi sospetti, come, ad esempio:
+                                <ol style="list-style: decimal; margin-left:1%; padding: 20px;">
+                                    <li>Se qualcuno sta cercando di rendere inutilizzabile un dispositivo con un attacco DoS (Denial of Service)
+                                    <li>Se un dispositivo è infetto da codice malevolo (es., virus, ransomware, etc.),
+                                    <li>Se c'è un tentativo di furto di dati da uno dei dispositivi,
+                                    <li>Se c'è un tentativo di autenticazione o un'autenticazione anomala su un dispositivo,
+                                    <li>Se si verificano comunicazioni sospette all'esterno della rete (es., scansione delle porte del router),
+                                    <li>Se si verificano comunicazioni sospette all'interno della rete (es., presenza di connessione insolite).</li>
+                                </ol>
                             </div>
-                            <div class="my-5">In risposta ad eventuali attacchi rilevati, <i>Intrusion Defender</i> permette di assumere misure difensive come, ad esempio:
+                            <div class="my-5">In risposta ad eventuali attacchi rilevati, Alexa può assumere misure difensive come:
                                 <ul>
+                                    <li>&#x2022; Gestire il traffico entrante e uscente, configurando un firewall a livello di rete (es., bloccare connessioni sospette, chiudere porte del router, etc.),</li>
                                     <li>&#x2022; Notificare l'utente del possibile pericolo tramite diversi canali (es., SMS, notifica su desktop, etc.),</li>
-                                    <li>&#x2022; Chiedere all'utente di cambiare le credenziali di accesso ad un dispositivo,&nbsp;</li>
-                                    <li>&#x2022; Gestire il traffico entrante e uscente, configurando un firewall a livello di rete (es., bloccare IP, chiudere porte del router, etc.),</li>
                                     <li>&#x2022; Cambiare parametri di configurazione specifici per ciascun dispositivo,</li>
+                                    <li>&#x2022; Chiedere all'utente di cambiare le credenziali di accesso ad un dispositivo, </li>
                                     <li>&#x2022; Gestire backup dei dati sui dispositivi,</li>
                                     <li>&#x2022; Isolare o spegnere dispositivi della rete.</li>
                                 </ul>
@@ -103,46 +44,103 @@
                         </div>
                     </div>
                     <!-- SECTION 2 -->
-                    <div x-show="step === 2" id="section-2" class="text-xl text-left pt-3">
-                        <p class="text-2xl w-full text-center">2 su <span class="num_slides"></span></p>
+                    <div x-show="step === 1" id="section-1" class="text-xl text-left pt-3">
+                        <p class="text-2xl w-full text-center">1 su <span class="num_slides"></span></p>
                         <div class="my-5">
-                            <p class="pb-3">Qualcuno, come un hacker, potrebbe scansionare la tua rete in cerca di punti di accesso (es. porte del router).
-                                <br>Il dispositivo di sicurezza Intrusion Defender è in grado di riconoscere eventuali scansioni e può essere usato per mettere in sicurezza la rete (es. bloccando le porte del router non essenziali).
-                                <br><span class="font-bold">Come vorresti configurare il sistema per proteggerti da un attacco del genere?</span>
-                                <br>Prova a definire una regola ECA per proteggerti da eventuali attacchi simili. Sentiti libero di utilizzare il livello di dettaglio che ti sembra più adeguato.
+                            <div class="font-bold mb-5"> <i>Data Exfiltration</i></div>
+                            <p class="pb-2">
+                                Alexa, tramite l'IDS può rilevare traffico sospetto entrante o uscente dalla rete o da un dispositivo in particolare. Questo potrebbe essere sintomo di attività in background che ruba i dati da un dispositivo (data exfiltration).<br>
+                                Questo può avvenire osservando traffico insolito, ad esempio che avviene ad orari sospetti, da/verso località sospette, che riguarda grosse quantità di dati, etc. <br/>
+                                Un dispositivo che un hacker potrebbe attaccare è lo smartwatch, in quanto carico di dati sensibili, che possono fornire informazioni molto private, come sapere quando chi lo indossa sta dormendo oppure no. <br/>
+                                - Come completeresti la seguente regola ECA per proteggere lo smartwatch da furti di dati?
                             </p>
+                            <div class="my-4 text-center font-bold text-xl">
+                                <span>"Alexa, SE [...] ALLORA isola lo smartwatch e mandami una notifica sullo smartwatch."</span>
+                            </div>
                             <textarea rows="10" name="question_1" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
+
+                            <p class="pt-12 pb-2">
+                                <span>- Motiva la tua risposta precedente, cercando di spiegare il tuo ragionamento:</span>
+                            </p>
+                            <textarea rows="3" name="question_1_rationale" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
+
+                            <p class="pt-12 pb-2">
+                                <span>- (Opzionale) Riguardo questo attacco, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
+                                    Motiva eventualmente la tua risposta.
+                                </span>
+                            </p>
+                            <textarea rows="3" name="question_1_alt" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
                         </div>
                     </div>
                     <!-- SECTION 3 -->
-                    <div x-show="step === 3" id="section-3">
-                        <p class="text-2xl w-full text-center">3 su <span class="num_slides"></span></p>
+                    <div x-show="step === 2" id="section-2" class="text-xl text-left pt-3">
+                        <p class="text-2xl w-full text-center">2 su <span class="num_slides"></span></p>
                         <div class="my-5">
-                            <p class="pb-3">Qualcuno (es., un hacker) potrebbe scansionare la tua rete in cerca di punti di accesso (es. porte del router).
-                                <br>Il dispositivo di sicurezza Intrusion Defender è in grado di riconoscere eventuali scansioni e può essere usato per mettere in sicurezza la rete (es. bloccando le porte del router non essenziali).
-                                <br><span class="font-bold">Come vorresti configurare il sistema per proteggerti da un attacco del genere?</span>
-                                <br>Prova a definire una regola ECA per proteggerti da eventuali attacchi simili. Sentiti libero di utilizzare il livello di dettaglio che ti sembra più adeguato.
+                            <div class="font-bold mb-5">Attività sospetta su una porta</div>
+                            <p class="pb-2">
+                                Alexa è in grado di riconoscere attività sospetta sulla rete. Ad esempio, un criminale potrebbe cercare di eseguire attacchi sfruttando una porta del router aperta, come la porta 22, utilizzata comunemente per il servizio SSH.<br>
+                                Per proteggersi da un attacco del genere si può intervenire, ad esempio, chiudendo la porta 22 ed impostando una porta non standard (la 2222) per il servizio SSH.<br/>
+                                - Come completeresti questa regola ECA per proteggerti da un attacco del genere?
                             </p>
-                            <textarea rows="10" name="explanation_feedback" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <div class="my-4 text-center font-bold text-xl">
+                                <span>"Alexa, SE [...] <br/> ALLORA chiudi la porta 22 del router, e imposta la porta 2222 per il servizio SSH"</span>
+                            </div>
+                            <textarea rows="10" name="question_2" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
+
+                            <p class="pt-12 pb-2">
+                                <span>- Motiva la tua risposta precedente, cercando di spiegare il tuo ragionamento:</span>
+                            </p>
+                            <textarea rows="3" name="question_2_rationale" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
+
+                            <p class="pt-12 pb-2">
+                                <span>- (Opzionale) Riguardo questo attacco, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
+                                    Motiva eventualmente la tua risposta.
+                                </span>
+                            </p>
+                            <textarea rows="3" name="question_2_alt" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
                         </div>
                     </div>
-                    <!-- SECTION 4 -->
-                    <div x-show="step === 3" id="section-3">
+                    <!-- SECTION 3 -->
+                    <div x-show="step === 3" id="section-3" class="text-xl text-left pt-3">
                         <p class="text-2xl w-full text-center">3 su <span class="num_slides"></span></p>
                         <div class="my-5">
-                            <p class="pb-3">Qualcuno (es., un hacker) potrebbe scansionare la tua rete in cerca di punti di accesso (es. porte del router).
-                                <br>Il dispositivo di sicurezza Intrusion Defender è in grado di riconoscere eventuali scansioni e può essere usato per mettere in sicurezza la rete (es. bloccando le porte del router non essenziali).
-                                <br><span class="font-bold">Come vorresti configurare il sistema per proteggerti da un attacco del genere?</span>
-                                <br>Prova a definire una regola ECA per proteggerti da eventuali attacchi simili. Sentiti libero di utilizzare il livello di dettaglio che ti sembra più adeguato.
+                            <div class="font-bold mb-5">Autenticazione illecita/Priviledge escalation</div>
+                            <p class="pb-2">
+                                Un malintenzionato potrebbe tentare di autenticarsi ed entrare in uno dei tuoi dispositivi tramite utilizzo di attacchi a forza bruta, oppure tramite priviledge escalation. Alexa può rilevare tentativi di accesso illeciti, oppure attività di autenticazione sospetta (es., rilevando connessioni da IP sconosciuti); in particolare, può riconoscere attività di login come amministratore. <br/>
+                                Per proteggersi da un attacco del genere si può, ad esempio, cambiare la password di accesso ad un dispositivo. <br>
+                                - Cosa diresti al sistema per proteggerti da attacchi del genere?
+                                <br/> Prova a definire una o più regole ECA per proteggerti da attacchi simili. Sentiti libero di utilizzare il livello di dettaglio che ti sembra più efficace.
                             </p>
-                            <textarea rows="10" name="explanation_feedback" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <div class="my-4 text-center font-bold text-xl">
+                                <span>"Alexa, [...]"</span>
+                            </div>
+                            <textarea rows="10" name="question_3" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
+
+                            <p class="pt-12 pb-2">
+                                <span>- Motiva la tua risposta precedente, cercando di spiegare il tuo ragionamento:</span>
+                            </p>
+                            <textarea rows="3" name="question_3_rationale" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
+
+                            <p class="pt-12 pb-2">
+                                <span>- (Opzionale) Riguardo questo attacco, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
+                                    Motiva eventualmente la tua risposta.
+                                </span>
+                            </p>
+                            <textarea rows="3" name="question_3_alt" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
                         </div>
                     </div>
+
                     <!-- Loading section -->
-                    <div x-show="step === 6" class="pt-1">
+                    <div x-show="step === 4" class="pt-1">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                              stroke="currentColor" class="w-12 h-12 mx-auto stroke-green-500 animate-spin">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -153,7 +151,7 @@
                         </div>
                     </div>
                     <div class="text-center mt-14 mb-10">
-                        <div x-show="step !== 6" class="flex flex-wrap w-full" :class="{'space-x-6' : step > 0}">
+                        <div x-show="step !== 4" class="flex flex-wrap w-full" :class="{'space-x-6' : step > 0}">
                             <div x-show="step > 0">
                                 <button type="button" id="back" @click="previous()"
                                         class="shrink py-3 w-64 text-lg text-black bg-gray-300 hover:bg-gray-400 rounded-2xl">
@@ -178,12 +176,15 @@
             let form_html = $("#form")
             let next_btn = $("#next")
 
-            let min_length = 20  // minimo 20 caratteri nelle risposte
-
+            /*window.onbeforeunload = function(event)
+            {
+                return confirm("Confirm refresh");
+            };
+            */
             function load() {
-                let last_section = 6
+                let last_section = 4
                 $(".num_slides").each (function(){
-                    $(this).html(last_section)
+                    $(this).html(last_section-1)
                 })
                 form_html.show();
                 return {
@@ -196,39 +197,13 @@
 
                         $(window).scrollTop(0);
 
-                        if (this.step < 5) {
+                        if (this.step < last_section-1) {
                             next_btn.text("Successivo");
                         }
                     },
                     next(e) {
-                        let check = true;
-                        let input_field = $('textarea[name=question_' + (this.step-1) + ']')[0]
-                        if (input_field !== undefined) {
-                            input_field.placeholder = `Scrivi qui... (almeno ${min_length} caratteri)`
-                            let answer = input_field.value
-                            console.log(answer)
-                            if (answer === "" || (answer !== undefined && answer.length < min_length)) {
-                                check = false;
-                                input_field.classList.remove('border-gray-300');
-                                input_field.classList.add('border-red-500');
-                                input_field.onchange = () => {
-                                    input_field.classList.remove('border-red-500');
-                                    input_field.classList.add('border-gray-300');
-                                };
-                            } else check = (check && true)
-                        }
-                        if (!check) {
-                            alert_modal.show();
-                            alert_modal.fadeTo("fast", 1, function () {
-                                setTimeout(function () {
-                                    alert_modal.fadeTo("fast", 0, function () {
-                                        alert_modal.hide();
-                                    });
-                                }, 10000);
-                            });
-                        }
 
-                        if (this.step !== last_section && check) { //!==5
+                        if (this.step !== last_section) {
                             this.step++;
                             alert_modal.hide();
                         }

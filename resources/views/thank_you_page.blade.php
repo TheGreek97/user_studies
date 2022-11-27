@@ -10,9 +10,18 @@
                             <path stroke-linecap="round" stroke-linejoin="round"
                                   d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
-                        <div class="text-center font-bold my-3 text-3xl w-full">
-                            Thank you for taking the test!
+                        <div class="font-bold my-3 text-3xl w-full">
+                            Grazie per aver partecipato al test!
                         </div>
+                        <p>
+                            Ti ringraziamo davvero di cuore per la partecipazione allo studio e per averci dedicato il tuo tempo. Il tuo è un piccolo ma significativo contributo alla ricerca.
+                            <br><br>
+                            Ti ricordiamo che il tuo indirizzo e-mail non sarà riconducibile alle risposte che hai dato nel tuo questionario, né tantomeno nei risultati finali dello studio. Per qualsiasi informazione, contattateci all'indirizzo francesco.greco@uniba.it.
+                            <br><br>
+                            Arrivederci!<br>
+                            Il Team di IVU Lab
+
+                        </p>
                     </div>
                     <div class="text-center mt-10">
                         <div class="w-full">

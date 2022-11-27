@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FollowUpQuestionnaire;
+use App\Models\AdvancedQuestionnaire;
+use App\Models\SkillsQuestionnaire;
 use App\Models\User;
 use App\Models\UserQuestionnaire;
 use Illuminate\Http\Request;
@@ -11,81 +12,10 @@ use Illuminate\Support\Facades\DB;
 
 class Questionnaire extends Controller
 {
-    public function showQuestionnaire($id=0) {
-        $id = (int) $id;
-        return match ($id) {
-            0 => view('questionnaire_basic'),
-            1 => view('questionnaire_medium'),
-            2 => view('questionnaire_expert'),
-            default => view('questionnaire_basic')
-        };
-    }
 
-    public function levelQuestionnaire($id, Request $request)
+    public function store_skills_questionnaire(Request $request)
     {
-        $questionnaire = new UserQuestionnaire();
-        #TODO riempi campi
-        $questionnaire->user_id = Auth::id();
-        $questionnaire->save();
-        return redirect(route('show'));
-    }
-
-    public function showFollowUp()
-    {
-        return view('skillsquestionnaire');
-        /*
-        if (Auth::user()->followUpQuestionnaire != null) {
-            return redirect(route('thankyou'));
-        } elseif (count(DB::table('userquestionnaire')->where('user_id', Auth::id())->get()) < 10) {
-            return redirect(route('show', ['folder' => 'inbox']));
-        } else {
-            switch (Auth::user()->warning_type) {
-                case 'popup_email':
-                    $vendor_1 = "Bartolini";
-                    $vendor_2 = "Amazon";
-                    break;
-
-                case 'popup_link':
-                    $vendor_1 = "Poste Italiane";
-                    $vendor_2 = "TikTok";
-                    break;
-
-                case 'tooltip':
-                    $vendor_1 = "Trenitalia";
-                    $vendor_2 = "Facebook";
-                    break;
-
-                case 'browser_native':
-                    $vendor_1 = "Netflix";
-                    $vendor_2 = "Apple";
-                    break;
-
-                default:
-                    $vendor_1 = "";
-                    $vendor_2 = "";
-            }
-            return view('followupquestionnaire', ['vendor_1' => $vendor_1, 'vendor_2' => $vendor_2]);
-        }*/
-    }
-
-    public function storeFollowUp(Request $request)
-    {
-        $questionnaire = new FollowUpQuestionnaire();
-        /*$questionnaire->parts_email_suspicious = $request->parts_email_suspicious;
-        $questionnaire->know_email_1 = $request->know_email_1;
-        $questionnaire->know_email_2 = $request->know_email_2;
-        $questionnaire->explanation_feedback = $request->explanation_feedback;
-        $questionnaire->have_read_warning = $request->have_read_warning == "1";
-        $questionnaire->how_warning_useful_identifying_link = $request->how_warning_useful_identifying_link;
-        $questionnaire->how_annoying_warning_was = $request->how_annoying_warning_was;
-        $questionnaire->how_warning_perception_link = $request->how_warning_perception_link;
-        $questionnaire->how_evident_was_warning = $request->how_evident_was_warning;
-        $questionnaire->nasa_mental_demand = $request->nasa_mental_demand;
-        $questionnaire->nasa_physical_demand = $request->nasa_physical_demand;
-        $questionnaire->nasa_temporal_demand = $request->nasa_temporal_demand;
-        $questionnaire->nasa_performance = $request->nasa_performance;
-        $questionnaire->nasa_effort = $request->nasa_effort;
-        $questionnaire->nasa_frustration_level = $request->nasa_frustration_level;*/
+        $questionnaire = new SkillsQuestionnaire();
         $questionnaire->level_informatics = $request->level_informatics;
         $questionnaire->level_cybersecurity = $request->level_cybersecurity;
         $questionnaire->level_iot = $request->level_iot;
@@ -106,18 +36,82 @@ class Questionnaire extends Controller
         $user = Auth::user();
         $user->expertise = $expertise;
         $user->save();
-        return match ($expertise) {
-            'basic' => redirect(route('next_step', ['id' => 0])),
-            'medium' => redirect(route('next_step', ['id' => 1])),
-            'expert' => redirect(route('next_step', ['id' => 2])),
-            default => redirect(route('next_step', ['id' => 0])),
-        };
-        /*
-        $user->gender = $request->gender;
-        $user->age = $request->age;
-        $user->num_hours_day_internet = $request->num_hours_day_internet;
-        */
-#       return redirect(route('thankyou'));
+
+        return redirect(route('questionnaire'));
+    }
+
+    public function store_questionnaire(Request $request)
+    {
+        $questionnaire = new UserQuestionnaire();
+        $questionnaire->answer_1 = $request->question_1;
+        $questionnaire->answer_1_rationale = $request->question_1_rationale;
+        $questionnaire->answer_1_alt = $request->question_1_alt ?? "";
+
+        $questionnaire->answer_2 = $request->question_2;
+        $questionnaire->answer_2_rationale = $request->question_2_rationale;
+        $questionnaire->answer_2_alt = $request->question_2_alt ?? "";
+
+        $questionnaire->answer_3 = $request->question_3;
+        $questionnaire->answer_3_rationale = $request->question_3_rationale;
+        $questionnaire->answer_3_alt = $request->question_3_alt ?? "";
+
+        $questionnaire->answer_4 = $request->question_4;
+        $questionnaire->answer_4_rationale = $request->question_4_rationale;
+        $questionnaire->answer_4_alt = $request->question_4_alt ?? "";
+
+        $questionnaire->answer_5 = $request->question_5;
+        $questionnaire->answer_5_rationale = $request->question_5_rationale;
+        $questionnaire->answer_5_alt = $request->question_5_alt ?? "";
+
+        $questionnaire->answer_6 = $request->question_6;
+        $questionnaire->answer_6_rationale = $request->question_6_rationale;
+        $questionnaire->answer_6_alt = $request->question_6_alt ?? "";
+
+        $questionnaire->user_id = Auth::id();
+        $questionnaire->save();
+
+        return redirect(route('next_step'));
+    }
+
+    public function showFollowUp()
+    {
+        if ( Auth::user()->expertise === "expert") {
+            return redirect(route('advanced'));
+        } else {
+            return redirect(route("post_test"));
+        }
+    }
+
+    public function storeAdvanced(Request $request)
+    {
+        $questionnaire = new AdvancedQuestionnaire();
+        $questionnaire->answer_1 = $request->question_1;
+        $questionnaire->answer_1_rationale = $request->question_1_rationale;
+        $questionnaire->answer_1_alt = $request->question_1_alt ?? "";
+
+        $questionnaire->answer_2 = $request->question_2;
+        $questionnaire->answer_2_rationale = $request->question_2_rationale;
+        $questionnaire->answer_2_alt = $request->question_2_alt ?? "";
+
+        $questionnaire->answer_3 = $request->question_3;
+        $questionnaire->answer_3_rationale = $request->question_3_rationale;
+        $questionnaire->answer_3_alt = $request->question_3_alt ?? "";
+
+        $questionnaire->user_id = Auth::id();
+        $questionnaire->save();
+
+        return redirect(route('post_test'));
+    }
+
+    public function storeFinalComments(Request $request)
+    {
+        $questionnaire = Auth::user()->questionnaire;
+        $questionnaire->other_events = $request->other_events ?? "";
+        $questionnaire->other_actions = $request->other_actions ?? "";
+        //$questionnaire->preferred_level = $request->preference;
+        $questionnaire->alternatives = $request->alternatives ?? "";
+        $questionnaire->save();
+        return redirect(route('thankyou'));
     }
 
     private function computeExpertiseLevel($q){
@@ -160,11 +154,9 @@ class Questionnaire extends Controller
         }if ($q["level_iot"] > 3) {
             $score+=1;
         }
-        if ($score > 9) { // [10-13]
+        if ($score > 7) { // [8-13]
             $level = "expert";
-        } else if ($score > 4) { // [5-9]
-            $level = "medium";
-        } else { // [0-4]
+        } else { // [0-7]
             $level = "basic";
         }
         return $level;

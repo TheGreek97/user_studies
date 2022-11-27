@@ -19,8 +19,8 @@
 
                         <p class="text-xl max-w-2xl text-left pt-3">
                             Gentile partecipante, adesso ti faremo qualche domanda per capire il tuo livello di conoscenza riguardo argomenti che possono influenzare i risultati del test.
-                            Ti ricordiamo che il questionario non riporta il tuo nome. A maggior ragione, non c'è alcuna ragione per barare nelle risposte, perciò ti chiediamo gentilmente di non farlo, in quanto inficerebbe negativamente sulla validità dello studio. Se non conosci la risposta alle domande, indica "Non so". Puoi indicare "Non so" come risposta anche a tutte le domande.
-
+                            <br>Ti ricordiamo che il questionario non riporta il tuo nome. A maggior ragione, non c'è alcuna ragione per barare nelle risposte, perciò ti chiediamo gentilmente di non farlo, in quanto inficerebbe negativamente sulla validità dello studio.
+                            <br>Se non conosci la risposta a delle domande, indica "Non so".
                         </p>
                         <p class="text-xl max-w-2xl text-left pt-4">
                             Grazie!
@@ -504,12 +504,12 @@
 
                     <div class="text-center mt-14 mb-10">
                         <div x-show="step !== 6" class="flex flex-row w-full" :class="{'space-x-6' : step > 0}">
-                            <!--<div x-show="step > 0">
+                            <div x-show="step > 1">
                                 <button type="button" id="back" @click="previous()"
                                         class="py-3 w-64 text-lg text-black bg-gray-300 hover:bg-gray-400 rounded-2xl">
-                                    Previous
+                                    Precedente
                                 </button>
-                            </div>-->
+                            </div>
                             <div x-show="step > 0" class="flex-1"></div>
                             <div :class="{'flex-1 w-full': step === 0}">
                                 <button type="button" id="next" @click="next()"
