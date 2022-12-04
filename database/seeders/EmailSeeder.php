@@ -333,6 +333,7 @@ class EmailSeeder extends Seeder
         $email->type = 'inbox';
         $email->save();
 
+        /*
         // 11 - False Negative
         $email = new Email();
         $email->subject = "Your Norton Protection subscription expires today";
@@ -343,7 +344,7 @@ class EmailSeeder extends Seeder
         $email->date = Carbon::today()->toDateTimeString();
         $email->type = 'inbox';
         $email->save();
-
+        */
         // ** PHISHING EMAILS **
 
         // Tooltip

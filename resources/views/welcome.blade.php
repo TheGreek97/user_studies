@@ -6,19 +6,16 @@
                     Thank you for accepting our invitation to participate to this test.
                 </div>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    Dear participant, we are conducting a research at the University of Bari "A. Moro" involving the
-                    evaluation of an e-mail client and, more specifically, to check that the visualisation of each e-mail is correct.
-
+                    Dear participant, we are conducting a research at the University of Bari involving the
+                    evaluation of an e-mail client.
                 </p>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    We ask you to open each e-mail and, if there is a link in it, to click on it to check that it works. Each time you read an email you will asked to answer three quick questions.
-
+                    In this study, you have to interact with the email client and the emails to test the usability of the system.
+                    Moreover, for emails that might be important, you have to check that the links are all functioning.
                 </p>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    When you have read all the 10 emails, you will have to fill out a final questionnaire. Please, make sure you fill it out completely before closing the test.
-                </p>
-                <p class="text-xl max-w-4xl text-left pt-4">
-                    For any information, please feel free to contact <a href="mailto:francesco.greco@uniba.it">francesco.greco@uniba.it</a>
+                    At the end of the study, you will have to fill out a final questionnaire.
+                    Please, make sure you fill it out completely before closing the test.
                 </p>
                 <div class="text-center mt-10">
                     <div class="w-full">
