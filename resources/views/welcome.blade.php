@@ -10,12 +10,11 @@
                     evaluation of an e-mail client.
                 </p>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    In this study, you have to interact with the email client and the emails to test the usability of the system.
-                    Moreover, for emails that might be important, you have to check that the links are all functioning.
+                    In this study, you have to interact with an email client to assess its usability.
+                    In doing this, please READ ALL THE EMAILS and, for those that you consider important, check that the links are all working.
                 </p>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    At the end of the study, you will have to fill out a final questionnaire.
-                    Please, make sure you fill it out completely before closing the test.
+                    At the end of the study, you will have to fill in a questionnaire.
                 </p>
                 <div class="text-center mt-10">
                     <div class="w-full">

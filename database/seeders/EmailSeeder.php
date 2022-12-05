@@ -19,7 +19,7 @@ class EmailSeeder extends Seeder
         function get_explanation ($url=null)
         {
             if ($url !== null)
-                return "The target URL in the mail <b>{$url}</b> can be a fake one. This site might be intended to take you to a different place. You might be disclosing private information.";
+                return "The target URL in the mail: <br/><b>{$url}</b> can be a fake one. This site might be intended to take you to a different place. You might be disclosing private information.";
             else
                 return "The target URL in the mail can be a fake one. This site might be intended to take you to a different place. You might be disclosing private information.";
         }
@@ -31,7 +31,7 @@ class EmailSeeder extends Seeder
         $email->from_email = "ecomm.customerservice@ticketone.it";
         $email->subject = "Important notice regarding Blanco in GALLIPOLI";
         $email->preview_text = 'Hi {user_name}, this is to provide you with useful information regarding  Blanco’s event scheduled in GALLIPOLI.';
-        $email->content = '<p class="p1"><img style="display: block; margin-left: auto; margin-right: auto;" src="/assets/img/email/ticketone.png" alt="" width="300" height="113" /></p><p class="p1">Hi {user_name},<br /><br />this is to provide you with useful information regarding <strong>Blanco’s event</strong> scheduled in <strong>GALLIPOLI</strong>.<br /><br />We confirm that the concert will be held this evening, <strong>August 4th</strong>, at <strong>Gondar Park</strong>.<br /><br />Below we report what the organizer shared:<br /><br />"BLANCO @ PARCO GONDAR - IMPORTANT SERVICE INFORMATION: <br /><strong>The opening of the gates is scheduled for around 5:30 pm</strong>.<br /><br />We invite you not to go to the venue too early, also to avoid the hottest hours.<br /><br />Blanco\'s concert is supposed to start between 9.30 pm and 10 pm. <br /><br />At the end of the concert, it is advisable to wait at least half an hour before leaving the venue in order not to obstruct traffic. <br /><br />To assure safety, the outflow will be managed in stages by our security personnel, checking the exits at regular intervals of time.<br /><br />Inside the Gondar Park there are food & beverage areas, including vegetarian choices too.<br />The internal regulations of Parco Gondar can be consulted at this link: <a href="/nextstep" style="text-decoration: underline; color: #0001F1;"><span class="s1">https://www.parcogondar.com/regolazione-interno-parco-gondar/</span></a><br /><br /><br />Kind Regards,<br />TicketOne Staff</p>';
+        $email->content = '<p class="p1"><img style="display: block; margin-left: auto; margin-right: auto;" src="/assets/img/email/ticketone.png" alt="" width="300" height="113" /></p><p class="p1">Hi {user_name},<br /><br />this is to provide you with useful information regarding <strong>Blanco’s event</strong> scheduled in <strong>GALLIPOLI</strong>.<br /><br />We confirm that the concert will be held this evening, <strong>August 4th</strong>, at <strong>Gondar Park</strong>.<br /><br />Below we report what the organizer shared:<br /><br />"BLANCO @ PARCO GONDAR - IMPORTANT SERVICE INFORMATION: <br /><strong>The opening of the gates is scheduled for around 5:30 pm</strong>.<br /><br />We invite you not to go to the venue too early, also to avoid the hottest hours.<br /><br />Blanco\'s concert is supposed to start between 9.30 pm and 10 pm. <br /><br />At the end of the concert, it is advisable to wait at least half an hour before leaving the venue in order not to obstruct traffic. <br /><br />To assure safety, the outflow will be managed in stages by our security personnel, checking the exits at regular intervals of time.<br /><br />Inside the Gondar Park there are food & beverage areas, including vegetarian choices too.<br />The internal regulations of Parco Gondar can be consulted at this link: <a href="https://www.parcogondar.com/regolazione-interno-parco-gondar/" style="text-decoration: underline; color: #0001F1;"><span class="s1">https://www.parcogondar.com/regolazione-interno-parco-gondar/</span></a><br /><br /><br />Kind Regards,<br />TicketOne Staff</p>';
         $email->date = Carbon::today()->subDays(mt_rand(0, 365))->toDateTimeString();
         $email->type = 'inbox';
         $email->save();
@@ -264,7 +264,7 @@ class EmailSeeder extends Seeder
         $email->preview_text = '{user_name} you have just logged into mps.it';
         $email->content = '<div><p><img style="display: block; margin-left: auto; margin-right: auto;" src="/assets/img/email/mps.png" alt="" width="300" height="109" /></p>
         <p>Hi {user_name},</p><br>
-        <p>you have just logged into <a href="' . url('/nextstep') . '" style="text-decoration: underline; color: #0001F1;">www.mps.it</a>.</p>
+        <p>you have just logged into <a href="www.mps.it" style="text-decoration: underline; color: #0001F1;">www.mps.it</a>.</p>
         <br><p>Best regards,<br />the M.P.S. Team.</p></div>';
         $email->date = Carbon::today()->subDays(mt_rand(0, 365))->toDateTimeString();
         $email->type = 'inbox';
@@ -365,11 +365,11 @@ class EmailSeeder extends Seeder
         <p class="p1"><em>Nashik, India<br /><br /></em></p>
         <p class="p1"><strong>If this was you</strong>, you can safely ignore this message.<br /><br /></p>
         <p class="p1"><strong>If this wasn\'t you</strong>, we highly recommend you to reset your password and terminate any other session to limit any possible damage. You can quickly reset your password by clicking the link below.
-        <table class="tooltip" data="tiktok link"  style="border: 4px solid  #b80000;">
+        <table class="tooltip" data="tiktok link">
             <tbody>
                <tr>
                   <td>
-                    <a style="color: #000000; text-decoration: none; margin:auto; display: block;" href="#"> tiktok.com/reset </a>
+                    <a class="phishing_link" href="#"> tiktok.com/reset </a>
                     <span id="tooltip_link" class="tooltiptext">
                     '. get_explanation () . '<br>Link goes to: <a href="#" style="text-decoration: underline;/* color: #0001F1; */"><span class="s2">http://92.233.24.33/tiktok/login.php</span></a>
                     </span>
@@ -402,11 +402,11 @@ class EmailSeeder extends Seeder
         You can proceed to the updating procedure by clicking the link below:</p>
         <br>
         <div style="margin-left: auto; margin-right: auto; border-radius: 5px; background-color: #ffd814; color: #000000; display: inline-block; text-align: center;" align="center">
-        <table class="tooltip" data="amazon link"  style="border: 4px solid  #b80000;">
+        <table class="tooltip" data="amazon link">
             <tbody>
                <tr>
                   <td>
-                    <a style="color: #000000; text-decoration: none; display: block; padding: 14px 30px 15px;" href="#"> Update now </a>
+                    <a class="phishing_btn" href="#"> Update now </a>
                     <span id="tooltip_link" class="tooltiptext">
                     '. get_explanation() .
                     '<br>Link goes to: <a href="#" style="text-decoration: underline;/* color: #0001F1; */"><span class="s2">'. $phish_url .'</span></a>
@@ -429,15 +429,15 @@ class EmailSeeder extends Seeder
         $email->from_name = "TRENITALIA";
         $email->from_email = "342urysj39Ije@mymail.cd.com";
         $email->subject = "Customer, €10 for you. Use them now!";
-        $email->preview_text = 'CONGRATULATIONS! We offer you a discount vaucher worth 10 €';
-        $email->content = "<div><p class=\"p1\">CONGRATULATIONS!<br/><br/>For you, here is a discount voucher worth 10 €. To get the discount voucher click on the button and insert your personal data.</p>
+        $email->preview_text = 'CONGRATULATIONS!!!! We offer you a discount vaucher worth 10 €';
+        $email->content = "<div><p class=\"p1\">CONGRATULATIONS!!!!<br/><br/>For you, here is a discount voucher worth 10 €. To get the discount voucher click on the button and insert your personal data.</p>
         <p class=\"p2\" style=\"text-align: center;\"><br/>
-        <table class=\"tooltip\" style=\"padding:3px;border: 4px solid  #b80000;\" data=\"link_trenitalia\" data-tool=\"classico\" >
+        <table class=\"tooltip\" data=\"link_trenitalia\" data-tool=\"classico\" >
             <tbody>
                <tr>
                   <td>
                     <div style=\"margin-left: auto; margin-right: auto; font-weight: bold; border-radius: 5px; background-color: #c41329; color: #ffffff; font-size: 14px; display: inline-block; text-align: center;\" align=\"center\">
-                        <a style=\"color: #ffffff; text-decoration: none; display: block; padding: 14px 30px 15px;pointer-events: none;\" href=\"#\"> Activate the discount cupon </a>
+                        <a class='phishing_btn' href=\"#\"> Activate the discount cupon </a>
                     </div>
                     <span id=\"tooltip_link\" class=\"tooltiptext\">
                         ". get_explanation().
@@ -549,12 +549,12 @@ class EmailSeeder extends Seeder
                     <p class=MsoNormal style='line-height:19.5pt;mso-line-height-rule:
                     exactly'><span style='font-size:12.0pt;font-family:Montserrat;
                     mso-fareast-font-family:\"Times New Roman\";color:black'>
-                    <table class=\"tooltip\" style=\"padding:3px;border: 4px solid  #b80000;\" data=\"link_livenation\" data-tool=\"classico\" >
+                    <table class=\"tooltip\" data=\"link_livenation\" data-tool=\"classico\" >
                         <tbody>
                            <tr>
                               <td>
                                 <div style=\"margin-left: auto; margin-right: auto; font-weight: bold; border-radius: 5px; background-color: #c41329; color: #ffffff; font-size: 14px; display: inline-block; text-align: center;\" align=\"center\">
-                                    <a style=\"color: #ffffff; text-decoration: none; display: block; padding: 14px 30px 15px;pointer-events: none;\" href=\"#\"> RESET PASSWORD </a>
+                                    <a class='phishing_btn' href=\"#\"> RESET PASSWORD </a>
                                 </div>
                                 <span id=\"tooltip_link\" class=\"tooltiptext\">
                                     ". get_explanation().
@@ -645,8 +645,8 @@ class EmailSeeder extends Seeder
         $email->from_name = "TRENITALIA";
         $email->from_email = "342urysj39Ije@mymail.cd.com";
         $email->subject = "Customer, €10 for you. Use them now!";
-        $email->preview_text = 'CONGRATULATIONS! We offer you a discount vaucher worth 10 €';
-        $email->content = "<div><p class=\"p1\">CONGRATULATIONS!<br/><br/>For you, here is a discount voucher worth 10 €. To get the discount voucher click on the button and insert your personal data.</p>
+        $email->preview_text = 'CONGRATULATIONS!!!! We offer you a discount vaucher worth 10 €';
+        $email->content = "<div><p class=\"p1\">CONGRATULATIONS!!!!<br/><br/>For you, here is a discount voucher worth 10 €. To get the discount voucher click on the button and insert your personal data.</p>
         <p class=\"p2\" style=\"text-align: center;\"><br/>
         <div style=\"margin-left: auto; margin-right: auto; font-weight: bold; border-radius: 5px; background-color: #c41329; color: #ffffff; font-size: 14px; display: inline-block; text-align: center;\" align=\"center\">
             <a style=\"color: #ffffff; text-decoration: none; display: block; padding: 14px 30px 15px;\" href=\"http://scam-you_.com.br/21322/details.php?id=98324hfduyu23vuyfeoIUhriunN$\"> Activate the discount cupon </a>
@@ -654,7 +654,6 @@ class EmailSeeder extends Seeder
         </p>
         <p class=\"p2\" style=\"text-align: center;\"> </p>
         <p class=\"p1\">The discount vaucher can be activated until 31/09/2023. Activate it and use it immidiately on your next purchase.</p>
-        <span id=\"tooltip_grammar\" class=\"tooltiptext\"></span>
         </div>";
         $email->warning_explanation_1 = get_explanation ("http://scam-you_.com.br/21322/details.php?id=98324hfduyu23vuyfeoIUhriunN$");
         $email->date = Carbon::today()->subDays(mt_rand(0, 365))->toDateTimeString();

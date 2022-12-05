@@ -15,14 +15,16 @@
             .tooltip {
                 position: relative;
                 display: inline-block;
-                border-bottom: 1px dotted black;
+                /*border-bottom: 1px dotted black;*/
+                cursor: not-allowed;
             }
 
             .tooltip .tooltiptext {
                 visibility: hidden;
                 width: 310px;
-                background-color: #b80000;
-                color: #fff;
+                border: solid #b80000 2px;
+                color: #b80000;
+                background-color: #fff;
                 text-align: center;
                 border-radius: 6px;
                 padding: 6px 10px;
@@ -31,6 +33,17 @@
                 top: -50px;
                 left: 105%;
             }
+
+            .tooltip .tooltiptext::after {
+                 content: "";
+                 position: absolute;
+                 top: -20%;
+                 left: 8%;
+                 margin-left: -5px;
+                 border-width: 10px;
+                 border-style: solid;
+                 border-color: transparent transparent #b80000 transparent;
+             }
 
             #tooltip_image{
                 top: 40px;
@@ -44,9 +57,12 @@
             }
 
             #tooltip_link{
-                top: -47px;
+                top: 105%;
                 width: 529px;
-                left: 103%;
+                left: 25%;
+            }
+            #tooltip_link:hover {
+                visibility: visible;
             }
 
             #tooltip_button{
@@ -62,6 +78,22 @@
             .tooltip:hover .tooltiptext {
                 visibility: visible;
             }
+            .phishing_btn {
+                color: #ffffff;
+                text-decoration: none;
+                display: block;
+                padding: 14px 30px 15px;
+                pointer-events: none;
+                cursor: not-allowed;
+            }
+            .phishing_link {
+                color: #b80000;
+                text-decoration: none;
+                margin:auto;
+                display: block;
+                cursor: not-allowed;
+            }
+
         </style>
         <!-- Styles -->
         @livewireStyles

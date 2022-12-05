@@ -7,6 +7,12 @@
 ?>
 <x-app-layout>
     <x-slot name="slot">
+        <div style="position: sticky; top: 0; left: 0; z-index: 10;"
+             class="p-6 shadow-lg bg-gray-700 text-white">
+            <p>
+                <span class="font-semibold">Goal:</span> Please READ ALL THE EMAILS and, for those that you consider important, check that the links are all working.
+            </p>
+        </div>
         <div
             class="flex h-screen bg-gray-100 dark:bg-gray-900"
             :class="{ 'overflow-hidden': isSideMenuOpen }">
@@ -374,15 +380,6 @@
                         <ul class="flex items-center flex-shrink-0 space-x-6">
                             <li class="relative">
                                 <button
-                                    class="btn align-middle rounded-full focus:shadow-outline-blue focus:outline-none"
-                                    type="button" data-modal-toggle="aim_of_study_modal"
-                                    style="font-size: smaller;"
-                                >
-                                    Need help?
-                                </button>
-                            </li>
-                            <li class="relative">
-                                <button
                                     class="align-middle rounded-full focus:shadow-outline-blue focus:outline-none"
                                     x-ref="button"
                                     x-on:click="toggleProfileMenu()"
@@ -438,7 +435,7 @@
                     </div>
                 </header>
                 <main class="h-full overflow-y-auto">
-                    <div class="container px-6 mx-auto grid">
+                    <div class="container px-6 mx-auto grid mb-10">
                         @if(!isset($selected_email))
                             <h2
                                 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200 flex flex-row align-middle content-center"
@@ -527,7 +524,7 @@
                             </div>
                         @else
                             <div
-                                class="w-full rounded-lg shadow-xs my-10 p-3 bg-white dark:bg-gray-800 overflow-y-hidden">
+                                class="w-full h-full rounded-lg shadow-xs my-10 p-3 bg-white dark:bg-gray-800 overflow-y-hidden">
                                 <div class="w-full flex flex-row space-x-2 pb-2">
                                     <a data-tooltip-target="tooltip-back" data-tooltip-placement="bottom"
                                        class="cursor-pointer hover:bg-gray-200 rounded-full p-2"
@@ -621,7 +618,7 @@
                                         {!! \Carbon\Carbon::parse($selected_email->date)->format('d M Y') . "<br>" . \Carbon\Carbon::parse($selected_email->date)->format('H:m:s') !!}
                                     </div>
                                 </div>
-                                <div id="email_content" class="px-10 py-4 dark:bg-white">
+                                <div id="email_content" class="px-10 pt-4 dark:bg-white" style="padding-bottom: 2.5rem">
                                     {!! str_replace("{user_name}", \Illuminate\Support\Facades\Auth::user()->name, $selected_email->content) !!}
                                 </div>
                             </div>
@@ -733,40 +730,12 @@
                 @endif
             @endif
         </div>
-        <div id="aim_of_study_modal" tabindex="-1" aria-hidden="true" style="background-color: rgba(0,0,0,0.5);" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
-            <div class="relative w-full h-full max-w-2xl md:h-auto">
-                <!-- Modal content -->
-                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                    <!-- Modal header -->
-                    <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                            What do you have to do?
-                        </h3>
-                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                data-modal-toggle="aim_of_study_modal">
-                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                            <span class="sr-only">Close modal</span>
-                        </button>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="p-6 space-y-6">
-                        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                            In this study, you have to interact with this email client and the emails you can see to test the usability of the system.
-                            Moreover, for emails that might be important, you have to check that the links inside them are functioning.
-                        </p>
-                    </div>
-                    <!-- Modal footer -->
-                    <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-                        <button data-modal-toggle="aim_of_study_modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Okay</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
-
-
+            window.onload = function () {
+                document.body.style.overflowY = "hidden";
+            }
             @if(isset($selected_email))
                 @if($selected_email->warning_type == null || $selected_email->warning_type == "popup_email")
                 $("#email_content").find('a').each(function (e) {
@@ -828,6 +797,26 @@
                 let tooltips = $(".tooltip")
                 let allow_to_go_back
                 allow_to_go_back = tooltips.length <= 0; // always allow going back if there are no tooltips
+
+                let warning_tooltip = $("#tooltip_link")
+                let explanation = warning_tooltip.html()
+                warning_tooltip.html(
+                    `<div class="flex justify-between items-start px-3">
+                        <div class="pr-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-10" viewBox="0 0 20 20"
+                                 fill="currentColor">
+                                <path fill-rule="evenodd"
+                                      d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                                      clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <div>
+                        <!--<h2 class="font-bold text-xl"> FAKE WEBSITE, DON'T CLICK!</h2>-->
+                        ${explanation}
+                        </div>
+                    </div>`
+                )
+                warning_tooltip.addClass("tooltip-balloon")
 
                 tooltips.mouseover(function () {
                     setTimeout(() => {
@@ -933,7 +922,11 @@
                     $("#button_hide_modal").off("click");
                     $("#button-advanced").off("click");
                     $("#warning_unsafe_link").off("click");
-                    window.location.href = '{{route('next_step')}}/' + email_id + '?nolink';
+                    if (warning_type==="popup_email") {
+                        window.location.href = '{{route('next_step')}}/' + email_id + '?nolink&noquest';
+                    } else {
+                        window.location.href = '{{route('next_step')}}/' + email_id + '?nolink';
+                    }
                     modal.hide();
                 });
                 modal.show();
