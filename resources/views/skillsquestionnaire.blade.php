@@ -12,20 +12,9 @@
 
                     <div>
                         <h1 x-show="step !== 0 && step !== 6"
-                            class="text-3xl font-bold text-center mb-4 cursor-pointer">Livello di conoscenze</h1>
+                            class="text-3xl font-bold text-center mb-4 cursor-pointer">Livello di conoscenze informatiche e sicurezza</h1>
                     </div>
-                    <!--- DISCLAIMER SECTION 0 --->
-                    <div x-show="step === 0" id="section-0">
 
-                        <p class="text-xl max-w-2xl text-left pt-3">
-                            Gentile partecipante, adesso ti faremo qualche domanda per capire il tuo livello di conoscenza riguardo argomenti che possono influenzare i risultati del test.
-                            <br>Ti ricordiamo che il questionario non riporta il tuo nome. A maggior ragione, non c'è alcuna ragione per barare nelle risposte, perciò ti chiediamo gentilmente di non farlo, in quanto inficerebbe negativamente sulla validità dello studio.
-                            <br>Se non conosci la risposta a delle domande, indica "Non so".
-                        </p>
-                        <p class="text-xl max-w-2xl text-left pt-4">
-                            Grazie!
-                        </p>
-                    </div>
                     <!-- SECTION 1 -->
                     <div x-show="step === 1" id="section-1">
                         <p class="text-2xl w-full text-center">1 su 2</p>
@@ -56,7 +45,7 @@
                         </div>
 
                         <div class="my-5">
-                            <p class="font-bold pb-1">In una scala da 1 a 5, come definiresti il tuo livello di conoscenze in Cybersecurity?</p>
+                            <p class="font-bold pb-1">In una scala da 1 a 5, come definiresti il tuo livello di conoscenze in Sicurezza Informatica?</p>
                             <label for="steps-range"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
@@ -82,15 +71,15 @@
                         </div>
 
                         <div class="my-5">
-                            <p class="font-bold pb-1">In una scala da 1 a 5 qual è il tuo livello di esperienza con dispositivi IoT all'interno di ambienti intelligenti?</p>
+                            <p class="font-bold pb-1">In una scala da 1 a 5, quanto fai utilizzo di dispositivi IoT all'interno di ambienti intelligenti?</p>
                             <label for="steps-range"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
-                                    1 (Scarso)
+                                    1 (Mai)
                                 </div>
                                 <div class="flex-1"></div>
                                 <div>
-                                    5 (Esperto)
+                                    5 (Abitualmente)
                                 </div>
                             </label>
                             <div class="w-full">
@@ -159,7 +148,7 @@
                             </div>
                         </div>
                         <div class="my-8">
-                            <p class="font-bold pb-1">Quale dei seguenti è un esempio di attacco di “phishing”</p>
+                            <p class="font-bold pb-1">Quale dei seguenti è un esempio di attacco di “phishing”?</p>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
                                 <input id="cb_1-1" type="radio" value="Sending someone an email that contains a malicious link that is disguised to look like an email from someone the person knows" name="cyber_2"
@@ -432,7 +421,7 @@
                         <div class="my-8">
                             <p class="font-bold pb-1">
                                 Se una rete Wi-Fi pubblica (come in un aeroporto o un bar) richiede una password per accedere,
-                                generalmente è sicuro utilizzare tale rete per attività sensibili come online banking (es., immettere dati della carta di credito)
+                                generalmente è sicuro utilizzare tale rete per attività sensibili come online banking (es., immettere dati della carta di credito)?
                             </p>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
@@ -458,7 +447,7 @@
                         </div>
                         <div class="my-8">
                             <p class="font-bold pb-1">
-                                Che genere di rischio di sicurezza può essere minimizzato utilizzando una VPN (Virtual Private Network)
+                                Che genere di rischio di sicurezza può essere minimizzato utilizzando una VPN (Virtual Private Network)?
                             </p>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
@@ -528,9 +517,9 @@
             function load() {
                 $("#form").show();
                 return {
-                    step: 0,
+                    step: 1,
                     previous(e) {
-                        if (this.step > 0)
+                        if (this.step > 1)
                             this.step--;
 
                         $("#alert").hide();

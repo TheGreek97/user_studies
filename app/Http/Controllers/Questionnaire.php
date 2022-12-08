@@ -105,12 +105,15 @@ class Questionnaire extends Controller
 
     public function storeFinalComments(Request $request)
     {
-        $questionnaire = Auth::user()->questionnaire;
+        $user = Auth::user();
+        $questionnaire = $user->questionnaire;
         $questionnaire->other_events = $request->other_events ?? "";
         $questionnaire->other_actions = $request->other_actions ?? "";
         //$questionnaire->preferred_level = $request->preference;
         $questionnaire->alternatives = $request->alternatives ?? "";
         $questionnaire->save();
+        $user->test_completed = true;
+        $user->save();
         return redirect(route('thankyou'));
     }
 

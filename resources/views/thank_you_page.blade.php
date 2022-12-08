@@ -14,9 +14,9 @@
                             Grazie per aver partecipato al test!
                         </div>
                         <p>
-                            Ti ringraziamo davvero di cuore per la partecipazione allo studio e per averci dedicato il tuo tempo. Il tuo è un piccolo ma significativo contributo alla ricerca.
+                            Ti ricordiamo che il tuo indirizzo e-mail non sarà riconducibile alla sua persona, né presente in ogni modo nei risultati finali dello studio.
                             <br><br>
-                            Ti ricordiamo che il tuo indirizzo e-mail non sarà riconducibile alle risposte che hai dato nel tuo questionario, né tantomeno nei risultati finali dello studio. Per qualsiasi informazione, contattateci all'indirizzo francesco.greco@uniba.it.
+                            Per qualsiasi informazione, contattateci all'indirizzo <a href="mailto:francesco.greco@uniba.it">francesco.greco@uniba.it</a>.
                             <br><br>
                             Arrivederci!<br>
                             Il Team di IVU Lab

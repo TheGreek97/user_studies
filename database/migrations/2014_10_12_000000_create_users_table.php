@@ -22,11 +22,11 @@ return new class extends Migration
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
-            $table->integer('age')->nullable();
-            $table->integer('num_hours_day_internet')->nullable();
-            $table->enum('gender', ['Male', 'Female', 'Others', 'Prefer not to say'])->nullable();
+            //$table->integer('age')->nullable();
+            //$table->integer('num_hours_day_internet')->nullable();
+            //$table->enum('gender', ['Male', 'Female', 'Others', 'Prefer not to say'])->nullable();
             $table->enum('expertise', ['basic', 'medium', 'expert'])->nullable()->default('basic');
-            $table->enum('warning_type', ['popup_email', 'popup_link', 'tooltip', 'browser_native']);
+            //$table->enum('warning_type', ['popup_email', 'popup_link', 'tooltip', 'browser_native']);
             $table->timestamps();
         });
     }

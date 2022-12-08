@@ -23,15 +23,9 @@ Route::get('/', function () {
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
-    'verified']);//->group(function (){
-    //Route::get('/warning_log', [\App\Http\Controllers\MailController::class, 'warning'])->name('warning_log');
-//});
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
     'verified',
-    'log'
+    'log',
+    \App\Http\Middleware\CheckTestCompleted::class
 ])->group(function () {
     Route::get('/welcome', function (){
          return view('welcome');
@@ -67,3 +61,7 @@ Route::middleware([
         return view("thank_you_page");
     })->name('thankyou');
 });
+
+Route::get('/test_completed', function (){
+    return view("thank_you_page");
+})->name('test_completed');

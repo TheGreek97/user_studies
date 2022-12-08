@@ -13,34 +13,9 @@
                     <div x-show="step === 0" id="section-0" class="text-xl text-left pt-3">
                         <div>
                             <p class="pt-4">
-                                Data la tua conoscenza in ambito di sicurezza informatica, vorremmo porti qualche altra domanda un po' più tecnica. Se pensi di non saper rispondere ad una domanda, lasciala pure in bianco, oppure scrivi "Non so".
+                                Data la tua conoscenza in ambito di sicurezza informatica, vorremmo porti un'altro paio di domande un po' più tecniche.
+                                <br/>Se pensi di non saper rispondere ad una domanda, lasciala pure in bianco, oppure scrivi "Non so".
                             </p>
-                            <img style="float: right; max-width: 50%;" src="{{url('assets/img/ids.webp')}}">
-                            <div class="my-3">
-                                Per implementare i comportamenti di sicurezza descritti nella scorsa sezione, è necessario collegare ad Alexa un dispositivo di protezione in grado di monitorare la rete chiamato IDS (Intrusion Defender System).
-                            </div>
-
-                            <div class="my-5">
-                                Come suggerito dalla sezione precedente, questo dispositivo è in grado di monitorare la rete al quale è collegato, ascoltando tutte le comunicazioni in entrata e in uscita da ciascun dispositivo. Entrando più nello specifico, è in grado di rilevare diversi tipi di attacchi ed eventi sospetti, come, ad esempio:
-                                <ol style="list-style: decimal; margin-left:1%; padding: 20px;">
-                                    <li>Se qualcuno sta cercando di rendere inutilizzabile un dispositivo con un attacco DoS (Denial of Service)
-                                    <li>Se un dispositivo è infetto da codice malevolo (es., virus, ransomware, etc.),
-                                    <li>Se c'è un tentativo di furto di dati da uno dei dispositivi,
-                                    <li>Se c'è un tentativo di autenticazione o un'autenticazione anomala su un dispositivo,
-                                    <li>Se si verificano comunicazioni sospette all'esterno della rete (es., scansione delle porte del router),
-                                    <li>Se si verificano comunicazioni sospette all'interno della rete (es., presenza di connessione insolite).</li>
-                                </ol>
-                            </div>
-                            <div class="my-5">In risposta ad eventuali attacchi rilevati, Alexa può assumere misure difensive come:
-                                <ul>
-                                    <li>&#x2022; Gestire il traffico entrante e uscente, configurando un firewall a livello di rete (es., bloccare connessioni sospette, chiudere porte del router, etc.),</li>
-                                    <li>&#x2022; Notificare l'utente del possibile pericolo tramite diversi canali (es., SMS, notifica su desktop, etc.),</li>
-                                    <li>&#x2022; Cambiare parametri di configurazione specifici per ciascun dispositivo,</li>
-                                    <li>&#x2022; Chiedere all'utente di cambiare le credenziali di accesso ad un dispositivo, </li>
-                                    <li>&#x2022; Gestire backup dei dati sui dispositivi,</li>
-                                    <li>&#x2022; Isolare o spegnere dispositivi della rete.</li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
                     <!-- SECTION 2 -->
@@ -49,10 +24,9 @@
                         <div class="my-5">
                             <div class="font-bold mb-5"> <i>Data Exfiltration</i></div>
                             <p class="pb-2">
-                                Alexa, tramite l'IDS può rilevare traffico sospetto entrante o uscente dalla rete o da un dispositivo in particolare. Questo potrebbe essere sintomo di attività in background che ruba i dati da un dispositivo (data exfiltration).<br>
-                                Questo può avvenire osservando traffico insolito, ad esempio che avviene ad orari sospetti, da/verso località sospette, che riguarda grosse quantità di dati, etc. <br/>
-                                Un dispositivo che un hacker potrebbe attaccare è lo smartwatch, in quanto carico di dati sensibili, che possono fornire informazioni molto private, come sapere quando chi lo indossa sta dormendo oppure no. <br/>
-                                - Come completeresti la seguente regola ECA per proteggere lo smartwatch da furti di dati?
+                                Un dispositivo che un hacker potrebbe attaccare è lo smartwatch poiché memorizza dati sensibili del possessore, come sapere se chi lo indossa sta dormendo.
+                                <br/>
+                                - Completa la seguente regola definendo l'evento che secondo te deve essere monitorato per difendersi da questo attacco.
                             </p>
                             <div class="my-4 text-center font-bold text-xl">
                                 <span>"Alexa, SE [...] ALLORA isola lo smartwatch e mandami una notifica sullo smartwatch."</span>
@@ -67,42 +41,42 @@
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- (Opzionale) Riguardo questo attacco, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
-                                    Motiva eventualmente la tua risposta.
+                                <span>- (Opzionale) Riguardo l'attacco precedente, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
+                                    <br/>Eventualmente, motiva la tua risposta.
                                 </span>
                             </p>
                             <textarea rows="3" name="question_1_alt" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
                         </div>
                     </div>
-                    <!-- SECTION 3 -->
+                    <!-- SECTION 2 -->
                     <div x-show="step === 2" id="section-2" class="text-xl text-left pt-3">
                         <p class="text-2xl w-full text-center">2 su <span class="num_slides"></span></p>
                         <div class="my-5">
-                            <div class="font-bold mb-5">Attività sospetta su una porta</div>
+                            <div class="font-bold mb-5"> Attività sospetta su una porta</div>
                             <p class="pb-2">
-                                Alexa è in grado di riconoscere attività sospetta sulla rete. Ad esempio, un criminale potrebbe cercare di eseguire attacchi sfruttando una porta del router aperta, come la porta 22, utilizzata comunemente per il servizio SSH.<br>
-                                Per proteggersi da un attacco del genere si può intervenire, ad esempio, chiudendo la porta 22 ed impostando una porta non standard (la 2222) per il servizio SSH.<br/>
-                                - Come completeresti questa regola ECA per proteggerti da un attacco del genere?
+                                Un criminale potrebbe cercare di eseguire attacchi sfruttando una porta del router aperta, come la porta 22, utilizzata comunemente per il servizio SSH.
+                                <br/>
+                                - Completa la seguente regola definendo l'evento che secondo te deve essere monitorato per difendersi da questo attacco.
                             </p>
                             <div class="my-4 text-center font-bold text-xl">
                                 <span>"Alexa, SE [...] <br/> ALLORA chiudi la porta 22 del router, e imposta la porta 2222 per il servizio SSH"</span>
                             </div>
-                            <textarea rows="10" name="question_2" placeholder="Scrivi qui... (almeno 20 caratteri)"
-                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
+                            <textarea rows="10" name="question_1" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
                                 <span>- Motiva la tua risposta precedente, cercando di spiegare il tuo ragionamento:</span>
                             </p>
-                            <textarea rows="3" name="question_2_rationale" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <textarea rows="3" name="question_1_rationale" placeholder="Scrivi qui... (almeno 20 caratteri)"
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- (Opzionale) Riguardo questo attacco, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
-                                    Motiva eventualmente la tua risposta.
+                                <span>(Opzionale) Riguardo l'attacco precedente, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
+                                Eventualmente, motiva la tua risposta.
                                 </span>
                             </p>
-                            <textarea rows="3" name="question_2_alt" placeholder="Scrivi qui..."
+                            <textarea rows="3" name="question_1_alt" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
                         </div>
                     </div>
@@ -112,10 +86,9 @@
                         <div class="my-5">
                             <div class="font-bold mb-5">Autenticazione illecita/Priviledge escalation</div>
                             <p class="pb-2">
-                                Un malintenzionato potrebbe tentare di autenticarsi ed entrare in uno dei tuoi dispositivi tramite utilizzo di attacchi a forza bruta, oppure tramite priviledge escalation. Alexa può rilevare tentativi di accesso illeciti, oppure attività di autenticazione sospetta (es., rilevando connessioni da IP sconosciuti); in particolare, può riconoscere attività di login come amministratore. <br/>
-                                Per proteggersi da un attacco del genere si può, ad esempio, cambiare la password di accesso ad un dispositivo. <br>
-                                - Cosa diresti al sistema per proteggerti da attacchi del genere?
-                                <br/> Prova a definire una o più regole ECA per proteggerti da attacchi simili. Sentiti libero di utilizzare il livello di dettaglio che ti sembra più efficace.
+                                Alexa può rilevare tentativi di autenticazione illeciti (es., rilevando connessioni da IP sconosciuti) e attività di login come amministratore.
+                                <br/>
+                                - Prova a definire una regola ECA (o più) per proteggerti da questo attacco.
                             </p>
                             <div class="my-4 text-center font-bold text-xl">
                                 <span>"Alexa, [...]"</span>
@@ -130,8 +103,8 @@
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- (Opzionale) Riguardo questo attacco, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
-                                    Motiva eventualmente la tua risposta.
+                                <span>- (Opzionale) Riguardo l'attacco precedente, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili?
+                                    <br/>Eventualmente, motiva la tua risposta.
                                 </span>
                             </p>
                             <textarea rows="3" name="question_3_alt" placeholder="Scrivi qui..."

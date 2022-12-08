@@ -25,7 +25,7 @@
                             <p class="pt-12 pb-2">
                                 - Ci sono altre azioni che vorresti che Alexa fosse in grado di fare per proteggere la smart home da attacchi? Nel caso, quali?
                             </p>
-                            <textarea rows="3" name="other_actions" placeholder="Scrivi qui..."
+                            <textarea rows="5" name="other_actions" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" ></textarea>
                         </div>
                     </div>
@@ -33,9 +33,9 @@
                     <!-- SECTION 1 -->
                     <div x-show="step === 1" id="section-1" class="text-xl text-left pt-3">
                         <p class="pt-4 pb-2">
-                            (Opzionale) Pensi che ci possano essere modi alternativi per definire i comportamenti che hai espresso con regole ECA?<br/>
+                            (Opzionale) Pensi che ci possano essere modi alternativi per definire i comportamenti che hai espresso con regole ECA?
                             <br/>
-                            Ad esempio, senza utilizzare regole ECA, c'è un altro modo in cui preferiresti dire ad Alexa che intendi difendere le telecamere di sicurezza da attacchi che le possono far smettere di funzionare (attacco <i>DoS</i>)?
+                            Ad esempio, per dire ad Alexa di proteggere le telecamere di sicurezza da virus, c'è un altro modo che preferiresti utilizzare? (senza includere regole ECA)
                         </p>
                         <textarea rows="10" name="alternatives" placeholder="Scrivi qui..."
                                   class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>

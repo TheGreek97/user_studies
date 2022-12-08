@@ -13,67 +13,33 @@
                     <div x-show="step === 0" id="section-0" class="text-xl max-w-2xl text-left pt-3">
                         <div>
                             <h1 class="text-3xl font-bold text-center mb-4 cursor-pointer">
-                                Introduzione: Regole <br>Evento-Condizione-Azione (ECA)</h1>
+                                Conoscenze preliminari per lo studio</h1>
                         </div>
                         <p>
-                            Nelle cosiddette smart home ("case intelligenti") ci sono diversi dispositivi che comunicano fra loro per diversi scopi, quali aumentare la qualità della vita degli abitanti della casa, ridurre sprechi energetici, aumentare la sicurezza.
+                            Nelle case intelligenti oggigiorno possono essere installati dispositivi intelligenti capaci di migliorare la qualità della vita degli abitanti della casa, ridurre sprechi energetici, aumentare la sicurezza. Esempi di dispositivi intelligenti sono luci intelligenti, tapparelle intelligenti, robot aspirapolvere, termostati intelligenti, telecamere per la video sorveglianza.
                         </p>
                         <p>
-                            In una smart home, gli utenti devono avere la possibilità di definire il comportamento dei loro dispositivi (luci, videocamere, elettrodomestici, etc.), ad esempio per rispondere a comandi vocali (es., "Alexa, accendi la luce nel soggiorno") o per eseguire automaticamente specifiche azioni (es., chiudere le finestre in caso di pioggia).
+                            Tali dispositivi sono anche controllabili attraverso assistenti vocali come Amazon Alexa, per esempio, per accedere le luci, senza usare gli interruttori, gli utenti possono dire "Alexa, accendi luce soggiorno".
                         </p>
                         <p>
-                            Per specificare comportamenti personalizzati, le cosiddette regole "ECA" (Event-Condition-Action, ovvero "Evento-Condizione-Azione") sono le più utilizzate all'interno di software per la domotica, data la loro espressività e al contempo semplicità per gli utenti.
+                            Nuove funzionalità di Alexa presto consentiranno di definire il comportamento TRA oggetti intelligenti cosicché la loro attivazione possa dipendere non da un comando di un utente ma dallo stato di un altro oggetto. Per esempio, un utente potrebbe volere chiudere le tapparelle quando il sensore pioggia rileva la pioggia, ad esempio dicendo "Alexa, chiudi tutte le tapparella se inizia a piovere". In altre parole, per specificare comportamenti tra oggetti, gli utenti potrebbero definire le  cosiddette regole "ECA" ("Evento-Condizione-Azione").
                         </p>
-                        <div class="mt-3">Una regola ECA, come il nome suggerisce, è composta da&nbsp;<b>3 parti</b>:</div>
+                        <div class="mt-3">Una regola ECA è composta da&nbsp;<b>3 parti</b>:</div>
                         <div>
                             <ol>
-                                <li>&#x2022; <b>EVENTO </b>- che cosa deve succedere per far attivare la regola?</li>
-                                <li>&#x2022; <b>CONDIZIONE (o STATO) </b>- in che stato si deve trovare il sistema affinché la regola si attivi?</li>
-                                <li>&#x2022; <b>AZIONE </b>- cosa succederà in seguito all'attivazione della regola?</li>
+                                <li>&#x2022; <b>EVENTO </b>- che cosa deve succedere per far attivare la regola? (es., inizia a piovere)</li>
+                                <li>&#x2022; <b>CONDIZIONE </b>- condizione (opzionale) per dettagliare la rilevazione di un evento (es., pioggia forte)</li>
+                                <li>&#x2022; <b>AZIONE </b>- cosa succederà in seguito all'attivazione della regola? (es., chiudi tapparelle)</li>
                             </ol>
                         </div>
-                        <div class="mt-3">
-                            <div>Una regola ECA può essere scritta sostanzialmente come:&nbsp;</div>
-                            <div><i>"SE succede qualcosa (E una specifica condizione è vera), ALLORA fai qualcosa"</i></div>
-                        </div>
-                        <div class="mt-3">Possiamo differenziare tra EVENTO e CONDIZIONE semplicemente pensando all'aspetto del <i><b>tempo</b>:</i></div>
-                        <div>
-                            <ul>
-                                <li>- Un EVENTO si verifica in uno specifico momento, <br>es.:&nbsp;<i>Comincia a piovere, </i>oppure&nbsp;<i>Smette di piovere</i></li>
-                                <li>- Una CONDIZIONE persiste nel tempo, <br>es.: <i>Sta piovendo, </i>oppure&nbsp;<i>Non sta piovendo</i></li>
-                            </ul>
-                        </div>
-                        <br>
 
-                        <div><i><br></i></div>
-                        <div>Per capire meglio, prendiamo un esempio di regola ECA per evitare sprechi di elettricità in casa:</div>
-                        <div>
+                        <div class="mt-3">
+                            D'altro canto, possiamo anche voler definire comportamenti più complessi nella nostra smart home, comprendenti più condizioni e/o più azioni come ad esempio un sistema per aprire le finestre automaticamente al nostro risveglio:
                             <ol class="text-center mt-2">
-                                <li><b>SE </b><i>esco dalla cucina</i></li>
-                                <li><b>E </b><i>non c'è nessuno in cucina</i></li>
-                                <li><b>ALLORA </b><i>spegni la luce della cucina&nbsp;</i>&nbsp;</li>
-                            </ol>
-                        </div>
-                        <div class="mt-3">Possiamo anche pensare a regole che non comprendano il punto 2, ovvero si attivano sempre in seguito a uno specifico evento, incondizionatamente:</div>
-                        <div>
-                            <ol class="text-center mt-2">
-                                <li><b>SE </b><i>scoppia un incendio</i></li>
-                                <li><b>ALLORA </b><i>attiva l'impianto antincendio</i></li>
-                            </ol>
-                            <div><br></div>
-                        </div>
-                        <div class="mt-3">Infine, possiamo anche voler definire comportamenti più complessi nella nostra smart home, comprendenti <u><i>più </i>condizioni</u> e/o<u> <i>più </i>azioni</u>&nbsp;
-                            come ad esempio un sistema per aprire le finestre automaticamente al nostro risveglio, accertandosi che ci siano le giuste condizioni per farlo:</div>
-                        <div>
-                            <ol class="text-center mt-2">
-                                <li><b>SE </b><i>mi sveglio</i></li>
-                                <li> <b>E </b><i>è mattina, </i>e<i> non sta piovendo, </i>e<i> la temperatura è maggiore a 20°C</i></li>
-                                <li> <b>ALLORA </b><i>apri le finestre della camera, </i>e<i> alza la tapparella</i></li>
+                                <li><b>SE </b><i>inizia a piovere a condizione forte o in maniera abbondante</i></li>
+                                <li> <b>ALLORA </b><i>chiudi le tapparelle e spegni la lavatrice</i></li>
                             </ol>
                             <br>
-                            <div class="mt-4">
-                                Come vedi, le regole ECA possono davvero essere un potente strumento per esprimere comportamenti anche complessi in maniera semplice.
-                            </div>
                         </div>
                     </div>
                     <!-- SECTION 1 -->
@@ -81,36 +47,30 @@
                         <p class="text-2xl w-full text-center">1 su <span class="num_slides"></span></p>
                         <div>
                             <p class="pt-4">
-                                Immagina di essere Marco, un avvocato con la passione per la domotica. All'interno della sua casa, Marco ha diversi dispositivi intelligenti: diverse luci smart (presenti sia all'interno che all'esterno della casa), un televisore smart, un computer, un robot aspirapolvere, tre finestre automatiche, una lavatrice smart, e due telecamere di sicurezza per controllare l'ingresso della casa ed il suo studio. Marco ha uno smartphone, che utilizza sia per lavoro che per la sua vita privata ed uno smartwatch ad esso collegato, che può anche contare i suoi passi, monitorare il sonno ed il battito cardiaco, etc. Infine, possiede un router per la connessione ad Internet.
+                                Ora ti chiediamo di metterti nei panni di Andrea, avvocato con la passione per la domotica. All'interno della sua casa, Andrea ha diversi dispositivi intelligenti: 10 luci smart (presenti sia all'interno che all'esterno della casa), un televisore smart, un computer, un robot aspirapolvere, 3 finestre motorizzate, 1 lavatrice smart, e 2 telecamere di sicurezza per controllare l'ingresso della casa ed il suo studio. Andrea ha uno smartphone che utilizza sia per lavoro che per la sua vita privata ed uno smartwatch ad esso collegato, che può anche contare i suoi passi, monitorare il sonno ed il battito cardiaco, etc..
                             </p>
                             <img style="float: right; max-width: 50%;" src="{{url('assets/img/alexa.jpg')}}">
                             <div class="my-3">
-                                Per comandare i suoi oggetti smart, Marco utilizza <b>Alexa</b>, il famoso assistente vocale di Amazon che gli permette, ad esempio, di spegnere e accendere le luci, regolarne l'intensità, programmare i lavaggi della sua lavatrice, visualizzare i video delle telecamere di sicurezza, e molto altro.
+                                Per comandare i suoi oggetti smart Andrea usa Alexa, ad esempio dicendo "Alexa, accendi luce soggiorno".
                             </div>
                             <div class="my-3">
-                                Recentemente, Marco ha sentito che Alexa permetterà, in un prossimo aggiornamento, di definire vocalmente regole Evento-Condizione-Azione per gestire il comportamento degli oggetti intelligenti all'interno della casa. Essendo appassionato di domotica, Marco trova la notizia entusiasmante, dato che sarà in grado di definire comportamenti personalizzati del tipo:
-                            </div>
-                            <div class="my-3">
-                                <i>"Alexa, SE piove ALLORA chiudi la finestra della cucina"</i>
+                                Recentemente, Andrea ha sentito parlare delle ultime due novità che Alexa ha introdotto. La prima riguarda la possibilità di definire vocalmente regole Evento-Condizione-Azione per gestire il comportamento tra gli oggetti intelligenti della casa, ad esempio:
+                                <i>"Alexa, SE piove ALLORA chiudi le tapparelle".</i>
                             </div>
                             <div class="mt-5">
-                                Sentendo parlare sempre più spesso di attacchi informatici, Marco decide di voler aumentare la sicurezza del suo impianto domotico; d'altronde, essendo un avvocato, ritiene di essere una figura ancora più suscettibile ad attacchi mirati rispetto ad altri.<br>
-                                Per proteggersi da attacchi informatici, Marco installa un'estensione di Alexa che permette di controllare tutte le attività che si verificano sulla rete di casa. Con questo programma, Alexa è in grado di controllare le connessioni in entrata e in uscita da ciascun dispositivo.
+                                La seconda novità riguarda una protezione offerta da Alexa a tutti i dispositivi connessi alla rete di casa: Alexa ora monitora la connessione di tutti i dispositivi collegati al router di casa per rilevare attacchi contro di essi. Esempi di attacchi che Alexa è in grado di rilevare sono:
                             </div>
-                            <div class="my-5">
-                                In particolare è in grado di rilevare diversi tipi di attacchi ed eventi sospetti, come, ad esempio:
+                            <div class="my-3">
                                 <ol style="list-style: decimal; margin-left:1%; padding: 20px;">
-                                    <li>Qualcuno cerca di sovraccaricare un dispositivo; questo tipo di attacco (chiamato "attacco DoS") ha lo scopo di rendere il dispositivo temporaneamente inutilizzabile, sovraccaricandolo di richieste Internet;</li>
-                                    <li>Un virus infetta un dispositivo; un virus è un programma malevolo che può compromettere sia il funzionamento di un dispositivo, che la privacy dell'utente (ad es., può rubare file e password). </li>
-                                    <li>Qualcuno cerca di rubare dati privati da un dispositivo; un furto di dati può portare alla diffusione di dati sensibili dell'utente (come credenziali o file privati), video di sorveglianza (provenienti da una telecamera di sicurezza), e persino la mappa di casa (se il bersaglio è il robot aspirapolvere).</li>
-                                    <li>Un hacker entra in maniera illecita nella rete o in un dispositivo; un utente non autorizzato può infatti provare ad accedere ad un dispositivo con lo scopo di danneggiarlo o rubare dati. </li>
-                                    <li>Ci sono possibili minacce provenienti dall'esterno della rete; questo può indicare tentativi di attacco o di accesso alla rete, come ad esempio una scansione della rete in cerca di vulnerabilità e punti di accesso.</li>
-                                    <li>Si verificano connessioni sospette all'interno della rete, oppure attività sospetta (es., ad orari insoliti).</li>
+                                    <li>Qualcuno cerca di sovraccaricare un dispositivo con richieste dall'esterno per renderlo temporaneamente inutilizzabile;</li>
+                                    <li>Un malware è stato caricato su un dispositivo; </li>
+                                    <li>Qualcuno cerca di rubare dati privati da un dispositivo (p.e., le registrazioni delle telecamere di video sorveglianza); </li>
+                                    <li>Un hacker prende il controllo di un dispositivo con lo scopo di danneggiarlo o rubare dati.</li>
                                 </ol>
                             </div>
-                            <div class="my-5">Oltre a rilevare questi eventuali attacchi, Alexa ora può anche permetterti di proteggerti da tali attacchi in diverse maniere:
+                            <div class="my-5"> Oltre a rilevare questi attacchi, Alexa ti consente anche di proteggere i tuoi dispositivi intelligenti in diversi modi:
                                 <ul>
-                                    <li>&#x2022; Mandarti notifiche del possibile pericolo (sullo smartphone, SMS, e-mail, etc.);</li>
+                                    <li>&#x2022; Inviando notifiche del possibile pericolo (sullo smartphone, SMS, e-mail, etc.);</li>
                                     <li>&#x2022; Chiederti di cambiare le credenziali per accedere ad un dispositivo;</li>
                                     <li>&#x2022; Bloccare eventuali connessioni sospette, chiudere i punti di accesso del router non essenziali;</li>
                                     <li>&#x2022; Creare copie sicure dei dati di un dispositivo;</li>
@@ -118,7 +78,7 @@
                                 </ul>
                             </div>
                             <div>
-                                Ora ti porremo delle domande a cui ti chiediamo di rispondere in maniera creativa. Ci teniamo a ricordarti che non esistono risposte giuste o sbagliate, perciò rispondi semplicemente nella maniera che ti sembra più sensata!
+                                Ora ti chiediamo di rispondere ad alcune domande. Ci teniamo a ricordarti che non esistono risposte giuste o sbagliate, perciò rispondi semplicemente nella maniera che ti sembra più sensata.
                             </div>
                         </div>
                     </div>
@@ -126,16 +86,14 @@
                     <div x-show="step === 2" id="section-2" class="text-xl text-left pt-3">
                         <p class="text-2xl w-full text-center">2 su <span class="num_slides"></span></p>
                         <div class="my-5">
-                            <div class="font-bold mb-5">Attacchi <i>DoS</i></div>
+                            <div class="font-bold mb-5">Attacco n. 1</div>
                             <p class="pb-2">
-                                Alexa è in grado di riconoscere attacchi che possono limitare il funzionamento di un dispositivo.<br>
-                                Un criminale, infatti, può lanciare un attacco del genere (in gergo chiamato "DoS") per intasare un dispositivo con dati inutili e causarne un blocco temporaneo, rendendolo inutilizzabile.<br>
-                                Per proteggersi, si può intervenire, ad esempio, isolando il dispositivo, bloccandone le comunicazioni in entrata.<br>
-                                Una telecamera di sicurezza in casa di Marco potrebbe essere un bersaglio per malintenzionati con l'intento di violare il perimetro della casa.<br>
-                                - Come completeresti questa regola ECA per proteggere le telecamere di sicurezza da attacchi simili?
+                                Una telecamera di sicurezza in casa di Andrea potrebbe essere un bersaglio per malintenzionati.
+                                <br/><br/>
+                                - Completa la seguente regola definendo l'azione che secondo te deve essere eseguita per difendersi da questo attacco.
                             </p>
                             <div class="my-4 text-center font-bold text-xl">
-                                <span>"Alexa, SE rilevi un attacco alle telecamere di sicurezza [...]"</span>
+                                <span>"Alexa, SE rilevi un attacco alle telecamere di sicurezza ALLORA [...]"</span>
                             </div>
                             <textarea rows="10" name="question_1" placeholder="Scrivi qui... (almeno 20 caratteri)"
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
@@ -147,9 +105,8 @@
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- (Opzionale) Riguardo questo attacco, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
-                                    Motiva eventualmente la tua risposta.
-                                </span>
+                                - (Opzionale) Riguardo l'attacco precedente, ti vengono in mente altri modi per dire ad Alexa come proteggerti da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.). <br>
+                                    Eventualmente, motiva la tua risposta.
                             </p>
                             <textarea rows="3" name="question_1_alt" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
@@ -159,14 +116,14 @@
                     <div x-show="step === 3" id="section-3" class="text-xl text-left pt-3">
                         <p class="text-2xl w-full text-center">3 su <span class="num_slides"></span></p>
                         <div class="my-5">
-                            <div class="font-bold mb-5">Protezione da Virus</div>
+                            <div class="font-bold mb-5">Attacco n. 2</div>
                             <p class="pb-2">
-                                Un hacker potrebbe voler inserire del codice malevolo, come un virus, su un dispositivo nella smart home di Marco. Alexa è in grado di riconoscere eventuale codice malevolo all'interno della rete e può mettere in sicurezza i suoi dispositivi, ad esempio, mettendo in quarantena i file infetti.
+                                La smart TV che Andrea ha in soggiorno potrebbe essere infettata da un virus.
                                 <br>
-                                Cosa potrebbe dire Marco ad Alexa per proteggere la sua smart TV da virus? Completa la seguente regola ECA:
+                                - Completa la seguente regola definendo l'evento che secondo te deve essere rilevato per difendersi da questo attacco.
                             </p>
                             <div class="my-4 text-center font-bold text-xl">
-                                <span>"Alexa, SE [...] ALLORA metti in quarantena i file sulla smart TV e fai una copia di backup dei dati"</span>
+                                <span>"Alexa, SE [...] ALLORA metti "in quarantena" i file sulla smart TV e fai una copia di backup dei dati"</span>
                             </div>
                             <textarea rows="10" name="question_2" placeholder="Scrivi qui... (almeno 20 caratteri)"
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
@@ -178,9 +135,8 @@
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- (Opzionale) Riguardo questo attacco, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
-                                    Motiva eventualmente la tua risposta.
-                                </span>
+                                - (Opzionale) Riguardo l'attacco precedente, ti vengono in mente altri modi per dire ad Alexa come proteggerti da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.). <br>
+                                Eventualmente, motiva la tua risposta.
                             </p>
                             <textarea rows="3" name="question_2_alt" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
@@ -190,13 +146,12 @@
                     <div x-show="step === 4" id="section-4" class="text-xl text-left pt-3">
                         <p class="text-2xl w-full text-center">4 su <span class="num_slides"></span></p>
                         <div class="my-5">
-                            <div class="font-bold mb-5">Furti di dati</div>
+                            <div class="font-bold mb-5">Attacco n. 3</div>
                             <p class="pb-2">
-                                Alexa può analizzare le comunicazioni nella rete e capire se ci sono possibili furti di dati. Ad esempio, si può accorgere che le telecamere di sicurezza stanno inviando i loro dati verso un dispositivo sconosciuto; questo significherebbe che qualcuno di non autorizzato riesce a visualizzare i video di sorveglianza delle telecamere di Marco.
+                                Il robot aspirapolvere di Andrea potrebbe essere attaccato con lo scopo di rubare dati e, ad esempio, ricostruire una mappa della casa.
                                 <br>
-                                Un altro dispositivo che un hacker potrebbe attaccare è il robot aspirapolvere: infatti, questo dispositivo raccoglie dati che possono essere utilizzati per ricostruire una mappa della casa di Marco ed eventualmente aiutare un ladro a pianificare furti con scasso.
+                                - Completa la seguente regola definendo l'azione che secondo te deve essere eseguita per difenderti da questo attacco.
                                 <br>
-                                - Come completeresti la seguente regola ECA per proteggere il robot aspirapolvere da furti di dati?
                             </p>
                             <div class="my-4 text-center font-bold text-xl">
                                 <span>"Alexa, SE rilevi un furto di dati dal robot aspirapolvere, ALLORA [...]"</span>
@@ -211,9 +166,8 @@
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- (Opzionale) Riguardo questo attacco, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
-                                    Motiva eventualmente la tua risposta.
-                                </span>
+                                - (Opzionale) Riguardo l'attacco precedente, ti vengono in mente altri modi per dire ad Alexa come proteggerti da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.). <br>
+                                Eventualmente, motiva la tua risposta.
                             </p>
                             <textarea rows="3" name="question_3_alt" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
@@ -224,11 +178,11 @@
                     <div x-show="step === 5" id="section-5" class="text-xl text-left pt-3">
                         <p class="text-2xl w-full text-center">5 su <span class="num_slides"></span></p>
                         <div class="my-5">
-                            <div class="font-bold mb-5">Accessi illeciti</div>
+                                <div class="font-bold mb-5">Attacco n. 4</div>
                             <p class="pb-2">
-                                Un malintenzionato potrebbe tentare di entrare in uno dei dispositivi smart di Marco provando ad accedervi provando svariate combinazioni di username e password. Alexa può rilevare questi tentativi di accesso illeciti ed impedire che un hacker riesca a trovare la combinazione giusta di username e password per accedere ai dati di un dispositivo.
-                                <br/>Un modo per proteggersi da un attacco simile potrebbe essere bloccare i tentativi di autenticazione dopo che un utente sbaglia le credenziali tante volte di fila.
-                                <br/>- Cosa potrebbe dire Marco ad Alexa per proteggersi da attacchi del genere? Prova a definire una regola ECA (o anche più, se lo ritieni necessario):
+                                Un malintenzionato potrebbe tentare di entrare in uno dei dispositivi smart di Andrea provando ad accedervi con svariate combinazioni di username e password.
+
+                                <br/>- Prova a definire una regola ECA (o più) per proteggerti da questo attacco.
                             </p>
                             <div class="my-4 text-center font-bold text-xl">
                                 <span>"Alexa, SE [...] ALLORA [...]"</span>
@@ -243,9 +197,8 @@
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- (Opzionale) Riguardo questo attacco, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
-                                    Motiva eventualmente la tua risposta.
-                                </span>
+                                - (Opzionale) Riguardo l'attacco precedente, ti vengono in mente altri modi per dire ad Alexa come proteggerti da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.). <br>
+                                Eventualmente, motiva la tua risposta.
                             </p>
                             <textarea rows="3" name="question_4_alt" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
@@ -256,11 +209,10 @@
                     <div x-show="step === 6" id="section-6" class="text-xl text-left pt-3">
                         <p class="text-2xl w-full text-center">6 su <span class="num_slides"></span></p>
                         <div class="my-5">
-                            <div class="font-bold mb-5">Scansione della rete</div>
+                            <div class="font-bold mb-5">Attacco n. 5</div>
                             <p class="pb-2">
-                                 Il router di casa garantisce a Marco una connessione ad Internet, ma potrebbe sfortunatamente avere qualche vulnerabilità dovuta ad una configurazione non corretta. Qualcuno, probabilmente un hacker, potrebbe scansionare la rete di casa in cerca di punti di accesso.
-                                <br/>Alexa è in grado di riconoscere scansioni di questo tipo e può mettere in sicurezza la rete di Marco chiudendo, ad esempio, i punti di accesso del router non essenziali per l'accesso ad Internet.
-                                <br/>- Cosa può dire Marco ad Alexa per proteggersi da attacchi del genere? Prova a definire una regola ECA (o anche più, se lo ritieni necessario):
+                                Il router di Andrea potrebbe essere scansionato da un hacker in cerca di vulnerabilità e punti di accesso alla rete di casa.
+                                <br/>- Prova a definire una regola ECA (o più) per proteggerti da questo attacco.
                             </p>
                             <div class="my-4 text-center font-bold text-xl">
                                 <span>"Alexa, SE [...] ALLORA [...]"</span>
@@ -275,9 +227,8 @@
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- (Opzionale) Riguardo questo attacco, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
-                                    Motiva eventualmente la tua risposta.
-                                </span>
+                                - (Opzionale) Riguardo l'attacco precedente, ti vengono in mente altri modi per dire ad Alexa come proteggerti da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.). <br>
+                                Eventualmente, motiva la tua risposta.
                             </p>
                             <textarea rows="3" name="question_5_alt" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
@@ -288,10 +239,10 @@
                     <div x-show="step === 7" id="section-7" class="text-xl text-left pt-3">
                         <p class="text-2xl w-full text-center">7 su <span class="num_slides"></span></p>
                         <div class="my-5">
-                            <div class="font-bold mb-5">Attività insolite</div>
+                            <div class="font-bold mb-5">Attacco n. 6</div>
                             <p class="pb-2">
-                                Marco è solito andare a letto entro mezzanotte, e quindi non controlla mai i suoi dispositivi dalle 00:00 alle 07:30, orario in cui si sveglia abitualmente. Alexa è in grado di riconoscere attività insolite sui dispositivi di casa: ad esempio, un accesso alle finestre per aprirle in piena notte, mentre Marco dorme (e per giunta in inverno!), può essere considerata un'attività sospetta e in quanto tale potenzialmente pericolosa.
-                                <br/>- Cosa può dire Marco ad Alexa per proteggersi da attacchi del genere? Prova a definire una regola ECA (o anche più, se lo ritieni necessario):
+                                Alexa è in grado di riconoscere attività insolite o sospette sui dispositivi di casa, come, ad esempio, l'apertura delle finestre in piena notte, mentre Andrea dorme.
+                                <br/>- Prova a definire una regola ECA (o più) per proteggerti da questo attacco.
                             </p>
                             <div class="my-4 text-center font-bold text-xl">
                                 <span>"Alexa, SE [...] ALLORA [...]"</span>
@@ -306,9 +257,8 @@
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- (Opzionale) Riguardo questo attacco, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
-                                    Motiva eventualmente la tua risposta.
-                                </span>
+                                - (Opzionale) Riguardo l'attacco precedente, ti vengono in mente altri modi per dire ad Alexa come proteggerti da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.). <br>
+                                Eventualmente, motiva la tua risposta.
                             </p>
                             <textarea rows="3" name="question_6_alt" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
