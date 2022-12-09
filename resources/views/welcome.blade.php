@@ -10,8 +10,8 @@
                     evaluation of an e-mail client.
                 </p>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    In this study, you have to interact with an email client to assess its usability.
-                    In doing this, please READ ALL THE EMAILS and, for those that you consider important, check that the links are all working.
+                    In this study, which will take about 15 minutes, you have to interact with an email client to assess its usability.
+                    In doing this, please READ ALL THE EMAILS and, for those that you consider important, check that all the links are working.
                 </p>
                 <p class="text-xl max-w-4xl text-left pt-4">
                     At the end of the study, you will have to fill in a questionnaire.

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class MailController extends Controller
 {
-    private int $number_mails = 15;
+    const MAILS_NUMBER = 14;
 
     public function show($folder = 'inbox', $id = null){
         if(!in_array($folder, ['inbox', 'sent', 'drafts', 'trash']))
@@ -22,7 +22,7 @@ class MailController extends Controller
             else
                 return redirect(route('show', ['folder' => $folder]));
         }
-        if(count(DB::table('useremailquestionnaire')->where('user_id', \Illuminate\Support\Facades\Auth::id())->get()) < $this->number_mails)
+        if(count(DB::table('useremailquestionnaire')->where('user_id', \Illuminate\Support\Facades\Auth::id())->get()) < self::MAILS_NUMBER)
             return view('email_page', ['folder' => $folder]);
         else {
             if(Auth::user()->followUpQuestionnaire != null)

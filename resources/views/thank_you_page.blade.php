@@ -13,6 +13,15 @@
                         <div class="text-center font-bold my-3 text-3xl w-full">
                             Thank you for taking the test!
                         </div>
+                        <p class="text-xl max-w-2xl text-left pt-3">
+                            We want to reassure you that the actions taken during the test will not have any consequence for you,
+                            as all the emails have been manually produced by our team and are not harmful.
+                            <br><br>
+                            For any further information, you can contact us at the email address <a href="mailto:francesco.greco@uniba.it">francesco.greco@uniba.it</a>.
+                            <br><br>
+                            Goodbye!<br>
+                            IVU Lab Team, University of Bari
+                        </p>
                     </div>
                     <div class="text-center mt-10">
                         <div class="w-full">

@@ -10,7 +10,7 @@
         <div style="position: sticky; top: 0; left: 0; z-index: 10;"
              class="p-6 shadow-lg bg-gray-700 text-white">
             <p>
-                <span class="font-semibold">Goal:</span> Please READ ALL THE EMAILS and, for those that you consider important, check that the links are all working.
+                <span class="font-semibold">Goal:</span> Please READ ALL THE EMAILS and, for those that you consider important, check that all the links are working.
             </p>
         </div>
         <div

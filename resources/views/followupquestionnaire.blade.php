@@ -15,124 +15,80 @@
                     </div>
                     <!--- DISCLAIMER SECTION 0 --->
                     <div x-show="step === 0" id="section-0">
-                        <div class="text-3xl font-bold text-left mb-5 cursor-pointer">Thank you for completing our
-                            test.
+                        <div class="text-3xl font-bold text-left mb-5 cursor-pointer">We're almost done...
                         </div>
                         <p class="text-xl max-w-2xl text-left pt-3">
                             When we invited you to participate in the study, we told you that the purpose of the study
                             was to evaluate an email client. However, there is another purpose that we did not tell you
-                            so as not to influence your actions. Indeed, this test aimed also to assess the inclusion of
-                            warning message in the email client.
+                            in order to not influence your actions in any way. Indeed, this test aimed to assess the effectiveness of
+                            different warning message designs in email clients.
                         </p>
                         <p class="text-xl max-w-2xl text-left pt-4">
                             To complete this study, we ask you to go ahead and fill in the final questionnaire on the
                             warning messages you have seen during the interaction.
                         </p>
                     </div>
-                    <!--- SECTION 1 --->
+
+                    <!--- WARNING QUESTIONS --->
                     <div x-show="step === 1" id="section-1">
-                        <p class="text-2xl w-full text-center">Section 1 of 5</p>
-                        <div class="my-5">
-                            <p class="font-bold pb-1">Which parts of the email seemed suspicious?</p>
-                            <input required type="text" name="parts_email_suspicious"
-                                   placeholder="Type your answer here..."
-                                   class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"/>
-                        </div>
-                        <div class="my-5">
-                            <p class="font-bold pb-1">How well do you know {{$vendor_1}}?</p>
-                            <label for="steps-range"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
-                                <div>
-                                    1
-                                </div>
-                                <div class="flex-1"></div>
-                                <div>
-                                    5
-                                </div>
-                            </label>
-                            <div class="w-full">
-                                <input type="range" list="know_email_1" value="1" min="1" max="5" step="1"
-                                       name="know_email_1" class="w-full">
-                                <datalist id="know_email_1">
-                                    <option value="1"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="4"></option>
-                                    <option value="5"></option>
-                                </datalist>
-                            </div>
-                        </div>
-                        <div class="my-5">
-                            <p class="font-bold pb-1">How well do you know {{$vendor_2}}?</p>
-                            <label for="steps-range"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
-                                <div>
-                                    1
-                                </div>
-                                <div class="flex-1"></div>
-                                <div>
-                                    5
-                                </div>
-                            </label>
-                            <div class="w-full">
-                                <input type="range" list="know_email_2" value="1" min="1" max="5" step="1"
-                                       name="know_email_2" class="w-full">
-                                <datalist id="know_email_2">
-                                    <option value="1"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="4"></option>
-                                    <option value="5"></option>
-                                </datalist>
-                            </div>
-                        </div>
-                    </div>
-                    <!--- SECTION 2 --->
-                    <div x-show="step === 2" id="section-2">
-                        <p class="text-2xl w-full text-center">Section 2 of 5</p>
+                        <p class="text-2xl w-full text-center">Section 1 of 4</p>
                         <p class="text-lg text-left pt-5">
                             During the study you were exposed to this warning message that alerted you against phishing
                             attacks:
                         </p>
                         <img class="mx-auto my-7 w-2/4"
                              src="{{ url('/assets/img/' . \Illuminate\Support\Facades\Auth::user()->warning_type .'.png') }}">
-                        <div class="my-5">
-                            <p class="font-bold pb-1">Have you read the warning during the study?</p>
-                            <div class="flex">
-                                <div class="flex items-center mr-4">
-                                    <input id="inline-radio" type="radio" value="1" name="have_read_warning"
+                        <div class="my-10">
+                            <p class="font-bold pb-1">Did you read the entire text of the warning dialogs that were presented to you?</p>
+                            <div>
+                                <div class="flex items-center mr-4 mb-2">
+                                    <input id="read_warning_1" type="radio" value="2" name="read_warning"
                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                            required>
-                                    <label for="inline-radio"
+                                    <label for="read_warning_1"
                                            class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Yes</label>
                                 </div>
-                                <div class="flex items-center mr-4">
-                                    <input id="inline-2-radio" type="radio" value="0" name="have_read_warning"
+                                <div class="flex items-center mr-4  mb-2">
+                                    <input id="read_warning_2" type="radio" value="1" name="read_warning"
                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                            required>
-                                    <label for="inline-2-radio"
+                                    <label for="read_warning_2"
+                                           class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Partially</label>
+                                </div>
+                                <div class="flex items-center mr-4 mb-2">
+                                    <input id="read_warning_3" type="radio" value="0" name="read_warning"
+                                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                           required>
+                                    <label for="read_warning_3"
                                            class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">No</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="my-5">
-                            <p class="font-bold pb-1">How useful was the warning to understand that the link was a
-                                scam?</p>
-                            <label for="steps-range"
+
+                        <div class="my-10">
+                            <p class="font-bold pb-1">When you saw the warning dialog, what was your first
+                                reaction?</p>
+                            <input required type="text" name="reaction"
+                                   placeholder="Type your answer here..." maxlength="255"
+                                   class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"/>
+                        </div>
+
+                        <div class="my-10">
+                            <p class="font-bold pb-1">I understood the warning dialog clearly.</p>
+                            <label for="understood_warning"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
-                                    1
+                                    1 (Don't agree)
                                 </div>
                                 <div class="flex-1"></div>
                                 <div>
-                                    5
+                                    5 (Totally agree)
                                 </div>
                             </label>
                             <div class="w-full">
-                                <input type="range" list="how_warning_useful_identifying_link" value="1" min="1" max="5"
-                                       step="1"
-                                       name="how_warning_useful_identifying_link" class="w-full">
-                                <datalist id="how_warning_useful_identifying_link">
+                                <input type="range" list="understood_warning" value="1" min="1" max="5" step="1"
+                                       name="understood_warning" class="w-full">
+                                <datalist id="understood_warning">
                                     <option value="1"></option>
                                     <option value="2"></option>
                                     <option value="3"></option>
@@ -141,22 +97,23 @@
                                 </datalist>
                             </div>
                         </div>
-                        <div class="my-5">
-                            <p class="font-bold pb-1">How annoying was the warning?</p>
-                            <label for="steps-range"
+
+                        <div class="my-10">
+                            <p class="font-bold pb-1">I am familiar with this warning dialog.</p>
+                            <label for="familiar_warning"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
-                                    1
+                                    1 (Don't agree)
                                 </div>
                                 <div class="flex-1"></div>
                                 <div>
-                                    5
+                                    5 (Totally agree)
                                 </div>
                             </label>
                             <div class="w-full">
-                                <input type="range" list="how_annoying_warning_was" value="1" min="1" max="5" step="1"
-                                       name="how_annoying_warning_was" class="w-full">
-                                <datalist id="how_annoying_warning_was">
+                                <input type="range" list="familiar_warning" value="1" min="1" max="5" step="1"
+                                       name="familiar_warning" class="w-full">
+                                <datalist id="familiar_warning">
                                     <option value="1"></option>
                                     <option value="2"></option>
                                     <option value="3"></option>
@@ -165,24 +122,23 @@
                                 </datalist>
                             </div>
                         </div>
-                        <div class="my-5">
-                            <p class="font-bold pb-1">How much did the warning affect your perception on the genuinity
-                                (safe or scam) of the email?</p>
-                            <label for="steps-range"
+
+                        <div class="my-10">
+                            <p class="font-bold pb-1">I am not interested in this warning dialog.</p>
+                            <label for="interested_warning"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
-                                    1
+                                    1 (Don't agree)
                                 </div>
                                 <div class="flex-1"></div>
                                 <div>
-                                    5
+                                    5 (Totally agree)
                                 </div>
                             </label>
                             <div class="w-full">
-                                <input type="range" list="how_warning_perception_link" value="1" min="1" max="5"
-                                       step="1"
-                                       name="how_warning_perception_link" class="w-full">
-                                <datalist id="how_warning_perception_link">
+                                <input type="range" list="interested_warning" value="1" min="1" max="5" step="1"
+                                       name="interested_warning" class="w-full">
+                                <datalist id="interested_warning">
                                     <option value="1"></option>
                                     <option value="2"></option>
                                     <option value="3"></option>
@@ -191,43 +147,158 @@
                                 </datalist>
                             </div>
                         </div>
-                        <div class="my-5">
-                            <p class="font-bold pb-1">How evident was the warning?</p>
-                            <label for="steps-range"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
-                                <div>
-                                    1
+
+                        <div class="my-10">
+                            <p class="font-bold pb-1">Which word(s) did you find confusing or too technical?</p>
+                            <input required type="text" name="confusing_words"
+                                   placeholder="Type your answer here..." maxlength="255"
+                                   class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"/>
+                        </div>
+
+                        <div class="my-10">
+                            <p class="font-bold pb-1">
+                                Please rate the extent of risk you feel you were warned about.</p>
+                            <div class="">
+                                <div class="flex items-center mr-4 mb-2">
+                                    <input id="felt_risk_0" type="radio" value="0" name="felt_risk"
+                                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                           required>
+                                    <label for="felt_risk_0"
+                                           class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">No risk</label>
                                 </div>
-                                <div class="flex-1"></div>
-                                <div>
-                                    5
+                                <div class="flex items-center mr-4 mb-2">
+                                    <input id="felt_risk_1" type="radio" value="1" name="felt_risk"
+                                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                           required>
+                                    <label for="felt_risk_1"
+                                           class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Very low risk</label>
                                 </div>
-                            </label>
-                            <div class="w-full">
-                                <input type="range" list="how_evident_was_warning" value="1" min="1" max="5" step="1"
-                                       name="how_evident_was_warning" class="w-full">
-                                <datalist id="how_evident_was_warning">
-                                    <option value="1"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="4"></option>
-                                    <option value="5"></option>
-                                </datalist>
+                                <div class="flex items-center mr-4 mb-2">
+                                    <input id="felt_risk_2" type="radio" value="2" name="felt_risk"
+                                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                           required>
+                                    <label for="felt_risk_2"
+                                           class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Low risk</label>
+                                </div>
+                                <div class="flex items-center mr-4 mb-2">
+                                    <input id="felt_risk_3" type="radio" value="3" name="felt_risk"
+                                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                           required>
+                                    <label for="felt_risk_3"
+                                           class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Risky</label>
+                                </div>
+                                <div class="flex items-center mr-4 mb-2">
+                                    <input id="felt_risk_4" type="radio" value="4" name="felt_risk"
+                                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                           required>
+                                    <label for="felt_risk_4"
+                                           class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Very high risk</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="my-5">
-                            <p class="font-bold pb-1">How do you think we can improve the warning messages?
-                                (optional)</p>
-                            <textarea rows="2" name="explanation_feedback" placeholder="Type your answer here..."
-                                      class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
+
+                        <div class="my-10">
+                            <p class="font-bold pb-1">
+                                What action, if any, did the warning dialog want you to take?
+                            </p>
+                            <div class="">
+                                <div class="flex items-center mr-4 mb-2">
+                                    <input id="actions_warning_1" type="radio" value="continue" name="actions_warning"
+                                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                           required>
+                                    <label for="actions_warning_1"
+                                           class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">To continue to the website</label>
+                                </div>
+                                <div class="flex items-center mr-4 mb-2">
+                                    <input id="actions_warning_2" type="radio" value="be_careful" name="actions_warning"
+                                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                           required>
+                                    <label for="actions_warning_2"
+                                           class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">To be careful while continuing to the website</label>
+                                </div>
+                                <div class="flex items-center mr-4 mb-2">
+                                    <input id="actions_warning_3" type="radio" value="not_continue" name="actions_warning"
+                                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                           required>
+                                    <label for="actions_warning_3"
+                                           class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">To not continue to the website</label>
+                                </div>
+                                <div class="flex items-center mr-4 mb-2">
+                                    <input id="actions_warning_4" type="radio" value="none" name="actions_warning"
+                                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                           required>
+                                    <label for="actions_warning_4"
+                                           class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I did not feel anything</label>
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="my-10">
+                            <p class="font-bold pb-1">What do you think this warning dialog means?</p>
+                            <input required type="text" name="meaning_warning"
+                                   placeholder="Type your answer here..." maxlength="255"
+                                   class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"/>
+                        </div>
+
+
+                        <div class="my-10">
+                            <p class="font-bold pb-1">
+                                Please rate your level of trust in this warning dialog.
+                            </p>
+                            <div class="mb-2">
+                                <div class="flex items-center mr-4 mb-2">
+                                    <input id="trust_warning_0" type="radio" value="0" name="trust_warning"
+                                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                           required>
+                                    <label for="trust_warning_0"
+                                           class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Not at all confident</label>
+                                </div>
+                                <div class="flex items-center mr-4 mb-2">
+                                    <input id="trust_warning_1" type="radio" value="1" name="trust_warning"
+                                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                           required>
+                                    <label for="trust_warning_1"
+                                           class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Not very confident</label>
+                                </div>
+                                <div class="flex items-center mr-4 mb-2">
+                                    <input id="trust_warning_2" type="radio" value="2" name="trust_warning"
+                                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                           required>
+                                    <label for="trust_warning_2"
+                                           class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Neutral</label>
+                                </div>
+                                <div class="flex items-center mr-4 mb-2">
+                                    <input id="trust_warning_3" type="radio" value="3" name="trust_warning"
+                                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                           required>
+                                    <label for="trust_warning_3"
+                                           class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Confident</label>
+                                </div>
+                                <div class="flex items-center mr-4 mb-2">
+                                    <input id="trust_warning_4" type="radio" value="4" name="trust_warning"
+                                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                           required>
+                                    <label for="trust_warning_4"
+                                           class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Very confident</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="my-10">
+                            <p class="font-bold pb-1">What is the first word in this warning dialog?</p>
+                            <input required type="text" name="first_word"
+                                   placeholder="Type your answer here..." maxlength="255"
+                                   class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"/>
+                        </div>
+
                     </div>
-                    <!--- SECTION 3 --->
-                    <div x-show="step === 3" id="section-3">
-                        <p class="text-2xl w-full text-center">Section 3 of 5</p>
+
+                    <!--- NASA-TLX Questionnaire --->
+                    <div x-show="step === 2" id="section-2">
+                        <p class="text-2xl w-full text-center">Section 2 of 4</p>
                         <div class="my-5">
                             <p class="font-bold pb-1">How mentally demanding was the task?</p>
-                            <label for="steps-range"
+                            <label for="tick-1"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
                                     Very Low
@@ -257,7 +328,7 @@
                         </div>
                         <div class="my-6">
                             <p class="font-bold pb-1">How physically demanding was the task?</p>
-                            <label for="steps-range"
+                            <label for="tick-2"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
                                     Very Low
@@ -287,7 +358,7 @@
                         </div>
                         <div class="my-6">
                             <p class="font-bold pb-1">How hurried or rushed was the pace of the task?</p>
-                            <label for="steps-range"
+                            <label for="tick-3"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
                                     Very Low
@@ -318,7 +389,7 @@
                         <div class="my-6">
                             <p class="font-bold pb-1">How successful were you in accomplishing what you were asked to
                                 do?</p>
-                            <label for="steps-range"
+                            <label for="tick-4"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
                                     Very Low
@@ -349,7 +420,7 @@
                         <div class="my-6">
                             <p class="font-bold pb-1">How hard did you have to work to accomplish your level of
                                 performance?</p>
-                            <label for="steps-range"
+                            <label for="tick-5"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
                                     Very Low
@@ -380,7 +451,7 @@
                         <div class="my-6">
                             <p class="font-bold pb-1">How insecure, discouraged, irritated, stressed and annoyed were
                                 you?</p>
-                            <label for="steps-range"
+                            <label for="tick-6"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
                                     Very Low
@@ -409,17 +480,17 @@
                             </div>
                         </div>
                     </div>
-                    <!--- SECTION 4 --->
-                    <div x-show="step === 4" id="section-4">
-                        <p class="text-2xl w-full text-center">Section 4 of 5</p>
+
+                    <!--- CYBERSECURITY QUESTIONNAIRE --->
+                    <div x-show="step === 3" id="section-3">
+                        <p class="text-2xl w-full text-center">Section 3 of 4</p>
                         <div class="my-8">
                             <p class="font-bold pb-1">What does the “https://” at the beginning of a URL denote, as
                                 opposed to
                                 http:// (without the “s”)?</p>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_0_1" type="radio" value="That the
-                            site has special high definition" name="cyber_1"
+                                <input id="cb_0_1" type="radio" value="0" name="cyber_1"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_0_1"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">That
@@ -428,8 +499,7 @@
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_0_2" type="radio" value="That
-                            information entered into the site is encrypted" name="cyber_1"
+                                <input id="cb_0_2" type="radio" value="1" name="cyber_1"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_0_2"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">That
@@ -437,8 +507,7 @@
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_0_3" type="radio" value="That the
-                            site is the newest version available" name="cyber_1"
+                                <input id="cb_0_3" type="radio" value="2" name="cyber_1"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_0_3"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">That
@@ -447,8 +516,7 @@
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_0_4" type="radio" value="That the
-                            site is not accessible to certain computers" name="cyber_1"
+                                <input id="cb_0_4" type="radio" value="3" name="cyber_1"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_0_4"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">That
@@ -457,8 +525,7 @@
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_0_5" type="radio" value="None of the
-                            above" name="cyber_1"
+                                <input id="cb_0_5" type="radio" value="4" name="cyber_1"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_0_5"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">None
@@ -467,7 +534,7 @@
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_0_6" type="radio" value="Not sure" name="cyber_1"
+                                <input id="cb_0_6" type="radio" value="5" name="cyber_1"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_0_6"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Not
@@ -478,9 +545,7 @@
                             <p class="font-bold pb-1">Which of the following is an example of a “phishing” attack?</p>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_1-1" type="radio" value="Sending
-                            someone an email that contains a malicious link that is disguised to look like an email from
-                            someone the person knows" name="cyber_2"
+                                <input id="cb_1-1" type="radio" value="1" name="cyber_2"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_1-1"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Sending
@@ -490,9 +555,7 @@
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_1-2" type="radio" value="Creating a
-                            fake website that looks nearly identical to a real website in order to trick users into
-                            entering their login information" name="cyber_2"
+                                <input id="cb_1-2" type="radio" value="2" name="cyber_2"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_1-2"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Creating
@@ -503,9 +566,7 @@
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_1-3" type="radio" value="Sending
-                            someone a text message that contains a malicious link that is disguised to look like a
-                            notification that the person has won a contest" name="cyber_2"
+                                <input id="cb_1-3" type="radio" value="3" name="cyber_2"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_1-3"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Sending
@@ -515,8 +576,7 @@
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_1-4" type="radio" value="All of the
-                            above" name="cyber_2"
+                                <input id="cb_1-4" type="radio" value="4" name="cyber_2"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_1-4"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">All
@@ -525,7 +585,7 @@
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_1-5" type="radio" value="Not sure" name="cyber_2"
+                                <input id="cb_1-5" type="radio" value="5" name="cyber_2"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_1-5"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Not
@@ -538,28 +598,28 @@
                                 steal information is called a...</p>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_2_1" type="radio" value="Botnet" name="cyber_3"
+                                <input id="cb_2_1" type="radio" value="1" name="cyber_3"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_2_1"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Botnet</label>
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_2_2" type="radio" value="Rootkit" name="cyber_3"
+                                <input id="cb_2_2" type="radio" value="2" name="cyber_3"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_2_2"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Rootkit</label>
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_2_3" type="radio" value="DDoS" name="cyber_3"
+                                <input id="cb_2_3" type="radio" value="3" name="cyber_3"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_2_3"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">DDoS</label>
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_2_4" type="radio" value="Operating system" name="cyber_3"
+                                <input id="cb_2_4" type="radio" value="4" name="cyber_3"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_2_4"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Operating
@@ -567,7 +627,7 @@
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_2_5" type="radio" value="Not sure" name="cyber_3"
+                                <input id="cb_2_5" type="radio" value="5" name="cyber_3"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_2_5"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Not
@@ -629,35 +689,35 @@
                             <p class="font-bold pb-1">Which of the following four passwords is the most secure?</p>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_4_1" type="radio" value="Boat123" name="cyber_5"
+                                <input id="cb_4_1" type="radio" value="1" name="cyber_5"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_4_1"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Boat123</label>
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_4_2" type="radio" value="WTh!5Z" name="cyber_5"
+                                <input id="cb_4_2" type="radio" value="2" name="cyber_5"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_4_2"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">WTh!5Z</label>
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_4_3" type="radio" value="into*48" name="cyber_5"
+                                <input id="cb_4_3" type="radio" value="3" name="cyber_5"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_4_3"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">into*48</label>
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_4_4" type="radio" value="123456" name="cyber_5"
+                                <input id="cb_4_4" type="radio" value="4" name="cyber_5"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_4_4"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">123456</label>
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_4_5" type="radio" value="Not sure" name="cyber_5"
+                                <input id="cb_4_5" type="radio" value="5" name="cyber_5"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_4_5"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Not
@@ -672,35 +732,35 @@
                                 files. This practice is called...</p>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_5_1" type="radio" value="Botnet" name="cyber_6"
+                                <input id="cb_5_1" type="radio" value="1" name="cyber_6"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_5_1"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Botnet</label>
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_5_2" type="radio" value="Ransomware" name="cyber_6"
+                                <input id="cb_5_2" type="radio" value="2" name="cyber_6"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_5_2"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Ransomware</label>
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_5_3" type="radio" value="Driving" name="cyber_6"
+                                <input id="cb_5_3" type="radio" value="3" name="cyber_6"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_5_3"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Driving</label>
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_5_4" type="radio" value="Spam" name="cyber_6"
+                                <input id="cb_5_4" type="radio" value="4" name="cyber_6"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_5_4"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Spam</label>
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_5_5" type="radio" value="None of the above" name="cyber_6"
+                                <input id="cb_5_5" type="radio" value="5" name="cyber_6"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_5_5"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">None
@@ -709,7 +769,7 @@
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_5_6" type="radio" value="Not sure" name="cyber_6"
+                                <input id="cb_5_6" type="radio" value="6" name="cyber_6"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_5_6"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Not
@@ -725,21 +785,21 @@
                                 subscribers are using private browsing?</p>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_6_1" type="radio" value="Yes" name="cyber_7"
+                                <input id="cb_6_1" type="radio" value="0" name="cyber_7"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_6_1"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Yes</label>
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_6_2" type="radio" value="No" name="cyber_7"
+                                <input id="cb_6_2" type="radio" value="1" name="cyber_7"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_6_2"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">No</label>
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_6_3" type="radio" value="Not sure" name="cyber_7"
+                                <input id="cb_6_3" type="radio" value="2" name="cyber_7"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_6_3"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Not
@@ -752,21 +812,21 @@
                                 your phone’s location.</p>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_7_1" type="radio" value="True" name="cyber_8"
+                                <input id="cb_7_1" type="radio" value="0" name="cyber_8"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_7_1"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">True</label>
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_7_2" type="radio" value="False" name="cyber_8"
+                                <input id="cb_7_2" type="radio" value="1" name="cyber_8"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_7_2"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">False</label>
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_7_3" type="radio" value="Not sure" name="cyber_8"
+                                <input id="cb_7_3" type="radio" value="2" name="cyber_8"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_7_3"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Not
@@ -781,7 +841,7 @@
                                 online banking?</p>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_8_1" type="radio" value="Yes, it is safe" name="cyber_9"
+                                <input id="cb_8_1" type="radio" value="0" name="cyber_9"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_8_1"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Yes,
@@ -790,7 +850,7 @@
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_8_2" type="radio" value="No, it is not safe" name="cyber_9"
+                                <input id="cb_8_2" type="radio" value="1" name="cyber_9"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_8_2"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">No,
@@ -799,7 +859,7 @@
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_8_3" type="radio" value="Not sure" name="cyber_9"
+                                <input id="cb_8_3" type="radio" value="2" name="cyber_9"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_8_3"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Not
@@ -812,7 +872,7 @@
                                 Private Network (VPN)?</p>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_9_1" type="radio" value="Use of insecure Wi-Fi networks" name="cyber_10"
+                                <input id="cb_9_1" type="radio" value="1" name="cyber_10"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_9_1"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Use
@@ -821,14 +881,14 @@
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_9_2" type="radio" value="Key-logging" name="cyber_10"
+                                <input id="cb_9_2" type="radio" value="2" name="cyber_10"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_9_2"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Key-logging</label>
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_9_3" type="radio" value="De-anonymization by network operators"
+                                <input id="cb_9_3" type="radio" value="3"
                                        name="cyber_10"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_9_3"
@@ -837,7 +897,7 @@
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_9_4" type="radio" value="Phishing attacks" name="cyber_10"
+                                <input id="cb_9_4" type="radio" value="4" name="cyber_10"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_9_4"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Phishing
@@ -845,7 +905,7 @@
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
-                                <input id="cb_9_5" type="radio" value="Not sure" name="cyber_10"
+                                <input id="cb_9_5" type="radio" value="5" name="cyber_10"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_9_5"
                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Not
@@ -853,11 +913,13 @@
                             </div>
                         </div>
                     </div>
-                    <div x-show="step === 5" class="pt-1">
-                        <p class="text-2xl w-full text-center">Section 5 of 5</p>
+
+                    <!-- DEMOGRAPHICS -->
+                    <div x-show="step === 4" class="pt-1">
+                        <p class="text-2xl w-full text-center">Section 4 of 4</p>
                         <div class="my-5">
                             <p class="font-bold pb-1">How old are you?</p>
-                            <input required type="number" name="age" min="14" max="100" value="14"
+                            <input required type="number" name="age" min="10" max="100" value="20"
                                    class="block text-sm px-4 rounded-lg py-3 border outline-none"/>
                         </div>
                         <div class="my-5">
@@ -900,7 +962,7 @@
                             </div>
                         </div>
                     </div>
-                    <div x-show="step === 6" class="pt-1">
+                    <div x-show="step === 5" class="pt-1">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                              stroke="currentColor" class="w-12 h-12 mx-auto stroke-green-500 animate-spin">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -933,6 +995,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
             function load() {
+                let num_steps = 4;
                 $("#form").show();
                 return {
                     step: 0,
@@ -944,7 +1007,7 @@
 
                         $(window).scrollTop(0);
 
-                        if (this.step < 5) {
+                        if (this.step < num_steps) {
                             $("#next").text("Next");
                         }
                     },
@@ -960,65 +1023,81 @@
                                     } else
                                         $(this).removeClass('border-red-500');
                                 });
-                                break;
-                            case 2:
-                                if (!$("input[name=have_read_warning]").is(':checked')) {
-                                    check = false;
-                                    $("input[name=have_read_warning]").removeClass('border-gray-300');
-                                    $("input[name=have_read_warning]").addClass('border-red-500');
-                                    $('input[name=have_read_warning]').change(_ => {
-                                        $("input[name=have_read_warning]").removeClass('border-red-500');
-                                        $("input[name=have_read_warning]").addClass('border-gray-300');
-                                    });
-                                } else
-                                    check = (check && true);
-                                break;
-
-                            case 4:
-                                for (let i = 1; i <= 10; i++) {
-                                    let input = 'input[name=cyber_' + i + ']';
-                                    if (!$(input).is(':checked')) {
+                                const questions = ["read_warning", "felt_risk", "actions_warning", "trust_warning"]
+                                for (const question in questions) {
+                                    let input_answer_i = $('input[name=' + questions[question] + ']');
+                                    if (!input_answer_i.is(':checked')) {
                                         check = false;
-                                        $(input).parent().removeClass('border-gray-300');
-                                        $(input).parent().addClass('border-red-500');
-                                        $(input).change(_ => {
-                                            $(input).parent().removeClass('border-red-500');
-                                            $(input).parent().addClass('border-gray-300');
+                                        let parent = input_answer_i.parent().parent()
+                                        console.log (input_answer_i)
+                                        parent.addClass('border-red-500');
+                                        parent.attr('style', 'border-width:1px;')
+                                        input_answer_i.change(_ => {
+                                            parent.removeClass('border-red-500');
+                                            parent.removeAttr('style')
                                         });
                                     } else
                                         check = (check && true);
                                 }
                                 break;
-                            case 5:
-                                if (!$("input[name=gender]").is(':checked')) {
+                            case 2:
+                                $("#section-2 :input").each(function () {
+                                    check = ($(this).val() != "" && check);
+                                    if ($(this).val() == "") {
+                                        $(this).addClass('border-red-500');
+                                        $(this).change(_ => $(this).removeClass('border-red-500'));
+                                    } else
+                                        $(this).removeClass('border-red-500');
+                                });
+                                break;
+                            case 3:
+                                for (let i = 1; i <= 10; i++) {
+                                    let input_answer_i = $('input[name=cyber_' + i + ']');
+                                    if (!input_answer_i.is(':checked')) {
+                                        check = false;
+                                        input_answer_i.parent().removeClass('border-gray-300');
+                                        input_answer_i.parent().addClass('border-red-500');
+                                        input_answer_i.change(_ => {
+                                            input_answer_i.parent().removeClass('border-red-500');
+                                            input_answer_i.parent().addClass('border-gray-300');
+                                        });
+                                    } else
+                                        check = (check && true);
+                                }
+                                break;
+                            case 4:
+                                let input_gender = $("input[name=gender]")
+                                if (!input_gender.is(':checked')) {
                                     check = false;
-                                    $("input[name=gender]").removeClass('border-gray-300');
-                                    $("input[name=gender]").addClass('border-red-500');
-                                    $('input[name=gender]').change(_ => {
-                                        $("input[name=gender]").removeClass('border-red-500');
-                                        $("input[name=gender]").addClass('border-gray-300');
+                                    input_gender.removeClass('border-gray-300');
+                                    input_gender.addClass('border-red-500');
+                                    input_gender.change(_ => {
+                                        input_gender.removeClass('border-red-500');
+                                        input_gender.addClass('border-gray-300');
                                     });
                                 } else
                                     check = (check && true);
 
-                                if ($('input[name=age]').val() < 14 || $('input[name=age]').val() > 100) {
+                                let input_age = $('input[name=age]')
+                                if (input_age.val() < 10 || input_age.val() > 100) {
                                     check = false;
-                                    $("input[name=age]").removeClass('border-gray-300');
-                                    $("input[name=age]").addClass('border-red-500');
-                                    $('input[name=age]').change(_ => {
-                                        $("input[name=age]").removeClass('border-red-500');
-                                        $("input[name=age]").addClass('border-gray-300');
+                                    input_age.removeClass('border-gray-300');
+                                    input_age.addClass('border-red-500');
+                                    input_age.change(_ => {
+                                        input_age.removeClass('border-red-500');
+                                        input_age.addClass('border-gray-300');
                                     });
                                 } else
                                     check = (check && true);
 
-                                if ($('input[name=num_hours_day_internet]').val() < 0) {
+                                let input_hours = $('input[name=num_hours_day_internet]')
+                                if (input_hours.val() < 0) {
                                     check = false;
-                                    $("input[name=num_hours_day_internet]").removeClass('border-gray-300');
-                                    $("input[name=num_hours_day_internet]").addClass('border-red-500');
-                                    $('input[name=num_hours_day_internet]').change(_ => {
-                                        $("input[name=num_hours_day_internet]").removeClass('border-red-500');
-                                        $("input[name=num_hours_day_internet]").addClass('border-gray-300');
+                                    input_hours.removeClass('border-gray-300');
+                                    input_hours.addClass('border-red-500');
+                                    input_hours.change(_ => {
+                                        input_hours.removeClass('border-red-500');
+                                        input_hours.addClass('border-gray-300');
                                     });
                                 } else
                                     check = (check && true);
@@ -1027,29 +1106,30 @@
                         }
 
                         if (!check) {
-                            $("#alert").show();
-                            $("#alert").fadeTo("fast", 1, function () {
+                            let alert = $("#alert")
+                            alert.show();
+                            alert.fadeTo("fast", 1, function () {
                                 setTimeout(function () {
-                                    $("#alert").fadeTo("fast", 0, function () {
-                                        $("#alert").hide();
+                                    alert.fadeTo("fast", 0, function () {
+                                        alert.hide();
                                     });
                                 }, 10000);
                             });
 
                         }
 
-                        if (this.step !== 6 && check) { //!==5
+                        if (this.step !== num_steps+1 && check) {
                             this.step++;
                             $("#alert").hide();
                         }
 
                         $(window).scrollTop(0);
 
-                        if (this.step === 5) {
+                        if (this.step === num_steps) {
                             $("#next").text("Finish");
                         }
 
-                        if (this.step === 6) {
+                        if (this.step === num_steps+1) {
                             $("#form").submit();
                         }
                     }

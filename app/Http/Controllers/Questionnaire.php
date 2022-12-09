@@ -23,18 +23,32 @@ class Questionnaire extends Controller
         return redirect(route('show'));
     }
 
+    public function showFollowUp()
+    {
+        if (Auth::user()->followUpQuestionnaire != null) {
+            return redirect(route('thankyou'));
+        } elseif (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) < MailController::MAILS_NUMBER) {
+            return redirect(route('show', ['folder' => 'inbox']));
+        } else {
+            return view('followupquestionnaire');
+        }
+    }
+
     public function storeFollowUp(Request $request)
     {
         $questionnaire = new FollowUpQuestionnaire();
-        $questionnaire->parts_email_suspicious = $request->parts_email_suspicious;
-        $questionnaire->know_email_1 = $request->know_email_1;
-        $questionnaire->know_email_2 = $request->know_email_2;
-        $questionnaire->explanation_feedback = $request->explanation_feedback;
-        $questionnaire->have_read_warning = $request->have_read_warning == "1";
-        $questionnaire->how_warning_useful_identifying_link = $request->how_warning_useful_identifying_link;
-        $questionnaire->how_annoying_warning_was = $request->how_annoying_warning_was;
-        $questionnaire->how_warning_perception_link = $request->how_warning_perception_link;
-        $questionnaire->how_evident_was_warning = $request->how_evident_was_warning;
+        $questionnaire->read_warning = $request->read_warning;
+        $questionnaire->reaction = $request->reaction;
+        $questionnaire->understood_warning = $request->understood_warning;
+        $questionnaire->familiar_warning = $request->familiar_warning;
+        $questionnaire->interested_warning = $request->interested_warning;
+        $questionnaire->confusing_words = $request->confusing_words;
+        $questionnaire->felt_risk = $request->felt_risk;
+        $questionnaire->actions_warning = $request->actions_warning;
+        $questionnaire->meaning_warning = $request->meaning_warning;
+        $questionnaire->trust_warning = $request->trust_warning;
+        $questionnaire->first_word = $request->first_word;
+
         $questionnaire->nasa_mental_demand = $request->nasa_mental_demand;
         $questionnaire->nasa_physical_demand = $request->nasa_physical_demand;
         $questionnaire->nasa_temporal_demand = $request->nasa_temporal_demand;
@@ -61,39 +75,4 @@ class Questionnaire extends Controller
         return redirect(route('thankyou'));
     }
 
-    public function showFollowUp()
-    {
-        if (Auth::user()->followUpQuestionnaire != null) {
-            return redirect(route('thankyou'));
-        } elseif (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) < 10) {
-            return redirect(route('show', ['folder' => 'inbox']));
-        } else {
-            switch (Auth::user()->warning_type) {
-                case 'popup_email':
-                    $vendor_1 = "Bartolini";
-                    $vendor_2 = "Amazon";
-                    break;
-
-                case 'popup_link':
-                    $vendor_1 = "Poste Italiane";
-                    $vendor_2 = "TikTok";
-                    break;
-
-                case 'tooltip':
-                    $vendor_1 = "Trenitalia";
-                    $vendor_2 = "Facebook";
-                    break;
-
-                case 'browser_native':
-                    $vendor_1 = "Netflix";
-                    $vendor_2 = "Apple";
-                    break;
-
-                default:
-                    $vendor_1 = "";
-                    $vendor_2 = "";
-            }
-            return view('followupquestionnaire', ['vendor_1' => $vendor_1, 'vendor_2' => $vendor_2]);
-        }
-    }
 }
