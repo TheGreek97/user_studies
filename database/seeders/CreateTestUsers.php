@@ -21,8 +21,7 @@ class CreateTestUsers extends Seeder
             DB::table('users')->insert([
                 'name' => 'User',
                 'email' => 'user' . $i . '@mail.com',
-                'password' => Hash::make('uwhfsih89w3hfw' . $i),
-                'warning_type' => 'tooltip'
+                'password' => Hash::make('uwhfsih89w3hfw' . $i)
             ]);
         }
 
@@ -30,8 +29,7 @@ class CreateTestUsers extends Seeder
             DB::table('users')->insert([
                 'name' => 'User',
                 'email' => 'user' . $i . '@mail.com',
-                'password' => Hash::make('uwhfsih89w3hfw' . $i),
-                'warning_type' => 'browser_native'
+                'password' => Hash::make('uwhfsih89w3hfw' . $i)
             ]);
         }
 
@@ -39,8 +37,7 @@ class CreateTestUsers extends Seeder
             DB::table('users')->insert([
                 'name' => 'User',
                 'email' => 'user' . $i . '@mail.com',
-                'password' => Hash::make('uwhfsih89w3hfw' . $i),
-                'warning_type' => 'popup_email'
+                'password' => Hash::make('uwhfsih89w3hfw' . $i)
             ]);
         }
 
@@ -48,34 +45,29 @@ class CreateTestUsers extends Seeder
             DB::table('users')->insert([
                 'name' => 'User',
                 'email' => 'user' . $i . '@mail.com',
-                'password' => Hash::make('uwhfsih89w3hfw' . $i),
-                'warning_type' => 'popup_link'
+                'password' => Hash::make('uwhfsih89w3hfw' . $i)
             ]);
         }
 
         DB::table('users')->insert([
             'name' => Str::random(10),
             'email' => 'tooltip@mail.com',
-            'password' => Hash::make('12345678'),
-            'warning_type' => 'tooltip'
+            'password' => Hash::make('12345678')
         ]);
         DB::table('users')->insert([
             'name' => Str::random(10),
             'email' => 'popup.email@mail.com',
-            'password' => Hash::make('12345678'),
-            'warning_type' => 'popup_email'
+            'password' => Hash::make('12345678')
         ]);
         DB::table('users')->insert([
             'name' => Str::random(10),
             'email' => 'popup.link@mail.com',
-            'password' => Hash::make('12345678'),
-            'warning_type' => 'popup_link'
+            'password' => Hash::make('12345678')
         ]);
         DB::table('users')->insert([
             'name' => Str::random(10),
             'email' => 'browser.native@mail.com',
-            'password' => Hash::make('12345678'),
-            'warning_type' => 'browser_native'
+            'password' => Hash::make('12345678')
         ]);
     }
 }
