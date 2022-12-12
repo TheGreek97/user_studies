@@ -831,7 +831,7 @@
                         allow_to_go_back = true
                     }, 2000)
                 });
-                $("#phishing_link, #tooltip_link").on("click", () => {
+                $("#phishing_link a, #tooltip_link a").on("click", () => {
                     allow_to_go_back = true
                     $.ajax({
                         url: ("{{ route('warning_log') }}?email_id={{$selected_email->id}}&warning_type=tooltip&msg=tooltip_click&url=" + window.location.href).replace(/%20/g, '+'),

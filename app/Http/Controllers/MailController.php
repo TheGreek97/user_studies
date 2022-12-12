@@ -33,12 +33,22 @@ class MailController extends Controller
     }
 
     public function warning(Request $request){
-
         $log = new ActivityLogs;
         $log->user_id = Auth::id();
         $log->url = $request->input('url');
         $log->warning_type = $request->input('warning_type');
-        $log->user_action = $this->get_user_action($request->input('msg'));
+        $action = $request->input('msg');
+        if (str_starts_with($action, "warning_shown") ||  str_starts_with($action, "tooltip_shown")) {
+            $user = Auth::User();
+            $user->shown_warning = true;
+            $user->save();
+        }
+        if (str_starts_with($action, "warning_ignored") || str_starts_with($action, "tooltip_click")) {
+            $user = Auth::User();
+            $user->ignored_warning = true;
+            $user->save();
+        }
+        $log->user_action = $this->get_user_action($action);
         $log->email_id = $request->input('email_id');
         $log->save();
     }
@@ -73,7 +83,9 @@ class MailController extends Controller
                 return "Clicked on btn 'Advanced'";
             case 'hide_advanced':
                 return "Clicked on btn 'Hide advanced'";
-            case 'tooltip_clicked':
+            case 'tooltip_shown':
+                return "Shown tooltip";
+            case 'tooltip_click':
                 return "Clicked on the tooltip";
             // Chrome warning
             case 'back_safety':

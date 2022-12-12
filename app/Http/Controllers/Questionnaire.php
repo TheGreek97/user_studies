@@ -30,7 +30,7 @@ class Questionnaire extends Controller
         } elseif (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) < MailController::MAILS_NUMBER) {
             return redirect(route('show', ['folder' => 'inbox']));
         } else {
-            return view('followupquestionnaire');
+            return view('followupquestionnaire')->with("user_ignored_warning", Auth::user()->warning_ignored);
         }
     }
 
@@ -47,6 +47,9 @@ class Questionnaire extends Controller
         $questionnaire->actions_warning = $request->actions_warning;
         $questionnaire->meaning_warning = $request->meaning_warning;
         $questionnaire->trust_warning = $request->trust_warning;
+        if ($request->warning_ignored_motivation) {
+            $questionnaire->warning_ignored_motivation = $request->warning_ignored_motivation;
+        }
         $questionnaire->first_word = $request->first_word;
 
         $questionnaire->nasa_mental_demand = $request->nasa_mental_demand;
@@ -71,8 +74,49 @@ class Questionnaire extends Controller
         $user->gender = $request->gender;
         $user->age = $request->age;
         $user->num_hours_day_internet = $request->num_hours_day_internet;
+
+        $answers = [];
+        for ($i=1; $i<=10; $i++){
+            $question = "cyber_".$i;
+            $answers[$question] = $request->$question;
+        }
+        $user->expertise_score = $this->computeExpertiseScore($answers);
         $user->save();
         return redirect(route('thankyou'));
     }
 
+    private function computeExpertiseScore($q){
+        $score = 0;
+        if ($q["cyber_1"] == 1){
+            $score +=1;
+        }
+        if ($q["cyber_2"] == 4){
+            $score +=1;
+        }
+        if ($q["cyber_3"] == 1){
+            $score +=1;
+        }
+        if ($q["cyber_4"] == 0){
+            $score +=1;
+        }
+        if ($q["cyber_5"] == 2){
+            $score +=1;
+        }
+        if ($q["cyber_6"] == 2){
+            $score +=1;
+        }
+        if ($q["cyber_7"] == 0){
+            $score +=1;
+        }
+        if ($q["cyber_8"] == 1){
+            $score +=1;
+        }
+        if ($q["cyber_9"] == 1){
+            $score +=1;
+        }
+        if ($q["cyber_10"] == 1){
+            $score +=1;
+        }
+        return $score;
+    }
 }

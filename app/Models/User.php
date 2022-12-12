@@ -27,6 +27,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'ignored_warning',
+        'shown_warning',
+        'expertise_score'
     ];
 
     protected $guarded = [

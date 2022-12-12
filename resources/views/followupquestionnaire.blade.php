@@ -283,7 +283,14 @@
                                 </div>
                             </div>
                         </div>
-
+                        @if ($user_ignored_warning)
+                            <div class="my-10">
+                                <p class="font-bold pb-1">Why did you choose to ignore the warning?</p>
+                                <input required type="text" name="warning_ignored_motivation"
+                                       placeholder="Type your answer here..." maxlength="255"
+                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"/>
+                            </div>
+                        @endif
                         <div class="my-10">
                             <p class="font-bold pb-1">What is the first word in this warning dialog?</p>
                             <input required type="text" name="first_word"
