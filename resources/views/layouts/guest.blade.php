@@ -19,7 +19,7 @@
             <div class="flex items-center">
                 <ul class="flex flex-row mt-0 mr-6 space-x-8 text-sm font-medium">
                     <li>
-                        <a href="{{route('login')}}" class="text-gray-900 dark:text-white hover:underline" aria-current="page">Login</a>
+                        <a href="{{route('login')}}" class="text-gray-900 dark:text-white hover:underline" aria-current="page">Accedi</a>
                     </li>
                     <li>
                         <a href="{{route('register')}}" class="text-gray-900 dark:text-white hover:underline">Registrati</a>
