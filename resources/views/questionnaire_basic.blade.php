@@ -22,12 +22,12 @@
                             Tali dispositivi sono anche controllabili attraverso assistenti vocali come Amazon Alexa, per esempio, per accedere le luci, senza usare gli interruttori, gli utenti possono dire "Alexa, accendi luce soggiorno".
                         </p>
                         <p>
-                            Nuove funzionalità di Alexa presto consentiranno di definire il comportamento TRA oggetti intelligenti cosicché la loro attivazione possa dipendere non da un comando di un utente ma dallo stato di un altro oggetto. Per esempio, un utente potrebbe volere chiudere le tapparelle quando il sensore pioggia rileva la pioggia, ad esempio dicendo "Alexa, chiudi tutte le tapparella se inizia a piovere". In altre parole, per specificare comportamenti tra oggetti, gli utenti potrebbero definire le  cosiddette regole "ECA" ("Evento-Condizione-Azione").
+                            Nuove funzionalità di Alexa presto consentiranno di definire il comportamento TRA oggetti intelligenti cosicché la loro attivazione possa dipendere non da un comando di un utente ma dallo stato di un altro oggetto. Per esempio, un utente potrebbe volere chiudere le tapparelle quando il sensore pioggia rileva la pioggia, ad esempio dicendo "Alexa, chiudi tutte le tapparelle se inizia a piovere". In altre parole, per specificare comportamenti tra oggetti, gli utenti potrebbero definire le  cosiddette regole "ECA" ("Evento-Condizione-Azione").
                         </p>
                         <div class="mt-3">Una regola ECA è composta da&nbsp;<b>3 parti</b>:</div>
                         <div>
                             <ol>
-                                <li>&#x2022; <b>EVENTO </b>- che cosa deve succedere per far attivare la regola? (es., inizia a piovere)</li>
+                                <li>&#x2022; <b>EVENTO </b>- che cosa deve succedere per far attivare la regola? (es., SE inizia a piovere)</li>
                                 <li>&#x2022; <b>CONDIZIONE </b>- condizione (opzionale) per dettagliare la rilevazione di un evento (es., pioggia forte)</li>
                                 <li>&#x2022; <b>AZIONE </b>- cosa succederà in seguito all'attivazione della regola? (es., chiudi tapparelle)</li>
                             </ol>
@@ -36,7 +36,7 @@
                         <div class="mt-3">
                             D'altro canto, possiamo anche voler definire comportamenti più complessi nella nostra smart home, comprendenti più condizioni e/o più azioni come ad esempio un sistema per aprire le finestre automaticamente al nostro risveglio:
                             <ol class="text-center mt-2">
-                                <li><b>SE </b><i>inizia a piovere a condizione forte o in maniera abbondante</i></li>
+                                <li><b>SE </b><i>inizia a piovere forte o inizia a piovere in maniera lieve</i></li>
                                 <li> <b>ALLORA </b><i>chiudi le tapparelle e spegni la lavatrice</i></li>
                             </ol>
                             <br>
@@ -95,13 +95,13 @@
                             <div class="my-4 text-center font-bold text-xl">
                                 <span>"Alexa, SE rilevi un attacco alle telecamere di sicurezza ALLORA [...]"</span>
                             </div>
-                            <textarea rows="10" name="question_1" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <textarea rows="10" name="question_1" placeholder="Scrivi qui... (almeno 3 caratteri)"
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
+                                <span>- (Opzionale) Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
                             </p>
-                            <textarea rows="3" name="question_1_rationale" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <textarea rows="3" name="question_1_rationale" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
@@ -125,13 +125,13 @@
                             <div class="my-4 text-center font-bold text-xl">
                                 <span>"Alexa, SE [...] ALLORA metti "in quarantena" i file sulla smart TV e fai una copia di backup dei dati"</span>
                             </div>
-                            <textarea rows="10" name="question_2" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <textarea rows="10" name="question_2" placeholder="Scrivi qui... (almeno 3 caratteri)"
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
+                                <span>- (Opzionale) Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
                             </p>
-                            <textarea rows="3" name="question_2_rationale" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <textarea rows="3" name="question_2_rationale" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
@@ -156,13 +156,13 @@
                             <div class="my-4 text-center font-bold text-xl">
                                 <span>"Alexa, SE rilevi un furto di dati dal robot aspirapolvere, ALLORA [...]"</span>
                             </div>
-                            <textarea rows="10" name="question_3" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <textarea rows="10" name="question_3" placeholder="Scrivi qui... (almeno 3 caratteri)"
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
+                                <span>- (Opzionale) Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
                             </p>
-                            <textarea rows="3" name="question_3_rationale" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <textarea rows="3" name="question_3_rationale" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
@@ -187,13 +187,13 @@
                             <div class="my-4 text-center font-bold text-xl">
                                 <span>"Alexa, SE [...] ALLORA [...]"</span>
                             </div>
-                            <textarea rows="10" name="question_4" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <textarea rows="10" name="question_4" placeholder="Scrivi qui... (almeno 3 caratteri)"
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
+                                <span>- (Opzionale) Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
                             </p>
-                            <textarea rows="3" name="question_4_rationale" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <textarea rows="3" name="question_4_rationale" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
@@ -217,13 +217,13 @@
                             <div class="my-4 text-center font-bold text-xl">
                                 <span>"Alexa, SE [...] ALLORA [...]"</span>
                             </div>
-                            <textarea rows="10" name="question_5" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <textarea rows="10" name="question_5" placeholder="Scrivi qui... (almeno 3 caratteri)"
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
+                                <span>- (Opzionale) Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
                             </p>
-                            <textarea rows="3" name="question_5_rationale" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <textarea rows="3" name="question_5_rationale" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
@@ -247,13 +247,13 @@
                             <div class="my-4 text-center font-bold text-xl">
                                 <span>"Alexa, SE [...] ALLORA [...]"</span>
                             </div>
-                            <textarea rows="10" name="question_6" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <textarea rows="10" name="question_6" placeholder="Scrivi qui... (almeno 3 caratteri)"
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
+                                <span>- (Opzionale) Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
                             </p>
-                            <textarea rows="3" name="question_6_rationale" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <textarea rows="3" name="question_6_rationale" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
@@ -324,7 +324,7 @@
                     },
                     next(e) {
                         let check_input = function (field) {
-                            let min_length = 20  // minimo 20 caratteri nelle risposte
+                            let min_length = 3  // minimo 3 caratteri nelle risposte
                             let check = true
                             if (field !== undefined) {
                                 field.placeholder = `Scrivi qui... (almeno ${min_length} caratteri)`
@@ -345,9 +345,9 @@
                         }
 
                         let input_field = $('textarea[name=question_' + (this.step-1) + ']')[0]
-                        let input_field_rationale = $('textarea[name=question_' + (this.step-1) + '_rationale]')[0]
+                        // let input_field_rationale = $('textarea[name=question_' + (this.step-1) + '_rationale]')[0]
 
-                        let check = check_input(input_field) & check_input(input_field_rationale)
+                        let check = check_input(input_field)  // & check_input(input_field_rationale)
                         if (! check) {
                             alert_modal.show();
                             alert_modal.fadeTo("fast", 1, function () {

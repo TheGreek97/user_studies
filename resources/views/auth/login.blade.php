@@ -4,6 +4,9 @@
             <x-jet-authentication-card-logo />
         </x-slot>
 
+        <div class="mb-4 text-xl font-bold">
+            Accedi
+        </div>
         <x-jet-validation-errors class="mb-4" />
 
         @if (session('status'))
@@ -11,10 +14,7 @@
                 {{ session('status') }}
             </div>
         @endif
-        <div class="mb-10 text-xl font-bold">
-            Accedi
-        </div>
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" class="mt-10" action="{{ route('login') }}">
             @csrf
 
             <div>

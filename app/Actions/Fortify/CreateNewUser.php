@@ -36,7 +36,7 @@ class CreateNewUser implements CreatesNewUsers
         $user->name = $input['name'];
         $user->email = $input['email'];
         $user->password = Hash::make($input['password']);
-        $user->warning_type = $warning_type[rand(0,3)];
+        //$user->warning_type = $warning_type[rand(0,3)];
         $user->save();
 
         return $user;

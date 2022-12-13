@@ -17,17 +17,17 @@
 
                     <!-- SECTION 1 -->
                     <div x-show="step === 1" id="section-1">
-                        <p class="text-2xl w-full text-center">1 su 2</p>
+                        <p class="text-2xl w-full text-center">&nbsp;</p>
                         <div class="my-5">
                             <p class="font-bold pb-1">In una scala da 1 a 5, come definiresti il tuo livello di conoscenze in Informatica?</p>
                             <label for="steps-range"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
-                                    1 (Scarso)
+                                    (Scarso)
                                 </div>
                                 <div class="flex-1"></div>
                                 <div>
-                                    5 (Esperto)
+                                    (Esperto)
                                 </div>
                             </label>
                             <div class="w-full">
@@ -35,25 +35,25 @@
                                        step="1"
                                        name="level_informatics" class="w-full">
                                 <datalist id="level_informatics">
-                                    <option value="1"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="4"></option>
-                                    <option value="5"></option>
+                                    <option value="1" label="1"></option>
+                                    <option value="2" label="2"></option>
+                                    <option value="3" label="3"></option>
+                                    <option value="4" label="4"></option>
+                                    <option value="5" label="5"></option>
                                 </datalist>
                             </div>
                         </div>
 
                         <div class="my-5">
-                            <p class="font-bold pb-1">In una scala da 1 a 5, come definiresti il tuo livello di conoscenze in Sicurezza Informatica?</p>
+                                <p class="font-bold pb-1">In una scala da 1 a 5, come definiresti il tuo livello di conoscenze in Sicurezza Informatica?</p>
                             <label for="steps-range"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
-                                    1 (Scarso)
+                                    (Scarso)
                                 </div>
                                 <div class="flex-1"></div>
                                 <div>
-                                    5 (Esperto)
+                                    (Esperto)
                                 </div>
                             </label>
                             <div class="w-full">
@@ -61,11 +61,11 @@
                                        step="1"
                                        name="level_cybersecurity" class="w-full">
                                 <datalist id="level_cybersecurity">
-                                    <option value="1"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="4"></option>
-                                    <option value="5"></option>
+                                    <option value="1" label="1"></option>
+                                    <option value="2" label="2"></option>
+                                    <option value="3" label="3"></option>
+                                    <option value="4" label="4"></option>
+                                    <option value="5" label="5"></option>
                                 </datalist>
                             </div>
                         </div>
@@ -75,11 +75,11 @@
                             <label for="steps-range"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
-                                    1 (Mai)
+                                    (Mai)
                                 </div>
                                 <div class="flex-1"></div>
                                 <div>
-                                    5 (Abitualmente)
+                                    (Abitualmente)
                                 </div>
                             </label>
                             <div class="w-full">
@@ -87,11 +87,11 @@
                                        step="1"
                                        name="level_iot" class="w-full">
                                 <datalist id="level_iot">
-                                    <option value="1"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="4"></option>
-                                    <option value="5"></option>
+                                    <option value="1" label="1"></option>
+                                    <option value="2" label="2"></option>
+                                    <option value="3" label="3"></option>
+                                    <option value="4" label="4"></option>
+                                    <option value="5" label="5"></option>
                                 </datalist>
                             </div>
                         </div>
@@ -99,7 +99,14 @@
                     </div>
                     <!-- SECTION 2 -->
                     <div x-show="step === 2" id="section-2">
-                        <p class="text-2xl w-full text-center">2 su 2</p>
+                        <p class="text-2xl w-full text-center">&nbsp;</p>
+                        <div class="my-8">
+                            Ora ti porremo delle domande tecniche per provare a capire il tuo livello di conoscenze su alcuni argomenti.
+                            <br> Non ti preoccupare se non conosci la risposta ad una o più domande: in tal caso indica l'opzione "Non so".
+                            <br> Ti chiediamo gentilmente di rispondere al meglio delle tue conoscenze e non utilizzare aiuti esterni, in quanto
+                            questo potrebbe inficiare negativamente sui risultati dello studio.
+                            <br> Ci teniamo, infine, a ricordarti che il test è anonimo e che non utilizzeremo in alcun modo il tuo indirizzo email dopo la fine del test.
+                        </div>
                         <div class="my-8">
                             <p class="font-bold pb-1">Cosa denota la scritta “https://” all'inizio di un URL, rispetto a
                                 http:// (senza la “s”)?</p>

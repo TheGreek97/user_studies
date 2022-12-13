@@ -17,13 +17,13 @@
                         </div>
                         <div class="my-5">
                             <p class="pb-2">
-                                - Ci sono altri attacchi che vorresti che Alexa fosse in grado di rilevare nella smart home?  Nel caso, quali?
+                                - (Opzionale) Ci sono altri attacchi che vorresti che Alexa fosse in grado di rilevare nella smart home?  Nel caso, quali?
                             </p>
                             <textarea rows="5" name="other_events" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
 
                             <p class="pt-12 pb-2">
-                                - Ci sono altre azioni che vorresti che Alexa fosse in grado di fare per proteggere la smart home da attacchi? Nel caso, quali?
+                                - (Opzionale) Ci sono altre azioni che vorresti che Alexa fosse in grado di fare per proteggere la smart home da attacchi? Nel caso, quali?
                             </p>
                             <textarea rows="5" name="other_actions" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" ></textarea>

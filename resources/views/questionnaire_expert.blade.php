@@ -31,13 +31,13 @@
                             <div class="my-4 text-center font-bold text-xl">
                                 <span>"Alexa, SE [...] ALLORA isola lo smartwatch e mandami una notifica sullo smartwatch."</span>
                             </div>
-                            <textarea rows="10" name="question_1" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <textarea rows="10" name="question_1" placeholder="Scrivi qui... (almeno 3 caratteri)"
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
                                 <span>- Motiva la tua risposta precedente, cercando di spiegare il tuo ragionamento:</span>
                             </p>
-                            <textarea rows="3" name="question_1_rationale" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <textarea rows="3" name="question_1_rationale" placeholder="Scrivi qui... (almeno 3 caratteri)"
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
@@ -62,13 +62,13 @@
                             <div class="my-4 text-center font-bold text-xl">
                                 <span>"Alexa, SE [...] <br/> ALLORA chiudi la porta 22 del router, e imposta la porta 2222 per il servizio SSH"</span>
                             </div>
-                            <textarea rows="10" name="question_1" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <textarea rows="10" name="question_1" placeholder="Scrivi qui... (almeno 3 caratteri)"
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
                                 <span>- Motiva la tua risposta precedente, cercando di spiegare il tuo ragionamento:</span>
                             </p>
-                            <textarea rows="3" name="question_1_rationale" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <textarea rows="3" name="question_1_rationale" placeholder="Scrivi qui... (almeno 3 caratteri)"
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
@@ -93,13 +93,13 @@
                             <div class="my-4 text-center font-bold text-xl">
                                 <span>"Alexa, [...]"</span>
                             </div>
-                            <textarea rows="10" name="question_3" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <textarea rows="10" name="question_3" placeholder="Scrivi qui... (almeno 3 caratteri)"
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
 
                             <p class="pt-12 pb-2">
                                 <span>- Motiva la tua risposta precedente, cercando di spiegare il tuo ragionamento:</span>
                             </p>
-                            <textarea rows="3" name="question_3_rationale" placeholder="Scrivi qui... (almeno 20 caratteri)"
+                            <textarea rows="3" name="question_3_rationale" placeholder="Scrivi qui... (almeno 3 caratteri)"
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">

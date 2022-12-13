@@ -15,7 +15,7 @@
 
                 <div class="mt-8 h2 font-bold">La partecipazione allo studio è obbligatoria?</div>
                 <p class="max-w-4xl text-left pt-4">
-                    La tua partecipazione è completamente libera. Inoltre, se in un qualsiasi momento, tu dovessi cambiare idea e volessi ritirarsi dalla procedura, sei liber* di farlo.
+                    La tua partecipazione è completamente libera. Inoltre, se in un qualsiasi momento, tu dovessi cambiare idea e volessi ritirarti dalla procedura, sei liber* di farlo.
                 </p>
 
                 <p class="max-w-4xl text-left pt-4">

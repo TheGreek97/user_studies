@@ -44,27 +44,27 @@ class Questionnaire extends Controller
     {
         $questionnaire = new UserQuestionnaire();
         $questionnaire->answer_1 = $request->question_1;
-        $questionnaire->answer_1_rationale = $request->question_1_rationale;
+        $questionnaire->answer_1_rationale = $request->question_1_rationale ?? "";
         $questionnaire->answer_1_alt = $request->question_1_alt ?? "";
 
         $questionnaire->answer_2 = $request->question_2;
-        $questionnaire->answer_2_rationale = $request->question_2_rationale;
+        $questionnaire->answer_2_rationale = $request->question_2_rationale ?? "";
         $questionnaire->answer_2_alt = $request->question_2_alt ?? "";
 
         $questionnaire->answer_3 = $request->question_3;
-        $questionnaire->answer_3_rationale = $request->question_3_rationale;
+        $questionnaire->answer_3_rationale = $request->question_3_rationale ?? "";
         $questionnaire->answer_3_alt = $request->question_3_alt ?? "";
 
         $questionnaire->answer_4 = $request->question_4;
-        $questionnaire->answer_4_rationale = $request->question_4_rationale;
+        $questionnaire->answer_4_rationale = $request->question_4_rationale ?? "";
         $questionnaire->answer_4_alt = $request->question_4_alt ?? "";
 
         $questionnaire->answer_5 = $request->question_5;
-        $questionnaire->answer_5_rationale = $request->question_5_rationale;
+        $questionnaire->answer_5_rationale = $request->question_5_rationale ?? "";
         $questionnaire->answer_5_alt = $request->question_5_alt ?? "";
 
         $questionnaire->answer_6 = $request->question_6;
-        $questionnaire->answer_6_rationale = $request->question_6_rationale;
+        $questionnaire->answer_6_rationale = $request->question_6_rationale ?? "";
         $questionnaire->answer_6_alt = $request->question_6_alt ?? "";
 
         $questionnaire->user_id = Auth::id();
@@ -86,15 +86,15 @@ class Questionnaire extends Controller
     {
         $questionnaire = new AdvancedQuestionnaire();
         $questionnaire->answer_1 = $request->question_1;
-        $questionnaire->answer_1_rationale = $request->question_1_rationale;
+        $questionnaire->answer_1_rationale = $request->question_1_rationale ?? "";
         $questionnaire->answer_1_alt = $request->question_1_alt ?? "";
 
         $questionnaire->answer_2 = $request->question_2;
-        $questionnaire->answer_2_rationale = $request->question_2_rationale;
+        $questionnaire->answer_2_rationale = $request->question_2_rationale ?? "";
         $questionnaire->answer_2_alt = $request->question_2_alt ?? "";
 
         $questionnaire->answer_3 = $request->question_3;
-        $questionnaire->answer_3_rationale = $request->question_3_rationale;
+        $questionnaire->answer_3_rationale = $request->question_3_rationale ?? "";
         $questionnaire->answer_3_alt = $request->question_3_alt ?? "";
 
         $questionnaire->user_id = Auth::id();
@@ -149,17 +149,19 @@ class Questionnaire extends Controller
         if ($q["cyber_10"] == "Use of insecure Wi-Fi networks"){
             $score +=1;
         }
+        /*
         if ($q["level_informatics"] > 3) {
             $score+=1;
         }
         if ($q["level_cybersecurity"] > 3) {
             $score+=1;
-        }if ($q["level_iot"] > 3) {
-            $score+=1;
         }
-        if ($score > 7) { // [8-13]
+        if ($q["level_iot"] > 3) {
+            $score+=1;
+        }*/
+        if ($score > 6) { // [7-10]
             $level = "expert";
-        } else { // [0-7]
+        } else { // [0-6]
             $level = "basic";
         }
         return $level;

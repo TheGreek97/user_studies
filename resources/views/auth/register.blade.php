@@ -4,11 +4,11 @@
             <x-jet-authentication-card-logo />
         </x-slot>
 
-        <x-jet-validation-errors class="mb-4" />
-        <div class="mb-10 text-xl font-bold">
+        <div class="mb-4 text-xl font-bold">
             Registrati
         </div>
-        <form method="POST" action="{{ route('register') }}">
+        <x-jet-validation-errors class="mb-4" />
+        <form method="POST" class="mt-10" action="{{ route('register') }}">
             @csrf
             <input id="email" class="block mt-1 w-full" type="hidden" name="name" value="-"/>
 
@@ -44,7 +44,7 @@
                 </div>
             @endif
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-end mt-10">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
                     {{ __('Già registrato?') }}
                 </a>
