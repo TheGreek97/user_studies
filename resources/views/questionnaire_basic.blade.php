@@ -99,7 +99,7 @@
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- (Opzionale) Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
+                                <span>- (Opzionale) Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento, se lo ritieni necessario.</span>
                             </p>
                             <textarea rows="3" name="question_1_rationale" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
@@ -129,7 +129,7 @@
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- (Opzionale) Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
+                                <span>- (Opzionale) Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento, se lo ritieni necessario.</span>
                             </p>
                             <textarea rows="3" name="question_2_rationale" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
@@ -160,7 +160,7 @@
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- (Opzionale) Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
+                                <span>- (Opzionale) Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento, se lo ritieni necessario.</span>
                             </p>
                             <textarea rows="3" name="question_3_rationale" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
@@ -191,7 +191,7 @@
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- (Opzionale) Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
+                                <span>- (Opzionale) Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento, se lo ritieni necessario.</span>
                             </p>
                             <textarea rows="3" name="question_4_rationale" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
@@ -221,7 +221,7 @@
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- (Opzionale) Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
+                                <span>- (Opzionale) Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento, se lo ritieni necessario.</span>
                             </p>
                             <textarea rows="3" name="question_5_rationale" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
@@ -251,7 +251,7 @@
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- (Opzionale) Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento:</span>
+                                <span>- (Opzionale) Cerca di motivare la tua risposta precedente, spiegando il tuo ragionamento, se lo ritieni necessario.</span>
                             </p>
                             <textarea rows="3" name="question_6_rationale" placeholder="Scrivi qui..."
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>

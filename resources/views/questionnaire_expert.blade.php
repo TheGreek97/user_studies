@@ -35,7 +35,7 @@
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- Motiva la tua risposta precedente, cercando di spiegare il tuo ragionamento:</span>
+                                <span>- (Opzionale) Motiva la tua risposta precedente, cercando di spiegare il tuo ragionamento, se lo ritieni necessario.</span>
                             </p>
                             <textarea rows="3" name="question_1_rationale" placeholder="Scrivi qui... (almeno 3 caratteri)"
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
@@ -66,13 +66,13 @@
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- Motiva la tua risposta precedente, cercando di spiegare il tuo ragionamento:</span>
+                                <span>- (Opzionale) Motiva la tua risposta precedente, cercando di spiegare il tuo ragionamento, se lo ritieni necessario.</span>
                             </p>
                             <textarea rows="3" name="question_1_rationale" placeholder="Scrivi qui... (almeno 3 caratteri)"
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>(Opzionale) Riguardo l'attacco precedente, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
+                                <span>- (Opzionale) Riguardo l'attacco precedente, ti vengono in mente altri modi per dire ad Alexa come proteggere la casa da attacchi simili? (ad esempio, regole con azioni diverse, più di una regola, etc.)
                                 Eventualmente, motiva la tua risposta.
                                 </span>
                             </p>
@@ -86,7 +86,7 @@
                         <div class="my-5">
                             <div class="font-bold mb-5">Autenticazione illecita/Priviledge escalation</div>
                             <p class="pb-2">
-                                Alexa può rilevare tentativi di autenticazione illeciti (es., rilevando connessioni da IP sconosciuti) e attività di login come amministratore.
+                                Alexa può rilevare tentativi illeciti di autenticazione ai tuoi dispositivi smart (es., rilevando connessioni da IP sconosciuti) e attività di login come amministratore.
                                 <br/>
                                 - Prova a definire una regola ECA (o più) per proteggerti da questo attacco.
                             </p>
@@ -97,7 +97,7 @@
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"></textarea>
 
                             <p class="pt-12 pb-2">
-                                <span>- Motiva la tua risposta precedente, cercando di spiegare il tuo ragionamento:</span>
+                                <span>- (Opzionale) Motiva la tua risposta precedente, cercando di spiegare il tuo ragionamento, se lo ritieni necessario.</span>
                             </p>
                             <textarea rows="3" name="question_3_rationale" placeholder="Scrivi qui... (almeno 3 caratteri)"
                                       class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required></textarea>

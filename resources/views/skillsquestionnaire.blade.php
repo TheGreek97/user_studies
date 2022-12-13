@@ -71,7 +71,7 @@
                         </div>
 
                         <div class="my-5">
-                            <p class="font-bold pb-1">In una scala da 1 a 5, quanto fai utilizzo di dispositivi IoT all'interno di ambienti intelligenti?</p>
+                            <p class="font-bold pb-1">In una scala da 1 a 5, quanto fai utilizzo di dispositivi smart all'interno di ambienti intelligenti?</p>
                             <label for="steps-range"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
@@ -100,7 +100,7 @@
                     <!-- SECTION 2 -->
                     <div x-show="step === 2" id="section-2">
                         <p class="text-2xl w-full text-center">&nbsp;</p>
-                        <div class="my-8">
+                        <div>
                             Ora ti porremo delle domande tecniche per provare a capire il tuo livello di conoscenze su alcuni argomenti.
                             <br> Non ti preoccupare se non conosci la risposta ad una o più domande: in tal caso indica l'opzione "Non so".
                             <br> Ti chiediamo gentilmente di rispondere al meglio delle tue conoscenze e non utilizzare aiuti esterni, in quanto
