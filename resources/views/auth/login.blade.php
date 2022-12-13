@@ -11,7 +11,9 @@
                 {{ session('status') }}
             </div>
         @endif
-
+        <div class="mb-10 text-xl font-bold">
+            Accedi
+        </div>
         <form method="POST" action="{{ route('login') }}">
             @csrf
 

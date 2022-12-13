@@ -14,6 +14,20 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
+    <nav class="bg-gray-50 dark:bg-gray-700">
+        <div class="container flex flex-row-reverse flex-wrap max-w-screen-xl py-3 mx-auto md:px-6" style="flex-direction: row-reverse">
+            <div class="flex items-center">
+                <ul class="flex flex-row mt-0 mr-6 space-x-8 text-sm font-medium">
+                    <li>
+                        <a href="{{route('login')}}" class="text-gray-900 dark:text-white hover:underline" aria-current="page">Login</a>
+                    </li>
+                    <li>
+                        <a href="{{route('register')}}" class="text-gray-900 dark:text-white hover:underline">Registrati</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
         <div class="font-sans text-gray-900 antialiased">
             {{ $slot }}
         </div>
