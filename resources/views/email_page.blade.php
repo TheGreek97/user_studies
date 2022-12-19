@@ -1,7 +1,12 @@
 <?php
-//if (\Illuminate\Support\Facades\Auth::id() % 2 == 0)
+if (! \Illuminate\Support\Facades\Auth::user()->show_explanation) {
+    $warning_explanation = "warning_explanation_1";
+} else {
+    $warning_explanation = "warning_explanation_2";
+}
+/*if (\Illuminate\Support\Facades\Auth::id() % 2 == 0)
     $random_warning_explanation = "warning_explanation_1";
-/*else
+else
     $random_warning_explanation = "warning_explanation_2";
 */
 ?>
@@ -494,7 +499,7 @@
                                             @else
                                                 <tr class="text-gray-700 cursor-pointer hover:bg-gray-200 hover:dark:bg-gray-600 dark:text-gray-400"
                                                     @if($email->warning_type === "popup_email")
-                                                    onclick="open_warning('{{ route('show', ['folder' => $folder,'id' => $email->id]) }}', {{ $email->id }}, '{!! $email->$random_warning_explanation !!}')"
+                                                    onclick="open_warning('{{ route('show', ['folder' => $folder,'id' => $email->id]) }}', {{ $email->id }}, '{!! $email->$warning_explanation !!}')"
                                                     @else
                                                     onclick="window.location.href = '{{ route('show', ['folder' => $folder,'id' => $email->id]) }}'"
                                                     @endif
@@ -765,7 +770,7 @@
                         e.preventDefault();
                         e.stopPropagation();
                         let url = new URL($(this).attr('href'));
-                        open_warning(url.hostname, {{ $selected_email->id }}, "{!! $selected_email->$random_warning_explanation !!}");
+                        open_warning(url.hostname, {{ $selected_email->id }}, "{!! $selected_email->$warning_explanation!!}");
                     });
                 });
                 $('a').not("#email_content *").each(function (e) {
@@ -791,7 +796,7 @@
             @elseif($selected_email->warning_type == "base_passive")
                 banner = $("#passive_banner"); // To do: Implement passive banners (if needed)
                 banner.show();
-                banner.innerHTML = {{$selected_email->$random_warning_explanation}}
+                banner.innerHTML = {{$selected_email->$warning_explanation}}
             @elseif($selected_email->warning_type == "tooltip")
                 let message_sent = [];
                 let tooltips = $(".tooltip")
@@ -801,7 +806,7 @@
                 let warning_tooltip = $("#tooltip_link")
                 let explanation = warning_tooltip.html()
                 warning_tooltip.html(
-                    `<div class="flex justify-between items-start px-3">
+                    `<div class="flex justify-between items-start">
                         <div class="pr-1">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-10" viewBox="0 0 20 20"
                                  fill="currentColor">
@@ -810,9 +815,9 @@
                                       clip-rule="evenodd"/>
                             </svg>
                         </div>
-                        <div>
-                        <!--<h2 class="font-bold text-xl"> FAKE WEBSITE, DON'T CLICK!</h2>-->
-                        ${explanation}
+                        <div class="">
+                            <span class="text-lg">FAKE WEBSITE, DON'T CLICK!</span><br/>
+                            <span>${explanation}</span>
                         </div>
                     </div>`
                 )
@@ -863,6 +868,7 @@
 
             function open_warning(url, email_id, warning_text) {
                 $("#warning_text").html(warning_text);
+                //const warning_type = "popup_email";
                 @if(!isset($selected_email))
                     const warning_type = "popup_email";
                 @else

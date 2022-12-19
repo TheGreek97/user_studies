@@ -17,11 +17,11 @@
                 display: inline-block;
                 /*border-bottom: 1px dotted black;*/
                 cursor: not-allowed;
+                z-index: 1;
             }
 
             .tooltip .tooltiptext {
                 visibility: hidden;
-                width: 310px;
                 border: solid #b80000 2px;
                 color: #b80000;
                 background-color: #fff;
@@ -30,36 +30,28 @@
                 padding: 6px 10px;
                 position: absolute;
                 z-index: 1;
-                top: -50px;
-                left: 105%;
             }
 
             .tooltip .tooltiptext::after {
-                 content: "";
-                 position: absolute;
-                 top: -20%;
-                 left: 8%;
-                 margin-left: -5px;
-                 border-width: 10px;
-                 border-style: solid;
-                 border-color: transparent transparent #b80000 transparent;
-             }
-
-            #tooltip_image{
-                top: 40px;
-                width: 460px;
-                left: 103%;
-            }
-
-            #tooltip_dear{
-                top: -30px;
-                width: 518px;
+                content: "";
+                position: absolute;
+                top: -20%;
+                left: 8%;
+                margin-left: -5px;
+                border-width: 10px;
+                border-style: solid;
+                border-color: transparent transparent #b80000 transparent;
+                z-index: 1;
             }
 
             #tooltip_link{
                 top: 105%;
-                width: 529px;
+                width: 450px;
+                height: 110px;
                 left: 25%;
+                position: absolute;
+                display: flex;
+                align-items: center;
             }
             #tooltip_link:hover {
                 visibility: visible;
@@ -69,11 +61,6 @@
                 top: -30px;
                 width: 550px;
                 left: 102%;
-            }
-            #tooltip_grammar{
-                top: -60px;
-                width: 260px;
-                left: 101%;
             }
             .tooltip:hover .tooltiptext {
                 visibility: visible;

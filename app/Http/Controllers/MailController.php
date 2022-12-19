@@ -13,12 +13,15 @@ class MailController extends Controller
     const MAILS_NUMBER = 14;
 
     public function show($folder = 'inbox', $id = null){
+        info("ID ".$id);
         if(!in_array($folder, ['inbox', 'sent', 'drafts', 'trash']))
             return redirect(route('show', ['folder' => 'inbox']));
         if($id != null){
             $email = Email::findOr($id, function () { return null; });
-            if($email != null && ($email->warning_type == Auth::user()->warning_type || $email->warning_type == null))
+
+            if($email != null && ($email->warning_type == Auth::user()->warning_type || $email->warning_type == null)) {
                 return view('email_page', ['folder' => $folder, 'selected_email' => $email]);
+            }
             else
                 return redirect(route('show', ['folder' => $folder]));
         }
@@ -32,7 +35,7 @@ class MailController extends Controller
         }
     }
 
-    public function warning(Request $request){
+    public function warningLog(Request $request){
         $log = new ActivityLogs;
         $log->user_id = Auth::id();
         $log->url = $request->input('url');
@@ -53,6 +56,7 @@ class MailController extends Controller
         $log->save();
     }
 
+/*
     public function warning_browser(Request $request)
     {
         $decodedurl = urldecode($request->input('url'));
@@ -68,7 +72,7 @@ class MailController extends Controller
         $log->save();
         return view('chrome_warning', ['url' => $decodedurl, 'hostname' => $hostname, 'backurl' => $backurl, 'email_id' => $request->input('email_id')]);
     }
-
+*/
     private function get_user_action($key){
         switch ($key) {
             case "clicked_link":

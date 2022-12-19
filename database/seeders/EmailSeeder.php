@@ -16,12 +16,52 @@ class EmailSeeder extends Seeder
      */
     public function run()
     {
-        function get_explanation ($url=null)
+        function get_explanation ($type='basic', $url=null): string
         {
-            if ($url !== null)
-                return "The target URL in the mail: <br/><b>{$url}</b> can be a fake one. This site might be intended to take you to a different place. You might be disclosing private information.";
-            else
-                return "The target URL in the mail can be a fake one. This site might be intended to take you to a different place. You might be disclosing private information.";
+            switch ($type) {
+                case 'basic':
+                    if ($url !== null)
+                        return "The target URL in the mail: <br/><b>{$url}</b> can be a fake one. This site might be intended to take you to a different place. You might be disclosing private information.";
+                    else
+                        return "";
+                        #return "The target URL in the mail can be a fake one. This site might be intended to take you to a different place. You might be disclosing private information.";
+                case 'image':
+                    return "A binary feature that is equal to 1 if there is a <img> tag in the email body";
+                case 'links':
+                    return "Number of links in the e-mail body";
+                case 'grammar':
+                    return "Number of misspelled words";
+                case 'spec_chars':
+                    return "Occurrences of special characters in the email body";
+                case 'sus_words':
+                    return "One or more suspicious words are found in the e-mail body";
+                case 'age':
+                    return "The age of the domain (a site with less than 2 years is suspicious)";
+                case 'expiration':
+                    return "The expiration date of the web domain";
+                case 'ranking':
+                    return "The ranking of the website according to Google, Alexa";
+                case 'no_https':
+                    return "The website does not use the HTTPS protocol";
+                case 'self_https':
+                    return "The website uses HTTPS protocol with a not trusted certificate issuer (ex. self-signed certificates)";
+                case 'spec_chars_url':
+                    return "Presence of special characters (_, /, //, @, -), Unicode characters, or digits in the URL";
+                case 'sensitive_words_url':
+                    return "Counts the number of sensitive words (i.e., “secure”, “account”, “webscr”, “login”, “ebayisapi”, “signin”, “banking”, “confirm”) in the URL";
+                case 'ip_url':
+                    return "There are one or more URLs with an IP Address as the domain";
+                case 'tld_mispositioned':
+                    return "There is an anomaly in the position of the Top-Level Domain is in an abnormal position (it is either in the path of the URL or in one of the subdomains)";
+                case 'num_subdomains':
+                    return "There is an anomaly in the domain of the URL since there are too many subdomains";
+                case 'url_length':
+                    return "There is an anomaly in the length of the entire URL or the length of the domain";
+                case 'url_shortened':
+                    return "A URL is shortened (e.g., TinyURL, etc.)";
+                default:
+                    return "";
+            }
         }
 
         //** LEGITIMATE EMAILS **
@@ -371,7 +411,7 @@ class EmailSeeder extends Seeder
                   <td>
                     <a class="phishing_link" href="#"> tiktok.com/reset </a>
                     <span id="tooltip_link" class="tooltiptext">
-                    '. get_explanation () . '<br>Link goes to: <a href="#" style="text-decoration: underline;/* color: #0001F1; */"><span class="s2">http://92.233.24.33/tiktok/login.php</span></a>
+                    Link goes to: <a href="#" style="text-decoration: underline;/* color: #0001F1; */"><span class="s2">http://92.233.24.33/tiktok/login.php</span></a>
                     </span>
                   </td>
                </tr>
@@ -408,8 +448,7 @@ class EmailSeeder extends Seeder
                   <td>
                     <a class="phishing_btn" href="#"> Update now </a>
                     <span id="tooltip_link" class="tooltiptext">
-                    '. get_explanation() .
-                    '<br>Link goes to: <a href="#" style="text-decoration: underline;/* color: #0001F1; */"><span class="s2">'. $phish_url .'</span></a>
+                    Link goes to: <a href="#" style="text-decoration: underline;/* color: #0001F1; */"><span class="s2">'. $phish_url .'</span></a>
                     </span>
                   </td>
                </tr>
@@ -440,8 +479,7 @@ class EmailSeeder extends Seeder
                         <a class='phishing_btn' href=\"#\"> Activate the discount cupon </a>
                     </div>
                     <span id=\"tooltip_link\" class=\"tooltiptext\">
-                        ". get_explanation().
-                        "<br>Link goes to: <a href=\"#\" style=\"text-decoration: underline;/* color: #0001F1; */\"><span class=\"s2\">http://scam-you_.com.br/21322/details.php?id=98324hfduyu23vuyfeoIUhriunN$</span></a>
+                    Link goes to: <a href=\"#\" style=\"text-decoration: underline;/* color: #0001F1; */\"><span class=\"s2\">http://scam-you_.com.br/21322/details.php?id=98324hfduyu23vuyfeoIUhriunN$</span></a>
                     </span>
                   </td>
                </tr>
@@ -557,8 +595,7 @@ class EmailSeeder extends Seeder
                                     <a class='phishing_btn' href=\"#\"> RESET PASSWORD </a>
                                 </div>
                                 <span id=\"tooltip_link\" class=\"tooltiptext\">
-                                    ". get_explanation().
-                                    "<br>Link goes to: <a href=\"#\" style=\"text-decoration: underline;/* color: #0001F1; */\"><span class=\"s2\">https://www.livenation.com/myln/resetpassword?mid=17cb06b7-6126-4be8-a7e5-351d1e9c8373&amp;auth=aba703yd-7f7c-479e-9305-b1fd5dcd50d1</span></a>
+                                    Link goes to: <a href=\"#\" style=\"text-decoration: underline;/* color: #0001F1; */\"><span class=\"s2\">https://www.livenation.com/myln/resetpassword?mid=17cb06b7-6126-4be8-a7e5-351d1e9c8373</span></a>
                                 </span>
                               </td>
                            </tr>
@@ -611,7 +648,8 @@ class EmailSeeder extends Seeder
         </div>';
         $email->date = Carbon::parse('2022-08-10 17:38')->toDateTimeString();
         $email->type = 'inbox';
-        $email->warning_explanation_1 = get_explanation("http://92.233.24.33/tiktok/login.php");
+        $email->warning_explanation_1 = get_explanation("basic", "http://92.233.24.33/tiktok/login.php");
+        $email->warning_explanation_2 = get_explanation("ip_url");
         $email->warning_type = 'popup_email';
         $email->save();
 
@@ -634,7 +672,8 @@ class EmailSeeder extends Seeder
         <br><br><p class="p1">Thank you for being part of the Amazon community,<span class="Apple-converted-space"> </span></p>
         <p class="p1">we look forward to hearing from you soon.</p><br>
         <p class="p1">Best regards, <br>Amazon Customer Service</p></div>';
-        $email->warning_explanation_1 = get_explanation("https://amazonservices.sc03osd.cz/account.php");
+        $email->warning_explanation_1 = get_explanation("basic","https://amazonservices.sc03osd.cz/account.php");
+        $email->warning_explanation_2 = get_explanation("tld_mispositioned");
         $email->warning_type = 'popup_email';
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
         $email->type = 'inbox';
@@ -655,7 +694,8 @@ class EmailSeeder extends Seeder
         <p class=\"p2\" style=\"text-align: center;\"> </p>
         <p class=\"p1\">The discount vaucher can be activated until 31/09/2023. Activate it and use it immidiately on your next purchase.</p>
         </div>";
-        $email->warning_explanation_1 = get_explanation ("http://scam-you_.com.br/21322/details.php?id=98324hfduyu23vuyfeoIUhriunN$");
+        $email->warning_explanation_1 = get_explanation ('basic', "http://scam-you_.com.br/21322/details.php?id=98324hfduyu23vuyfeoIUhriunN$");
+        $email->warning_explanation_2 = get_explanation ('grammar');
         $email->date = Carbon::today()->subDays(mt_rand(0, 365))->toDateTimeString();
         $email->type = 'inbox';
         $email->warning_type = 'popup_email';
@@ -809,7 +849,8 @@ class EmailSeeder extends Seeder
           </table>";
         $email->date = Carbon::today()->subDays(mt_rand(0, 365))->toDateTimeString();
         $email->type = 'inbox';
-        $email->warning_explanation_1 = get_explanation("https://www.livenation.com/myln/resetpassword?mid=17cb06b7-6126-4be8-a7e5-351d1e9c8373&amp;auth=aba703yd-7f7c-479e-9305-b1fd5dcd50d1");
+        $email->warning_explanation_1 = get_explanation("basic", "https://www.livenation.com/myln/resetpassword?mid=17cb06b7-6126-4be8-a7e5-351d1e9c8373&amp;auth=aba703yd-7f7c-479e-9305-b1fd5dcd50d1");
+        $email->warning_explanation_2 = get_explanation("link_mismatch");
         $email->warning_type = 'popup_email';
         $email->save();
     }

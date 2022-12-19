@@ -23,7 +23,7 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'])->group(function (){
-    Route::get('/warning_log', [\App\Http\Controllers\MailController::class, 'warning'])->name('warning_log');
+    Route::get('/warning_log', [\App\Http\Controllers\MailController::class, 'warningLog'])->name('warning_log');
 });
 
 Route::middleware([

@@ -40,42 +40,10 @@ class CreateTestUsers extends Seeder
                 'name' => 'User',
                 'email' => 'user' . $i . '@mail.com',
                 'password' => Hash::make('uwhfsih89w3hfw' . $i),
-                'warning_type' => 'tooltip'
+                'warning_type' => 'popup_email',
+                'show_explanation' => true
             ]);
         }
 
-        for($i = 30; $i < 40; $i++){
-            DB::table('users')->insert([
-                'name' => 'User',
-                'email' => 'user' . $i . '@mail.com',
-                'password' => Hash::make('uwhfsih89w3hfw' . $i),
-                'warning_type' => 'popup_email'
-            ]);
-        }
-
-        DB::table('users')->insert([
-            'name' => Str::random(10),
-            'email' => 'tooltip@mail.com',
-            'password' => Hash::make('12345678'),
-            'warning_type' => 'tooltip'
-        ]);
-        DB::table('users')->insert([
-            'name' => Str::random(10),
-            'email' => 'popup.email@mail.com',
-            'password' => Hash::make('12345678'),
-            'warning_type' => 'popup_email'
-        ]);
-        DB::table('users')->insert([
-            'name' => Str::random(10),
-            'email' => 'popup.link@mail.com',
-            'password' => Hash::make('12345678'),
-            'warning_type' => 'tooltip'
-        ]);
-        DB::table('users')->insert([
-            'name' => Str::random(10),
-            'email' => 'browser.native@mail.com',
-            'password' => Hash::make('12345678'),
-            'warning_type' => 'popup_email'
-        ]);
     }
 }
