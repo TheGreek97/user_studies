@@ -73,6 +73,7 @@ class MailController extends Controller
         return view('chrome_warning', ['url' => $decodedurl, 'hostname' => $hostname, 'backurl' => $backurl, 'email_id' => $request->input('email_id')]);
     }
 */
+
     private function get_user_action($key){
         switch ($key) {
             case "clicked_link":
