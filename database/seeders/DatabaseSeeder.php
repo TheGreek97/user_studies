@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             //CreateTestUsers::class,
-            UserForStudy::class,
             EmailSeeder::class
         ]);
         // \App\Models\User::factory(10)->create();

@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Seeders;
-define("EMAIL_DIR", base_path("\\database\\seeders\\email_files"));
+define("EMAIL_DIR", base_path("database/seeders/email_files"));
 use App\Models\Email;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
