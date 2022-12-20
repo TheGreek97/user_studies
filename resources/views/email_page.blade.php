@@ -398,7 +398,7 @@ else
                                         aria-hidden="true"
                                     />
                                 </button>
-                                <template x-if="isProfileMenuOpen">
+                                {{-- <template x-if="isProfileMenuOpen">
                                     <ul
                                         x-transition:leave="transition ease-in duration-150"
                                         x-transition:leave-start="opacity-100"
@@ -434,11 +434,12 @@ else
                                             </form>
                                         </li>
                                     </ul>
-                                </template>
+                                </template> --}}
                             </li>
                         </ul>
                     </div>
                 </header>
+
                 <main class="h-full overflow-y-auto">
                     <div class="container px-6 mx-auto grid mb-10">
                         @if(!isset($selected_email))

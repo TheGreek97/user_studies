@@ -16,23 +16,26 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    //return redirect()->route('login');
+    return redirect()->route('welcome');
 });
 
 Route::middleware([
-    'auth:sanctum',
+    //'auth:sanctum',
     config('jetstream.auth_session'),
-    'verified'])->group(function (){
+    //'verified'
+])->group(function (){
     Route::get('/warning_log', [\App\Http\Controllers\MailController::class, 'warningLog'])->name('warning_log');
 });
 
 Route::middleware([
-    'auth:sanctum',
+    //'auth:sanctum',
     config('jetstream.auth_session'),
-    'verified',
+    //'verified',
+    \App\Http\Middleware\StudyAuth::class,
     'log'
 ])->group(function () {
-    Route::get('/welcome', function (){
+    Route::get('/welcome', function () {
         if (Auth::user()->followUpQuestionnaire != null) {
             return redirect(route('thankyou'));
         } else {
@@ -50,7 +53,6 @@ Route::middleware([
             return redirect(route('show', ['folder' => 'inbox']));
         return view("emailquestionnaire")->with('warning_type', Auth::user()->warning_type);
     })->name('next_step');
-
     Route::post('/nextstep/{mail?}', [\App\Http\Controllers\Questionnaire::class, 'storeEmailQuestionnaire'])->name('next_step');
 
     Route::get('/finish', function (){
@@ -58,7 +60,6 @@ Route::middleware([
     })->name('thankyou');
 
     Route::get('/end', [\App\Http\Controllers\Questionnaire::class, 'showFollowUp'])->name('post_test');
-
     Route::post('/end', [\App\Http\Controllers\Questionnaire::class, 'storeFollowUp']);
 
     Route::get('/warning_browser', [\App\Http\Controllers\MailController::class, 'warning_browser'])->name('warning_browser');
