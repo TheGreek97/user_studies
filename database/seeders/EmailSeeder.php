@@ -296,7 +296,7 @@ class EmailSeeder extends Seeder
         $email->from_name = "YouTube";
         $email->from_email = "no-reply@youtube.com";
         $email->preview_text = 'We have sent you this email to notify you of an update of the Terms of Service.';
-        $email->content = file_get_contents(EMAIL_DIR . "\\youtube_legit.htm");
+        $email->content = file_get_contents(EMAIL_DIR . "/youtube_legit.htm");
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
         $email->type = 'inbox';
         $email->save();
@@ -362,7 +362,7 @@ class EmailSeeder extends Seeder
         $email->from_name = "Unity Technologies";
         $email->from_email = "accounts@unity3d.com";
         $email->preview_text = 'Here\'s how to renew your plan';
-        $email->content = file_get_contents(EMAIL_DIR . "\\unity_legit.htm");
+        $email->content = file_get_contents(EMAIL_DIR . "/unity_legit.htm");
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
         $email->type = 'inbox';
         $email->save();
@@ -373,7 +373,7 @@ class EmailSeeder extends Seeder
         $email->from_name = "Amazon";
         $email->from_email = "order-confirmation@amazon.com";
         $email->preview_text = 'Delivered: Your Amazon.com order';
-        $email->content = file_get_contents(EMAIL_DIR . "\\amazon_legit.htm");
+        $email->content = file_get_contents(EMAIL_DIR . "/amazon_legit.htm");
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
         $email->type = 'inbox';
         $email->save();
@@ -533,7 +533,7 @@ class EmailSeeder extends Seeder
         $email->from_name = "Norton";
         $email->from_email = "norton.services@protonmail.com";
         $email->preview_text = 'Your Norton Protection subscription expires today';
-        $email->content = file_get_contents(EMAIL_DIR . "\\norton_phishing.htm");
+        $email->content = file_get_contents(EMAIL_DIR . "/norton_phishing.htm");
         $email->date = Carbon::today()->toDateTimeString();
         $email->type = 'inbox';
         $email->save();
