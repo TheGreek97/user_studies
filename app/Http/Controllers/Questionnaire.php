@@ -6,6 +6,7 @@ use App\Models\FollowUpQuestionnaire;
 use App\Models\User;
 use App\Models\UserEmailQuestionnaire;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -25,13 +26,13 @@ class Questionnaire extends Controller
 
     public function showFollowUp()
     {
-        if (Auth::user()->followUpQuestionnaire != null) {
+        /*if (Auth::user()->followUpQuestionnaire != null) {
             return redirect(route('thankyou'));
         } elseif (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) < MailController::MAILS_NUMBER) {
             return redirect(route('show', ['folder' => 'inbox']));
-        } else {
+        } else {*/
             return view('followupquestionnaire')->with("user_ignored_warning", Auth::user()->warning_ignored);
-        }
+        //}
     }
 
     public function storeFollowUp(Request $request)
@@ -81,6 +82,7 @@ class Questionnaire extends Controller
             $answers[$question] = $request->$question;
         }
         $user->expertise_score = $this->computeExpertiseScore($answers);
+        $user->study_completed = Carbon::now();
         $user->save();
         return redirect(route('thankyou'));
     }

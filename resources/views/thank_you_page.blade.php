@@ -20,8 +20,6 @@
                             <a href="https://app.prolific.co/submissions/complete?cc=C19FFAV6" style="color:dodgerblue; text-decoration: underline; font-weight: bold">CLICKING HERE</a>
                         </div>
                         <br>
-                        For any further information or problem you might incur, you can contact us at the email address <a style="color:dodgerblue;" href="mailto:francesco.greco@uniba.it">francesco.greco@uniba.it</a>.
-                        <br><br>
                         Goodbye!<br>
                         The team of IVU Lab, University of Bari, Italy
                         <div class="mt-6" style="display: flex;justify-content: center;">

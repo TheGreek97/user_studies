@@ -11,11 +11,11 @@
                     evaluation of an e-mail client.
                 </p>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    In this study, which will last about 15 minutes, we ask you to imagine being Andrea, a 28 years old guy from Rome, Italy. <br>
+                    In this study, which will last about 20 minutes, we ask you to imagine being Andrea, a 28 years old guy from Rome, Italy. <br>
                     Andrea uses various social networks, among which Instagram, Facebook, Twitter, and TikTok. <br>
-                    Moreover, Andrea uses Ebay and Amazon to make online purchases. Andrea really loves music and goes to live concerts monthly. <br>
-                    Andrea works at an IT company and has accepted to test a new email client that his company has recently employed. 
-<br/>To test this client, we ask you to put yourself in Andrea's shoes, by interacting with the new email client by reading ALL of his emails in the inbox and check that all the links in them, if any, are working.
+                    Moreover, Andrea uses eBay and Amazon to make online purchases. Andrea really loves music and goes to live concerts monthly. <br>
+                    Andrea works at an IT company and has accepted to test a new email client that his company has recently employed.
+<br/>To test this client, we ask you to put yourself in Andrea's shoes, by interacting with the new email client by reading ALL of his emails in the inbox and checking that all the links in them, if any, are working.
                 </p><!--
                 <p class="text-xl max-w-4xl text-left pt-4">
                     At the end of the study, you will be asked to fill in a questionnaire.
