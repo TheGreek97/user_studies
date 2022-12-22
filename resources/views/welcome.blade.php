@@ -1,24 +1,25 @@
 <x-app-layout>
     <x-slot name="slot">
-        <div class="min-h-screen bg-gray-200 flex justify-center items-center">
+       <div class="min-h-screen bg-gray-200 flex justify-center items-center">
             <div class="p-12 m-10 bg-white rounded-2xl shadow-xl z-20">
                 <div class="text-left font-bold my-3 text-3xl w-full">
-                    Thank you for accepting our invitation to participate to this test.
+                    Thank you for accepting our invitation to participate to this study
                 </div>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    Dear participant, we are conducting a research at the University of Bari involving the
+<b>Condizione sperimentale: {{$condition}} </b>
+                    <br>Dear participant, we are conducting a research at the University of Bari involving the
                     evaluation of an e-mail client.
                 </p>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    In this study, which will take about 15 minutes, we ask you to imagine being Andrea, a 28 years old guy from Rome, Italy. <br>
+                    In this study, which will last about 15 minutes, we ask you to imagine being Andrea, a 28 years old guy from Rome, Italy. <br>
                     Andrea uses various social networks, among which Instagram, Facebook, Twitter, and TikTok. <br>
                     Moreover, Andrea uses Ebay and Amazon to make online purchases. Andrea really loves music and goes to live concerts monthly. <br>
-                    Andrea works at an IT company and has accepted to test a new email client that his company has recently employed. To test this client,
-                    Andrea must interact with it, by READING ALL HIS EMAILS in the inbox and, for those that can be considered important, check that all the links are working.
-                </p>
+                    Andrea works at an IT company and has accepted to test a new email client that his company has recently employed. 
+<br/>To test this client, we ask you to put yourself in Andrea's shoes, by interacting with the new email client by reading ALL of his emails in the inbox and check that all the links in them, if any, are working.
+                </p><!--
                 <p class="text-xl max-w-4xl text-left pt-4">
                     At the end of the study, you will be asked to fill in a questionnaire.
-                </p>
+                </p>-->
                 <div class="text-center mt-10">
                     <div class="w-full">
                         <div>

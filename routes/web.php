@@ -43,7 +43,17 @@ Route::middleware([
                 return redirect(route('show', ['folder' => 'inbox']));
             else {
                 session(['welcome_shown' => '1']);
-                return view('welcome');
+		if (Auth::user()->warning_type === "tooltip") {
+			$cond = "warning passivo";
+ 		} else {
+			$cond = "warning attivo";
+			if (Auth::user()->show_explanation){
+				$cond.= " explanation";
+			} else {
+				$cond.=" NO explanation";
+			}
+		}
+                return view('welcome')->with('condition', $cond);
             }
         }
     })->name('welcome');
