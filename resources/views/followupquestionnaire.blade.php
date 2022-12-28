@@ -86,7 +86,7 @@
                                 </div>
                             </label>
                             <div class="w-full">
-                                <input type="range" list="understood_warning" value="1" min="1" max="5" step="1"
+                                <input type="range" list="understood_warning" value="3" min="1" max="5" step="1"
                                        name="understood_warning" class="w-full">
                                 <datalist id="understood_warning">
                                     <option value="1"></option>
@@ -111,7 +111,7 @@
                                 </div>
                             </label>
                             <div class="w-full">
-                                <input type="range" list="familiar_warning" value="1" min="1" max="5" step="1"
+                                <input type="range" list="familiar_warning" value="3" min="1" max="5" step="1"
                                        name="familiar_warning" class="w-full">
                                 <datalist id="familiar_warning">
                                     <option value="1"></option>
@@ -136,7 +136,7 @@
                                 </div>
                             </label>
                             <div class="w-full">
-                                <input type="range" list="interested_warning" value="1" min="1" max="5" step="1"
+                                <input type="range" list="interested_warning" value="3" min="1" max="5" step="1"
                                        name="interested_warning" class="w-full">
                                 <datalist id="interested_warning">
                                     <option value="1"></option>
@@ -150,8 +150,8 @@
 
                         <div class="my-10">
                             <p class="font-bold pb-1">Which word(s) did you find confusing or too technical?</p>
-                            <input required type="text" name="confusing_words"
-                                   placeholder="Type your answer here..." maxlength="255"
+                            <input type="text" name="confusing_words"
+                                   placeholder="Type your answer here..." minlength="0" maxlength="255"
                                    class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"/>
                         </div>
 
