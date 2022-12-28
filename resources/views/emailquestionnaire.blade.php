@@ -5,7 +5,7 @@
                 <form action="{{ Request::url() }}" id="emailform" method="POST">
                     @csrf
                     <div>
-                        <h1 class="text-xl text-center mb-4">@if(!isset($_GET['nolink']))For the purpose of the study you will not visit the destination<br/>website but we ask you to answer the following questions.<br/>Then you will be redirected to the inbox page. @else Before continuing and coming back, answer these questions @endif</h1>
+                        <h1 class="text-xl text-center mb-4">@if(!isset($_GET['nolink']))For the purpose of the study you will not visit the destination <br/>website but we ask you to answer the following questions. <br/>Then you will be redirected to the inbox page. @else Before continuing and coming back to the test, answer these questions @endif</h1>
                     </div>
                     <!--
                     <div class="my-5">
@@ -28,7 +28,7 @@
                         <input type="hidden" name="how_many_hyperlinks" value="1"/>
                     @endif
                     <div class="text-center mt-6">
-                        <button id="submit_btn" class="py-3 w-64 text-xl text-white bg-blue-500 rounded-2xl">Continue the test</button>
+                        <button id="submit_btn" class="py-3 w-64 text-xl text-white bg-blue-500 rounded-2xl">Continue the study</button>
                     </div>
                 </form>
             </div>

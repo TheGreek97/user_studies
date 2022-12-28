@@ -82,12 +82,6 @@ class MailController extends Controller
                 return "Shown warning";
             case "warning_ignored":
                 return "Ignored warning";
-            case 'go_back':
-                return "Clicked on btn 'Go back to the safe zone'";
-            case 'advanced':
-                return "Clicked on btn 'Advanced'";
-            case 'hide_advanced':
-                return "Clicked on btn 'Hide advanced'";
             case 'tooltip_shown':
                 return "Shown tooltip";
             case 'tooltip_click':

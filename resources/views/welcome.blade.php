@@ -1,9 +1,9 @@
 <x-app-layout>
     <x-slot name="slot">
-        <div class="min-h-screen bg-gray-200 flex justify-center items-center">
+       <div class="min-h-screen bg-gray-200 flex justify-center items-center">
             <div class="p-12 m-10 bg-white rounded-2xl shadow-xl z-20">
                 <div class="text-left font-bold my-3 text-3xl w-full">
-                    Thank you for accepting our invitation to participate to this test.
+                    Thank you for accepting our invitation to participate to this study
                 </div>
                 <p class="text-xl max-w-4xl text-left pt-4">
                     Dear participant, at the University of Bari we are evaluating a new prototype of email client.
@@ -17,7 +17,7 @@
                 </p>
                 <p class="text-xl max-w-4xl text-left pt-4">
                     At the end of the study, you will be asked to fill in a questionnaire.
-                </p>
+                </p>-->
                 <div class="text-center mt-10">
                     <div class="w-full">
                         <div>

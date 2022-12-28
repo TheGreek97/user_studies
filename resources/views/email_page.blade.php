@@ -15,7 +15,7 @@ else
         <div style="position: sticky; top: 0; left: 0; z-index: 10;"
              class="p-6 shadow-lg bg-gray-700 text-white">
             <p>
-                <span class="font-semibold">Goal:</span> Please READ ALL THE EMAILS and, for those that you consider important, check that all the links are working.
+                <span class="font-semibold">Goal:</span> Please READ ALL THE EMAILS in the inbox and check that all the links in them, if any, are working. The test finishes when you interact with all the emails.
             </p>
         </div>
         <div
@@ -651,7 +651,7 @@ else
                                                   clip-rule="evenodd"/>
                                         </svg>
                                     </div>
-                                    <div>Possible scam in the email</div>
+                                    <div>Deceptive email ahead</div>
                                 </h2>
                             </div>
                             <!-- Modal body -->
@@ -663,16 +663,17 @@ else
                             <!-- Modal footer -->
                             <div class="flex items-center p-6 justify-between rounded-b">
                                 <button id="button-advanced" type="button"
-                                        class="text-white underline font-medium text-sm text-center">Advanced
+                                        class="text-white underline font-medium text-sm text-center">Show Details
                                 </button>
                                 <button id="button_hide_modal" type="button"
                                         class="bg-white hover:bg-gray-200 rounded-lg text-sm font-medium px-5 py-2.5"
-                                        style="color: #b80000;">Go back to the safe zone
+                                        style="color: #b80000;">Back to safety
                                 </button>
                             </div>
                             <div id="div-advanced" class="hidden text-white px-6 pb-6">
-                                This email has a <b>fraudulent purpose</b> and may <b>steal your personal data</b>.
-                                <br/>Click
+                                <!--This email has a <b>fraudulent purpose</b> and may <b>steal your personal data</b>.
+                                <br/>-->
+                                Click
                                 <button id="warning_unsafe_link" class="text-white underline">here</button>
                                 (not safe) to read it.
                             </div>
@@ -901,10 +902,10 @@ else
                 });
                 $("#button-advanced").on('click', () => {
                     if ($("#div-advanced").is(":hidden")) {
-                        $("#button-advanced").text("Hide advanced");
+                        $("#button-advanced").text("Hide Details");
                         $("#div-advanced").show();
                         $.ajax({
-                            url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=advanced&url=" + window.location.href).replace(/%20/g, '+'),
+                            url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=show_details&url=" + window.location.href).replace(/%20/g, '+'),
                             type: 'GET',
                             dataType: 'json'
                         });
@@ -912,7 +913,7 @@ else
                         $("#button-advanced").text("Advanced");
                         $("#div-advanced").hide();
                         $.ajax({
-                            url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=hide_advanced&url=" + window.location.href).replace(/%20/g, '+'),
+                            url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=hide_details&url=" + window.location.href).replace(/%20/g, '+'),
                             type: 'GET',
                             dataType: 'json'
                         });
@@ -920,7 +921,7 @@ else
                 });
                 $("#button_hide_modal").on('click', () => {
                     $.ajax({
-                        url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=go_back&url=" + window.location.href).replace(/%20/g, '+'),
+                        url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=back_safety&url=" + window.location.href).replace(/%20/g, '+'),
                         type: 'GET',
                         dataType: 'json'
                     });

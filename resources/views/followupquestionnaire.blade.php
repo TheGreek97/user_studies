@@ -1,3 +1,16 @@
+@php
+    $user= \Illuminate\Support\Facades\Auth::user();
+    if ($user->warning_type === "tooltip"){
+        $url_image_warning = url('/assets/img/tooltip.png');
+    } else {
+        if ($user->show_explanation) {
+            $url_image_warning = url('/assets/img/popup_email_exp.png');
+        } else {
+            $url_image_warning = url('/assets/img/popup_email_no_exp.png');
+        }
+    }
+@endphp
+
 <x-app-layout>
     <x-slot name="slot">
         <div class="min-h-screen bg-gray-200 flex justify-center items-center">
@@ -20,12 +33,12 @@
                         <p class="text-xl max-w-2xl text-left pt-3">
                             When we invited you to participate in the study, we told you that the purpose of the study
                             was to evaluate an email client. However, there is another purpose that we did not tell you
-                            in order to not influence your actions in any way. Indeed, this test aimed to assess the effectiveness of
-                            different warning message designs in email clients.
+                            in order to not influence your actions in any way.
+                            Indeed, this test aimed also to assess the effectiveness of an alert shown in case of suspicious phishing emails.
                         </p>
                         <p class="text-xl max-w-2xl text-left pt-4">
                             To complete this study, we ask you to go ahead and fill in the final questionnaire on the
-                            warning messages you have seen during the interaction.
+                            alert you have seen during the interaction.
                         </p>
                     </div>
 
@@ -33,11 +46,10 @@
                     <div x-show="step === 1" id="section-1">
                         <p class="text-2xl w-full text-center">Section 1 of 4</p>
                         <p class="text-lg text-left pt-5">
-                            During the study you were exposed to this warning message that alerted you against phishing
-                            attacks:
+                            During the study you were exposed to this type of alert:
                         </p>
                         <img class="mx-auto my-7 w-2/4"
-                             src="{{ url('/assets/img/' . \Illuminate\Support\Facades\Auth::user()->warning_type .'.png') }}">
+                             src="{{$url_image_warning}}">
                         <div class="my-10">
                             <p class="font-bold pb-1">Did you read the entire text of the warning dialogs that were presented to you?</p>
                             <div>
@@ -78,22 +90,22 @@
                             <label for="understood_warning"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
-                                    1 (Don't agree)
+                                    (Don't agree)
                                 </div>
                                 <div class="flex-1"></div>
                                 <div>
-                                    5 (Totally agree)
+                                    (Totally agree)
                                 </div>
                             </label>
                             <div class="w-full">
                                 <input type="range" list="understood_warning" value="3" min="1" max="5" step="1"
                                        name="understood_warning" class="w-full">
                                 <datalist id="understood_warning">
-                                    <option value="1"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="4"></option>
-                                    <option value="5"></option>
+                                    <option value="1" label="1"></option>
+                                    <option value="2" label="2"></option>
+                                    <option value="3" label="3"></option>
+                                    <option value="4" label="4"></option>
+                                    <option value="5" label="5"></option>
                                 </datalist>
                             </div>
                         </div>
@@ -103,22 +115,22 @@
                             <label for="familiar_warning"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
-                                    1 (Don't agree)
+                                    (Don't agree)
                                 </div>
                                 <div class="flex-1"></div>
                                 <div>
-                                    5 (Totally agree)
+                                    (Totally agree)
                                 </div>
                             </label>
                             <div class="w-full">
                                 <input type="range" list="familiar_warning" value="3" min="1" max="5" step="1"
                                        name="familiar_warning" class="w-full">
                                 <datalist id="familiar_warning">
-                                    <option value="1"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="4"></option>
-                                    <option value="5"></option>
+                                    <option value="1" label="1"></option>
+                                    <option value="2" label="2"></option>
+                                    <option value="3" label="3"></option>
+                                    <option value="4" label="4"></option>
+                                    <option value="5" label="5"></option>
                                 </datalist>
                             </div>
                         </div>
@@ -128,22 +140,22 @@
                             <label for="interested_warning"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
-                                    1 (Don't agree)
+                                    (Don't agree)
                                 </div>
                                 <div class="flex-1"></div>
                                 <div>
-                                    5 (Totally agree)
+                                    (Totally agree)
                                 </div>
                             </label>
                             <div class="w-full">
                                 <input type="range" list="interested_warning" value="3" min="1" max="5" step="1"
                                        name="interested_warning" class="w-full">
                                 <datalist id="interested_warning">
-                                    <option value="1"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="4"></option>
-                                    <option value="5"></option>
+                                    <option value="1" label="1"></option>
+                                    <option value="2" label="2"></option>
+                                    <option value="3" label="3"></option>
+                                    <option value="4" label="4"></option>
+                                    <option value="5" label="5"></option>
                                 </datalist>
                             </div>
                         </div>
@@ -304,7 +316,7 @@
                     <div x-show="step === 2" id="section-2">
                         <p class="text-2xl w-full text-center">Section 2 of 4</p>
                         <div class="my-5">
-                            <p class="font-bold pb-1">How mentally demanding was the task?</p>
+                            <p class="font-bold pb-1">How mentally demanding was the task of interacting with the alert?</p>
                             <label for="tick-1"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
@@ -319,22 +331,21 @@
                                 <input type="range" list="tick-1" value="5" min="0" max="10" step="1"
                                        name="nasa_mental_demand" class="w-full">
                                 <datalist id="tick-1">
-                                    <option value="0"></option>
-                                    <option value="1"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="4"></option>
-                                    <option value="5"></option>
-                                    <option value="6"></option>
-                                    <option value="7"></option>
-                                    <option value="8"></option>
-                                    <option value="9"></option>
-                                    <option value="10"></option>
+                                    <option value="1" label="1"></option>
+                                    <option value="2" label="2"></option>
+                                    <option value="3" label="3"></option>
+                                    <option value="4" label="4"></option>
+                                    <option value="5" label="5"></option>
+                                    <option value="6" label="6"></option>
+                                    <option value="7" label="7"></option>
+                                    <option value="8" label="8"></option>
+                                    <option value="9" label="9"></option>
+                                    <option value="10" label="10"></option>
                                 </datalist>
                             </div>
                         </div>
                         <div class="my-6">
-                            <p class="font-bold pb-1">How physically demanding was the task?</p>
+                            <p class="font-bold pb-1">How physically demanding was the task of interacting with the alert?</p>
                             <label for="tick-2"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
@@ -349,22 +360,21 @@
                                 <input type="range" list="tick-2" value="5" min="0" max="10" step="1"
                                        name="nasa_physical_demand" class="w-full">
                                 <datalist id="tick-2">
-                                    <option value="0"></option>
-                                    <option value="1"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="4"></option>
-                                    <option value="5"></option>
-                                    <option value="6"></option>
-                                    <option value="7"></option>
-                                    <option value="8"></option>
-                                    <option value="9"></option>
-                                    <option value="10"></option>
+                                    <option value="1" label="1"></option>
+                                    <option value="2" label="2"></option>
+                                    <option value="3" label="3"></option>
+                                    <option value="4" label="4"></option>
+                                    <option value="5" label="5"></option>
+                                    <option value="6" label="6"></option>
+                                    <option value="7" label="7"></option>
+                                    <option value="8" label="8"></option>
+                                    <option value="9" label="9"></option>
+                                    <option value="10" label="10"></option>
                                 </datalist>
                             </div>
                         </div>
                         <div class="my-6">
-                            <p class="font-bold pb-1">How hurried or rushed was the pace of the task?</p>
+                            <p class="font-bold pb-1">How hurried or rushed was the pace of the task of interacting with the alert?</p>
                             <label for="tick-3"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
@@ -379,23 +389,21 @@
                                 <input type="range" list="tick-3" value="5" min="0" max="10" step="1"
                                        name="nasa_temporal_demand" class="w-full">
                                 <datalist id="tick-3">
-                                    <option value="0"></option>
-                                    <option value="1"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="4"></option>
-                                    <option value="5"></option>
-                                    <option value="6"></option>
-                                    <option value="7"></option>
-                                    <option value="8"></option>
-                                    <option value="9"></option>
-                                    <option value="10"></option>
+                                    <option value="1" label="1"></option>
+                                    <option value="2" label="2"></option>
+                                    <option value="3" label="3"></option>
+                                    <option value="4" label="4"></option>
+                                    <option value="5" label="5"></option>
+                                    <option value="6" label="6"></option>
+                                    <option value="7" label="7"></option>
+                                    <option value="8" label="8"></option>
+                                    <option value="9" label="9"></option>
+                                    <option value="10" label="10"></option>
                                 </datalist>
                             </div>
                         </div>
                         <div class="my-6">
-                            <p class="font-bold pb-1">How successful were you in accomplishing what you were asked to
-                                do?</p>
+                            <p class="font-bold pb-1">How successful were you in accomplishing what you were asked to do?</p>
                             <label for="tick-4"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
                                 <div>
@@ -410,17 +418,16 @@
                                 <input type="range" list="tick-4" value="5" min="0" max="10" step="1"
                                        name="nasa_performance" class="w-full">
                                 <datalist id="tick-4">
-                                    <option value="0"></option>
-                                    <option value="1"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="4"></option>
-                                    <option value="5"></option>
-                                    <option value="6"></option>
-                                    <option value="7"></option>
-                                    <option value="8"></option>
-                                    <option value="9"></option>
-                                    <option value="10"></option>
+                                    <option value="1" label="1"></option>
+                                    <option value="2" label="2"></option>
+                                    <option value="3" label="3"></option>
+                                    <option value="4" label="4"></option>
+                                    <option value="5" label="5"></option>
+                                    <option value="6" label="6"></option>
+                                    <option value="7" label="7"></option>
+                                    <option value="8" label="8"></option>
+                                    <option value="9" label="9"></option>
+                                    <option value="10" label="10"></option>
                                 </datalist>
                             </div>
                         </div>
@@ -441,17 +448,16 @@
                                 <input type="range" list="tick-5" value="5" min="0" max="10" step="1" name="nasa_effort"
                                        class="w-full">
                                 <datalist id="tick-5">
-                                    <option value="0"></option>
-                                    <option value="1"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="4"></option>
-                                    <option value="5"></option>
-                                    <option value="6"></option>
-                                    <option value="7"></option>
-                                    <option value="8"></option>
-                                    <option value="9"></option>
-                                    <option value="10"></option>
+                                    <option value="1" label="1"></option>
+                                    <option value="2" label="2"></option>
+                                    <option value="3" label="3"></option>
+                                    <option value="4" label="4"></option>
+                                    <option value="5" label="5"></option>
+                                    <option value="6" label="6"></option>
+                                    <option value="7" label="7"></option>
+                                    <option value="8" label="8"></option>
+                                    <option value="9" label="9"></option>
+                                    <option value="10" label="10"></option>
                                 </datalist>
                             </div>
                         </div>
@@ -472,17 +478,16 @@
                                 <input type="range" list="tick-6" value="5" min="0" max="10" step="1"
                                        name="nasa_frustration_level" class="w-full">
                                 <datalist id="tick-6">
-                                    <option value="0"></option>
-                                    <option value="1"></option>
-                                    <option value="2"></option>
-                                    <option value="3"></option>
-                                    <option value="4"></option>
-                                    <option value="5"></option>
-                                    <option value="6"></option>
-                                    <option value="7"></option>
-                                    <option value="8"></option>
-                                    <option value="9"></option>
-                                    <option value="10"></option>
+                                    <option value="1" label="1"></option>
+                                    <option value="2" label="2"></option>
+                                    <option value="3" label="3"></option>
+                                    <option value="4" label="4"></option>
+                                    <option value="5" label="5"></option>
+                                    <option value="6" label="6"></option>
+                                    <option value="7" label="7"></option>
+                                    <option value="8" label="8"></option>
+                                    <option value="9" label="9"></option>
+                                    <option value="10" label="10"></option>
                                 </datalist>
                             </div>
                         </div>
