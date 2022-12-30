@@ -13,9 +13,9 @@
                     Andrea uses various social networks, among which Instagram, Facebook, Twitter, and TikTok. <br>
                     Moreover, Andrea uses Ebay and Amazon to make online purchases with his italian credit card. Andrea really loves music and goes to live concerts monthly. <br>
                     Andrea works at an IT company and has accepted to test a new email client that his company has recently adopted. To test the new email client,
-                    Andrea must interact with it, by READING ALL HIS EMAILS in the inbox and, for those that can be considered important, check that all the links are working.
+                    Andrea must interact with it, by READING ALL HIS EMAILS in the inbox and check that the links in them, if any, are working.
                 </p>
-                <p class="text-xl max-w-4xl text-left pt-4">
+                <!--<p class="text-xl max-w-4xl text-left pt-4">
                     At the end of the study, you will be asked to fill in a questionnaire.
                 </p>-->
                 <div class="text-center mt-10">

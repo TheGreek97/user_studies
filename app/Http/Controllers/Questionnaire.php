@@ -15,7 +15,7 @@ class Questionnaire extends Controller
     public function storeEmailQuestionnaire($id, Request $request)
     {
         $questionnaire = new UserEmailQuestionnaire();
-        $questionnaire->title_email = $request->title_email;
+        $questionnaire->title_email = "null";//$request->title_email;
         $questionnaire->how_many_hyperlinks = $request->how_many_hyperlinks;
         $questionnaire->sender_email = $request->sender_email;
         $questionnaire->email_id = $id;

@@ -716,18 +716,17 @@ class EmailSeeder extends Seeder
                   <tr style="border-top:solid 1px #e5e5e5;">
                     <td height="19" style="line-height:19px;">&nbsp;</td>
                   </tr>
-                  <tr>
+                  <tr style="align-items: center; display: block">
                     <td style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:11px;color:#aaaaaa;line-height:16px;"> This email was sent by Facebook. If you do not want to receive this kind of emails from Facebook, <a href="https://www.facebook.com/o.php?k=3DAS3IzEaiunZaSIOZ&amp;u=3D100000125023309&amp;mid=3D57fd6086d799fG5af317edf44dG57fd652037c71G18e" style="color:#3b5998;text-decoration:none;">cancel your subscription</a>. <br>Facebook Ireland Ltd., Attention: Community Operations, 4 Grand Canal Square, Dublin 2, Ireland </td>
                   </tr>
                 </table>
               </td>
-              <td width="15" style="display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td>
             </tr>
             <tr>
               <td width="15" style="display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td>
               <td style="">
                 <table border="0" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
-                  <tr>
+                  <tr style="align-items: center; display: block">
                     <td style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:11px;color:#aaaaaa;line-height:16px;">
                       <span style="font-family:Helvetica Neue,Helvetica,LucidaGrande,tahoma,verdana,arial,sans-serif;font-size:11px;color:#aaaaaa;line-height:16px;">To protect your account, do not forward this email. <a href="https://www.facebook.com/email_forward_notice/?mid=57fd6086d799fG5af317edf44dG57fd652037c71G18e" style="color:#3b5998;text-decoration:none;">Discover more.</a>
                       </span>
@@ -890,20 +889,19 @@ class EmailSeeder extends Seeder
               <td width="15" style="display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td>
             </tr>
             <tr>
-              <td width="15" style="display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td>
               <td style="">
                 <table border="0" width="100%" cellspacing="0" cellpadding="0" align=" left" style="border-collapse:collapse;">
                   <tr style="border-top:solid 1px #e5e5e5;">
                     <td height="19" style="line-height:19px;">&nbsp;</td>
                   </tr>
-                  <tr>
+                   <tr style="align-items: center; display: block">
                     <td style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:11px;color:#aaaaaa;line-height:16px;"> This email was sent by Facebook. If you do not want to receive this kind of emails from Facebook, <a href="https://www.facebook.com/o.php?k=3DAS3IzEaiunZaSIOZ&amp;u=3D100000125023309&amp;mid=3D57fd6086d799fG5af317edf44dG57fd652037c71G18e" style="color:#3b5998;text-decoration:none;">cancel your subscription</a>. <br>Facebook Ireland Ltd., Attention: Community Operations, 4 Grand Canal Square, Dublin 2, Ireland </td>
                   </tr>
                 </table>
               </td>
               <td width="15" style="display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td>
             </tr>
-            <tr>
+            <tr style="align-items: center; display: block">
               <td width="15" style="display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td>
               <td style="">
                 <table border="0" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">

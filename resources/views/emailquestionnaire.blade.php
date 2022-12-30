@@ -14,18 +14,17 @@
                     </div>
                     -->
                     <div class="my-5">
-                        <p class="font-bold pb-1">Who is the sender of the email?</p>
+                        <p class="font-bold pb-1">Who was the sender of the email?</p>
                         <input type="text" name="sender_email" placeholder="Answer here..." class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required/>
                     </div>
-                    <input type="hidden" name="title_email" value="-"/>
                     @if(!isset($_GET['noquest']))
                     <div class="my-5">
-                        <p class="font-bold pb-1">Was there any link in the email?</p>
-                        <input type="number" name="how_many_hyperlinks" placeholder="Answer here..." class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" value="1" min="0" required/>
+                        <p class="font-bold pb-1">Were there links in the email?</p>
+                        <input type="text" name="how_many_hyperlinks" placeholder="Answer here..." class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required/>
                     </div
                     @else
                         <!--<input type="hidden" name="title_email" value="_"/>-->
-                        <input type="hidden" name="how_many_hyperlinks" value="1"/>
+                        <input type="hidden" name="how_many_hyperlinks" value="-"/>
                     @endif
                     <div class="text-center mt-6">
                         <button id="submit_btn" class="py-3 w-64 text-xl text-white bg-blue-500 rounded-2xl">Continue the study</button>

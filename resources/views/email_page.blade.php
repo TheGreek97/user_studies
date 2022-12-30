@@ -15,7 +15,7 @@ else
         <div style="position: sticky; top: 0; left: 0; z-index: 10;"
              class="p-6 shadow-lg bg-gray-700 text-white">
             <p>
-                <span class="font-semibold">Goal:</span> Please READ ALL THE EMAILS in the inbox and check that all the links in them, if any, are working. The test finishes when you interact with all the emails.
+                <span class="font-semibold">Goal:</span> Please READ ALL THE EMAILS in the inbox and check that the links in them, if any, are working. The test finishes when you interact with all the emails.
             </p>
         </div>
         <div
