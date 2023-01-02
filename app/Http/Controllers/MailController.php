@@ -14,7 +14,7 @@ class MailController extends Controller
 
     public function show($folder = 'inbox', $id = null){
         info("ID ".$id);
-        if(!in_array($folder, ['inbox', 'sent', 'drafts', 'trash']))
+        if(!in_array($folder, ['inbox', 'sent', 'draft', 'trash']))
             return redirect(route('show', ['folder' => 'inbox']));
         if($id != null){
             $email = Email::findOr($id, function () { return null; });

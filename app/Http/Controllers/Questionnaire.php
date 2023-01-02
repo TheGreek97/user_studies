@@ -30,8 +30,8 @@ class Questionnaire extends Controller
             return redirect(route('thankyou'));
         } elseif (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) < MailController::MAILS_NUMBER) {
             return redirect(route('show', ['folder' => 'inbox']));
-        } else {*/
-            return view('followupquestionnaire')->with("user_ignored_warning", Auth::user()->warning_ignored);
+        } else {
+            */return view('followupquestionnaire')->with("user_ignored_warning", Auth::user()->warning_ignored);
         //}
     }
 

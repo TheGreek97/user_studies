@@ -116,7 +116,7 @@ else
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                           d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20"/>
                                 </svg>
-                                <span class="ml-4">Inbox</span>
+                                <span class="ml-4">Inbox (14)</span>
                             </a>
                         </li>
                     </ul>
@@ -141,19 +141,19 @@ else
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                           d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
                                 </svg>
-                                <span class="ml-4">Sent</span>
+                                <span class="ml-4">Sent (0)</span>
                             </a>
                         </li>
                         <li class="relative px-6 py-3">
-                            @if($folder === 'drafts')
+                            @if($folder === 'draft')
                                 <span
                                     class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
                                     aria-hidden="true"
                                 ></span>
                             @endif
                             <a
-                                href="{{ route('show', ['folder' => 'drafts']) }}"
-                                @if($folder === 'drafts')
+                                href="{{ route('show', ['folder' => 'draft']) }}"
+                                @if($folder === 'draft')
                                 class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                                 @else
                                 class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
@@ -164,7 +164,7 @@ else
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                           d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                                 </svg>
-                                <span class="ml-4">Drafts</span>
+                                <span class="ml-4">Drafts (0)</span>
                             </a>
                         </li>
                         <li class="relative px-6 py-3">
@@ -187,7 +187,7 @@ else
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                           d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                 </svg>
-                                <span class="ml-4">Trash</span>
+                                <span class="ml-4">Trash (0)</span>
                             </a>
                         </li>
                     </ul>
@@ -289,19 +289,19 @@ else
                             </a>
                         </li>
                         <li class="relative px-6 py-3">
-                            @if($folder === 'drafts')
+                            @if($folder === 'draft')
                                 <span
                                     class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
                                     aria-hidden="true"
                                 ></span>
                             @endif
                             <a
-                                @if($folder === 'drafts')
+                                @if($folder === 'draft')
                                 class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                                 @else
                                 class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                                 @endif
-                                href="{{ route('show', ['folder' => 'drafts']) }}"
+                                href="{{ route('show', ['folder' => 'draft']) }}"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                      stroke="currentColor" stroke-width="2">
@@ -463,7 +463,7 @@ else
                                                   d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
                                         </svg>
                                         @break
-                                        @case('drafts')
+                                        @case('draft')
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-full" fill="none"
                                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -499,10 +499,12 @@ else
                                                 <tr class="text-gray-700 cursor-not-allowed bg-gray-300">
                                             @else
                                                 <tr class="text-gray-700 cursor-pointer hover:bg-gray-200 hover:dark:bg-gray-600 dark:text-gray-400"
-                                                    @if($email->warning_type === "popup_email")
-                                                    onclick="open_warning('{{ route('show', ['folder' => $folder,'id' => $email->id]) }}', {{ $email->id }}, '{!! $email->$warning_explanation !!}')"
-                                                    @else
-                                                    onclick="window.location.href = '{{ route('show', ['folder' => $folder,'id' => $email->id]) }}'"
+                                                    @if($email->type === "inbox")
+                                                        @if($email->warning_type === "popup_email")
+                                                        onclick="open_warning('{{ route('show', ['folder' => $folder,'id' => $email->id]) }}', {{ $email->id }}, '{!! $email->$warning_explanation !!}')"
+                                                        @else
+                                                        onclick="window.location.href = '{{ route('show', ['folder' => $folder,'id' => $email->id]) }}'"
+                                                        @endif
                                                     @endif
                                                 >
                                                     @endif

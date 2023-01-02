@@ -9,9 +9,9 @@
                     Dear participant, at the University of Bari we are evaluating a new prototype of email client.
                 </p>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    In this study, which will take about 15 minutes, we ask you to imagine being Andrea, a 28 years old guy who lives in Rome, Italy. <br>
+                    In this study, which will take about 20 minutes, we ask you to imagine being Andrea, a 28 years old guy who lives in Rome, Italy. <br>
                     Andrea uses various social networks, among which Instagram, Facebook, Twitter, and TikTok. <br>
-                    Moreover, Andrea uses Ebay and Amazon to make online purchases with his italian credit card. Andrea really loves music and goes to live concerts monthly. <br>
+                    Moreover, Andrea uses Ebay and Amazon to make online purchases with his Italian credit card. Andrea really loves music and goes to live concerts monthly. <br>
                     Andrea works at an IT company and has accepted to test a new email client that his company has recently adopted. To test the new email client,
                     Andrea must interact with it, by READING ALL HIS EMAILS in the inbox and check that the links in them, if any, are working.
                 </p>

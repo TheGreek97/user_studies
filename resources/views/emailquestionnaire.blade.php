@@ -5,7 +5,7 @@
                 <form action="{{ Request::url() }}" id="emailform" method="POST">
                     @csrf
                     <div>
-                        <h1 class="text-xl text-center mb-4">@if(!isset($_GET['nolink']))For the purpose of the study you will not visit the destination <br/>website but we ask you to answer the following questions. <br/>Then you will be redirected to the inbox page. @else Before continuing and coming back to the test, answer these questions @endif</h1>
+                        <h1 class="text-xl text-center mb-4">@if(!isset($_GET['nolink']))For the purpose of the study you will not visit the destination <br/>website but we ask you to answer the following questions. <br/>Then you will be redirected to the inbox page. @else Before continuing and coming back to the study, answer these questions @endif</h1>
                     </div>
                     <!--
                     <div class="my-5">
@@ -19,9 +19,14 @@
                     </div>
                     @if(!isset($_GET['noquest']))
                     <div class="my-5">
-                        <p class="font-bold pb-1">Were there links in the email?</p>
-                        <input type="text" name="how_many_hyperlinks" placeholder="Answer here..." class="block text-sm px-4 rounded-lg py-3 w-full border outline-none" required/>
-                    </div
+                        <label for="how_many_hyperlinks" class="font-bold pb-1">Were there links in the email?</label>
+                        <select required id="how_many_hyperlinks" name="how_many_hyperlinks" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="" selected>Select an answer</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                            <option value="dont remember">I don't remember</option>
+                        </select>
+                    </div>
                     @else
                         <!--<input type="hidden" name="title_email" value="_"/>-->
                         <input type="hidden" name="how_many_hyperlinks" value="-"/>

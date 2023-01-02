@@ -1033,12 +1033,15 @@
                         switch (this.step) {
                             case 1:
                                 $("#section-1 :input").each(function () {
-                                    check = ($(this).val() != "" && check);
-                                    if ($(this).val() == "") {
-                                        $(this).addClass('border-red-500');
-                                        $(this).change(_ => $(this).removeClass('border-red-500'));
-                                    } else
-                                        $(this).removeClass('border-red-500');
+                                    if ($(this).attr("name") !== "confusing_words") {
+                                        check = ($(this).val() != "" && check);
+                                        if ($(this).val() == "") {
+                                            $(this).addClass('border-red-500');
+                                            $(this).change(_ => $(this).removeClass('border-red-500'));
+                                        } else
+                                            $(this).removeClass('border-red-500');
+                                    }
+
                                 });
                                 const questions = ["read_warning", "felt_risk", "actions_warning", "trust_warning"]
                                 for (const question in questions) {
