@@ -54,7 +54,7 @@ class EmailSeeder extends Seeder
                 case 'link_mismatch':
                     return "The displayed link is different from the actual one ". $url .". This site might be intended to take you to a different place. You might be disclosing private information";
                 case 'tld_mispositioned':
-                    return "In the URL present in the email the position of the top-level domain (". "e.g., “.com“". ") is in an abnormal position. This could indicate that the URL leads to a fake website. Such websites might steal your personal information";
+                    return "In the URL present in the email (". $url .") the top-level domain (e.g., “.com“) is in an abnormal position. This could indicate that the URL leads to a fake website. Such websites might steal your personal information";
                 case 'num_subdomains':
                     return "There are many subdomains in the URL contained in the email. This anomaly is a sign of malicious email. Don't share your private information";
                 case 'url_length':
@@ -589,11 +589,11 @@ class EmailSeeder extends Seeder
         $email->save();
 
         // Email 2 - AMAZON
-        $phish_url = "amazonservices.sc03osd.cz/account.php";
+        $phish_url = "amazonservices.com.cz/account.php";
         $email = new Email();
         $email->subject = "Problem with your account";
         $email->from_name = "Amazon";
-        $email->from_email = "amazon.it@amazonservices.sc03osd.cz";
+        $email->from_email = "amazon.it@amazonservices.com.cz";
         $email->preview_text = 'Hello customer, We have faced some problems with your account.';
         $email->content = '<div><p class="p1"><img src="/assets/img/email/amazon.jpg" alt="" width="100" /></p>
         <p class="p1">Dear Customer,<br /><br />
@@ -792,7 +792,7 @@ class EmailSeeder extends Seeder
         $email = new Email();
         $email->subject = "Problem with your account";
         $email->from_name = "Amazon";
-        $email->from_email = "amazon.it@amazonservices.sc03osd.cz";
+        $email->from_email = "amazon.it@amazonservices.com.cz";
         $email->preview_text = 'Hello customer, We have faced some problems with your account.';
         $email->content = '<div><p class="p1"><img src="/assets/img/email/amazon.jpg" alt="" width="100" /></p>
         <p class="p1">Dear Customer,<br /><br />
@@ -803,12 +803,12 @@ class EmailSeeder extends Seeder
         You can proceed to the updating procedure by clicking the link below:</p>
         <br>
         <div style="margin-left: auto; margin-right: auto; border-radius: 5px; background-color: #ffd814; color: #000000; display: inline-block; text-align: center;" align="center">
-        <a style="color: #000000; text-decoration: none; display: block; padding: 14px 30px 15px;" href="https://amazonservices.sc03osd.cz/account.php"> Update now </a></div>
+        <a style="color: #000000; text-decoration: none; display: block; padding: 14px 30px 15px;" href="https://amazonservices.com.cz/account.php"> Update now </a></div>
         <br><br><p class="p1">Thank you for being part of the Amazon community,<span class="Apple-converted-space"> </span></p>
         <p class="p1">we look forward to hearing from you soon.</p><br>
         <p class="p1">Best regards, <br>Amazon Customer Service</p></div>';
-        $email->warning_explanation_1 = get_explanation("basic","https://amazonservices.sc03osd.cz/account.php");
-        $email->warning_explanation_2 = get_explanation("tld_mispositioned");
+        $email->warning_explanation_1 = get_explanation("basic","https://amazonservices.com.cz/account.php");
+        $email->warning_explanation_2 = get_explanation("tld_mispositioned","https://amazonservices.com.cz/account.php");
         $email->warning_type = 'popup_email';
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
         $email->type = 'inbox';

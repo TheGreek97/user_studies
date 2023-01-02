@@ -751,7 +751,7 @@ else
                     $(this).on('click', (e) => {
                         e.preventDefault();
                         $.ajax({
-                            url: ("{{ route('warning_log') }}?email_id={{$selected_email->id}}&warning_type={{$selected_email->warning_type}}&msg=clicked_link&url=" + window.location.href).replace(/%20/g, '+'),
+                            url: ("{{ route('warning_log') }}?email_id={{$selected_email->id}}&warning_type={{$selected_email->warning_type}}&msg=clicked_link&url=" + $(this).attr("href")).replace(/%20/g, '+'),
                             type: 'GET',
                             dataType: 'json',
                             complete: function (data) {
