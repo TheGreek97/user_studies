@@ -75,7 +75,7 @@ class Questionnaire extends Controller
         $user->gender = $request->gender;
         $user->age = $request->age;
         $user->num_hours_day_internet = $request->num_hours_day_internet;
-
+        $user->prolific_id = $request->prolific_id;
         $answers = [];
         for ($i=1; $i<=10; $i++){
             $question = "cyber_".$i;
