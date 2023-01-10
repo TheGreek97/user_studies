@@ -1,29 +1,33 @@
-## Requisiti
+This is a platform to execute user study to assess the effectiveness of active warnings (with or without explanations) and passive contextual warnings.
+
+The email list is visible in the database/seeders/email_files folder
+
+## Requirements
 
 - PHP >= 8.0.2
 - Composer
 
-## Installazione
+## Installation
 
-- Copiare il contenuto della cartella .zip sul Web Server
-- Creare un database MySQL (o MariaDB) e un utente con i privilegi sul database creato:
-    - CREATE SCHEMA nome_database;
-    - CREATE USER 'utente_db'@'localhost' IDENTIFIED BY 'password';
-    - GRANT PRIVILEGE ON nome_database.* TO 'utente_db'@'localhost';
+- Clone this repo on the Web Server
+- Create a MySQL (or MariaDB) database and a user with the right priviledges:
+    - CREATE SCHEMA db_name;
+    - CREATE USER 'user_db'@'localhost' IDENTIFIED BY 'password';
+    - GRANT PRIVILEGE ON db_name.* TO 'user_db'@'localhost';
     - FLUSH PRIVILEGES;
-- Copiare (o rinominare) il file .env.example in .env
-- Aprire il file .env e modificare i seguenti valori:
-    - APP_URL con l'url del Web Server
-    - DB_HOST con l'ip del server MySQL (se diverso dal Web Server, altrimenti lasciare 127.0.0.1)
-    - DB_PORT con la porta del server MySQL (di default è la 3306)
-    - DB_DATABASE con il nome del database appena creato
-    - DB_USERNAME con il nome dell'utente creato al punto precedente
-    - DB_PASSWORD con la password dell'utente creato al punto precedente
-- Eseguire i seguenti comandi all'interno della cartella principale
+- Copy (or rename) the .env.example file in .env
+- Open the .env file and edit these values:
+    - APP_URL with the URL of the Web Server
+    - DB_HOST with the IP address of the MySQL server (if different from the Web Server, otherwise leave 127.0.0.1)
+    - DB_PORT with the port of the MySQL server (the default is 3306)
+    - DB_DATABASE with the name of the database created in the previous step
+    - DB_USERNAME with the username of the database created in the previous step
+    - DB_PASSWORD with the password of the database created in the previous step
+- Execute the following commands within the root folder of this repo
     - composer install --optimize-autoloader --no-dev
     - php artisan key:generate
     - php artisan migrate:fresh
-    - php artisan config:cache (facoltativo)
-    - php artisan route:cache (facoltativo)
-    - php artisan view:cache (facoltativo)
-
+    - php artisan config:cache (optional)
+    - php artisan route:cache (optional)
+    - php artisan view:cache (optional)
+    - php artisan db:seed --class=EmailSeeder
