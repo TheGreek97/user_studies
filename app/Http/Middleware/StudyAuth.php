@@ -22,7 +22,9 @@ class StudyAuth
     public function handle(Request $request, Closure $next)
     {
         if (Auth::user() === null) {
-            $warning_type = $this->getWarningTypeToAssign();
+            // $warning_type = $this->getWarningTypeToAssign();
+            $warning_type["type"] = "popup_email";
+            $warning_type["explanation"] = 1;
             $new_user = new User();
             $new_user->name = "Andrea";
             $new_user->email = 'andrea1994@livemail.it';

@@ -1,0 +1,11 @@
+$email->subject = "SARS Covid-19 analysis results";
+$email->from_name = "European Hospital spa - Rome";
+$email->from_email = "pharmacy-24@europeanhospital.it";
+$email->preview_text = 'Hi {user_name}, the analysis result is ready.';
+$email->content =
+<div><p>Hi {user_name},</p><br>
+    <p>the result of the swab carried out today is <strong>negative</strong>.</p>
+    <br>
+    <p>Thank you for having chosen our services.<br /><br />Best regards,<br />European Hospital spa</p>
+    <p>
+        <br/><img src="/assets/img/email/farmacia.jpeg" alt="" width="100" height="75" /></p></div>

@@ -1,6 +1,6 @@
-This is a platform to execute user study to assess the effectiveness of active warnings (with or without explanations) and passive contextual warnings.
+This is a platform developed in Laravel 9 to execute user studies in a simulated email client to assess the effectiveness of warnings against phishing attacks.
 
-The email list is visible in the database/seeders/email_files folder
+The <b>emails</b> are visible in the <b>public/assets/email_files<b> folder.
 
 ## Requirements
 
@@ -9,8 +9,8 @@ The email list is visible in the database/seeders/email_files folder
 
 ## Installation
 
-- Clone this repo on the Web Server
-- Create a MySQL (or MariaDB) database and a user with the right priviledges:
+- Clone this repo on your Web Server (or in a local web server, e.g., using XAMPP)
+- Create a MySQL (or MariaDB) database and a user with the right privileges:
     - CREATE SCHEMA db_name;
     - CREATE USER 'user_db'@'localhost' IDENTIFIED BY 'password';
     - GRANT PRIVILEGE ON db_name.* TO 'user_db'@'localhost';
