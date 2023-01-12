@@ -1,6 +1,6 @@
 This is a platform developed in Laravel 9 to execute user studies in a simulated email client to assess the effectiveness of warnings against phishing attacks.
 
-The <b>emails</b> are visible in the <b>public/assets/email_files<b> folder.
+The <b>emails</b> are visible in the <b>emails_screens.pdf</b> file . The emails' HTML files are located in the <b>public/assets/email_files<b> folder.
 
 ## Requirements
 
