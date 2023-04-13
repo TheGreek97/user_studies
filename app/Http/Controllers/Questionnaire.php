@@ -15,7 +15,7 @@ class Questionnaire extends Controller
     public function storeEmailQuestionnaire($id, Request $request)
     {
         $questionnaire = new UserEmailQuestionnaire();
-        $questionnaire->title_email = $request->title_email;
+        $questionnaire->title_email = "null";//$request->title_email;
         $questionnaire->how_many_hyperlinks = $request->how_many_hyperlinks;
         $questionnaire->sender_email = $request->sender_email;
         $questionnaire->email_id = $id;
@@ -75,7 +75,7 @@ class Questionnaire extends Controller
         $user->gender = $request->gender;
         $user->age = $request->age;
         $user->num_hours_day_internet = $request->num_hours_day_internet;
-
+        $user->prolific_id = $request->prolific_id;
         $answers = [];
         for ($i=1; $i<=10; $i++){
             $question = "cyber_".$i;

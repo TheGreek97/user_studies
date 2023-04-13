@@ -15,7 +15,7 @@
                         We want to reassure you that the actions taken during the test will not have any consequence for you,
                         as all the emails have been manually produced by our team and are not actually harmful.
                         <br><br>
-                        <b>IMPORTANT!</b> In order to prove your participation to this study and BE REWARDED, you <u>must</u> go back to ©Prolific by <br/>
+                        <b>IMPORTANT!</b> In order to prove your participation to this study and BE REWARDED, you <b>must</b> go back to ©Prolific by <br/>
                         <div class="text-center mt-2">
                             <a href="https://app.prolific.co/submissions/complete?cc=C19FFAV6" style="color:dodgerblue; text-decoration: underline; font-weight: bold">CLICKING HERE</a>
                         </div>

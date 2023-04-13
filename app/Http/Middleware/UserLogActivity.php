@@ -21,7 +21,7 @@ class UserLogActivity
         if(Auth::check()) {
             $log = new ActivityLogs;
             $log->url = $request->fullUrl();
-            $log->user_action = "Visits link";
+            $log->user_action = $request->method();
             $log->user_id = Auth::id();
             $log->save();
         }

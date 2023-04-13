@@ -14,7 +14,7 @@ class MailController extends Controller
 
     public function show($folder = 'inbox', $id = null){
         info("ID ".$id);
-        if(!in_array($folder, ['inbox', 'sent', 'drafts', 'trash']))
+        if(!in_array($folder, ['inbox', 'sent', 'draft', 'trash']))
             return redirect(route('show', ['folder' => 'inbox']));
         if($id != null){
             $email = Email::findOr($id, function () { return null; });
@@ -77,22 +77,22 @@ class MailController extends Controller
     private function get_user_action($key){
         switch ($key) {
             case "clicked_link":
-                return "Clicked link in the email";
+                return "Clicked link in email";
             case "warning_shown":
-                return "Shown warning";
+                return "Warning shown";
             case "warning_ignored":
-                return "Ignored warning";
+                return "Warning ignored";
             case 'tooltip_shown':
-                return "Shown tooltip";
+                return "Tooltip shown";
             case 'tooltip_click':
-                return "Clicked on the tooltip";
-            // Chrome warning
+                return "Tooltip clicked";
+
             case 'back_safety':
-                return "Clicked on btn 'Back to safety'";
+                return "Back to safety btn clicked";
             case 'hide_details':
-                return "Clicked on btn 'Hide details'";
+                return "Hide details btn clicked ";
             case 'show_details':
-                return "Clicked on btn 'Details'";
+                return "Details btn clicked";
             default:
                 return filter_var($key, FILTER_SANITIZE_STRING);
         }

@@ -54,7 +54,7 @@ class EmailSeeder extends Seeder
                 case 'link_mismatch':
                     return "The displayed link is different from the actual one ". $url .". This site might be intended to take you to a different place. You might be disclosing private information";
                 case 'tld_mispositioned':
-                    return "In the URL present in the email the position of the top-level domain (". "e.g., “.com“". ") is in an abnormal position. This could indicate that the URL leads to a fake website. Such websites might steal your personal information";
+                    return "In the URL present in the email (". $url .") the top-level domain (e.g., “.com“) is in an abnormal position. This could indicate that the URL leads to a fake website. Such websites might steal your personal information";
                 case 'num_subdomains':
                     return "There are many subdomains in the URL contained in the email. This anomaly is a sign of malicious email. Don't share your private information";
                 case 'url_length':
@@ -171,7 +171,7 @@ class EmailSeeder extends Seeder
         </table>
         <p> </p>
         <p><span style="font-family: Calibri,sans-serif; color: #4f4f4f; font-size: 1.1em;">For any tax deduction it is necessary to keep this email. This operation is not subject to the obligation of invoicing pursuant to art. 74 1st paragraph letter e) of Presidential Decree 633/72.</span></p>
-        <p><span style="font-family: Calibri,sans-serif; color: #4f4f4f; font-size: 1.1em;"> If you need help or more details, consult our <a style="color: #a45a95;" href="www.mycicero.eu/details"> <span style="font-family: Calibri,sans-serif; color: #a45a95;"> <strong>FAQs</strong></span></a> or contact us at <a style="color: #a45a95;" href="www.mycicero.it/contacts"> <span style="font-family: Calibri,sans-serif; color: #a45a95;"> <strong>support@mycicero.eu</strong></span></a> or at <a style="color: #a45a95; text-decoration: none;"> <span style="font-family: Calibri,sans-serif; color: #a45a95;"> <strong>071 920 7000</strong></span></a>.</span> <br /><br /><span style="font-family: Calibri,sans-serif; color: #4f4f4f; font-size: 1.1em;"> On our site you will also find: all the information regarding parking, the cities involved in the program , timetables of the public transport and an apposite section to buy the tickets and the transport companies adherent to <strong>myCicero</strong>. </span> <br /><br /><br /><span style="font-family: Calibri,sans-serif; color: #4f4f4f; font-size: 1.1em;"> Have a safe trip! <br /></span> <span style="font-family: Calibri,sans-serif; color: #a45a95; font-size: 1.1em;"> <strong>The myCicero team</strong> </span></p>
+        <p><span style="font-family: Calibri,sans-serif; color: #4f4f4f; font-size: 1.1em;"> If you need help or more details, consult our <a style="color: #a45a95;" href="https://www.mycicero.eu/details"> <span style="font-family: Calibri,sans-serif; color: #a45a95;"> <strong>FAQs</strong></span></a> or contact us at <a style="color: #a45a95;" href="mailto:support@mycicero.eu"> <span style="font-family: Calibri,sans-serif; color: #a45a95;"> <strong>support@mycicero.eu</strong></span></a> or at <a style="color: #a45a95; text-decoration: none;"> <span style="font-family: Calibri,sans-serif; color: #a45a95;"> <strong>071 920 7000</strong></span></a>.</span> <br /><br /><span style="font-family: Calibri,sans-serif; color: #4f4f4f; font-size: 1.1em;"> On our site you will also find: all the information regarding parking, the cities involved in the program , timetables of the public transport and an apposite section to buy the tickets and the transport companies adherent to <strong>myCicero</strong>. </span> <br /><br /><br /><span style="font-family: Calibri,sans-serif; color: #4f4f4f; font-size: 1.1em;"> Have a safe trip! <br /></span> <span style="font-family: Calibri,sans-serif; color: #a45a95; font-size: 1.1em;"> <strong>The myCicero team</strong> </span></p>
         </td>
         <td style="max-width: 17px; background: white; border-color: white; width: 3%;" width="3%"> </td>
         </tr>
@@ -303,14 +303,21 @@ class EmailSeeder extends Seeder
 
         // 6
         $email = new Email();
-        $email->subject = "Access to Digital Banking";
-        $email->from_name = "Monte dei Paschi di Siena Bank";
-        $email->from_email = "no-reply@mps.it";
-        $email->preview_text = '{user_name} you have just logged into mps.it';
-        $email->content = '<div><p><img style="display: block; margin-left: auto; margin-right: auto;" src="/assets/img/email/mps.png" alt="" width="300" height="109" /></p>
+        $email->subject = "PIN reset";
+        $email->from_name = "UniCredit";
+        $email->from_email = "no-reply@unicreditgroup.eu";
+        $email->preview_text = 'You have reset your PIN and we have updated your account.';
+        $email->content = '<div><p><img style="display: block; margin-left: auto; margin-right: auto;" src="/assets/img/email/unicredit.jpg" alt="" width="300" height="109" /></p>
         <p>Hi {user_name},</p><br>
-        <p>you have just logged into <a href="www.mps.it" style="text-decoration: underline; color: #0001F1;">www.mps.it</a>.</p>
-        <br><p>Best regards,<br />the M.P.S. Team.</p></div>';
+        <p>Your confirmation PIN for your online banking services has been successfully reset!</p>
+        <br>
+        <p>
+        If you did not request to reset your PIN, nor you did modify it, start an online chat with one of our operators by visiting
+        <a href="https://www.unicredit.it/support" style="text-decoration: underline; color: #e31a0e;">www.unicredit.it/support</a>
+        to verify the integrity of your account. <br/>
+        Alternatively, you can also visit one of our branches near you - <a style="text-decoration: underline; color: #e31a0e;" href="https://www.unicredit.it/it/contatti-e-agenzie/locator.html">where is the closest branch?</a>
+        </p>
+        <br><p>Best regards,<br />UniCredit Bank</p></div>';
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
         $email->type = 'inbox';
         $email->save();
@@ -351,7 +358,8 @@ class EmailSeeder extends Seeder
         <p>the result of the swab carried out today is <strong>negative</strong>.</p>
         <br>
         <p>Thank you for having chosen our services.<br /><br />Best regards,<br />European Hospital spa</p>
-        <p><img src="/assets/img/email/farmacia.jpeg" alt="" width="100" height="75" /></p></div>';
+        <p>
+        <br/><img src="/assets/img/email/farmacia.jpeg" alt="" width="100" height="75" /></p></div>';
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
         $email->type = 'inbox';
         $email->save();
@@ -581,11 +589,11 @@ class EmailSeeder extends Seeder
         $email->save();
 
         // Email 2 - AMAZON
-        $phish_url = "amazonservices.sc03osd.cz/account.php";
+        $phish_url = "amazonservices.com.cz/account.php";
         $email = new Email();
         $email->subject = "Problem with your account";
         $email->from_name = "Amazon";
-        $email->from_email = "amazon.it@amazonservices.sc03osd.cz";
+        $email->from_email = "amazon.it@amazonservices.com.cz";
         $email->preview_text = 'Hello customer, We have faced some problems with your account.';
         $email->content = '<div><p class="p1"><img src="/assets/img/email/amazon.jpg" alt="" width="100" /></p>
         <p class="p1">Dear Customer,<br /><br />
@@ -716,18 +724,17 @@ class EmailSeeder extends Seeder
                   <tr style="border-top:solid 1px #e5e5e5;">
                     <td height="19" style="line-height:19px;">&nbsp;</td>
                   </tr>
-                  <tr>
+                  <tr style="align-items: center; display: block">
                     <td style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:11px;color:#aaaaaa;line-height:16px;"> This email was sent by Facebook. If you do not want to receive this kind of emails from Facebook, <a href="https://www.facebook.com/o.php?k=3DAS3IzEaiunZaSIOZ&amp;u=3D100000125023309&amp;mid=3D57fd6086d799fG5af317edf44dG57fd652037c71G18e" style="color:#3b5998;text-decoration:none;">cancel your subscription</a>. <br>Facebook Ireland Ltd., Attention: Community Operations, 4 Grand Canal Square, Dublin 2, Ireland </td>
                   </tr>
                 </table>
               </td>
-              <td width="15" style="display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td>
             </tr>
             <tr>
               <td width="15" style="display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td>
               <td style="">
                 <table border="0" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
-                  <tr>
+                  <tr style="align-items: center; display: block">
                     <td style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:11px;color:#aaaaaa;line-height:16px;">
                       <span style="font-family:Helvetica Neue,Helvetica,LucidaGrande,tahoma,verdana,arial,sans-serif;font-size:11px;color:#aaaaaa;line-height:16px;">To protect your account, do not forward this email. <a href="https://www.facebook.com/email_forward_notice/?mid=57fd6086d799fG5af317edf44dG57fd652037c71G18e" style="color:#3b5998;text-decoration:none;">Discover more.</a>
                       </span>
@@ -785,7 +792,7 @@ class EmailSeeder extends Seeder
         $email = new Email();
         $email->subject = "Problem with your account";
         $email->from_name = "Amazon";
-        $email->from_email = "amazon.it@amazonservices.sc03osd.cz";
+        $email->from_email = "amazon.it@amazonservices.com.cz";
         $email->preview_text = 'Hello customer, We have faced some problems with your account.';
         $email->content = '<div><p class="p1"><img src="/assets/img/email/amazon.jpg" alt="" width="100" /></p>
         <p class="p1">Dear Customer,<br /><br />
@@ -796,12 +803,12 @@ class EmailSeeder extends Seeder
         You can proceed to the updating procedure by clicking the link below:</p>
         <br>
         <div style="margin-left: auto; margin-right: auto; border-radius: 5px; background-color: #ffd814; color: #000000; display: inline-block; text-align: center;" align="center">
-        <a style="color: #000000; text-decoration: none; display: block; padding: 14px 30px 15px;" href="https://amazonservices.sc03osd.cz/account.php"> Update now </a></div>
+        <a style="color: #000000; text-decoration: none; display: block; padding: 14px 30px 15px;" href="https://amazonservices.com.cz/account.php"> Update now </a></div>
         <br><br><p class="p1">Thank you for being part of the Amazon community,<span class="Apple-converted-space"> </span></p>
         <p class="p1">we look forward to hearing from you soon.</p><br>
         <p class="p1">Best regards, <br>Amazon Customer Service</p></div>';
-        $email->warning_explanation_1 = get_explanation("basic","https://amazonservices.sc03osd.cz/account.php");
-        $email->warning_explanation_2 = get_explanation("tld_mispositioned");
+        $email->warning_explanation_1 = get_explanation("basic","https://amazonservices.com.cz/account.php");
+        $email->warning_explanation_2 = get_explanation("tld_mispositioned","https://amazonservices.com.cz/account.php");
         $email->warning_type = 'popup_email';
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
         $email->type = 'inbox';
@@ -890,20 +897,19 @@ class EmailSeeder extends Seeder
               <td width="15" style="display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td>
             </tr>
             <tr>
-              <td width="15" style="display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td>
               <td style="">
                 <table border="0" width="100%" cellspacing="0" cellpadding="0" align=" left" style="border-collapse:collapse;">
                   <tr style="border-top:solid 1px #e5e5e5;">
                     <td height="19" style="line-height:19px;">&nbsp;</td>
                   </tr>
-                  <tr>
+                   <tr style="align-items: center; display: block">
                     <td style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:11px;color:#aaaaaa;line-height:16px;"> This email was sent by Facebook. If you do not want to receive this kind of emails from Facebook, <a href="https://www.facebook.com/o.php?k=3DAS3IzEaiunZaSIOZ&amp;u=3D100000125023309&amp;mid=3D57fd6086d799fG5af317edf44dG57fd652037c71G18e" style="color:#3b5998;text-decoration:none;">cancel your subscription</a>. <br>Facebook Ireland Ltd., Attention: Community Operations, 4 Grand Canal Square, Dublin 2, Ireland </td>
                   </tr>
                 </table>
               </td>
               <td width="15" style="display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td>
             </tr>
-            <tr>
+            <tr style="align-items: center; display: block">
               <td width="15" style="display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td>
               <td style="">
                 <table border="0" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
@@ -934,5 +940,17 @@ class EmailSeeder extends Seeder
         $email->type = 'inbox';
         $email->save();
 
+
+        foreach (["sent", "trash", "draft"] as $folder) {
+            $email = new Email();
+            $email->subject = "Not available";
+            $email->from_name = "System";
+            $email->from_email = "";
+            $email->preview_text = 'For the scope of this test, this area is not currently accessible';
+            $email->content = '-';
+            $email->date = Carbon::today()->toDateTimeString();
+            $email->type = $folder;
+            $email->save();
+        }
     }
 }
