@@ -16,22 +16,27 @@ class MailController extends Controller
         info("ID ".$id);
         if(!in_array($folder, ['inbox', 'sent', 'draft', 'trash']))
             return redirect(route('show', ['folder' => 'inbox']));
-        if($id != null){
+        if($id != null){    // Show a specific e-mail
             $email = Email::findOr($id, function () { return null; });
-
-            if($email != null && ($email->warning_type == Auth::user()->warning_type || $email->warning_type == null)) {
+            // get the phishing emails (with the right warning, i.e., passive or active) + legitimate emails
+            $email["warning_type"] = Auth::user()->warning_type;
+            if($email != null) {
                 return view('email_page', ['folder' => $folder, 'selected_email' => $email]);
             }
-            else
+            else {
                 return redirect(route('show', ['folder' => $folder]));
-        }
-        if(count(DB::table('useremailquestionnaire')->where('user_id', \Illuminate\Support\Facades\Auth::id())->get()) < self::MAILS_NUMBER)
+            }
+        }  // Else, show the mails list
+        if(count(DB::table('useremailquestionnaire')->where('user_id', \Illuminate\Support\Facades\Auth::id())->get()) < self::MAILS_NUMBER) {
             return view('email_page', ['folder' => $folder]);
+        }
         else {
-            if(Auth::user()->followUpQuestionnaire != null)
+            if(Auth::user()->followUpQuestionnaire != null) {
                 return redirect(route('thankyou'));
-            else
+            }
+            else {
                 return redirect(route('post_test'));
+            }
         }
     }
 

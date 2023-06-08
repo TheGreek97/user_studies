@@ -22,9 +22,11 @@ class StudyAuth
     public function handle(Request $request, Closure $next)
     {
         if (Auth::user() === null) {
-            // $warning_type = $this->getWarningTypeToAssign();
-            $warning_type["type"] = "popup_email";
-            $warning_type["explanation"] = 1;
+            $least_popular_condition = $this->getWarningTypeToAssign();
+            $warning_type["type"] = $least_popular_condition["type"];
+            $warning_type["explanation"] = $least_popular_condition["explanation"];
+            //$warning_type["type"] = "popup_link";
+            //$warning_type["explanation"] = 0;
             $new_user = new User();
             $new_user->name = "Andrea";
             $new_user->email = 'andrea1994@livemail.it';
@@ -48,6 +50,7 @@ class StudyAuth
             ->get();
 
         $conditions_count= [];
+        /*
         // Condition 1
         $temp_group = $users->where('warning_type', "=", "tooltip")->first();
         if ($temp_group) {
@@ -73,6 +76,33 @@ class StudyAuth
         } else {
             $conditions_count["active_exp"] = 0;
         }
+        */
+        // Condition 4
+        $temp_group = $users->where('warning_type', "=", "tooltip")
+            ->where('show_explanation', "=", 1)->first();
+        if ($temp_group) {
+            $conditions_count["tooltip_exp"] = $temp_group->total;
+        } else {
+            $conditions_count["tooltip_exp"] = 0;
+        }
+
+        // Condition 5
+        $temp_group = $users->where('warning_type', "=", "popup_link")
+            ->where('show_explanation', "=", 0)->first();
+        if ($temp_group) {
+            $conditions_count["active_after_no_exp"] = $temp_group->total;
+        } else {
+            $conditions_count["active_after_no_exp"] = 0;
+        }
+
+        // Condition 6
+        $temp_group = $users->where('warning_type', "=", "popup_link")
+            ->where('show_explanation', "=", 1)->first();
+        if ($temp_group) {
+            $conditions_count["active_after_exp"] = $temp_group->total;
+        } else {
+            $conditions_count["active_after_exp"] = 0;
+        }
 
         $condition_to_assign = array_keys($conditions_count, min($conditions_count));
         if (count($condition_to_assign) > 1) {  // If there are 2 or more minimum values, take one condition at random between them
@@ -84,9 +114,19 @@ class StudyAuth
         $type = match ($condition_to_assign) {
             'active_exp' => 'popup_email',
             'active_no_exp' => 'popup_email',
-            'tooltip' => 'tooltip'
+            'tooltip_exp' => 'tooltip',
+            'tooltip' => 'tooltip', // = tooltip no_exp
+            'active_after_exp' => 'popup_link',
+            'active_after_no_exp' => 'popup_link'
         };
-        $show_explanation = $condition_to_assign === "active_exp";
+        $show_explanation = match ($condition_to_assign) {
+            'active_exp' => 1,
+            'active_no_exp' => 0,
+            'tooltip_exp' => 1,
+            'tooltip' => 0, // = tooltip no_exp
+            'active_after_exp' => 1,
+            'active_after_no_exp' => 0
+        };
         return ["type" => $type, "explanation" => $show_explanation];
     }
 }

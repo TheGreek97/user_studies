@@ -1,8 +1,10 @@
 <?php
-if (! \Illuminate\Support\Facades\Auth::user()->show_explanation) {
-    $warning_explanation = "warning_explanation_1";
+$warning_type = \Illuminate\Support\Facades\Auth::user()->warning_type;
+$show_explanation = \Illuminate\Support\Facades\Auth::user()->show_explanation;
+if (! $show_explanation) {
+    $warning_explanation = "warning_explanation_1"; // Generic explanation message
 } else {
-    $warning_explanation = "warning_explanation_2";
+    $warning_explanation = "warning_explanation_2"; // Specific explanation message
 }
 /*if (\Illuminate\Support\Facades\Auth::id() % 2 == 0)
     $random_warning_explanation = "warning_explanation_1";
@@ -12,10 +14,10 @@ else
 ?>
 <x-app-layout>
     <x-slot name="slot">
-        <div style="position: sticky; top: 0; left: 0; z-index: 10;"
+        <div style="position: sticky; top: 0; left: 0; z-index: 99;"
              class="p-6 shadow-lg bg-gray-700 text-white">
             <p>
-                <span class="font-semibold">Goal:</span> Please READ ALL THE EMAILS in the inbox and check that the links in them, if any, are working. The test finishes when you interact with all the emails.
+                <span class="font-semibold">Goal:</span> Please READ ALL THE EMAILS in the inbox and check that the links in them, if any, are working. The test ends when you have interacted with all the emails.
             </p>
         </div>
         <div
@@ -492,18 +494,15 @@ else
                                                  ->where('type', $folder)
                                                  ->orderBy('date', 'desc')
                                                  ->get() as $email)
-                                            @if($email->warning_type !== \Illuminate\Support\Facades\Auth::user()->warning_type && $email->warning_type !== null)
-                                                @continue
-                                            @endif
                                             @if(count(DB::table('useremailquestionnaire')->where('user_id', \Illuminate\Support\Facades\Auth::id())->where('email_id', $email->id)->get()) > 0)
                                                 <tr class="text-gray-700 cursor-not-allowed bg-gray-300">
                                             @else
                                                 <tr class="text-gray-700 cursor-pointer hover:bg-gray-200 hover:dark:bg-gray-600 dark:text-gray-400"
                                                     @if($email->type === "inbox")
-                                                        @if($email->warning_type === "popup_email")
-                                                        onclick="open_warning('{{ route('show', ['folder' => $folder,'id' => $email->id]) }}', {{ $email->id }}, '{!! $email->$warning_explanation !!}')"
+                                                        @if($email->show_warning && $warning_type === "popup_email")
+                                                            onclick="open_warning('{{ route('show', ['folder' => $folder,'id' => $email->id]) }}', {{ $email->id }}, '{!! $email->$warning_explanation !!}')"
                                                         @else
-                                                        onclick="window.location.href = '{{ route('show', ['folder' => $folder,'id' => $email->id]) }}'"
+                                                            onclick="window.location.href = '{{ route('show', ['folder' => $folder, 'id' => $email->id]) }}'"
                                                         @endif
                                                     @endif
                                                 >
@@ -613,9 +612,7 @@ else
                                                 {{ $selected_email->from_name }}
                                             </h3>
                                             <span class="ml-1 text-xs font-semibold text-gray-500 dark:text-gray-400">
-
-                                                                {{ $selected_email->from_email }}
-
+                                                {{ $selected_email->from_email }}
                                             </span>
                                         </div>
                                         <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400">
@@ -634,198 +631,134 @@ else
                     </div>
                 </main>
             </div>
-        @if(!isset($selected_email))
-            <!-- Warning attivo apertura -->
-                <div id="warning_open" tabindex="-1" aria-hidden="true"
-                     class="hidden bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-                    <input type="hidden" value="" id="warning_id-1">
-                    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
-                        <!-- Modal content -->
-                        <div class="relative rounded-lg shadow" style="background-color: #b80000;">
-                            <!-- Modal header -->
-                            <div class="flex justify-between items-start px-5 py-6 rounded-t border-b">
-                                <h2 class="text-2xl font-bold text-white flex flex-row align-middle content-center">
-                                    <div class="pr-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-8" viewBox="0 0 20 20"
-                                             fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                  d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                                                  clip-rule="evenodd"/>
-                                        </svg>
-                                    </div>
-                                    <div>Deceptive email ahead</div>
-                                </h2>
-                            </div>
-                            <!-- Modal body -->
-                            <div class="p-6 space-y-6">
-                                <p class="text-base leading-relaxed text-white" id="warning_text">
-                                </p>
-                            </div>
-                            <hr class="bg-white mx-auto" style="width: 96%;">
-                            <!-- Modal footer -->
-                            <div class="flex items-center p-6 justify-between rounded-b">
-                                <button id="button-advanced" type="button"
-                                        class="text-white underline font-medium text-sm text-center">Show Details
-                                </button>
-                                <button id="button_hide_modal" type="button"
-                                        class="bg-white hover:bg-gray-200 rounded-lg text-sm font-medium px-5 py-2.5"
-                                        style="color: #b80000;">Back to safety
-                                </button>
-                            </div>
-                            <div id="div-advanced" class="hidden text-white px-6 pb-6">
-                                <!--This email has a <b>fraudulent purpose</b> and may <b>steal your personal data</b>.
-                                <br/>-->
-                                Click
-                                <button id="warning_unsafe_link" class="text-white underline">here</button>
-                                (not safe) to read it.
-                            </div>
+
+            <!-- Active warning modal -->
+            <div id="warning_open" tabindex="-1" aria-hidden="true"
+                 class="hidden bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                <input type="hidden" value="" id="warning_id-1">
+                <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                    <!-- Modal content -->
+                    <div class="relative rounded-lg shadow" style="background-color: #b80000;">
+                        <!-- Modal header -->
+                        <div class="flex justify-between items-start px-5 py-6 rounded-t border-b">
+                            <h2 class="text-2xl font-bold text-white flex flex-row align-middle content-center">
+                                <div class="pr-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-8" viewBox="0 0 20 20"
+                                         fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                              d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                                              clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                                <div>Deceptive {{ $warning_type === "popup_link" ? "site" : "email"}} ahead</div>
+                            </h2>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="p-6 space-y-6">
+                            <p class="text-base leading-relaxed text-white" id="warning_text">
+                            </p>
+                        </div>
+                        <hr class="bg-white mx-auto" style="width: 96%;">
+                        <!-- Modal footer -->
+                        <div class="flex items-center p-6 justify-between rounded-b">
+                            <button id="button-advanced" type="button"
+                                    class="text-white underline font-medium text-sm text-center">Show Details
+                            </button>
+                            <button id="button_hide_modal" type="button"
+                                    class="bg-white hover:bg-gray-200 rounded-lg text-sm font-medium px-5 py-2.5"
+                                    style="color: #b80000;">Back to safety
+                            </button>
+                        </div>
+                        <div id="div-advanced" class="hidden text-white px-6 pb-6">
+                            <!--This email has a <b>fraudulent purpose</b> and may <b>steal your personal data</b>.
+                            <br/>-->
+                            <!-- This site is a <b>scam</b> with the purpose of <b>stealing your personal data</b>.-->
+                            Click
+                            <button id="warning_unsafe_link" class="text-white underline">here</button>
+                            (not safe) to {{ $warning_type === "popup_link" ? "visit the linked website" : "read it"}}.
                         </div>
                     </div>
                 </div>
-        @else
-            @if($selected_email->warning_type == "popup_link")
-                <!-- Warning click link -->
-                    <div id="warning_open" tabindex="-1" aria-hidden="true"
-                         class="hidden bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-                        <input type="hidden" value="" id="warning_id-2">
-                        <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
-                            <!-- Modal content -->
-                            <div class="relative rounded-lg shadow" style="background-color: #b80000;">
-                                <!-- Modal header -->
-                                <div class="flex justify-between items-start px-5 py-6 rounded-t border-b">
-                                    <h2 class="text-2xl font-bold text-white flex flex-row align-middle content-center">
-                                        <div class="pr-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-8"
-                                                 viewBox="0 0 20 20" fill="currentColor">
-                                                <path fill-rule="evenodd"
-                                                      d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                                                      clip-rule="evenodd"/>
-                                            </svg>
-                                        </div>
-                                        <div>Possible scam site</div>
-                                    </h2>
-                                </div>
-                                <!-- Modal body -->
-                                <div class="p-6 space-y-6">
-                                    <p class="text-base leading-relaxed text-white" id="warning_text">
-                                        <!-- warning text variable here -->
-                                        Your personal data <b>may be stolen</b>. This site has been labeled as <b>highly
-                                            dangerous</b>.
-                                        We recommend that you <b>return to the safe zone</b>.
-                                    </p>
-                                </div>
-                                <hr class="bg-white mx-auto" style="width: 96%;">
-                                <!-- Modal footer -->
-                                <div class="flex items-center p-6 justify-between rounded-b">
-                                    <button id="button-advanced" type="button"
-                                            class="text-white underline font-medium text-sm text-center">Advanced
-                                    </button>
-                                    <button id="button_hide_modal" type="button"
-                                            class="bg-white hover:bg-gray-200 rounded-lg text-sm font-medium px-5 py-2.5"
-                                            style="color: #b80000;">Go back to the safe zone
-                                    </button>
-                                </div>
-                                <div id="div-advanced" class="hidden text-white px-6 pb-6">
-                                    This site is a <b>scam</b> with the purpose of <b>stealing your personal data</b>.
-                                    You can proceed from <a
-                                        id="warning_unsafe_link" href="{{ route('next_step', $selected_email->id) }}"
-                                        target="_blank"
-                                        class="text-white underline">here</a> on <span id="warning_link"
-                                                                                       class="font-bold"></span>.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-            @endif
+            </div>
+            <!-- End active warning modal -->
         </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
-            window.onload = function () {
-                document.body.style.overflowY = "hidden";
-            }
-            @if(isset($selected_email))
-                @if($selected_email->warning_type == null || $selected_email->warning_type == "popup_email")
-                $("#email_content").find('a').each(function (e) {
+        window.onload = function () {
+            document.body.style.overflowY = "hidden";
+        }
+        @if(isset($selected_email))
+            // Show email questionnaire when going back
+            $('a').not("#email_content *").each(function (e) {
+                $(this).on('click', (e) => {
+                    e.preventDefault();
+                    window.location.href = '{{ route('next_step', $selected_email->id) }}?nolink';
+                });
+            });
+            // Phishing links:
+            @if($warning_type !== "tooltip")  // if($warning_type == null || "popup_email" || "popup_link")
+                console.log ("warning type: {{$selected_email->warning_type}}")
+                $("#email_content").find('a').not('#phishing_link').each(function (e) {
                     $(this).on('click', (e) => {
                         e.preventDefault();
                         $.ajax({
                             url: ("{{ route('warning_log') }}?email_id={{$selected_email->id}}&warning_type={{$selected_email->warning_type}}&msg=clicked_link&url=" + $(this).attr("href")).replace(/%20/g, '+'),
                             type: 'GET',
                             dataType: 'json',
-                            complete: function (data) {
-                                window.location.href = '{{route('next_step') . '/' . $selected_email->id}}';
-                            },
+                            complete: () => { window.location.href = '{{route('next_step') . '/' . $selected_email->id}}'},
                             async: false
                         });
                     });
                 });
-                $('a').not("#email_content *").each(function (e) {
-                    $(this).on('click', (e) => {
-                        e.preventDefault();
-                        window.location.href = '{{ route('next_step', $selected_email->id) }}?nolink';
-                    });
-                });
-            @endif
-            @if($selected_email->warning_type == "popup_link")
-                $("#email_content").find('a').each(function (e) {
-                    $(this).on('click', (e) => {
+
+                @if($warning_type == "popup_link" && $selected_email->show_warning)  // show the modal warning only for the Popup Link condition
+                    let phishing_link = $("#phishing_link")
+                    phishing_link.on('click', (e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        let url = new URL($(this).attr('href'));
-                        open_warning(url.hostname, {{ $selected_email->id }}, "{!! $selected_email->$warning_explanation!!}");
+                        let url = new URL(phishing_link.attr('href'));
+                        let warning_message = "{!! $show_explanation ? $selected_email->$warning_explanation : __('warning.no_explanation_website') !!}"
+                        open_warning(url.hostname, {{ $selected_email->id }}, warning_message);
                     });
-                });
-                $('a').not("#email_content *").each(function (e) {
-                    $(this).on('click', (e) => {
-                        e.preventDefault();
-                        window.location.href = '{{ route('next_step', $selected_email->id) }}?nolink';
-                    });
-                });
-            @elseif($selected_email->warning_type == "browser_native")
-                $("#email_content").find('a').each(function (e) {
-                    $(this).on('click', (e) => {
-                        e.preventDefault();
-                        let url = new URL($(this).attr('href'));
-                        window.location.href = '{{ route('warning_browser') }}?url=' + encodeURI(url) + '&backurl=' + encodeURI('{{ url('/nextstep', $selected_email->id)  }}') + '&email_id={{ $selected_email->id }}';
-                    });
-                });
-                $('a').not("#email_content *").each(function (e) {
-                    $(this).on('click', (e) => {
-                        e.preventDefault();
-                        window.location.href = '{{ route('next_step', $selected_email->id) }}?nolink';
-                    });
-                });
-            @elseif($selected_email->warning_type == "base_passive")
-                banner = $("#passive_banner"); // To do: Implement passive banners (if needed)
-                banner.show();
-                banner.innerHTML = {{$selected_email->$warning_explanation}}
-            @elseif($selected_email->warning_type == "tooltip")
+                @endif
+            @elseif($selected_email->show_warning)  // TOOLTIP (AND is phishing email) case
                 let message_sent = [];
                 let tooltips = $(".tooltip")
-                let allow_to_go_back
-                allow_to_go_back = tooltips.length <= 0; // always allow going back if there are no tooltips
+                let allow_to_go_back  // Ensures the user stays on a phishing email for a minimum of X seconds before allowing them to go back
+                let phishing_link_html = $("#phishing_link")
+                let explanation = "{{ $selected_email->$warning_explanation }}"
+                let default_explanation = `Link goes to: <a href="#" style="text-decoration: underline;/* color: #0001F1; */"><span class="s2">${phishing_link_html.attr("href")}</span></a>`
+                explanation = explanation || default_explanation  // if there is no explanation to show, show the default one
 
-                let warning_tooltip = $("#tooltip_link")
-                let explanation = warning_tooltip.html()
-                warning_tooltip.html(
-                    `<div class="flex justify-between items-start">
-                        <div class="pr-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-10" viewBox="0 0 20 20"
-                                 fill="currentColor">
-                                <path fill-rule="evenodd"
-                                      d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                                      clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <div class="">
-                            <span class="text-lg">FAKE WEBSITE, DON'T CLICK!</span><br/>
-                            <span>${explanation}</span>
-                        </div>
-                    </div>`
-                )
-                warning_tooltip.addClass("tooltip-balloon")
+                let tooltip_warning_html = `
+                    <table class="tooltip" data="{{$selected_email->from_email}}">
+                        <tbody>
+                           <tr>
+                              <td>
+                                <a class="phishing_link" href="#">${phishing_link_html.html()} </a>
+                                <span id="tooltip_link" class="tooltiptext tooltip-balloon">
+                                    <div class="flex justify-between items-start">
+                                        <div class="pr-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-10" viewBox="0 0 20 20"
+                                                 fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                      d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                                                      clip-rule="evenodd"/>
+                                            </svg>
+                                        </div>
+                                        <div class="">
+                                            <span class="text-lg">FAKE WEBSITE, DON'T CLICK!</span><br/>
+                                            <span>${explanation}</span>
+                                        </div>
+                                    </div>
+                                </span>
+                              </td>
+                           </tr>
+                       </tbody>
+                    </table>
+                `
+                phishing_link_html.html(tooltip_warning_html)
 
                 tooltips.mouseover(function () {
                     setTimeout(() => {
@@ -852,95 +785,106 @@ else
                         async: false
                     });
                 });
-
+                /*
                 $('a').not("#email_content *").each(function (e) {
                     $(this).on('click', (e) => {
                         if (allow_to_go_back) {
                             e.preventDefault();
-                            window.location.href = '{{ route('next_step', $selected_email->id) }}?nolink';
+                            window.location.href = '{{-- route('next_step', $selected_email->id) --}}?nolink';
                         } else {
                             e.preventDefault();
                             alert("Please be sure to check all the links in the email by hovering on them with the mouse.")
                         }
                     });
-                });
-                @endif
-            @endif
-
-            const targetEl = document.getElementById('warning_open');
-            const modal = new Modal(targetEl);
-
-            function open_warning(url, email_id, warning_text) {
-                $("#warning_text").html(warning_text);
-                //const warning_type = "popup_email";
-                @if(!isset($selected_email))
-                    const warning_type = "popup_email";
-                @else
-                    @if($selected_email->warning_type == "popup_link")
-                        const warning_type = "popup_link";
-                        $("#warning_link").text(url);
-                    @endif
-                @endif
-                $.ajax({
-                    url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=warning_shown&url=" + window.location.href).replace(/%20/g, '+'),
-                    type: 'GET',
-                    dataType: 'json'
-                });
-                $("#warning_unsafe_link").on('click', (e) => {
-                    e.preventDefault();
-                    $.ajax({
-                        url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=warning_ignored&url=" + window.location.href).replace(/%20/g, '+'),
-                        type: 'GET',
-                        dataType: 'json',
-                        complete: function (data) {
-                            @if(\Illuminate\Support\Facades\Auth::user()->warning_type == 'popup_email')
-                                window.location.href = '{{route('show')}}/inbox/' + email_id;
-                            @else
-                                window.location.href = '{{route('next_step')}}/' + email_id;
-                            @endif
-                        },
-                        async: false
+                });*/
+            {{--
+            @elseif($selected_email->warning_type == "browser_native")
+                $("#email_content").find('a').each(function (e) {
+                    $(this).on('click', (e) => {
+                        e.preventDefault();
+                        let url = new URL($(this).attr('href'));
+                        window.location.href = '{{ route('warning_browser') }}?url=' + encodeURI(url) + '&backurl=' + encodeURI('{{ url('/nextstep', $selected_email->id)  }}') + '&email_id={{ $selected_email->id }}';
                     });
                 });
-                $("#button-advanced").on('click', () => {
-                    if ($("#div-advanced").is(":hidden")) {
-                        $("#button-advanced").text("Hide Details");
-                        $("#div-advanced").show();
-                        $.ajax({
-                            url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=show_details&url=" + window.location.href).replace(/%20/g, '+'),
-                            type: 'GET',
-                            dataType: 'json'
-                        });
-                    } else {
-                        $("#button-advanced").text("Advanced");
-                        $("#div-advanced").hide();
-                        $.ajax({
-                            url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=hide_details&url=" + window.location.href).replace(/%20/g, '+'),
-                            type: 'GET',
-                            dataType: 'json'
-                        });
-                    }
+                $('a').not("#email_content *").each(function (e) {
+                    $(this).on('click', (e) => {
+                        e.preventDefault();
+                        window.location.href = '{{ route('next_step', $selected_email->id) }}?nolink';
+                    });
                 });
-                $("#button_hide_modal").on('click', () => {
+            @elseif($selected_email->warning_type == "base_passive")
+                banner = $("#passive_banner"); // To do: Implement passive banners (if needed)
+                banner.show();
+                banner.innerHTML = "{{$selected_email->$warning_explanation}}"
+            --}}
+            @endif
+        @endif
+
+        const modal = new Modal(document.getElementById('warning_open'));
+
+        function open_warning(url, email_id, warning_text) {
+            $("#warning_text").html(warning_text);
+            const warning_type = "{{$warning_type}}";
+            $.ajax({
+                url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=warning_shown&url=" + window.location.href).replace(/%20/g, '+'),
+                type: 'GET',
+                dataType: 'json'
+            });
+            $("#warning_unsafe_link").on('click', (e) => {
+                e.preventDefault();
+                $.ajax({
+                    url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=warning_ignored&url=" + window.location.href).replace(/%20/g, '+'),
+                    type: 'GET',
+                    dataType: 'json',
+                    complete: function (data) {
+                        @if(\Illuminate\Support\Facades\Auth::user()->warning_type == 'popup_email')
+                            window.location.href = '{{route('show')}}/inbox/' + email_id;
+                        @else
+                            window.location.href = '{{route('next_step')}}/' + email_id;
+                        @endif
+                    },
+                    async: false
+                });
+            });
+            $("#button-advanced").on('click', () => {
+                if ($("#div-advanced").is(":hidden")) {
+                    $("#button-advanced").text("Hide Details");
+                    $("#div-advanced").show();
                     $.ajax({
-                        url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=back_safety&url=" + window.location.href).replace(/%20/g, '+'),
+                        url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=show_details&url=" + window.location.href).replace(/%20/g, '+'),
                         type: 'GET',
                         dataType: 'json'
                     });
+                } else {
                     $("#button-advanced").text("Advanced");
                     $("#div-advanced").hide();
-                    $("#button_hide_modal").off("click");
-                    $("#button-advanced").off("click");
-                    $("#warning_unsafe_link").off("click");
-                    if (warning_type==="popup_email") {
-                        window.location.href = '{{route('next_step')}}/' + email_id + '?nolink&noquest';
-                    } else {
-                        window.location.href = '{{route('next_step')}}/' + email_id + '?nolink';
-                    }
-                    modal.hide();
+                    $.ajax({
+                        url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=hide_details&url=" + window.location.href).replace(/%20/g, '+'),
+                        type: 'GET',
+                        dataType: 'json'
+                    });
+                }
+            });
+            $("#button_hide_modal").on('click', () => {
+                $.ajax({
+                    url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=back_safety&url=" + window.location.href).replace(/%20/g, '+'),
+                    type: 'GET',
+                    dataType: 'json'
                 });
-                modal.show();
-            }
+                $("#button-advanced").text("Advanced");
+                $("#div-advanced").hide();
+                $("#button_hide_modal").off("click");
+                $("#button-advanced").off("click");
+                $("#warning_unsafe_link").off("click");
+                if (warning_type==="popup_email") {
+                    window.location.href = '{{route('next_step')}}/' + email_id + '?nolink&noquest';
+                } else {
+                    window.location.href = '{{route('next_step')}}/' + email_id + '?nolink';
+                }
+                modal.hide();
+            });
+            modal.show();
+        }
         </script>
     </x-slot>
 </x-app-layout>

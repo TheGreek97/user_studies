@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\MailController;
+use App\Http\Controllers\Questionnaire;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
+use Laravel\Jetstream\Http\Controllers\Livewire\TermsOfServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,12 +22,14 @@ Route::get('/', function () {
     return redirect()->route('welcome');
 });
 
+Route::get('/ethical_consent', [TermsOfServiceController::class, 'show'])->name('terms');
+
 Route::middleware([
     //'auth:sanctum',
     config('jetstream.auth_session'),
     //'verified'
 ])->group(function (){
-    Route::get('/warning_log', [\App\Http\Controllers\MailController::class, 'warningLog'])->name('warning_log');
+    Route::get('/warning_log', [MailController::class, 'warningLog'])->name('warning_log');
 });
 
 Route::middleware([
@@ -36,23 +40,24 @@ Route::middleware([
     'log'
 ])->group(function () {
     Route::get('/welcome', function () {
-        if (Auth::user()->followUpQuestionnaire != null) {
+        if (Auth::user()->followUpQuestionnaire != null) {  // study already completed
             return redirect(route('thankyou'));
         } else {
             if (session()->has('welcome_shown'))
                 return redirect(route('show', ['folder' => 'inbox']));
             else {
                 session(['welcome_shown' => '1']);
-		if (Auth::user()->warning_type === "tooltip") {
-			$cond = "warning passivo";
- 		} else {
-			$cond = "warning attivo";
-			if (Auth::user()->show_explanation){
-				$cond.= " explanation";
-			} else {
-				$cond.=" NO explanation";
-			}
-		}
+                /* $cond is a debug value */
+                if (Auth::user()->warning_type === "tooltip") {
+                    $cond = "warning passivo";
+                } else {
+                    $cond = "warning attivo";
+                    if (Auth::user()->show_explanation){
+                        $cond.= " explanation";
+                    } else {
+                        $cond.=" NO explanation";
+                    }
+		        }
                 return view('welcome')->with('condition', $cond);
             }
         }
@@ -63,16 +68,16 @@ Route::middleware([
             return redirect(route('show', ['folder' => 'inbox']));
         return view("emailquestionnaire")->with('warning_type', Auth::user()->warning_type);
     })->name('next_step');
-    Route::post('/nextstep/{mail?}', [\App\Http\Controllers\Questionnaire::class, 'storeEmailQuestionnaire'])->name('next_step');
+    Route::post('/nextstep/{mail?}', [Questionnaire::class, 'storeEmailQuestionnaire'])->name('next_step');
 
     Route::get('/finish', function (){
         return view("thank_you_page");
     })->name('thankyou');
 
-    Route::get('/end', [\App\Http\Controllers\Questionnaire::class, 'showFollowUp'])->name('post_test');
-    Route::post('/end', [\App\Http\Controllers\Questionnaire::class, 'storeFollowUp']);
+    Route::get('/end', [Questionnaire::class, 'showFollowUp'])->name('post_test');
+    Route::post('/end', [Questionnaire::class, 'storeFollowUp']);
 
-    Route::get('/warning_browser', [\App\Http\Controllers\MailController::class, 'warning_browser'])->name('warning_browser');
+    Route::get('/warning_browser', [MailController::class, 'warning_browser'])->name('warning_browser');
 
-    Route::get('/{folder?}/{id?}', [\App\Http\Controllers\MailController::class, 'show'])->name('show');
+    Route::get('/{folder?}/{id?}', [MailController::class, 'show'])->name('show');
 });

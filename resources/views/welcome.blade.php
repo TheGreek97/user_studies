@@ -6,24 +6,21 @@
                     Thank you for accepting our invitation to participate to this study
                 </div>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    Dear participant, at the University of Bari we are evaluating a new prototype of email client.
+                    Dear participant, at the University of Bari we are evaluating a new prototype of an email client.
                 </p>
                 <p class="text-xl max-w-4xl text-left pt-4">
                     In this study, which will take about 15 minutes, we ask you to imagine being Andrea, a 28 years old guy who lives in Rome, Italy. <br>
                     Andrea uses various social networks, among which Instagram, Facebook, Twitter, and TikTok. <br>
                     Moreover, Andrea uses Ebay and Amazon to make online purchases with his Italian credit card. Andrea really loves music and goes to live concerts monthly. <br>
                     <br/>
-                    Andrea works at an IT company and has accepted to test a new email client that his company has recently adopted. To test the new email client,
+                    Andrea works for an IT company and has agreed to test a new email client that the company has recently adopted. To test the new email client,
                     Andrea must interact with it, by READING ALL HIS EMAILS in the inbox and check that the links in them, if any, are working.
                 </p>
-                <!--<p class="text-xl max-w-4xl text-left pt-4">
-                    At the end of the study, you will be asked to fill in a questionnaire.
-                </p>-->
                 <div class="text-center mt-10">
                     <div class="w-full">
                         <div>
-                            <button onclick="window.location.replace('{{ route('show', ['folder' => 'inbox']) }}')"
-                                    class="py-3 w-full text-lg text-white bg-blue-500 hover:bg-blue-800 rounded-2xl">Start the study
+                            <button onclick="window.location.replace('{{ route('terms') }}')"
+                                    class="py-3 w-full text-lg text-white bg-blue-500 hover:bg-blue-800 rounded-2xl"> Read the terms
                             </button>
                         </div>
                     </div>

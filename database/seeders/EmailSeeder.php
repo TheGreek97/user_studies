@@ -20,11 +20,11 @@ class EmailSeeder extends Seeder
         {
             switch ($type) {
                 case 'basic':
-                    if ($url !== null)
-                        return "This email was blocked because it may trick you into doing something dangerous like installing software or revealing personal information like passwords or credit cards.";
-                    else
-                        return "";
-                        #return "The target URL in the mail can be a fake one. This site might be intended to take you to a different place. You might be disclosing private information.";
+                    //if ($url !== null)
+                    return "This email was blocked because it may trick you into doing something dangerous like installing software or revealing personal information like passwords or credit cards.";
+                    //else
+                    // return "";
+                    #return "The target URL in the mail can be a fake one. This site might be intended to take you to a different place. You might be disclosing private information.";
                 case 'image':
                     return "In the e-mail there is an image, a typical element of possible malicious e-mails. There is a potential risk to your data if you continue";
                 case 'links':
@@ -76,6 +76,7 @@ class EmailSeeder extends Seeder
         $email->content = '<p class="p1"><img style="display: block; margin-left: auto; margin-right: auto;" src="/assets/img/email/ticketone.png" alt="" width="300" height="113" /></p>
             <p class="p1">Hi {user_name},<br /><br />this is to provide you with useful information regarding <strong>U2’s event</strong> scheduled in <strong>LONDON</strong>.<br /><br />We confirm that the concert will be held this evening, <strong>November 16th</strong>, at <strong>The London Palladium</strong>.<br /><br />Below we report what the organizer shared:<br /><br />"U2 @ The London Palladium - IMPORTANT SERVICE INFORMATION: <br /><strong>The opening of the gates is scheduled for around 5:30 pm</strong>.<br /><br />We invite you not to go to the venue too early, also to avoid the hottest hours.<br /><br />U2\'s concert is supposed to start between 9.30 pm and 10 pm. <br /><br />At the end of the concert, it is advisable to wait at least half an hour before leaving the venue in order not to obstruct traffic. <br /><br />To assure safety, the outflow will be managed in stages by our security personnel, checking the exits at regular intervals of time.<br /><br />Inside the venue there are food & beverage areas, including vegetarian choices too.<br />The internal regulations of The London Palladium can be consulted at this link: <a href="https://lwtheatres.co.uk/lw-theatres-audience-guide/" style="text-decoration: underline; color: #0001F1;"><span class="s1">https://lwtheatres.co.uk/lw-theatres-audience-guide/</span></a><br /><br /><br />Kind Regards,<br />TicketOne Staff</p>';
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
 
@@ -212,6 +213,7 @@ class EmailSeeder extends Seeder
         <div class="yj6qo"> </div>
         <div class="adL"> </div>
         </div>';
+        $email->show_warning = false;
         $email->date = $date;
         $email->type = 'inbox';
         $email->save();
@@ -232,6 +234,7 @@ class EmailSeeder extends Seeder
         <p class="p1"><span class="s1">We’d like to</span> thank you for the trust you had put in us and hope you would like to entrust your policy to us in the future.</p>
         <p class="p1">Our best regards.</p></div>';
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
 
@@ -287,6 +290,7 @@ class EmailSeeder extends Seeder
         </table>
         </div>';
         $email->date = Carbon::parse('2022-08-19 15:28')->toDateTimeString();
+        $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
 
@@ -298,6 +302,7 @@ class EmailSeeder extends Seeder
         $email->preview_text = 'We have sent you this email to notify you of an update of the Terms of Service.';
         $email->content = file_get_contents(EMAIL_DIR . "/youtube_legit.htm");
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
 
@@ -319,6 +324,7 @@ class EmailSeeder extends Seeder
         </p>
         <br><p>Best regards,<br />UniCredit Bank</p></div>';
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
 
@@ -345,6 +351,7 @@ class EmailSeeder extends Seeder
         <p class="p1"> </p>
         <p class="p1">The DAZN Team</p></div>';
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
 
@@ -361,6 +368,7 @@ class EmailSeeder extends Seeder
         <p>
         <br/><img src="/assets/img/email/farmacia.jpeg" alt="" width="100" height="75" /></p></div>';
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
 
@@ -372,6 +380,7 @@ class EmailSeeder extends Seeder
         $email->preview_text = 'Here\'s how to renew your plan';
         $email->content = file_get_contents(EMAIL_DIR . "/unity_legit.htm");
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
 
@@ -383,6 +392,7 @@ class EmailSeeder extends Seeder
         $email->preview_text = 'Delivered: Your Amazon.com order';
         $email->content = file_get_contents(EMAIL_DIR . "/amazon_legit.htm");
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
 
@@ -531,6 +541,7 @@ class EmailSeeder extends Seeder
            </tr>
           </table>";
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
 
@@ -549,216 +560,7 @@ class EmailSeeder extends Seeder
 
         // ** PHISHING EMAILS **
 
-        // Tooltip
-        // Email 1 - INSTAGRAM
-        $email = new Email();
-        $email->subject = "New device login detected";
-        $email->from_name = "Instagram";
-        $email->from_email = "noreply@lnstagram.com";
-        $email->preview_text = 'Dear user, we\'re writing to inform you that we detected a login to your account from a new device.';
-        $email->content = '<div><p class="p1"><strong><img style="display: block; margin-left: auto; margin-right: auto;" src="/assets/img/email/instagram.png" alt="" width="300" height="165" /></strong><strong>Dear {user_name},</strong></p>
-        <p> </p>
-        <p class="p1">We\'re writing to inform you that we\'ve detected a login to your account from a new device.<br /><br /></p>
-        <p class="p1"><strong>When:</strong></p>
-        <p class="p1"><em>10/12/2022 17:38 CEST</em></p>
-        <p class="p1"><strong>Device:</strong></p>
-        <p class="p1"><em>Huawei P30 Pro</em></p>
-        <p class="p1"><strong>Near:<span class="Apple-converted-space"> </span></strong></p>
-        <p class="p1"><em>Nashik, India<br /><br /></em></p>
-        <p class="p1"><strong>If this was you</strong>, you can safely ignore this message.<br /><br /></p>
-        <p class="p1"><strong>If this wasn\'t you</strong>, we highly recommend you to reset your password and terminate any other session to limit any possible damage. You can quickly reset your password by clicking the link below.
-        <table class="tooltip" data="instagram link">
-            <tbody>
-               <tr>
-                  <td>
-                    <a class="phishing_link" href="#"> instagram.com/reset </a>
-                    <span id="tooltip_link" class="tooltiptext">
-                    Link goes to: <a href="#" style="text-decoration: underline;/* color: #0001F1; */"><span class="s2">http://92.233.24.33/instagram/login.php</span></a>
-                    </span>
-                  </td>
-               </tr>
-           </tbody>
-        </table>
-        </p>
-        <br/>
-        <p class="p1">Sincerely,<br/>Instagram Technical Staff</p>
-        </div>';
-        $email->date = Carbon::parse('2022-12-10 18:12')->toDateTimeString();
-        $email->type = 'inbox';
-        $email->warning_type = 'tooltip';
-        $email->save();
-
-        // Email 2 - AMAZON
-        $phish_url = "amazonservices.com.cz/account.php";
-        $email = new Email();
-        $email->subject = "Problem with your account";
-        $email->from_name = "Amazon";
-        $email->from_email = "amazon.it@amazonservices.com.cz";
-        $email->preview_text = 'Hello customer, We have faced some problems with your account.';
-        $email->content = '<div><p class="p1"><img src="/assets/img/email/amazon.jpg" alt="" width="100" /></p>
-        <p class="p1">Dear Customer,<br /><br />
-        We are sorry to inform you that we have registered some problems related to your account. As a consequence, you need to update your account details.
-        Unless you update your details within 24 hours (since the opening of this email), your account will be officially and <b>permanently disabled</b>,
-        as mentioned in our <i>Terms of Use and Conditions</i>.
-        <br>
-        You can proceed to the updating procedure by clicking the link below:</p>
-        <br>
-        <div style="margin-left: auto; margin-right: auto; border-radius: 5px; background-color: #ffd814; color: #000000; display: inline-block; text-align: center;" align="center">
-        <table class="tooltip" data="amazon link">
-            <tbody>
-               <tr>
-                  <td>
-                    <a class="phishing_btn" href="#"> Update now </a>
-                    <span id="tooltip_link" class="tooltiptext">
-                    Link goes to: <a href="#" style="text-decoration: underline;/* color: #0001F1; */"><span class="s2">'. $phish_url .'</span></a>
-                    </span>
-                  </td>
-               </tr>
-           </tbody>
-        </table>
-        </div>
-        <br><br><p class="p1">Thank you for being part of the Amazon community,<span class="Apple-converted-space"> </span></p>
-        <p class="p1">we look forward to hearing from you soon.</p><br>
-        <p class="p1">Best regards, <br>Amazon Customer Service</p></div>';
-        $email->warning_type = 'tooltip';
-        $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
-        $email->type = 'inbox';
-        $email->save();
-
-        // False positive
-        $email = new Email();
-        $email->subject = "Your Facebook password has been modified";
-        $email->from_name = "Facebook";
-        $email->from_email = "security@facebookmail.com";
-        $email->preview_text = 'Hello {user_name}, Your Facebook password has been modified.';
-        $email->content ='<body style="margin:0;padding:0;" dir="ltr" bgcolor="#ffffff">
-          <table border="0" cellspacing="0" cellpadding="0" align="center" id="email_table" style="border-collapse:collapse;">
-            <tr>
-              <td id="email_content" style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;background:#ffffff;">
-                  <table border="0" cellspacing="0" cellpadding="0" style=" border-collapse:collapse;">
-                    <tr>
-                      <td valign="top" style="padding-right:10px;font-size: 0px;">
-                        <img src="/assets/img/email/facebook.png" style="border:0;">
-                      </td>
-                      <td valign="top" style="width:100%;">
-                        <table border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse;font-size:14px;color:#3D4452;width:100%;">
-                          <tr>
-                            <td style="font-size:14px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;color:#3D4452;padding-bottom:6px;">Hello {user_name},</td>
-                          </tr>
-                          <tr>
-                            <td style="font-size:14px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;color:#3D4452;padding-top:6px;padding-bottom:6px;">Your Facebook password has been modified Saturday 17 December 2022 at 22:29 (UTC+01)
-                            </td>
-                          </tr>
-                          <tr>
-                            <td style="font-size:14px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;color:#3D4452;padding-top:6px;padding-bottom:6px;">
-                              <table border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin-top:5px;margin-bottom:5px;">
-                                <tr style="">
-                                  <td style="padding-left: 10px">
-                                    <span style="color:#808080;">Operating System: </span>
-                                  </td>
-                                  <td style="padding-left: 10px">Windows</td>
-                                </tr>
-                                <tr style="">
-                                  <td style="padding-left: 10px">
-                                    <span style="color:#808080;">Browser: </span>
-                                  </td>
-                                  <td style="padding-left: 10px">Chrome</td>
-                                </tr>
-                                <tr style="">
-                                  <td style="padding-left: 10px">
-                                    <span style="color:#808080;">IP Address: </span>
-                                  </td>
-                                  <td style="padding-left: 10px"> 93.40.196.198</td>
-                                </tr>
-                                <tr style="">
-                                  <td style="padding-left: 10px">
-                                    <span style="color:#808080;">Approximate Location: </span>
-                                  </td>
-                                  <td style="padding-left: 10px">Rome, IT</td>
-                                </tr>
-                              </table>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td style="font-size:14px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;color:#3D4452;padding-top:6px;padding-bottom:6px;">
-                              <strong>If you performed this action,</strong>  you can ignore this email.
-                            </td>
-                          </tr>
-                          <tr>
-                            <td style="display:flex;font-size:14px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;color:#3D4452;padding-top:6px;padding-bottom:6px;">
-                              <strong>If it wasn\'t you,</strong> &nbsp;
-                              <table class="tooltip" data="facebook link">
-                                <tbody>
-                                   <tr>
-                                      <td>
-                                        <a class="phishing_link" href="#" style="color:#3b5998;text-decoration:none;"> protect your account </a>
-                                        <span id="tooltip_link" class="tooltiptext">
-                                        Link goes to: <a href="#" style="text-decoration: underline;/* color: #0001F1; */"><span class="s2">https://www.facebook.com/hacked/disavow?u=100000125023309&amp;nArdInDS2&amp;lit_IT&amp;ext1548538159</span></a>
-                                        </span>
-                                      </td>
-                                   </tr>
-                               </tbody>
-                              </table>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td style="font-size:14px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;color:#3D4452;padding-top:6px;padding-bottom:6px;"></td>
-                          </tr>
-                          <tr>
-                            <td style="font-size:14px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;color:#3D4452;padding-top:6px;padding-bottom:6px;">Thank you, <br> the Facebook security team</td>
-                          </tr>
-                          <tr>
-                            <td style="font-size:14px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;color:#3D4452;padding-top:6px;">&nbsp;</td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
-              </td>
-              <td width="15" style="display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td>
-            </tr>
-            <tr>
-              <td width="15" style="display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td>
-              <td style="">
-                <table border="0" width="100%" cellspacing="0" cellpadding="0" align=" left" style="border-collapse:collapse;">
-                  <tr style="border-top:solid 1px #e5e5e5;">
-                    <td height="19" style="line-height:19px;">&nbsp;</td>
-                  </tr>
-                  <tr style="align-items: center; display: block">
-                    <td style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:11px;color:#aaaaaa;line-height:16px;"> This email was sent by Facebook. If you do not want to receive this kind of emails from Facebook, <a href="https://www.facebook.com/o.php?k=3DAS3IzEaiunZaSIOZ&amp;u=3D100000125023309&amp;mid=3D57fd6086d799fG5af317edf44dG57fd652037c71G18e" style="color:#3b5998;text-decoration:none;">cancel your subscription</a>. <br>Facebook Ireland Ltd., Attention: Community Operations, 4 Grand Canal Square, Dublin 2, Ireland </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td width="15" style="display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td>
-              <td style="">
-                <table border="0" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
-                  <tr style="align-items: center; display: block">
-                    <td style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:11px;color:#aaaaaa;line-height:16px;">
-                      <span style="font-family:Helvetica Neue,Helvetica,LucidaGrande,tahoma,verdana,arial,sans-serif;font-size:11px;color:#aaaaaa;line-height:16px;">To protect your account, do not forward this email. <a href="https://www.facebook.com/email_forward_notice/?mid=57fd6086d799fG5af317edf44dG57fd652037c71G18e" style="color:#3b5998;text-decoration:none;">Discover more.</a>
-                      </span>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-              <td width="15" style="display:block;width:15px;">&nbsp;&nbsp;&nbsp; </td>
-                </tr>
-            <tr style="">
-              <td height="20" style="line-height:20px;" colspan="3">&nbsp;</td>
-            </tr>
-          </table>
-          </td>
-          </tr>
-          </table>
-          </body>
-        ';
-        $email->warning_type = 'tooltip';
-        $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
-        $email->type = 'inbox';
-        $email->save();
-
-        // Before-Email warning
+        // PHISHING
         // Email 1 - INSTAGRAM
         $email = new Email();
         $email->subject = "New device login detected";
@@ -776,17 +578,18 @@ class EmailSeeder extends Seeder
         <p class="p1"><em>Nashik, India<br /><br /></em></p>
         <p class="p1"><strong>If this was you</strong>, you can ignore this message.<br /><br /></p>
         <p class="p1"><strong>If this wasn\'t you</strong>, click the link below and reset your password to be safe.
-        <a href="http://92.233.24.33/instagram/login.php" style="text-decoration: underline; color:#3366CC;">instagram.com/reset</span>.</a>
+        <a id="phishing_link" href="http://92.233.24.33/instagram/login.php" style="text-decoration: underline; color:#3366CC;">instagram.com/reset.</a>
         </p>
         <br/>
         <p class="p1">Sincerely,<br/>Instagram Technical Staff</p>
         </div>';
         $email->date = Carbon::parse('2022-12-10 18:12')->toDateTimeString();
         $email->type = 'inbox';
+        $email->show_warning = true;
         $email->warning_explanation_1 = get_explanation("basic", "http://92.233.24.33/instagram/login.php");
         $email->warning_explanation_2 = get_explanation("ip_url");
-        $email->warning_type = 'popup_email';
         $email->save();
+
 
         // Email 2 - AMAZON
         $email = new Email();
@@ -803,13 +606,13 @@ class EmailSeeder extends Seeder
         You can proceed to the updating procedure by clicking the link below:</p>
         <br>
         <div style="margin-left: auto; margin-right: auto; border-radius: 5px; background-color: #ffd814; color: #000000; display: inline-block; text-align: center;" align="center">
-        <a style="color: #000000; text-decoration: none; display: block; padding: 14px 30px 15px;" href="https://amazonservices.com.cz/account.php"> Update now </a></div>
+        <a style="color: #000000; text-decoration: none; display: block; padding: 14px 30px 15px;" id="phishing_link" href="https://amazonservices.com.cz/account.php"> Update now </a></div>
         <br><br><p class="p1">Thank you for being part of the Amazon community,<span class="Apple-converted-space"> </span></p>
         <p class="p1">we look forward to hearing from you soon.</p><br>
         <p class="p1">Best regards, <br>Amazon Customer Service</p></div>';
+        $email->show_warning = true;
         $email->warning_explanation_1 = get_explanation("basic","https://amazonservices.com.cz/account.php");
         $email->warning_explanation_2 = get_explanation("tld_mispositioned","https://amazonservices.com.cz/account.php");
-        $email->warning_type = 'popup_email';
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
         $email->type = 'inbox';
         $email->save();
@@ -877,7 +680,7 @@ class EmailSeeder extends Seeder
                           <tr>
                             <td style="font-size:14px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;color:#3D4452;padding-top:6px;padding-bottom:6px;">
                               <strong>If it wasn\'t you,</strong>
-                              <a href="https://www.facebook.com/hacked/disavow?u=100000125023309&amp;nArdInDS2&amp;lit_IT&amp;ext1548538159" style="color:#3b5998;text-decoration:none;">protect your account</a>.
+                              <a href="https://www.facebook.com/hacked/disavow?u=100000125023309&amp;nArdInDS2&amp;lit_IT&amp;ext1548538159" id="phishing_link" style="color:#3b5998;text-decoration:none;">protect your account</a>.
                             </td>
                           </tr>
                           <tr>
@@ -933,9 +736,9 @@ class EmailSeeder extends Seeder
           </body>
         ';
         $url = "https://www.facebook.com/hacked/disavow?u=100000125023309&amp;nArdInDS2&amp;lit_IT&amp;ext1548538159";
+        $email->show_warning = true;
         $email->warning_explanation_1 = get_explanation("basic", $url);
         $email->warning_explanation_2 = get_explanation("link_mismatch", $url);
-        $email->warning_type = 'popup_email';
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
         $email->type = 'inbox';
         $email->save();
@@ -946,7 +749,7 @@ class EmailSeeder extends Seeder
             $email->subject = "Not available";
             $email->from_name = "System";
             $email->from_email = "";
-            $email->preview_text = 'For the scope of this test, this area is not currently accessible';
+            $email->preview_text = 'For the purposes of this test, this area is currently inaccessible';
             $email->content = '-';
             $email->date = Carbon::today()->toDateTimeString();
             $email->type = $folder;

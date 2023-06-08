@@ -23,7 +23,7 @@
                         Goodbye!<br>
                         The team of IVU Lab, University of Bari, Italy
                         <div class="mt-6" style="display: flex;justify-content: center;">
-                            <img src="/assets/img/ivu_logo.png" alt="lab logo" style="max-width: 35%">
+                            <img src="/assets/img/logo_ivu.png" alt="lab logo" style="max-width: 35%">
                         </div>
                     </div>
                 </div>
