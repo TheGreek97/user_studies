@@ -17,12 +17,17 @@ use Laravel\Jetstream\Http\Controllers\Livewire\TermsOfServiceController;
 |
 */
 
+
 Route::get('/', function () {
     //return redirect()->route('login');
     return redirect()->route('welcome');
 });
 
-Route::get('/ethical_consent', [TermsOfServiceController::class, 'show'])->name('terms');
+Route::get('/no-consent', function () {
+    return view("informed_consent_declined");
+})->name('no_consent');
+
+//Route::get('/ethical_consent', [TermsOfServiceController::class, 'show'])->name('terms');
 
 Route::middleware([
     //'auth:sanctum',
@@ -48,7 +53,7 @@ Route::middleware([
             else {
                 session(['welcome_shown' => '1']);
                 /* $cond is a debug value */
-                if (Auth::user()->warning_type === "tooltip") {
+                /*if (Auth::user()->warning_type === "tooltip") {
                     $cond = "warning passivo";
                 } else {
                     $cond = "warning attivo";
@@ -58,7 +63,8 @@ Route::middleware([
                         $cond.=" NO explanation";
                     }
 		        }
-                return view('welcome')->with('condition', $cond);
+                return view('welcome')->with('condition', $cond);*/
+                return view('welcome');
             }
         }
     })->name('welcome');
