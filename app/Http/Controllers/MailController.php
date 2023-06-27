@@ -28,6 +28,7 @@ class MailController extends Controller
             }
         }  // Else, show the mails list
         if(count(DB::table('useremailquestionnaire')->where('user_id', \Illuminate\Support\Facades\Auth::id())->get()) < self::MAILS_NUMBER) {
+            session(['consent' => '1']);
             return view('email_page', ['folder' => $folder]);
         }
         else {

@@ -15,7 +15,6 @@
                 position: relative;
                 display: inline-block;
                 /*border-bottom: 1px dotted black;*/
-                cursor: not-allowed;
                 z-index: 1;
             }
 
@@ -31,10 +30,15 @@
                 z-index: 1;
             }
 
+            .tooltip-balloon {
+                width: max-content;
+                max-width:35rem;
+            }
+
             .tooltip .tooltiptext::after {
                 content: "";
                 position: absolute;
-                top: -20%;
+                bottom: 100%;
                 left: 8%;
                 margin-left: -5px;
                 border-width: 10px;
@@ -43,17 +47,16 @@
                 z-index: 1;
             }
 
-            #tooltip_link{
-                top: 105%;
-                width: 450px;
-                height: 110px;
+            .visible {
+                visibility: visible !important;
+            }
+
+            #tooltip_balloon{
+                top: 110%;
                 left: 25%;
                 position: absolute;
                 display: flex;
                 align-items: center;
-            }
-            #tooltip_link:hover {
-                visibility: visible;
             }
 
             #tooltip_button{
@@ -61,9 +64,7 @@
                 width: 550px;
                 left: 102%;
             }
-            .tooltip:hover .tooltiptext {
-                visibility: visible;
-            }
+
             .phishing_btn {
                 color: #ffffff;
                 text-decoration: none;

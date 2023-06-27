@@ -80,7 +80,7 @@
                             <button style="margin: 0 1rem;" onclick="window.location.replace('{{ route('no_consent') }}')"
                                     class="py-3 w-1/2 text-lg text-white bg-blue-500 hover:bg-blue-800 rounded-2xl"> DISAGREE
                             </button>
-                            <button style="margin: 0 1rem;" onclick="window.location.replace('{{ route('show', ['folder' => 'inbox']) }}')"
+                            <button style="margin: 0 1rem;" onclick="window.location.replace('{{ route('show', ['folder' => 'inbox', 'consent' => true]) }}')"
                                     class="py-3 w-1/2 text-lg text-white bg-blue-500 hover:bg-blue-800 rounded-2xl"> AGREE
                             </button>
                         </div>

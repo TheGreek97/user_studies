@@ -18,6 +18,10 @@ class EmailSeeder extends Seeder
     {
         function get_explanation ($type='basic', $url=null): string
         {
+            $success = preg_match("/(?:https?:\/\/)?[^\/]*\//", $url, $matches);
+            if ($success) {
+                $url = substr($matches[0], 0, strlen($matches[0])-1);
+            }
             switch ($type) {
                 case 'basic':
                     //if ($url !== null)
@@ -50,9 +54,9 @@ class EmailSeeder extends Seeder
                 case 'sensitive_words_url':
                     return "The URL present in the e-mail body contains many sensitive words. This might happen when a URL is fraudulent. If you continue, you are likely to be exposed to the theft of private information";
                 case 'ip_url':
-                    return "Usually, the email uses the URL instead of the IP address to make it easier for you to browse the web. However, an IP address was found in the email. Similar e-mail is harmful and steals private information. There is a potential risk of being cheated if you proceed.";
+                    return "Usually, the email uses the URL instead of the IP address to make it easier for you to browse the web. However, an IP address was found in the email. Similar e-mails are harmful and steal private information. There is a potential risk of being cheated if you proceed.";
                 case 'link_mismatch':
-                    return "The displayed link is different from the actual one ". $url .". This site might be intended to take you to a different place. You might be disclosing private information";
+                    return "The displayed link is different from the actual one ". $url .". This site might be intended to take you to a different place. You might be disclosing private information.";
                 case 'tld_mispositioned':
                     return "In the URL present in the email (". $url .") the top-level domain (e.g., “.com“) is in an abnormal position. This could indicate that the URL leads to a fake website. Such websites might steal your personal information";
                 case 'num_subdomains':
@@ -577,11 +581,11 @@ class EmailSeeder extends Seeder
         <p class="p1"><strong>Near:<span class="Apple-converted-space"> </span></strong></p>
         <p class="p1"><em>Nashik, India<br /><br /></em></p>
         <p class="p1"><strong>If this was you</strong>, you can ignore this message.<br /><br /></p>
-        <p class="p1"><strong>If this wasn\'t you</strong>, click the link below and reset your password to be safe.
+        <p class="p1"><strong>If this wasn\'t you</strong>, click the link below and reset your password to be safe.<br>
         <a id="phishing_link" href="http://92.233.24.33/instagram/login.php" style="text-decoration: underline; color:#3366CC;">instagram.com/reset.</a>
         </p>
         <br/>
-        <p class="p1">Sincerely,<br/>Instagram Technical Staff</p>
+        <p class="p1" style="margin-bottom: 5rem">Sincerely,<br/>Instagram Technical Staff</p>
         </div>';
         $email->date = Carbon::parse('2022-12-10 18:12')->toDateTimeString();
         $email->type = 'inbox';
@@ -605,8 +609,9 @@ class EmailSeeder extends Seeder
         <br>
         You can proceed to the updating procedure by clicking the link below:</p>
         <br>
-        <div style="margin-left: auto; margin-right: auto; border-radius: 5px; background-color: #ffd814; color: #000000; display: inline-block; text-align: center;" align="center">
-        <a style="color: #000000; text-decoration: none; display: block; padding: 14px 30px 15px;" id="phishing_link" href="https://amazonservices.com.cz/account.php"> Update now </a></div>
+        <div style="margin-left: auto; margin-right: auto; border-radius: 5px; background-color: #ffd814; color: #000000; display: inline-block; text-align: center;" align="center" id="tooltip-button">
+            <a style="color: #000000; text-decoration: none; display: block; padding: 14px 30px 15px;" id="phishing_link" href="https://amazonservices.com.cz/account.php"> Update now </a>
+            </div>
         <br><br><p class="p1">Thank you for being part of the Amazon community,<span class="Apple-converted-space"> </span></p>
         <p class="p1">we look forward to hearing from you soon.</p><br>
         <p class="p1">Best regards, <br>Amazon Customer Service</p></div>';
@@ -679,8 +684,8 @@ class EmailSeeder extends Seeder
                           </tr>
                           <tr>
                             <td style="font-size:14px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;color:#3D4452;padding-top:6px;padding-bottom:6px;">
-                              <strong>If it wasn\'t you,</strong>
-                              <a href="https://www.facebook.com/hacked/disavow?u=100000125023309&amp;nArdInDS2&amp;lit_IT&amp;ext1548538159" id="phishing_link" style="color:#3b5998;text-decoration:none;">protect your account</a>.
+                              <strong>If it wasn\'t you,</strong> <br/>
+                              <a href="https://www.facebook.com/hacked/disavow?u=100000125023309&amp;nArdInDS2&amp;lit_IT&amp;ext1548538159" id="phishing_link" style="color:#3b5998;text-decoration:none;">protect your account</a>
                             </td>
                           </tr>
                           <tr>

@@ -48,11 +48,10 @@ Route::middleware([
         if (Auth::user()->followUpQuestionnaire != null) {  // study already completed
             return redirect(route('thankyou'));
         } else {
-            if (session()->has('welcome_shown'))
+            if (session()->has('consent'))  //TODO FIX THIS! Maybe is already fixed
                 return redirect(route('show', ['folder' => 'inbox']));
             else {
-                session(['welcome_shown' => '1']);
-                /* $cond is a debug value */
+                // $cond is a debug value
                 /*if (Auth::user()->warning_type === "tooltip") {
                     $cond = "warning passivo";
                 } else {
@@ -70,8 +69,9 @@ Route::middleware([
     })->name('welcome');
 
     Route::get('/nextstep/{id?}', function ($id = null){
-        if($id === null)
+        if($id === null) {
             return redirect(route('show', ['folder' => 'inbox']));
+        }
         return view("emailquestionnaire")->with('warning_type', Auth::user()->warning_type);
     })->name('next_step');
     Route::post('/nextstep/{mail?}', [Questionnaire::class, 'storeEmailQuestionnaire'])->name('next_step');

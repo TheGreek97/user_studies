@@ -696,8 +696,8 @@ else
                     window.location.href = '{{ route('next_step', $selected_email->id) }}?nolink';
                 });
             });
-            // Phishing links:
-            @if($warning_type !== "tooltip")  // if($warning_type == null || "popup_email" || "popup_link")
+            // Links:
+            @if($warning_type !== "tooltip")  //TODO FIX THIS! // if($warning_type == null || "popup_email" || "popup_link")
                 console.log ("warning type: {{$selected_email->warning_type}}")
                 $("#email_content").find('a').not('#phishing_link').each(function (e) {
                     $(this).on('click', (e) => {
@@ -729,15 +729,18 @@ else
                 let phishing_link_html = $("#phishing_link")
                 let explanation = "{{ $selected_email->$warning_explanation }}"
                 let default_explanation = `Link goes to: <a href="#" style="text-decoration: underline;/* color: #0001F1; */"><span class="s2">${phishing_link_html.attr("href")}</span></a>`
-                explanation = explanation || default_explanation  // if there is no explanation to show, show the default one
-
+                if (explanation) {
+                    explanation = explanation + "<br/>" + default_explanation
+                } else {
+                    explanation = default_explanation; // if there is no explanation to show, show the default one
+                }
                 let tooltip_warning_html = `
                     <table class="tooltip" data="{{$selected_email->from_email}}">
                         <tbody>
                            <tr>
                               <td>
-                                <a class="phishing_link" href="#">${phishing_link_html.html()} </a>
-                                <span id="tooltip_link" class="tooltiptext tooltip-balloon">
+                                <a href="#" class="phishing_link">${phishing_link_html.html()} </a>
+                                <span id="tooltip_balloon" class="tooltiptext tooltip-balloon">
                                     <div class="flex justify-between items-start">
                                         <div class="pr-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-10" viewBox="0 0 20 20"
@@ -747,7 +750,7 @@ else
                                                       clip-rule="evenodd"/>
                                             </svg>
                                         </div>
-                                        <div class="">
+                                        <div style="cursor: auto;">
                                             <span class="text-lg">FAKE WEBSITE, DON'T CLICK!</span><br/>
                                             <span>${explanation}</span>
                                         </div>
@@ -759,7 +762,12 @@ else
                     </table>
                 `
                 phishing_link_html.html(tooltip_warning_html)
+                phishing_link_html.attr("href", "#")
+                phishing_link_html.attr("style", phishing_link_html.attr("style")+"cursor: not-allowed;")
 
+                let tooltip_balloon = $("#tooltip_balloon")
+                phishing_link_html.mouseenter(() => {tooltip_balloon.addClass("visible"); console.log ("enter")})
+                phishing_link_html.mouseleave(() => setTimeout( () => {tooltip_balloon.removeClass("visible"); console.log ("escher")}, 100))
                 tooltips.mouseover(function () {
                     setTimeout(() => {
                         if (!message_sent.includes($(this).attr('data'))) {
@@ -773,7 +781,7 @@ else
                         allow_to_go_back = true
                     }, 2000)
                 });
-                $("#phishing_link a, #tooltip_link a").on("click", () => {
+                $("#phishing_link a, #tooltip_balloon a").on("click", () => {
                     allow_to_go_back = true
                     $.ajax({
                         url: ("{{ route('warning_log') }}?email_id={{$selected_email->id}}&warning_type=tooltip&msg=tooltip_click&url=" + window.location.href).replace(/%20/g, '+'),
