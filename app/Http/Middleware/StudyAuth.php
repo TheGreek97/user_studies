@@ -50,7 +50,7 @@ class StudyAuth
             ->get();
 
         $conditions_count= [];
-        /*
+
         // Condition 1
         $temp_group = $users->where('warning_type', "=", "tooltip")->first();
         if ($temp_group) {
@@ -76,7 +76,7 @@ class StudyAuth
         } else {
             $conditions_count["active_exp"] = 0;
         }
-        */
+
         // Condition 4
         $temp_group = $users->where('warning_type', "=", "tooltip")
             ->where('show_explanation', "=", 1)->first();
