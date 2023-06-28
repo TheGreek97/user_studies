@@ -13,6 +13,9 @@ class MailController extends Controller
     const MAILS_NUMBER = 14;
 
     public function show($folder = 'inbox', $id = null){
+        if (!session()->has('consent')) {
+            return redirect(route('welcome'));
+        }
         info("ID ".$id);
         if(!in_array($folder, ['inbox', 'sent', 'draft', 'trash']))
             return redirect(route('show', ['folder' => 'inbox']));
@@ -28,7 +31,6 @@ class MailController extends Controller
             }
         }  // Else, show the mails list
         if(count(DB::table('useremailquestionnaire')->where('user_id', \Illuminate\Support\Facades\Auth::id())->get()) < self::MAILS_NUMBER) {
-            session(['consent' => '1']);
             return view('email_page', ['folder' => $folder]);
         }
         else {

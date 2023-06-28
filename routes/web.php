@@ -27,6 +27,11 @@ Route::get('/no-consent', function () {
     return view("informed_consent_declined");
 })->name('no_consent');
 
+Route::get('/consent-grant', function (){
+    session(['consent' => '1']);
+    return redirect(route('show', ['folder' => 'inbox']));
+})->name('consent');
+
 //Route::get('/ethical_consent', [TermsOfServiceController::class, 'show'])->name('terms');
 
 Route::middleware([
@@ -48,8 +53,9 @@ Route::middleware([
         if (Auth::user()->followUpQuestionnaire != null) {  // study already completed
             return redirect(route('thankyou'));
         } else {
-            if (session()->has('consent'))  //TODO FIX THIS! Maybe is already fixed
+            if (session()->has('consent')) {
                 return redirect(route('show', ['folder' => 'inbox']));
+            }
             else {
                 // $cond is a debug value
                 /*if (Auth::user()->warning_type === "tooltip") {
