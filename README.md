@@ -25,6 +25,7 @@ The <b>emails</b> are visible in the <b>emails_screens.pdf</b> file in the root 
     - DB_PASSWORD with the password of the database created in the previous step
 - Execute the following commands within the root folder of this repo
     - composer install --optimize-autoloader --no-dev
+    - npm install
     - php artisan key:generate
     - php artisan migrate:fresh
     - php artisan config:cache (optional)

@@ -490,10 +490,7 @@ else
                                         <tbody
                                             class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
                                         >
-                                        @foreach(\Illuminate\Support\Facades\DB::table('emails')
-                                                 ->where('type', $folder)
-                                                 ->orderBy('date', 'desc')
-                                                 ->get() as $email)
+                                        @foreach($emails ?? [] as $email)
                                             @if(count(DB::table('useremailquestionnaire')->where('user_id', \Illuminate\Support\Facades\Auth::id())->where('email_id', $email->id)->get()) > 0)
                                                 <tr class="text-gray-700 cursor-not-allowed bg-gray-300">
                                             @else

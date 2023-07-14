@@ -974,7 +974,7 @@
                             </div>
                             <div class="my-5">
                                 <p class="font-bold pb-1">How many hours do you spend on the Internet each day?</p>
-                                <input required type="number" name="num_hours_day_internet" min="0" value="0"
+                                <input required type="number" name="num_hours_day_internet" min="0" max="24" value="0"
                                        class="block text-sm px-4 rounded-lg py-3 border outline-none"/>
                             </div>
                         </div>

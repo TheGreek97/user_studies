@@ -77,7 +77,7 @@ class EmailSeeder extends Seeder
         $email->from_email = "ecomm.customerservice@ticketone.it";
         $email->subject = "Important notice regarding U2 in London";
         $email->preview_text = 'Hi {user_name}, this is to provide you with useful information regarding U2’s event scheduled in LONDON.';
-        $email->content = '<p class="p1"><img style="display: block; margin-left: auto; margin-right: auto;" src="/assets/img/email/ticketone.png" alt="" width="300" height="113" /></p>
+        $email->content = '<p class="p1"><img style="display: block; margin-left: auto; margin-right: auto;" src="'. asset("img/email/ticketone.png").'" alt="" width="300" height="113" /></p>
             <p class="p1">Hi {user_name},<br /><br />this is to provide you with useful information regarding <strong>U2’s event</strong> scheduled in <strong>LONDON</strong>.<br /><br />We confirm that the concert will be held this evening, <strong>November 16th</strong>, at <strong>The London Palladium</strong>.<br /><br />Below we report what the organizer shared:<br /><br />"U2 @ The London Palladium - IMPORTANT SERVICE INFORMATION: <br /><strong>The opening of the gates is scheduled for around 5:30 pm</strong>.<br /><br />We invite you not to go to the venue too early, also to avoid the hottest hours.<br /><br />U2\'s concert is supposed to start between 9.30 pm and 10 pm. <br /><br />At the end of the concert, it is advisable to wait at least half an hour before leaving the venue in order not to obstruct traffic. <br /><br />To assure safety, the outflow will be managed in stages by our security personnel, checking the exits at regular intervals of time.<br /><br />Inside the venue there are food & beverage areas, including vegetarian choices too.<br />The internal regulations of The London Palladium can be consulted at this link: <a href="https://lwtheatres.co.uk/lw-theatres-audience-guide/" style="text-decoration: underline; color: #0001F1;"><span class="s1">https://lwtheatres.co.uk/lw-theatres-audience-guide/</span></a><br /><br /><br />Kind Regards,<br />TicketOne Staff</p>';
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
         $email->show_warning = false;
@@ -101,7 +101,7 @@ class EmailSeeder extends Seeder
         <table style="border-collapse: collapse; background: transparent;" width="100%" align="center">
         <tbody>
         <tr>
-        <td style="background: transparent;" align="center"><img class="CToWUd a6T" style="width: 100%; max-width: 810px; max-height: 170px;" tabindex="0" src="/assets/img/email/mycicero.jpg" alt="header myCicero" data-bit="iit" />
+        <td style="background: transparent;" align="center"><img class="CToWUd a6T" style="width: 100%; max-width: 810px; max-height: 170px;" tabindex="0" src="'. asset("img/email/mycicero.jpg").'" alt="header myCicero" data-bit="iit" />
         <div class="a6S" dir="ltr" style="opacity: 0.01; left: 524.195px; top: 75px;">
         <div id=":rx" class="T-I J-J5-Ji aQv T-I-ax7 L3 a5q" tabindex="0" role="button" aria-label="Download attachment " data-tooltip-class="a1V" data-tooltip="Download">
         <div class="akn">
@@ -228,7 +228,7 @@ class EmailSeeder extends Seeder
         $email->from_email = "insurances@allianz.com";
         $email->subject = "Notice of expiry of the Car Insurance Policy";
         $email->preview_text = 'Dear customer, we\'re sending you this email as a reminder of the expiration of your car insurance policy.';
-        $email->content = '<div><p class="p1"><img style="display: block; margin-left: auto; margin-right: auto;" src="/assets/img/email/allianz.png" alt="" width="200" height="57" /></p>
+        $email->content = '<div><p class="p1"><img style="display: block; margin-left: auto; margin-right: auto;" src="'. asset("img/email/allianz.png").'" alt="" width="200" height="57" /></p>
         <p class="p1">Dear Customer,</p>
         <p class="p2"> </p>
         <p class="p1">we\'re sending you this email as a reminder of the near expiration of your car insurance policy.</p>
@@ -260,7 +260,7 @@ class EmailSeeder extends Seeder
         <table style="height: 49px; padding: 5px;" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
         <tr>
-        <td style="width: 50%;"><img id="m_-4745720069737180512amazonLogo" class="CToWUd" width="100"  src="/assets/img/email/amazon.jpg" data-bit="iit" /></td>
+        <td style="width: 50%;"><img id="m_-4745720069737180512amazonLogo" class="CToWUd" width="100"  src="'. asset("img/email/amazon.jpg").'" data-bit="iit" /></td>
         <td id="m_-4745720069737180512title" style="width: 50%;" align="right" valign="top">
         <p>Password assistance</p>
         </td>
@@ -293,7 +293,8 @@ class EmailSeeder extends Seeder
         </tbody>
         </table>
         </div>';
-        $email->date = Carbon::parse('2022-08-19 15:28')->toDateTimeString();
+        $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        //$email->date = Carbon::parse('2022-08-19 15:28')->toDateTimeString();
         $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
@@ -305,6 +306,7 @@ class EmailSeeder extends Seeder
         $email->from_email = "no-reply@youtube.com";
         $email->preview_text = 'We have sent you this email to notify you of an update of the Terms of Service.';
         $email->content = file_get_contents(EMAIL_DIR . "/youtube_legit.htm");
+        $email->content = str_replace ("____asset_path_____", asset("/assets/img/email/youtube.png"), $email->content);
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
         $email->show_warning = false;
         $email->type = 'inbox';
@@ -316,7 +318,7 @@ class EmailSeeder extends Seeder
         $email->from_name = "UniCredit";
         $email->from_email = "no-reply@unicreditgroup.eu";
         $email->preview_text = 'You have reset your PIN and we have updated your account.';
-        $email->content = '<div><p><img style="display: block; margin-left: auto; margin-right: auto;" src="/assets/img/email/unicredit.jpg" alt="" width="300" height="109" /></p>
+        $email->content = '<div><p><img style="display: block; margin-left: auto; margin-right: auto;"  src="'. asset("img/email/unicredit.jpg").'" alt="" width="300" height="109" /></p>
         <p>Hi {user_name},</p><br>
         <p>Your confirmation PIN for your online banking services has been successfully reset!</p>
         <br>
@@ -338,7 +340,7 @@ class EmailSeeder extends Seeder
         $email->from_name = "DAZN";
         $email->from_email = "newsletter@dazn.it";
         $email->preview_text = 'Hi {user_name}, We are ready for a new season of great sport.';
-        $email->content = '<div><p class="p1"><img style="display: block; margin-left: auto; margin-right: auto;" src="/assets/img/email/dazn.png" alt="" width="102" height="102" /></p>
+        $email->content = '<div><p class="p1"><img style="display: block; margin-left: auto; margin-right: auto;" src="'. asset("img/email/dazn.png").'" alt="" width="102" height="102" /></p>
         <p class="p1">Hi {user_name},</p>
         <p class="p1">We are ready for a new season of great sport. What about you, are you ready to live it to the fullest on <strong>DAZN</strong>?</p>
         <p class="p1">We want to give you some simple advice to prepare yourself for the vision of <strong>upcoming events</strong>.</p>
@@ -370,7 +372,7 @@ class EmailSeeder extends Seeder
         <br>
         <p>Thank you for having chosen our services.<br /><br />Best regards,<br />European Hospital spa</p>
         <p>
-        <br/><img src="/assets/img/email/farmacia.jpeg" alt="" width="100" height="75" /></p></div>';
+        <br/><img src="'. asset("img/email/farmacia.jpeg").'" alt="" width="100" height="75" /></p></div>';
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
         $email->show_warning = false;
         $email->type = 'inbox';
@@ -395,6 +397,7 @@ class EmailSeeder extends Seeder
         $email->from_email = "order-confirmation@amazon.com";
         $email->preview_text = 'Delivered: Your Amazon.com order';
         $email->content = file_get_contents(EMAIL_DIR . "/amazon_legit.htm");
+        $email->content = str_replace('____asset_path_____', asset("img/email/amazon.jpg"), $email->content);
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
         $email->show_warning = false;
         $email->type = 'inbox';
@@ -570,12 +573,13 @@ class EmailSeeder extends Seeder
         $email->subject = "New device login detected";
         $email->from_name = "Instagram";
         $email->from_email = "noreply@lnstagram.com";
+        $date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
         $email->preview_text = 'Dear user, we\'re writing to inform you that we detected a login to your account from a new device.';
-        $email->content = '<div><p class="p1"><strong><img style="display: block; margin-left: auto; margin-right: auto;" src="/assets/img/email/instagram.png" alt="" width="300" height="165" /></strong><strong>Hey user,</strong></p>
+        $email->content = '<div><p class="p1"><strong><img style="display: block; margin-left: auto; margin-right: auto;" src="'. asset("img/email/instagram.png").'" alt="" width="300" height="165" /></strong><strong>Hey user,</strong></p>
         <p> </p>
         <p class="p1">We\'re writing to inform you that we detected a login to your account from a new device.<br /><br /></p>
         <p class="p1"><strong>When:</strong></p>
-        <p class="p1"><em>10/12/2022 17:38 CEST</em></p>
+        <p class="p1"><em> '.  $date .' CEST</em></p>
         <p class="p1"><strong>Device:</strong></p>
         <p class="p1"><em>Huawei P30 Pro</em></p>
         <p class="p1"><strong>Near:<span class="Apple-converted-space"> </span></strong></p>
@@ -587,7 +591,8 @@ class EmailSeeder extends Seeder
         <br/>
         <p class="p1" style="margin-bottom: 5rem">Sincerely,<br/>Instagram Technical Staff</p>
         </div>';
-        $email->date = Carbon::parse('2022-12-10 18:12')->toDateTimeString();
+        $email->date = $date;
+        //$email->date = Carbon::parse('2022-12-10 18:12')->toDateTimeString();
         $email->type = 'inbox';
         $email->show_warning = true;
         $email->warning_explanation_1 = get_explanation("basic", "http://92.233.24.33/instagram/login.php");
@@ -601,7 +606,7 @@ class EmailSeeder extends Seeder
         $email->from_name = "Amazon";
         $email->from_email = "amazon.it@amazonservices.com.cz";
         $email->preview_text = 'Hello customer, We have faced some problems with your account.';
-        $email->content = '<div><p class="p1"><img src="/assets/img/email/amazon.jpg" alt="" width="100" /></p>
+        $email->content = '<div><p class="p1"><img src="'. asset("img/email/amazon.jpg").'" alt="" width="100" /></p>
         <p class="p1">Dear Customer,<br /><br />
         We are sorry to inform you that we have registered some problems related to your account. As a consequence, you need to update your account details.
         Unless you update your details within 24 hours (since the opening of this email), your account will be officially and <b>permanently disabled</b>,
@@ -635,7 +640,7 @@ class EmailSeeder extends Seeder
                   <table border="0" cellspacing="0" cellpadding="0" style=" border-collapse:collapse;">
                     <tr>
                       <td valign="top" style="padding-right:10px;font-size: 0px;">
-                        <img src="/assets/img/email/facebook.png" style="border:0;">
+                        <img src="'. asset("img/email/facebook.png").'" style="border:0;">
                       </td>
                       <td valign="top" style="width:100%;">
                         <table border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse;font-size:14px;color:#3D4452;width:100%;">
