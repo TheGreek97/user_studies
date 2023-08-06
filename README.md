@@ -15,7 +15,7 @@ The <b>emails</b> are visible in the <b>emails_screens.pdf</b> file in the root 
     - CREATE USER 'user_db'@'localhost' IDENTIFIED BY 'password';
     - GRANT PRIVILEGE ON db_name.* TO 'user_db'@'localhost';
     - FLUSH PRIVILEGES;
-- Copy (or rename) the .env.example file in .env
+- Copy the .env.example file in .env
 - Open the .env file and edit these values:
     - APP_URL with the URL of the Web Server
     - DB_HOST with the IP address of the MySQL server (if different from the Web Server, otherwise leave 127.0.0.1)
@@ -31,4 +31,4 @@ The <b>emails</b> are visible in the <b>emails_screens.pdf</b> file in the root 
     - php artisan config:cache (optional)
     - php artisan route:cache (optional)
     - php artisan view:cache (optional)
-    - php artisan db:seed --class=EmailSeeder
+    - php artisan db:seed

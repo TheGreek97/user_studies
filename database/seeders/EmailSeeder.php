@@ -18,10 +18,10 @@ class EmailSeeder extends Seeder
     {
         function get_explanation ($type='basic', $url=null): string
         {
-            $success = preg_match("/(?:https?:\/\/)?[^\/]*\//", $url, $matches);
+            /*$success = preg_match("/(?:https?:\/\/)?[^\/]*\//", $url, $matches);
             if ($success) {
                 $url = substr($matches[0], 0, strlen($matches[0])-1);
-            }
+            }*/
             switch ($type) {
                 case 'basic':
                     //if ($url !== null)
