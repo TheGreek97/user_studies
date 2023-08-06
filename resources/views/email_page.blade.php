@@ -774,8 +774,14 @@ window.onload = function () {
            </tbody>
         </table>
     `
+
     phishing_link_html.html(tooltip_warning_html)
-    phishing_link_html.attr("href", "#")
+    phishing_link_html.attr("href", "#");
+    phishing_link_html.on("click", (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+    }
+    );
     phishing_link_html.attr("style", phishing_link_html.attr("style")+"cursor: not-allowed;")
 
     let tooltip_balloon = $("#tooltip_balloon")
@@ -794,7 +800,7 @@ window.onload = function () {
             allow_to_go_back = true
         }, 2000)
     });
-    $("#phishing_link a, #tooltip_balloon a").on("click", (e) => {
+    $("#tooltip_balloon a").on("click", (e) => {
         allow_to_go_back = true
         e.preventDefault()
         $.ajax({
