@@ -80,7 +80,7 @@ Route::middleware([
         }
         return view("emailquestionnaire")->with('warning_type', Auth::user()->warning_type);
     })->name('next_step');
-    Route::post('/nextstep/{mail?}', [Questionnaire::class, 'storeEmailQuestionnaire'])->name('next_step');
+    Route::post('/nextstep/{mail?}', [Questionnaire::class, 'storeEmailQuestionnaire']); //->name('next_step');
 
     Route::get('/finish', function (){
         return view("thank_you_page");

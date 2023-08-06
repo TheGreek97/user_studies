@@ -22,8 +22,9 @@
                         <br>
                         Goodbye!<br>
                         The team of IVU Lab, University of Bari, Italy
-                        <div class="mt-6" style="display: flex;justify-content: center;">
-                            <img src= "{{asset("img/logo_ivu.png")}}" alt="lab logo" style="max-width: 35%">
+                        <div class="mt-6 flex flex-row justify-center">
+                            <img src="{{asset("/assets/img/UNIBA_logo.svg")}}" alt="uniba logo" style="max-width: 25%">
+                            <img src="{{asset("/assets/img/IVUx-Logo.svg")}}" alt="ivu lab logo" style="max-width: 25%">
                         </div>
                     </div>
                 </div>

@@ -1,12 +1,12 @@
 @php
     $user= \Illuminate\Support\Facades\Auth::user();
     if ($user->warning_type === "tooltip"){
-        $url_image_warning = url('/assets/img/tooltip.png');
+        $url_image_warning = asset('/assets/img/tooltip.png');
     } else {
         if ($user->show_explanation) {
-            $url_image_warning = url('/assets/img/popup_email_exp.png');
+            $url_image_warning = asset('/assets/img/popup_email_exp.png');
         } else {
-            $url_image_warning = url('/assets/img/popup_email_no_exp.png');
+            $url_image_warning = asset('/assets/img/popup_email_no_exp.png');
         }
     }
 @endphp
@@ -656,28 +656,28 @@
                                 <input id="cb_3_1" type="radio" value="0" name="cyber_4"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_3_1" class="w-full"><img class="max-h-64 ml-2"
-                                                                        src="{{ url('assets/img/cyber_4_1.png') }}"></label>
+                                                                        src="{{ asset('assets/img/cyber_4_1.png') }}"></label>
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
                                 <input id="cb_3_2" type="radio" value="1" name="cyber_4"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_3_2" class="w-full"><img class="max-h-64 ml-2"
-                                                                        src="{{ url('assets/img/cyber_4_2.webp') }}"></label>
+                                                                        src="{{ asset('assets/img/cyber_4_2.webp') }}"></label>
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
                                 <input id="cb_3_3" type="radio" value="2" name="cyber_4"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_3_3" class="w-full"><img class="max-h-64 ml-2"
-                                                                        src="{{ url('assets/img/cyber_4_3.png') }}"></label>
+                                                                        src="{{ asset('assets/img/cyber_4_3.png') }}"></label>
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
                                 <input id="cb_3_4" type="radio" value="3" name="cyber_4"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="cb_3_4" class="w-full"><img class="max-h-64 ml-2"
-                                                                        src="{{ url('assets/img/cyber_4_4.png') }}"></label>
+                                                                        src="{{ asset('assets/img/cyber_4_4.png') }}"></label>
                             </div>
                             <div
                                 class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">

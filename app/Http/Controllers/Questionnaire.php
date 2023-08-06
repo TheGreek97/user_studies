@@ -26,6 +26,8 @@ class Questionnaire extends Controller
 
     public function showFollowUp()
     {
+
+        return view('followupquestionnaire')->with("user_ignored_warning", Auth::user()->warning_ignored);
         if (Auth::user()->followUpQuestionnaire != null) {
             return redirect(route('thankyou'));
         } elseif (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) < MailController::MAILS_NUMBER) {

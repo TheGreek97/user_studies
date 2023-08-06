@@ -2,7 +2,8 @@
     <div class="pt-4 bg-gray-100">
         <div class="min-h-screen flex flex-col items-center pt-6 sm:pt-0">
             <div class="flex flex-row justify-center">
-                <img class="float-left object-scale-down pb-1" style="max-height: 6rem; width: auto; margin:0" src="/assets/img/uniba.png" alt="lab logo">
+                <img class="float-left object-scale-down pb-1" style="max-height: 6rem; width: auto; margin:0" src="{{asset('assets/img/UNIBA_logo.svg')}}" alt="uniba logo">
+                <img class="float-left object-scale-down pb-1" style="max-height: 6rem; width: auto; margin:0" src="{{asset('assets/img/IVUx-Logo.svg')}}" alt="ivu lab logo">
             </div>
             <div class="w-full sm:max-w-2xl p-6 bg-white shadow-md overflow-hidden sm:rounded-lg prose">
                 {!! $terms !!}
