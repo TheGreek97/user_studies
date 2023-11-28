@@ -794,7 +794,7 @@ window.onload = function () {
             allow_to_go_back = true
         }, 2000)
     });
-    $("#phishing_link a, #tooltip_balloon a").on("click", (e) => {
+    $("#tooltip_balloon a").on("click", (e) => {
         allow_to_go_back = true
         e.preventDefault()
         $.ajax({
