@@ -10,9 +10,15 @@
                 </p>
                 <div class="text-lg pt-3 font-bold italic"> What this study is about </div>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    In this study, we ask you to imagine being Andrea, a 28 years old guy who lives in Rome, Italy. <br>
-                    Andrea uses various social networks, among which are Instagram, Facebook, Twitter, and TikTok. Moreover, Andrea uses eBay and Amazon to make online purchases with his Italian credit card. Andrea loves music and goes to live concerts monthly. <br/>
-                    Andrea works for an IT company and has accepted to test a new email client that his company has recently adopted. To test the new email client, Andrea must interact with it, by reading all his emails in the inbox and checking that the links in them, if any, are working.
+                    Dear participant,<br>
+                    <br>
+                    at the University of Bari we are evaluating a new prototype of an email client.<br>
+                    In this study, which will take about 15 minutes, we ask you to imagine that you are Andrea, a 28-year-old woman living in Rome, Italy.<br>
+                    Andrea uses several social networks, including Instagram, Facebook, Twitter and TikTok.
+                    Andrea also uses eBay and Amazon to shop online with her Italian credit card.
+                    Andrea loves music and goes to live concerts every month. <br/>
+                    Andrea works for an IT company and has agreed to test a new email client that her company has recently introduced.
+                    To test the new email client, Andrea has to interact with it by READING ALL her emails in her inbox and checking that any links in them work.
                 </p>
 
                 <div class="text-lg pt-3 font-bold italic"> Participation in the study and reward</div>

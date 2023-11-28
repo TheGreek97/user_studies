@@ -32,8 +32,8 @@ class MailController extends Controller
                 return null;
             });
             // get the phishing emails (with the right warning, i.e., passive or active) + legitimate emails
-            $email["warning_type"] = Auth::user()->warning_type;
             if ($email != null) {
+                $email["warning_type"] = Auth::user()->warning_type;
                 return view('email_page', ['folder' => $folder, 'emails' => $emails, 'selected_email' => $email]);
             } else {
                 return redirect(route('show', ['folder' => $folder, 'emails' => $emails]));
@@ -59,7 +59,19 @@ class MailController extends Controller
         $action = $request->input('msg');
         if (str_starts_with($action, "warning_shown") || str_starts_with($action, "tooltip_shown")) {
             $user = Auth::User();
-            $user->shown_warning = true;
+            // Based on the email that was shown, add a bit value to the $user->shown_warning property
+            if ($request->input('email_id') == 12)  // Instagram email
+                $warning_shown_value = 1;  // 001
+            else if ($request->input('email_id') == 13)  // Amazon email
+                $warning_shown_value = 2;  // 010
+            else if ($request->input('email_id') == 14)  // Facebook email
+                $warning_shown_value = 4;  // 100
+            else   // handle erroneous values = treat it as if no warning was shown
+                $warning_shown_value = 0;  // 000
+
+            if ($user->shown_warning + $warning_shown_value <= 7) {  // Check if the sum is maximum = 7
+                $user->shown_warning += $warning_shown_value;
+            }
             $user->save();
         }
         if (str_starts_with($action, "warning_ignored") || str_starts_with($action, "tooltip_click")) {
@@ -89,7 +101,7 @@ class MailController extends Controller
             return view('chrome_warning', ['url' => $decodedurl, 'hostname' => $hostname, 'backurl' => $backurl, 'email_id' => $request->input('email_id')]);
         }
     */
-    function seededShuffle(&$array, $seed)
+    private function seededShuffle(&$array, $seed)
     {
         // Generate an array of random numbers based on the seed
         srand($seed);

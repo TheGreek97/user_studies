@@ -1,14 +1,45 @@
 @php
     $user= \Illuminate\Support\Facades\Auth::user();
+
     if ($user->warning_type === "tooltip"){
-        $url_image_warning = asset('/assets/img/tooltip.png');
-    } else {
-        if ($user->show_explanation) {
-            $url_image_warning = asset('/assets/img/popup_email_exp.png');
-        } else {
-            $url_image_warning = asset('/assets/img/popup_email_no_exp.png');
+        $condition = "tooltip";
+    } else { // if ($user->warning_type === "popup_email" || $user->warning_type === "popup_link"){
+        $condition = "active";
+    }
+
+    // Base on what the user saw during the experiment, show a different image
+    if ($user->show_explanation) {
+        // if the exp condition involved showing a warning
+        // $user->warning_shown contains a decimal representing a binary value 000:
+        // 0: no warning was shown, 1: instagram warning only was shown, 2: amazon warning only was shown
+        // 3: instagram and amazon warnings only were shown (1+2),
+        // 4: the facebook (false positive) warning only was shown,
+        // 5: the facebook and the instagram warnings only were shown (4+1),
+        // 6: the facebook and the amazon warnings only were shown (4+2)
+        // 7: all the 3 warnings were shown (1+2+4)
+
+        $warning_name = match ($user->shown_warning) {
+            1, 5 => "ip_addr",
+            2, 6 => "tld_misp",
+            0, 3, 4, 7 => (rand(0, 1) === 0) ? "ip_addr" : "tld_misp" // take one at random between the two true positive warnings
+        };
+    }
+    else {
+        $warning_name = "no_exp";
+        if ($user->warning_type == "tooltip") {
+            $warning_name = $warning_name . "_" . match ($user->shown_warning) {
+                0, 7 => (rand(0, 2) === 0) ? "ig" : ((rand(0, 1) === 0) ? "amazon" : "fb"),
+                1 => "ig",
+                2 => "amazon",
+                3 => (rand(0, 1) === 0) ? "ig" : "amazon", // random between ig and amazon
+                4 => "fb",
+                5 => (rand(0, 1) === 0) ? "ig" : "fb", // random between ig and facebook
+                6 => (rand(0, 1) === 0) ? "fb" : "amazon", // random between facebook and amazon
+            };
         }
     }
+
+    $url_image_warning = asset("/assets/img/". $condition. "_". $warning_name . ".png")
 @endphp
 
 <x-app-layout>
@@ -46,7 +77,12 @@
                     <div x-show="step === 1" id="section-1">
                         <p class="text-2xl w-full text-center">Section 1 of 4</p>
                         <p class="text-lg text-left pt-5">
-                            During the study you were exposed to this type of alert:
+                            @if($user->shown_warning > 0) {{-- it means that the user was shown a warning --}}
+                                You were exposed to this type of alert during the study:
+                            @else   {{-- it means that the user was not shown a warning during the study --}}
+                                Image that the following alert would have been shown when a link in an email was
+                            @if($user->warning_type === "tooltip") hovered: @else clicked: @endif
+                            @endif
                         </p>
                         <img class="mx-auto my-7 w-2/4"
                              src="{{$url_image_warning}}">

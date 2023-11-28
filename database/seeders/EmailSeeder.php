@@ -54,7 +54,7 @@ class EmailSeeder extends Seeder
                 case 'sensitive_words_url':
                     return "The URL present in the e-mail body contains many sensitive words. This might happen when a URL is fraudulent. If you continue, you are likely to be exposed to the theft of private information";
                 case 'ip_url':
-                    return "Usually, the email uses the URL instead of the IP address to make it easier for you to browse the web. However, an IP address was found in the email. Similar e-mails are harmful and steal private information. There is a potential risk of being cheated if you proceed.";
+                    return "Usually, websites use the URL instead of the IP address to make it easier for you to browse the web. However, an IP address was found in the email. Similar e-mails are harmful and steal private information. There is a potential risk of being cheated if you proceed.";
                 case 'link_mismatch':
                     return "The displayed link is different from the actual one ". $url .". This site might be intended to take you to a different place. You might be disclosing private information.";
                 case 'tld_mispositioned':

@@ -86,6 +86,22 @@
                 justify-content: space-between;
                 margin-bottom: 2rem;
             }
+
+            @keyframes flash {
+                0% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.4;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+
+            .flash-element {
+                animation: flash 1s 3; /* 1s duration, flash 3 times */
+            }
         </style>
         <!-- Styles -->
         @livewireStyles

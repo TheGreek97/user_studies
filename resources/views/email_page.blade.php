@@ -15,7 +15,7 @@ else
 <x-app-layout>
     <x-slot name="slot">
         <div style="position: sticky; top: 0; left: 0; z-index: 99;"
-             class="p-6 shadow-lg bg-gray-700 text-white">
+             class="p-6 shadow-lg bg-gray-700 text-white flash-element">
             <p>
                 <span class="font-semibold">Goal:</span> Please READ ALL THE EMAILS in the inbox and check that the links in them, if any, are working. The test ends when you have interacted with all the emails.
             </p>
@@ -684,6 +684,7 @@ else
 <script>
 window.onload = function () {
     document.body.style.overflowY = "hidden";
+    //setTimeout(() => {$(".flash-element").removeClass("flash-element")}, 5000)
 }
 @if(isset($selected_email))
     // Show email questionnaire when going back
@@ -741,7 +742,7 @@ window.onload = function () {
     let allow_to_go_back  // Ensures the user stays on a phishing email for a minimum of X seconds before allowing them to go back
     let phishing_link_html = $("#phishing_link")
     let explanation = "{{ $selected_email->$warning_explanation }}"
-    let default_explanation = `Link goes to: <a href="${phishing_link_html.attr("href")}" style="text-decoration: underline;/* color: #0001F1; */" id="actual_phishing_link"><span class="s2">${phishing_link_html.attr("href")}</span></a>`
+    let default_explanation = `Link goes to: <br> <a href="${phishing_link_html.attr("href")}" style="text-decoration: underline;/* color: #0001F1; */" id="actual_phishing_link"><span class="s2">${phishing_link_html.attr("href")}</span></a>`
     if ("{{$show_explanation}}" === "1") {
         explanation = explanation + "<br/>" + default_explanation
     } else {
@@ -787,7 +788,8 @@ window.onload = function () {
     let tooltip_balloon = $("#tooltip_balloon")
     phishing_link_html.mouseenter(() => {tooltip_balloon.addClass("visible"); console.log ("enter")})
     phishing_link_html.mouseleave(() => setTimeout( () => {tooltip_balloon.removeClass("visible"); console.log ("escher")}, 100))
-    tooltips.mouseover(function () {
+    phishing_link_html.mouseover(function () {
+        console.log("heeyy")
         setTimeout(() => {
             if (!message_sent.includes($(this).attr('data'))) {
                 message_sent.push($(this).attr('data'));
@@ -841,7 +843,7 @@ window.onload = function () {
             });
         });
     @elseif($selected_email->warning_type == "base_passive")
-        banner = $("#passive_banner"); // To do: Implement passive banners (if needed)
+        banner = $("#passive_banner"); // TO DO: Implement passive banners (if needed)
         banner.show();
         banner.innerHTML = "{{$selected_email->$warning_explanation}}"
     --}}
