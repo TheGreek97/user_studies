@@ -40,7 +40,12 @@ class MailController extends Controller
             }
         }  // Else, show the mails list
         if (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) < self::MAILS_NUMBER) {
-            return view('email_page', ['folder' => $folder, 'emails' => $emails]);
+            if (session()->has('startStudy')) {
+                session()->remove('startStudy');
+                return view('email_page', ['folder' => $folder, 'emails' => $emails, 'startStudy' => true]);
+            } else {
+                return view('email_page', ['folder' => $folder, 'emails' => $emails]);
+            }
         } else {
             if (Auth::user()->followUpQuestionnaire != null) {
                 return redirect(route('thankyou'));

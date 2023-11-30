@@ -55,7 +55,7 @@
                     @csrf
                     <div>
                         <h1 x-show="step !== 0 && step !== 6"
-                            class="text-3xl font-bold text-center mb-4 cursor-pointer">Post-test questionnaire</h1>
+                            class="text-3xl font-bold text-center mb-4 cursor-pointer">Post-study questionnaire</h1>
                     </div>
                     <!--- DISCLAIMER SECTION 0 --->
                     <div x-show="step === 0" id="section-0">
@@ -65,7 +65,7 @@
                             When we invited you to participate in the study, we told you that the purpose of the study
                             was to evaluate an email client. However, there is another purpose that we did not tell you
                             in order to not influence your actions in any way.
-                            Indeed, this test aimed also to assess the effectiveness of an alert shown in case of suspicious phishing emails.
+                            Indeed, this study aimed also to assess the effectiveness of an alert shown in case of suspicious phishing emails.
                         </p>
                         <p class="text-xl max-w-2xl text-left pt-4">
                             To complete this study, we ask you to go ahead and fill in the final questionnaire on the

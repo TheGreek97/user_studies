@@ -14,12 +14,81 @@ else
 ?>
 <x-app-layout>
     <x-slot name="slot">
-        <div style="position: sticky; top: 0; left: 0; z-index: 99;"
+        <div style="position: sticky; top: 0; left: 0; z-index: 10;"
              class="p-6 shadow-lg bg-gray-700 text-white flash-element">
             <p>
-                <span class="font-semibold">Goal:</span> Please READ ALL THE EMAILS in the inbox and check that the links in them, if any, are working. The test ends when you have interacted with all the emails.
+                <span class="font-semibold">GOAL:</span> Please READ ALL THE EMAILS in the inbox and check that the links in them, if any, are working.
+                The study ends when you have interacted with all the emails.
             </p>
         </div>
+
+        <!-- Task presentation modal -->
+        <div id="task-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" style="z-index: 99; background: rgba(0,0,0,30%);"
+             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-2xl max-h-full">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                            GOAL
+                        </h3>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-4 md:p-5 space-y-4">
+                        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                            Please READ ALL THE EMAILS in the inbox and check that the links in them, if any, are working.
+                            <br>The study ends when you have interacted with all the emails.</p>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex items-end p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600" style="flex-direction: row-reverse">
+                        <button id="close-task-modal-btn" data-modal-hide="static-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Start</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if(isset($startStudy))
+        <script type="module">
+            {// show the modal
+                // set the modal menu element
+                const $targetEl = document.getElementById('task-modal')
+
+                // options with default values
+                const options = {
+                    placement: 'bottom-right',
+                    backdrop: 'static',
+                    backdropClasses:
+                        'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
+                    closable: true,
+                    onHide: () => {
+                        console.log('modal is hidden');
+                    }
+                };
+
+                // instance options object
+                const instanceOptions = {
+                    id: 'modalEl',
+                    override: true
+                };
+                /*
+                 * $targetEl: required
+                 * options: optional
+                 */
+                const modal = new Modal($targetEl, options, instanceOptions);
+
+                function shrinkModalToNavbar () {
+                    $targetEl.firstElementChild.classList.add("modal-shrink") // add the animation to the modal
+                    setTimeout(() => modal.hide(), 1100) // wait 2 second for the animation to complete, then hide the modal
+                }
+
+                modal.show()
+                document.getElementById('close-task-modal-btn').onclick = shrinkModalToNavbar
+            }
+
+        </script>
+        @endif
+
         <div
             class="flex h-screen bg-gray-100 dark:bg-gray-900"
             :class="{ 'overflow-hidden': isSideMenuOpen }">
@@ -682,10 +751,9 @@ else
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-window.onload = function () {
+$( () => {
     document.body.style.overflowY = "hidden";
-    //setTimeout(() => {$(".flash-element").removeClass("flash-element")}, 5000)
-}
+})
 @if(isset($selected_email))
     // Show email questionnaire when going back
     $('a').not("#email_content *").each(function (e) {
@@ -851,6 +919,7 @@ window.onload = function () {
 @endif
 
 const modal = new Modal(document.getElementById('warning_open'));
+
 function open_warning(url, email_id, warning_text) {
     $("#warning_text").html(warning_text);
     const warning_type = "{{$warning_type}}";

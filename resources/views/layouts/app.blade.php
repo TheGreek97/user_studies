@@ -87,20 +87,29 @@
                 margin-bottom: 2rem;
             }
 
-            @keyframes flash {
+            @-webkit-keyframes shrink {
                 0% {
                     opacity: 1;
                 }
-                50% {
-                    opacity: 0.4;
+                100% {
+                    transform: translateY(-200%) translateX(-120%) scale(0);
+                    opacity: 0;
+                }
+            }
+            @keyframes shrink {
+                0% {
+                    opacity: 1;
                 }
                 100% {
-                    opacity: 1;
+                    transform: translateY(-200%) translateX(-100%) scale(0);
+                    opacity: 0;
                 }
             }
 
-            .flash-element {
-                animation: flash 1s 3; /* 1s duration, flash 3 times */
+            .modal-shrink {
+                -webkit-animation: shrink 1.4s;
+                animation: shrink 1.4s;
+                animation-iteration-count:1;
             }
         </style>
         <!-- Styles -->
