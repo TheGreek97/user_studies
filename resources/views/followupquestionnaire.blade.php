@@ -84,7 +84,7 @@
                             @if($user->warning_type === "tooltip") hovered: @else clicked: @endif
                             @endif
                         </p>
-                        <img class="mx-auto my-7 w-2/4"
+                        <img class="mx-auto my-7 w-2/4" style="border-radius:6px;"
                              src="{{$url_image_warning}}">
                         <div class="my-10">
                             <p class="font-bold pb-1">Did you read the entire text of the warning dialogs that were presented to you?</p>
