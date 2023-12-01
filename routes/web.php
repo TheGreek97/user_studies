@@ -29,7 +29,8 @@ Route::get('/no-consent', function () {
 
 Route::get('/consent-grant', function (){
     session(['consent' => '1']);
-    return redirect(route('show', ['folder' => 'inbox', 'start' => true]));
+    session(['startStudy' => '1']);
+    return redirect(route('show', ['folder' => 'inbox']));
 })->name('consent');
 
 //Route::get('/ethical_consent', [TermsOfServiceController::class, 'show'])->name('terms');
@@ -54,7 +55,6 @@ Route::middleware([
             return redirect(route('thankyou'));
         } else {
             if (session()->has('consent')) {
-                session(['startStudy' => '1']);
                 return redirect(route('show', ['folder' => 'inbox']));
             }
             else {
