@@ -49,11 +49,12 @@ class Questionnaire extends Controller
         $questionnaire->felt_risk = $request->felt_risk;
         $questionnaire->actions_warning = $request->actions_warning;
         $questionnaire->meaning_warning = $request->meaning_warning;
+        $questionnaire->understood_warning_reverse = $request->not_understood_warning;  // attention check
         $questionnaire->trust_warning = $request->trust_warning;
         if ($request->warning_ignored_motivation) {
             $questionnaire->warning_ignored_motivation = $request->warning_ignored_motivation;
         }
-        $questionnaire->first_word = $request->first_word;
+        $questionnaire->first_word = $request->first_word;  // attention check
 
         $questionnaire->nasa_mental_demand = $request->nasa_mental_demand;
         $questionnaire->nasa_physical_demand = $request->nasa_physical_demand;
@@ -61,6 +62,9 @@ class Questionnaire extends Controller
         $questionnaire->nasa_performance = $request->nasa_performance;
         $questionnaire->nasa_effort = $request->nasa_effort;
         $questionnaire->nasa_frustration_level = $request->nasa_frustration_level;
+        $questionnaire->nasa_mental_demand_reverse = $request->nasa_mental_demand_reverse;  // attention check (reverse-coding question)
+
+
         $questionnaire->cyber_1 = $request->cyber_1;
         $questionnaire->cyber_2 = $request->cyber_2;
         $questionnaire->cyber_3 = $request->cyber_3;
@@ -71,6 +75,7 @@ class Questionnaire extends Controller
         $questionnaire->cyber_8 = $request->cyber_8;
         $questionnaire->cyber_9 = $request->cyber_9;
         $questionnaire->cyber_10 = $request->cyber_10;
+        $questionnaire->cyber_control = $request->cyber_11 == 1;   // attention check
         $questionnaire->user_id = Auth::id();
         $questionnaire->save();
         $user = Auth::user();

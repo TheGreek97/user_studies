@@ -3,8 +3,10 @@
 
     if ($user->warning_type === "tooltip"){
         $condition = "tooltip";
-    } else { // if ($user->warning_type === "popup_email" || $user->warning_type === "popup_link"){
-        $condition = "active";
+    } else if ($user->warning_type === "popup_email") {
+        $condition = "active_email";
+    } else if ($user->warning_type === "popup_link"){
+        $condition = "active_link";
     }
 
     // Base on what the user saw during the experiment, show a different image
@@ -290,6 +292,31 @@
 
 
                         <div class="my-10">
+                            <p class="font-bold pb-1">I did not understand the warning dialog clearly.</p>
+                            <label for="not_understood_warning"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    (Don't agree)
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    (Totally agree)
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="not_understood_warning" value="1" min="1" max="5" step="1"
+                                       name="not_understood_warning" class="w-full">
+                                <datalist id="not_understood_warning">
+                                    <option value="1" label="1"></option>
+                                    <option value="2" label="2"></option>
+                                    <option value="3" label="3"></option>
+                                    <option value="4" label="4"></option>
+                                    <option value="5" label="5"></option>
+                                </datalist>
+                            </div>
+                        </div>
+
+                        <div class="my-10">
                             <p class="font-bold pb-1">
                                 Please rate your level of trust in this warning dialog.
                             </p>
@@ -364,7 +391,7 @@
                                 </div>
                             </label>
                             <div class="w-full">
-                                <input type="range" list="tick-1" value="5" min="0" max="10" step="1"
+                                <input type="range" list="tick-1" value="1" min="1" max="10" step="1"
                                        name="nasa_mental_demand" class="w-full">
                                 <datalist id="tick-1">
                                     <option value="1" label="1"></option>
@@ -393,7 +420,7 @@
                                 </div>
                             </label>
                             <div class="w-full">
-                                <input type="range" list="tick-2" value="5" min="0" max="10" step="1"
+                                <input type="range" list="tick-2" value="1" min="1" max="10" step="1"
                                        name="nasa_physical_demand" class="w-full">
                                 <datalist id="tick-2">
                                     <option value="1" label="1"></option>
@@ -422,7 +449,7 @@
                                 </div>
                             </label>
                             <div class="w-full">
-                                <input type="range" list="tick-3" value="5" min="0" max="10" step="1"
+                                <input type="range" list="tick-3" value="1" min="1" max="10" step="1"
                                        name="nasa_temporal_demand" class="w-full">
                                 <datalist id="tick-3">
                                     <option value="1" label="1"></option>
@@ -451,7 +478,7 @@
                                 </div>
                             </label>
                             <div class="w-full">
-                                <input type="range" list="tick-4" value="5" min="0" max="10" step="1"
+                                <input type="range" list="tick-4" value="1" min="1" max="10" step="1"
                                        name="nasa_performance" class="w-full">
                                 <datalist id="tick-4">
                                     <option value="1" label="1"></option>
@@ -481,7 +508,7 @@
                                 </div>
                             </label>
                             <div class="w-full">
-                                <input type="range" list="tick-5" value="5" min="0" max="10" step="1" name="nasa_effort"
+                                <input type="range" list="tick-5" value="1" min="1" max="10" step="1" name="nasa_effort"
                                        class="w-full">
                                 <datalist id="tick-5">
                                     <option value="1" label="1"></option>
@@ -511,9 +538,39 @@
                                 </div>
                             </label>
                             <div class="w-full">
-                                <input type="range" list="tick-6" value="5" min="0" max="10" step="1"
+                                <input type="range" list="tick-6" value="1" min="1" max="10" step="1"
                                        name="nasa_frustration_level" class="w-full">
                                 <datalist id="tick-6">
+                                    <option value="1" label="1"></option>
+                                    <option value="2" label="2"></option>
+                                    <option value="3" label="3"></option>
+                                    <option value="4" label="4"></option>
+                                    <option value="5" label="5"></option>
+                                    <option value="6" label="6"></option>
+                                    <option value="7" label="7"></option>
+                                    <option value="8" label="8"></option>
+                                    <option value="9" label="9"></option>
+                                    <option value="10" label="10"></option>
+                                </datalist>
+                            </div>
+                        </div>
+
+                        <div class="my-5">
+                            <p class="font-bold pb-1">How mentally easy was the task of interacting with the alert?</p>
+                            <label for="tick-7"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    Very Low
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    Very High
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="tick-7" value="1" min="1" max="10" step="1"
+                                       name="nasa_mental_demand_reverse" class="w-full">
+                                <datalist id="tick-7">
                                     <option value="1" label="1"></option>
                                     <option value="2" label="2"></option>
                                     <option value="3" label="3"></option>
@@ -772,6 +829,47 @@
                                     sure</label>
                             </div>
                         </div>
+
+                        <div class="my-8">
+                            <p class="font-bold pb-1">Please select "red" for this question to show that you are paying attention.</p>
+                            <div
+                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
+                                <input id="cb_11_1" type="radio" value="0" name="cyber_11"
+                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="cb_11_1"
+                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">White</label>
+                            </div>
+                            <div
+                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
+                                <input id="cb_11_2" type="radio" value="1" name="cyber_11"
+                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="cb_11_2"
+                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Red</label>
+                            </div>
+                            <div
+                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
+                                <input id="cb_11_3" type="radio" value="0" name="cyber_11"
+                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="cb_11_3"
+                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Gray</label>
+                            </div>
+                            <div
+                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
+                                <input id="cb_11_4" type="radio" value="0" name="cyber_11"
+                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="cb_11_4"
+                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Yellow</label>
+                            </div>
+                            <div
+                                class="flex items-center my-1 pl-4 rounded border border-gray-200 dark:border-gray-700">
+                                <input id="cb_11_5" type="radio" value="0" name="cyber_11"
+                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="cb_11_5"
+                                       class="py-4 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Not
+                                    sure</label>
+                            </div>
+                        </div>
+
                         <div class="my-8">
                             <p class="font-bold pb-1">Criminals access someone’s computer and encrypt the user’s
                                 personal files
@@ -1066,8 +1164,8 @@
                     },
                     next(e) {
                         let check = true;
-                        switch (this.step) {
-                            case 1:
+                        switch (this.step) {   // manages the different sub-questionnaires
+                            case 1:  // Warning questionnaire
                                 $("#section-1 :input").each(function () {
                                     if ($(this).attr("name") !== "confusing_words") {
                                         check = ($(this).val() != "" && check);
@@ -1096,7 +1194,7 @@
                                         check = (check && true);
                                 }
                                 break;
-                            case 2:
+                            case 2:  // NASA-TLX questionnaire
                                 $("#section-2 :input").each(function () {
                                     check = ($(this).val() != "" && check);
                                     if ($(this).val() == "") {
@@ -1106,8 +1204,8 @@
                                         $(this).removeClass('border-red-500');
                                 });
                                 break;
-                            case 3:
-                                for (let i = 1; i <= 10; i++) {
+                            case 3:  // Cybersecurity skills questionnaire
+                                for (let i = 1; i <= 11; i++) {  // 10 questions + attention check question
                                     let input_answer_i = $('input[name=cyber_' + i + ']');
                                     if (!input_answer_i.is(':checked')) {
                                         check = false;
@@ -1121,7 +1219,7 @@
                                         check = (check && true);
                                 }
                                 break;
-                            case 4:
+                            case 4:  // Demographics questionnaire
                                 let input_gender = $("input[name=gender]")
                                 if (!input_gender.is(':checked')) {
                                     check = false;
