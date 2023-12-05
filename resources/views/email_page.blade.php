@@ -17,7 +17,7 @@ else
         <div style="position: sticky; top: 0; left: 0; z-index: 10;"
              class="p-6 shadow-lg bg-gray-700 text-white flash-element">
             <p>
-                <span class="font-semibold">GOAL:</span> Please READ ALL THE EMAILS in the inbox and check that the links in them, if any, are working.
+                <span class="font-semibold">GOAL:</span> Please READ ALL THE EMAILS in the inbox and check that the links in them, if any, are working. Please behave as naturally as you would interact with your own email client.
                 The study ends when you have interacted with all the emails.
             </p>
         </div>
@@ -38,6 +38,7 @@ else
                     <div class="p-4 md:p-5 space-y-4">
                         <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                             Please READ ALL THE EMAILS in the inbox and check that the links in them, if any, are working.
+                            <br>Please behave as naturally as you would interact with your own email client.
                             <br>The study ends when you have interacted with all the emails.</p>
                     </div>
                     <!-- Modal footer -->

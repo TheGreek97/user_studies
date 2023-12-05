@@ -56,7 +56,7 @@ class EmailSeeder extends Seeder
                 case 'ip_url':
                     return "Usually, websites use the URL instead of the IP address to make it easier for you to browse the web. However, an IP address was found in the email. Similar e-mails are harmful and steal private information. There is a potential risk of being cheated if you proceed.";
                 case 'link_mismatch':
-                    return "The displayed link is different from the actual one ". $url .". This site might be intended to take you to a different place. You might be disclosing private information.";
+                    return "This email reports a link that is different from the actual one ". $url .". This site might be intended to take you to a different place. You might be disclosing private information.";
                 case 'tld_mispositioned':
                     return "In the URL present in the email (". $url .") the top-level domain (e.g., “.com“) is in an abnormal position. This could indicate that the URL leads to a fake website. Such websites might steal your personal information";
                 case 'num_subdomains':
