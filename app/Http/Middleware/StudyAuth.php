@@ -46,20 +46,22 @@ class StudyAuth
     {
         $users = DB::table('users')
             ->select('warning_type', 'show_explanation', DB::raw('count(*) as total'))
+            ->whereNotNull('study_completed')
             ->groupBy(['warning_type', 'show_explanation'])
             ->get();
 
         $conditions_count= [];
 
-        // Condition 1
-        $temp_group = $users->where('warning_type', "=", "tooltip")->first();
+        // Condition 1 (Baseline)
+        $temp_group = $users->where('warning_type', "=", "tooltip")
+            ->where('show_explanation', "=", 0)->first();
         if ($temp_group) {
             $conditions_count["tooltip"] = $temp_group->total;
         } else {
             $conditions_count["tooltip"] = 0;
         }
 
-        // Condition 2
+        // Condition 2 (Active before - no explanation)
         $temp_group = $users->where('warning_type', "=", "popup_email")
             ->where('show_explanation', "=", 0)->first();
         if ($temp_group) {
@@ -68,7 +70,7 @@ class StudyAuth
             $conditions_count["active_no_exp"] = 0;
         }
 
-        // Condition 3
+        // Condition 3 (Active before - explanation)
         $temp_group = $users->where('warning_type', "=", "popup_email",)
             ->where('show_explanation', "=", 1)->first();
         if ($temp_group) {
@@ -77,7 +79,7 @@ class StudyAuth
             $conditions_count["active_exp"] = 0;
         }
 
-        // Condition 4
+        // Condition 4 (Tooltip - explanation)
         $temp_group = $users->where('warning_type', "=", "tooltip")
             ->where('show_explanation', "=", 1)->first();
         if ($temp_group) {
@@ -86,7 +88,7 @@ class StudyAuth
             $conditions_count["tooltip_exp"] = 0;
         }
 
-        // Condition 5
+        // Condition 5 (Active after - no explanation)
         $temp_group = $users->where('warning_type', "=", "popup_link")
             ->where('show_explanation', "=", 0)->first();
         if ($temp_group) {
@@ -95,7 +97,7 @@ class StudyAuth
             $conditions_count["active_after_no_exp"] = 0;
         }
 
-        // Condition 6
+        // Condition 6 (Active after - explanation)
         $temp_group = $users->where('warning_type', "=", "popup_link")
             ->where('show_explanation', "=", 1)->first();
         if ($temp_group) {
