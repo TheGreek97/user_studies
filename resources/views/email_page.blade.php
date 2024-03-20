@@ -794,8 +794,9 @@ $( () => {
         allow_to_go_back = true
         e.preventDefault()
         e.stopPropagation();
+
         $.ajax({
-            url: ("{{ route('warning_log') }}?email_id={{$selected_email->id}}&warning_type=popup_email&show_explanation={{$show_explanation}}&msg=warning_shown&url=" + window.location.href).replace(/%20/g, '+'),
+            url: ("{{ route('warning_log') }}?email_id={{$selected_email->id}}&warning_type=popup_email&show_explanation={{$show_explanation}}&msg=clicked_link&url=" + window.location.href).replace(/%20/g, '+'),
             type: 'GET',
             dataType: 'json',
             complete: function (data) {
@@ -858,12 +859,11 @@ $( () => {
     phishing_link_html.mouseenter(() => {tooltip_balloon.addClass("visible"); console.log ("enter")})
     phishing_link_html.mouseleave(() => setTimeout( () => {tooltip_balloon.removeClass("visible"); console.log ("escher")}, 100))
     phishing_link_html.mouseover(function () {
-        console.log("heeyy")
         setTimeout(() => {
             if (!message_sent.includes($(this).attr('data'))) {
                 message_sent.push($(this).attr('data'));
                 $.ajax({
-                    url: ("{{ route('warning_log') }}?email_id={{ $selected_email->id }}&show_explanation={{$show_explanation}}&warning_type=tooltip&msg=tooltip_shown_" + $(this).attr("data") + "&url=" + window.location.href).replace(/%20/g, '+'),
+                    url: ("{{ route('warning_log') }}?email_id={{ $selected_email->id }}&show_explanation={{$show_explanation}}&warning_type=tooltip&msg=tooltip_shown&url=" + window.location.href).replace(/%20/g, '+'),
                     type: 'GET',
                     dataType: 'json'
                 });

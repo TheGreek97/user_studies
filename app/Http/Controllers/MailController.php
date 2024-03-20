@@ -128,7 +128,7 @@ class MailController extends Controller
                 return "Warning shown";
             case "warning_ignored":
                 return "Warning ignored";
-            case 'tooltip_shown':
+            case 'tooltip_shown':  // the actual action received was tooltip_shown_{email}
                 return "Tooltip shown";
             case 'tooltip_click':
                 return "Tooltip clicked";
