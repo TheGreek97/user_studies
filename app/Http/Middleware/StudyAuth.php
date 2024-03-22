@@ -28,8 +28,8 @@ class StudyAuth
             //$warning_type["type"] = "popup_link";
             //$warning_type["explanation"] = 0;
             $new_user = new User();
-            $new_user->name = "Andrea";
-            $new_user->email = 'andrea1994@livemail.it';
+            $new_user->name = "Alice";
+            $new_user->email = 'alice1994@livemail.it';
             $new_user->password = Hash::make('prolific');
             $new_user->warning_type = $warning_type["type"];
             $new_user->show_explanation = $warning_type["explanation"];

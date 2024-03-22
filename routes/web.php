@@ -93,4 +93,6 @@ Route::middleware([
     Route::get('/warning_browser', [MailController::class, 'warning_browser'])->name('warning_browser');
 
     Route::get('/{folder?}/{id?}', [MailController::class, 'show'])->name('show');
+
+    Route::get('/information-sheet/download', [\App\Http\Controllers\Controller::class, 'download_info_sheet'])->name('download_file');
 });

@@ -54,11 +54,14 @@ class EmailSeeder extends Seeder
                 case 'sensitive_words_url':
                     return "The URL present in the e-mail body contains many sensitive words. This might happen when a URL is fraudulent. If you continue, you are likely to be exposed to the theft of private information";
                 case 'ip_url':
-                    return "Usually, websites use the URL instead of the IP address to make it easier for you to browse the web. However, an IP address was found in the email. Similar e-mails are harmful and steal private information. There is a potential risk of being cheated if you proceed.";
+                    return "The link in the email uses a string of numbers instead of a normal web address. This is unusual and often a sign of a fake site trying to steal your details. If you enter your information, it could be stolen and misused.";
+                    //return "Usually, websites use the URL instead of the IP address to make it easier for you to browse the web. However, an IP address was found in the email. Similar e-mails are harmful and steal private information. There is a potential risk of being cheated if you proceed.";
                 case 'link_mismatch':
-                    return "This email reports a link that is different from the actual one ". $url .". This site might be intended to take you to a different place. You might be disclosing private information.";
+                    return "The link text says \"protect your account\", but it points somewhere else. This could trick you into visiting a harmful site. You might give away your personal details or password.";
+                    //return "This email reports a link that is different from the actual one ". $url .". This site might be intended to take you to a different place. You might be disclosing private information.";
                 case 'tld_mispositioned':
-                    return "In the URL present in the email (". $url .") the top-level domain (e.g., “.com“) is in an abnormal position. This could indicate that the URL leads to a fake website. Such websites might steal your personal information";
+                    return "The sender's email address has a familiar company name in an unusual place. This could trick you into thinking it's from a trusted source when it's not. If fooled, you might give away personal details to scammers.";
+                    //return "In the URL present in the email (". $url .") the top-level domain (e.g., “.com“) is in an abnormal position. This could indicate that the URL leads to a fake website. Such websites might steal your personal information";
                 case 'num_subdomains':
                     return "There are many subdomains in the URL contained in the email. This anomaly is a sign of malicious email. Don't share your private information";
                 case 'url_length':
