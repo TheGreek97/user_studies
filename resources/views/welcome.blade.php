@@ -3,14 +3,14 @@
        <div class="min-h-screen bg-gray-200 flex justify-center items-center">
             <div class="p-12 m-10 bg-white rounded-2xl shadow-xl z-20">
                 <div class="text-left font-bold my-3 text-3xl w-full">
-                    Thank you for accepting our invitation to participate in our study: <i>Evaluation of an email client</i>
-                    <br>
-                    Ethical Clearance Reference Number: []
-                    <br>
-                    Version Number: 24/02/24
-                    <br>
-                    <br>
-                    YOU CAN DOWNLOAD A COPY OF THIS INFORMATION SHEET BY <a href="{{route("download_file")}}" target="_blank">CLICKING HERE</a>
+                    Thank you for accepting our invitation to participate in our study <br> <i>"Evaluation of an email client"</i>
+                    <div class="font-medium text-lg mt-5">
+                        Ethical Clearance Reference Number: HR-23/24-41353
+                        <br>
+                        Version Number: 09/05/24
+                        <br>
+                        YOU CAN DOWNLOAD A COPY OF THIS INFORMATION SHEET BY <a class="font-bold underline" href="{{route("download_information_sheet")}}" >CLICKING HERE</a>
+                    </div>
                 </div>
                 <p class="text-xl max-w-4xl text-left pt-4 font-bold capitalize">
                     INFORMATION SHEET FOR PARTICIPANTS

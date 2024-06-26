@@ -15,13 +15,15 @@ class Controller extends BaseController
 
     public function download_info_sheet(Request $request)
     {
-        $file_name = "information-sheet.pdf";
+        $file_name = "information-sheet-for-anonymous-studies.pdf";
         $file_in_storage = "storage/downloads/" . $file_name;
         $file_public_path = "public/downloads/".$file_name;
+        error_log("##d####");
 
         // Ensure the file exists in storage
         if (Storage::exists($file_public_path)) {
             //$file_size = Storage::size($file_public_path);
+            error_log("###############");
             return response()->download($file_in_storage, $file_name);
         } else {
             abort(404, 'File not found');

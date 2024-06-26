@@ -23,10 +23,10 @@ class StudyAuth
     {
         if (Auth::user() === null) {
             $least_popular_condition = $this->getWarningTypeToAssign();
-            $warning_type["type"] = $least_popular_condition["type"];
-            $warning_type["explanation"] = $least_popular_condition["explanation"];
-            //$warning_type["type"] = "popup_link";
-            //$warning_type["explanation"] = 0;
+            //$warning_type["type"] = $least_popular_condition["type"];
+            //$warning_type["explanation"] = $least_popular_condition["explanation"];
+            $warning_type["type"] = "popup_link";
+            $warning_type["explanation"] = 1;
             $new_user = new User();
             $new_user->name = "Alice";
             $new_user->email = 'alice1994@livemail.it';
