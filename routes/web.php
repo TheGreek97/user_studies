@@ -17,6 +17,9 @@ use Laravel\Jetstream\Http\Controllers\Livewire\TermsOfServiceController;
 |
 */
 
+Route::get('/information-sheet', [\App\Http\Controllers\Controller::class, 'download_info_sheet'])
+    ->name('download_information_sheet');
+
 
 Route::get('/', function () {
     //return redirect()->route('login');
@@ -32,8 +35,6 @@ Route::get('/consent-grant', function (){
     session(['startStudy' => '1']);
     return redirect(route('show', ['folder' => 'inbox']));
 })->name('consent');
-
-//Route::get('/ethical_consent', [TermsOfServiceController::class, 'show'])->name('terms');
 
 Route::middleware([
     //'auth:sanctum',
@@ -58,18 +59,6 @@ Route::middleware([
                 return redirect(route('show', ['folder' => 'inbox']));
             }
             else {
-                // $cond is a debug value
-                /*if (Auth::user()->warning_type === "tooltip") {
-                    $cond = "warning passivo";
-                } else {
-                    $cond = "warning attivo";
-                    if (Auth::user()->show_explanation){
-                        $cond.= " explanation";
-                    } else {
-                        $cond.=" NO explanation";
-                    }
-		        }
-                return view('welcome')->with('condition', $cond);*/
                 return view('welcome');
             }
         }
@@ -87,12 +76,14 @@ Route::middleware([
         return view("thank_you_page");
     })->name('thankyou');
 
+    Route::get('/debriefing', function() {
+        return view('debriefing');
+    })->name('debriefing');
+
     Route::get('/end', [Questionnaire::class, 'showFollowUp'])->name('post_test');
     Route::post('/end', [Questionnaire::class, 'storeFollowUp']);
 
     Route::get('/warning_browser', [MailController::class, 'warning_browser'])->name('warning_browser');
 
     Route::get('/{folder?}/{id?}', [MailController::class, 'show'])->name('show');
-
-    Route::get('/information_sheet/download', [\App\Http\Controllers\Controller::class, 'download_info_sheet'])->name('download_information_sheet');
 });

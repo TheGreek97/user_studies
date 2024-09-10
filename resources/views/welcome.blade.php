@@ -9,7 +9,7 @@
                         <br>
                         Version Number: 09/05/24
                         <br>
-                        YOU CAN DOWNLOAD A COPY OF THIS INFORMATION SHEET BY <a class="font-bold underline" href="{{route("download_information_sheet")}}" >CLICKING HERE</a>
+                        YOU CAN DOWNLOAD A COPY OF THIS INFORMATION SHEET BY <a class="font-bold underline" href="{{route("download_information_sheet")}}" target="_blank">CLICKING HERE</a>
                     </div>
                 </div>
                 <p class="text-xl max-w-4xl text-left pt-4 font-bold capitalize">
@@ -19,63 +19,66 @@
                 <p class="text-xl max-w-4xl text-left pt-4">
                     Dear participant,<br>
                     <br>
-                    I would like to invite you to participate in this study which forms part of our research. <br>
-                    Before you decide whether you want to take part, it is important for you to understand why the
-                    research is being done and what your participation will involve. Please take time to read the
-                    following information carefully and discuss it with others if you wish. Ask me if there is anything
-                    that is not clear or if you would like more information.
+                    I would like to invite you to participate in this research project which forms part of our
+                    research. Before you decide whether you want to take part, it is important for you to
+                    understand why the research is being done and what your participation will involve. Please
+                    take time to read the following information carefully and discuss it with others if you wish.
+                    Ask me if there is anything that is not clear or if you would like more information.
                 </p>
 
                 <div class="text-lg pt-3 font-bold italic" style="color:darkred"> What is the purpose of the study?</div>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    The purpose of the study is the evaluation of an email. In this study, which will take about 15
-                    minutes, we ask you to imagine that you are Alice, a 28-year-old woman living in Rome, Italy.<br>
-                    Alice uses several social networks, including Instagram, Facebook, Twitter and TikTok. Alice also
-                    uses eBay and Amazon to shop online with her Italian credit card. Alice loves music and goes to
-                    live concerts every month.<br>
-                    Alice works for an IT company and has agreed to test a new email client that her company has
-                    recently introduced. To test the new email client, Alice has to interact with it by READING ALL her
-                    emails in her inbox and checking that any links in them work.
+                    The purpose of the study is the usability evaluation of the prototype of an email client we are
+                    developing. We are indeed testing this prototype with users to address possible usability
+                    and UX problems and improve it.
                 </p>
 
-                <div class="text-lg pt-3 font-bold italic"> Why have I been invited to take part? </div>
+                <div class="text-lg pt-6 mt-6 font-bold italic"> Why have I been invited to take part? </div>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    You are being invited to participate in this study because you decided to take part through the
-                    Prolific platform. Any English-speaker user of 18 years of age or older is eligible for this study,
-                    with no specific restrictions on demographic or expertise levels. Participants are also asked to
-                    possess a PC and take part of the studio using it (participation via mobile/tablet/other devices
-                    is not allowed).
+                    You are being invited to participate in this study because you decided to take part through
+                    the Prolific platform. Any English-speaker user of 18 years of age or older is eligible for this
+                    study, with no specific restrictions on demographic or expertise levels. Participants are also
+                    asked to own a personal computer (laptop, desktop, etc.), possibly in a quiet and peaceful
+                    place where they are sure not to be disturbed during the activity. Participation via
+                    mobile/tablet/other devices is not allowed.
                 </p>
 
                 <div class="text-lg pt-3 font-bold italic"> What will happen if I take part?</div>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    If you choose to take part in the study you will be asked to interact with the prototype of an email
-                    client by imagining yourself as Alice, a fictious 28-year-old employee that was asked to test the
-                    new email client of her company. You, as Alice, have to interact with the client by reading all the
-                    emails in her inbox and checking that any links in them work. At the end of the study you will be
-                    asked to fill in a few brief questionnaires to express your evaluation to what you will experience
-                    during the study. <br>
-                    <br>
-                    Participation will take place online and will ask about 15 minutes. As part of participation you
-                    will be asked to provide your honest and considered answers to the questionnaires you will be
-                    administered. The interaction with the email client should also not be rushed. You must not insert
-                    any data that could identify your person in your answers. You need to insert your prolific ID (which
-                    we cannot link to your identity) to receive the compensation for the participation to the study and
-                    to link your demographic (anonymous) data to your response.
+                    If you agree to take part you will complete a study anonymously. The study will ask you to
+                    interact with the prototype of an email client by imagining yourself as Alice, a fictious 28-
+                    year-old employee that was asked to test the new email client of her company. You, as Alice,
+                    have to interact with the client by reading all the emails in her inbox and checking that any
+                    links in them work. At the end of the study you will be asked to fill in a few brief questionnaires
+                    to express your evaluation to what you will experience during the study.
+                    <br><br>
+                    The study will take you approximately 20 minutes to complete.
+                    <br><br>
+                    As part of participation you will be asked to provide your honest and considered answers to
+                    the questionnaires you will be administered. The interaction with the email client should also
+                    not be rushed. You must not insert any data that could identify your person in your answers.
+                    You need to insert your prolific ID (which we cannot link to your identity) to receive the
+                    compensation for the participation to the study and to link your demographic (anonymous)
+                    data to your response.
                 </p>
 
                 <div class="text-lg pt-3 font-bold italic"> Do I have to take part?</div>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    Participation is completely voluntary. You should only take part if you want to and choosing not to
-                    take part will not disadvantage you in any way. Once you have read the information sheet, please
-                    contact us if you have any questions that will help you make a decision about taking part. If you
-                    decide to take part we will ask you to sign a consent form and you will be given a copy of this
-                    consent form to keep.
+                    Participation is completely voluntary. You should only take part if you want to and choosing
+                    not to take part will not disadvantage you in anyway. If you choose to take part you will be
+                    asked to provide your consent. To do this you will be asked to indicate that you have read
+                    and understood the information provided and that you consent to your anonymous data
+                    being used for the purposes explained.
+                    <br><br>
+                    You are free to withdraw at any point during completion of the study, without having to give
+                    a reason. Withdrawing from the study will not affect you in any way. Once you submit the
+                    study, it will no longer be possible to withdraw because the data will be fully anonymous.
+                    Please do not include any personal identifiable information in your responses.
                 </p>
 
                 <div class="text-lg pt-3 font-bold italic"> Incentives</div>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    The reward for participating in this study is of £3, above the Prolific average compensation of
+                    The reward for participating in this study is of £3.50, above the Prolific average compensation of
                     £9/hour.<br>
                     <b>Important:</b> in order to redeem the reward for participation, the completion link at the end of
                     the study must be clicked, which will redirect the browser to the Prolific website to confirm the
@@ -86,74 +89,69 @@
                 <div class="text-lg pt-3 font-bold italic"> What are the possible risks of taking part?</div>
                 <p class="text-xl max-w-4xl text-left pt-4">
                     There is no actual risk in participating in this study. You will be exposed to emails that were
-                    specifically handcrafted for this study and any link in them will be disabled to prevent accessing
-                    external websites.
+                    specifically handcrafted for this study and any link in them will be disabled to prevent
+                    accessing external websites.
                 </p>
 
                 <div class="text-lg pt-3 font-bold italic">What are the possible benefits of taking part?</div>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    Participants that will complete the study without giving rushed or incomplete answers will be repaid
-                    according to what stated under the “Incentives” section.
+                    Participants that will complete the study without giving rushed or incomplete answers will be
+                    repaid according to what stated under the “Incentives” section.
                 </p>
 
                 <div class="text-lg pt-3 font-bold italic">Data handling and confidentiality</div>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    Your data will be processed under the terms of UK data protection law (including the UK General Data
-                    Protection Regulation (UK GDPR) and the Data Protection Act 2018). This research is anonymous. This
-                    means that nobody, including the researchers, will be aware of your identity, and that nobody will
-                    be able to connect you to the answers you provide, even indirectly. Your answers will nevertheless
-                    be treated confidentially and the information you provide will not allow you to be identified in any
-                    research outputs/publications. Your data will be held securely for a minimum of 10 years after the
+                    This research is anonymous. This means that nobody, including the researchers, will be
+                    aware of your identity, and that nobody will be able to connect you to the answers you
+                    provide, even indirectly. Your answers will nevertheless be treated confidentially and the
+                    information you provide will not allow you to be identified in any research
+                    outputs/publications. Your data will be held securely for a minimum of 10 years after the
                     study has been completed, as recommended by
                     <a href="https://www.ukri.org/wp-content/uploads/2021/08/MRC-0208212-Good-research-practice_2014.pdf">
                         MRC principles and guidelines for good research practice</a>.
-                    The stored data in its raw form will only be used by the research team. The data will be stored in
-                    the ReCaS data center of the University of Bari, Italy. <br>
-                    <br>
-                    King’s College London has a responsibility to keep information collected about you safe and secure,
-                    and to ensure the integrity of research data. Specialist teams within King’s College London
-                    continually assess and ensure that data is held in the most appropriate and secure way.
+                    The stored data in its raw form will only be used by the research team.
+                    The data will be stored in the ReCaS data center of the University of Bari, Italy.
                 </p>
 
-                <div class="text-lg pt-3 font-bold italic">Data Protection Statement</div>
+                <div class="text-lg pt-3 font-bold italic">How is the project being funded?</div>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    If you would like more information about how your data will be processed under the terms of UK data
-                    protection laws please
-                    <a href="https://www.kcl.ac.uk/research/support/research-ethics/kings-college-london-statement-on-use-of-personal-data-in-research">
-                        visit this link
-                    </a>
-                </p>
-
-                <div class="text-lg pt-3 font-bold italic">What if I change my mind about taking part?</div>
-                <p class="text-xl max-w-4xl text-left pt-4">
-                    You are free withdraw at any point of the project, without having to give a reason. Withdrawing from
-                    the project will not affect you in any way. You are able to withdraw your data from the project up
-                    until 31st March 2024, after which withdrawal of your data will no longer be possible due to the
-                    data being included in research material in an aggregate and anonymous way. If you choose to withdraw
-                    from the project we will not retain the information you have given thus far.
+                    This study is being funded by the Italian Ministry of University and Research (MUR) under
+                    grant PRIN 2022 PNRR “DAMOCLES: Detection And Mitigation Of Cyber attacks that
+                    exploit human vuLnerabilitiES” – CUP: H53D23008140001. The principal investigator of
+                    DAMOCLES is Giuseppe Desolda.
                 </p>
 
                 <div class="text-lg pt-3 font-bold italic">What will happen to the results of the project?</div>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    The results of the study will be summarised and published in a research paper and, possibly, as part
-                    of a PhD thesis.
+                    The results of the study will be summarised and published in a research paper and, possibly,
+                    as part of a PhD thesis.
                 </p>
 
                 <div class="text-lg pt-3 font-bold italic">Who should I contact for further information?</div>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    If you have any questions or require more information about this study, please contact me using the following contact details:
+                    If you have any questions or require more information about this study, please contact me
+                    using the following contact details:
                     <br><br>
                     Francesco Greco: <a href="mailto:francesco.greco@kcl.ac.uk">francesco.greco@kcl.ac.uk</a>, <a href="tel:+44 (0)20 78482078">+44 (0)20 78482078</a>
                 </p>
 
                 <div class="text-lg pt-3 font-bold italic">What if I have further questions, or if something goes wrong?</div>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    If this study has harmed you in any way or if you wish to make a complaint about the conduct of the project you can contact King's College London using the details below for further advice and information:
+                    If this study has harmed you in any way or if you wish to make a complaint about the conduct
+                    of the study you can contact King's College London using the details below for further advice
+                    and information:
                     <br><br>
                     Prof. Luca Viganò: <a href="mailto:luca.vigano@kcl.ac.uk">luca.vigano@kcl.ac.uk</a>, <a href="tel:+44 (0)20 78482078">+44 (0)20 78482078</a>
+                    <br><br>
+                    (N)7.18<br>
+                    Bush House<br>
+                    Strand campus, 30 Aldwych, London, WC2B 4BG
                 </p>
 
-                <div class="text-lg pt-3 font-bold italic">Thank you for reading this information sheet and for considering taking part in this research.</div>
+                <div class="text-lg pt-3 max-w-4xl font-bold italic">Thank you for reading this information sheet and for considering taking part in this research.
+                <br>To proceed to the study, please read carefully the following statements and express
+                    your consent by pressing the <b>"AGREE"</b> button at the bottom of this page.
+                </div>
 
                 <div class="text-lg pt-3 font-bold italic">Consent</div>
                 <div class="text-lg" style="font-style: italic;"> Informed Consent for the Collection of Personal Data </div>

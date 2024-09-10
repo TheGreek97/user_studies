@@ -26,7 +26,6 @@ class Questionnaire extends Controller
 
     public function showFollowUp()
     {
-
         return view('followupquestionnaire')->with("user_ignored_warning", Auth::user()->warning_ignored);
         if (Auth::user()->followUpQuestionnaire != null) {
             return redirect(route('thankyou'));

@@ -56,23 +56,8 @@
                 <form action="{{ Request::url() }}" method="POST" x-data="load()" id="form" style="display:none;">
                     @csrf
                     <div>
-                        <h1 x-show="step !== 0 && step !== 6"
+                        <h1 x-show="step !== 1 && step !== 6"
                             class="text-3xl font-bold text-center mb-4 cursor-pointer">Post-study questionnaire</h1>
-                    </div>
-                    <!--- DISCLAIMER SECTION 0 --->
-                    <div x-show="step === 0" id="section-0">
-                        <div class="text-3xl font-bold text-left mb-5 cursor-pointer">We're almost done...
-                        </div>
-                        <p class="text-xl max-w-2xl text-left pt-3">
-                            When we invited you to participate in the study, we told you that the purpose of the study
-                            was to evaluate an email client. However, there is another purpose that we did not tell you
-                            in order to not influence your actions in any way.
-                            Indeed, this study aimed also to assess the effectiveness of an alert shown in case of suspicious phishing emails.
-                        </p>
-                        <p class="text-xl max-w-2xl text-left pt-4">
-                            To complete this study, we ask you to go ahead and fill in the final questionnaire on the
-                            alert you have seen during the interaction.
-                        </p>
                     </div>
 
                     <!--- WARNING QUESTIONS --->
@@ -1125,7 +1110,7 @@
                     </div>
                     <div class="text-center mt-14 mb-10">
                         <div x-show="step !== 6" class="flex flex-row w-full" :class="{'space-x-6' : step > 0}">
-                            <div x-show="step > 0">
+                            <div x-show="step > 1">
                                 <button type="button" id="back" @click="previous()"
                                         class="py-3 w-64 text-lg text-black bg-gray-300 hover:bg-gray-400 rounded-2xl">
                                     Previous
@@ -1149,9 +1134,9 @@
                 let num_steps = 4;
                 $("#form").show();
                 return {
-                    step: 0,
+                    step: 1,
                     previous(e) {
-                        if (this.step > 0)
+                        if (this.step > 1)
                             this.step--;
 
                         $("#alert").hide();

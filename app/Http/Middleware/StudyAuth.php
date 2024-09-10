@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use App\Models\User;
@@ -23,26 +22,62 @@ class StudyAuth
     {
         if (Auth::user() === null) {
             $least_popular_condition = $this->getWarningTypeToAssign();
-            //$warning_type["type"] = $least_popular_condition["type"];
-            //$warning_type["explanation"] = $least_popular_condition["explanation"];
-            $warning_type["type"] = "popup_link";
-            $warning_type["explanation"] = 1;
+
             $new_user = new User();
             $new_user->name = "Alice";
             $new_user->email = 'alice1994@livemail.it';
             $new_user->password = Hash::make('prolific');
-            $new_user->warning_type = $warning_type["type"];
-            $new_user->show_explanation = $warning_type["explanation"];
+            $new_user->warning_type = $least_popular_condition["type"];
+            $new_user->show_explanation = $least_popular_condition["explanation"];
+            $new_user->show_details = $least_popular_condition["details"] ?? "no";
             $new_user->save();
             Auth::login($new_user);
         }
         return $next($request);
     }
 
+
     /*
-     * Returns the least popular warning type
+     * Returns the least popular condition (not showing details, showing details always, or only on-demand) for study #2
      */
-    #[ArrayShape(["type" => "string", "explanation" => "false"])] private function getWarningTypeToAssign(): array
+    #[ArrayShape(["type" => "string", "explanation" => "boolean", "details" => "string"])]
+    private function getWarningTypeToAssign(): array
+    {
+        $users = DB::table('users')
+            ->select('show_details', DB::raw('count(*) as total'))
+            ->whereNotNull('study_completed')
+            ->where('warning_type', '=', 'popup_link')
+            ->where('show_explanation', '=', '1')
+            ->groupBy('show_details')
+            ->get();
+
+        $conditions_count= [];
+        foreach (["no", "always", "on_demand"] as $cond) {
+            $temp_group = $users->where('show_details', "=", $cond)->first();
+            if ($temp_group) {
+                $conditions_count[$cond] = $temp_group->total;
+            } else {
+                $conditions_count[$cond] = 0;
+            }
+        }
+        # Take the condition with the minimum value
+        $condition_to_assign = array_keys($conditions_count, min($conditions_count));
+        if (count($condition_to_assign) > 1) {  // If there are 2 or more minimum values, take one condition at random between them
+            $random_idx = rand(0, count($condition_to_assign)-1);
+            $condition_to_assign = $condition_to_assign[$random_idx];
+        } else {
+            $condition_to_assign = $condition_to_assign[0];
+        }
+        return ["type" => "popup_link", "explanation" => 1, "details" => $condition_to_assign];
+    }
+
+
+    /*
+     * [OLD] Returns the least popular warning type. This method was used to assign users to conditions in the first
+     * studies (with 900 participants)
+     */
+    #[ArrayShape(["type" => "string", "explanation" => "boolean"])]
+    private function getWarningTypeToAssign_old(): array
     {
         $users = DB::table('users')
             ->select('warning_type', 'show_explanation', DB::raw('count(*) as total'))
@@ -131,4 +166,6 @@ class StudyAuth
         };
         return ["type" => $type, "explanation" => $show_explanation];
     }
+
+
 }

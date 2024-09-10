@@ -73,6 +73,20 @@ class EmailSeeder extends Seeder
             }
         }
 
+        function get_detailed_explanation(string $feature, string $url) : string{
+            switch ($feature) {
+                case 'ip_url':
+                    return "URL - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. ";  // TODO: FILL this
+                case 'link_mismatch':
+                    return "Link mismatch - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";  // TODO: FILL this
+                case 'tld_mispositioned':
+                    return "TLD mispositioned - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";  // TODO: FILL this
+                default:
+                    return "";
+            }
+        }
+
+
         //** LEGITIMATE EMAILS **
         // 1
         $email = new Email();
@@ -578,6 +592,7 @@ class EmailSeeder extends Seeder
         $email->from_email = "noreply@lnstagram.com";
         $date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
         $email->preview_text = 'Dear user, we\'re writing to inform you that we detected a login to your account from a new device.';
+        $url = "http://92.233.24.33/instagram/login.php";
         $email->content = '<div><p class="p1"><strong><img style="display: block; margin-left: auto; margin-right: auto;" src="'. asset("assets/img/email/instagram.png").'" alt="" width="300" height="165" /></strong><strong>Hey user,</strong></p>
         <p> </p>
         <p class="p1">We\'re writing to inform you that we detected a login to your account from a new device.<br /><br /></p>
@@ -589,7 +604,7 @@ class EmailSeeder extends Seeder
         <p class="p1"><em>Nashik, India<br /><br /></em></p>
         <p class="p1"><strong>If this was you</strong>, you can ignore this message.<br /><br /></p>
         <p class="p1"><strong>If this wasn\'t you</strong>, click the link below and reset your password to be safe.<br>
-        <a id="phishing_link" href="http://92.233.24.33/instagram/login.php" style="text-decoration: underline; color:#3366CC;">instagram.com/reset.</a>
+        <a id="phishing_link" href="'. $url .'" style="text-decoration: underline; color:#3366CC;">instagram.com/reset.</a>
         </p>
         <br/>
         <p class="p1" style="margin-bottom: 5rem">Sincerely,<br/>Instagram Technical Staff</p>
@@ -598,8 +613,9 @@ class EmailSeeder extends Seeder
         //$email->date = Carbon::parse('2022-12-10 18:12')->toDateTimeString();
         $email->type = 'inbox';
         $email->show_warning = true;
-        $email->warning_explanation_1 = get_explanation("basic", "http://92.233.24.33/instagram/login.php");
-        $email->warning_explanation_2 = get_explanation("ip_url");
+        $email->warning_explanation_1 = get_explanation("basic", $url);
+        $email->warning_explanation_2 = get_explanation("ip_url", $url);
+        $email->detailed_explanation = get_detailed_explanation("ip_url", $url);
         $email->save();
 
 
@@ -609,6 +625,8 @@ class EmailSeeder extends Seeder
         $email->from_name = "Amazon";
         $email->from_email = "amazon.it@amazonservices.com.cz";
         $email->preview_text = 'Hello customer, We have faced some problems with your account.';
+        $url = "https://amazonservices.com.cz/account.php";
+
         $email->content = '<div><p class="p1"><img src="'. asset("/assets/img/email/amazon.jpg"). '" alt="" width="100" /></p>
         <p class="p1">Dear Customer,<br /><br />
         We are sorry to inform you that we have registered some problems related to your account. As a consequence, you need to update your account details.
@@ -618,14 +636,15 @@ class EmailSeeder extends Seeder
         You can proceed to the updating procedure by clicking the link below:</p>
         <br>
         <div style="margin-left: auto; margin-right: auto; border-radius: 5px; background-color: #ffd814; color: #000000; display: inline-block; text-align: center;" align="center" id="tooltip-button">
-            <a style="color: #000000; text-decoration: none; display: block; padding: 14px 30px 15px;" id="phishing_link" href="https://amazonservices.com.cz/account.php"> Update now </a>
+            <a style="color: #000000; text-decoration: none; display: block; padding: 14px 30px 15px;" id="phishing_link" href="'. $url. '"> Update now </a>
             </div>
         <br><br><p class="p1">Thank you for being part of the Amazon community,<span class="Apple-converted-space"> </span></p>
         <p class="p1">we look forward to hearing from you soon.</p><br>
         <p class="p1">Best regards, <br>Amazon Customer Service</p></div>';
         $email->show_warning = true;
-        $email->warning_explanation_1 = get_explanation("basic","https://amazonservices.com.cz/account.php");
-        $email->warning_explanation_2 = get_explanation("tld_mispositioned","https://amazonservices.com.cz/account.php");
+        $email->warning_explanation_1 = get_explanation("basic", $url);
+        $email->warning_explanation_2 = get_explanation("tld_mispositioned", $url);
+        $email->detailed_explanation = get_detailed_explanation("link_mismatch", $url);
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
         $email->type = 'inbox';
         $email->save();
@@ -636,6 +655,7 @@ class EmailSeeder extends Seeder
         $email->from_name = "Facebook";
         $email->from_email = "security@facebookmail.com";
         $email->preview_text = 'Hello {user_name}, Your Facebook password has been modified.';
+        $url = "https://www.facebook.com/hacked/disavow?u=100000125023309&amp;nArdInDS2&amp;lit_IT&amp;ext1548538159";
         $email->content ='<body style="margin:0;padding:0;" dir="ltr" bgcolor="#ffffff">
           <table border="0" cellspacing="0" cellpadding="0" align="center" id="email_table" style="border-collapse:collapse;">
             <tr>
@@ -693,7 +713,7 @@ class EmailSeeder extends Seeder
                           <tr>
                             <td style="font-size:14px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;color:#3D4452;padding-top:6px;padding-bottom:6px;">
                               <strong>If it wasn\'t you,</strong> <br/>
-                              <a href="https://www.facebook.com/hacked/disavow?u=100000125023309&amp;nArdInDS2&amp;lit_IT&amp;ext1548538159" id="phishing_link" style="color:#3b5998;text-decoration:none;">protect your account</a>
+                              <a href="'. $url .'" id="phishing_link" style="color:#3b5998;text-decoration:none;">protect your account</a>
                             </td>
                           </tr>
                           <tr>
@@ -748,14 +768,13 @@ class EmailSeeder extends Seeder
           </table>
           </body>
         ';
-        $url = "https://www.facebook.com/hacked/disavow?u=100000125023309&amp;nArdInDS2&amp;lit_IT&amp;ext1548538159";
         $email->show_warning = true;
         $email->warning_explanation_1 = get_explanation("basic", $url);
         $email->warning_explanation_2 = get_explanation("link_mismatch", $url);
+        $email->detailed_explanation = get_detailed_explanation("link_mismatch", $url);
         $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
         $email->type = 'inbox';
         $email->save();
-
 
         foreach (["sent", "trash", "draft"] as $folder) {
             $email = new Email();

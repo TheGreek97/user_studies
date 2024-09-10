@@ -1,11 +1,15 @@
 <?php
-$warning_type = \Illuminate\Support\Facades\Auth::user()->warning_type;
-$show_explanation = \Illuminate\Support\Facades\Auth::user()->show_explanation;
+use \Illuminate\Support\Facades\Auth;
+
+$warning_type = Auth::user()->warning_type;
+$show_explanation = Auth::user()->show_explanation;
+$show_details = Auth::user()->show_details;
 if (! $show_explanation) {
     $warning_explanation = "warning_explanation_1"; // Generic explanation message
 } else {
     $warning_explanation = "warning_explanation_2"; // Specific explanation message
 }
+
 /*if (\Illuminate\Support\Facades\Auth::id() % 2 == 0)
     $random_warning_explanation = "warning_explanation_1";
 else
@@ -37,7 +41,15 @@ else
                     <!-- Modal body -->
                     <div class="p-4 md:p-5 space-y-4">
                         <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                            Please READ ALL THE EMAILS in the inbox and check that the links in them, if any, are working.
+                            We ask you to imagine that you are Alice, a 28-year-old woman living in Rome, Italy.<br>
+                            Alice uses several social networks, including Instagram, Facebook, Twitter and TikTok. Alice also
+                            uses eBay and Amazon to shop online with her Italian credit card. Alice loves music and goes to
+                            live concerts every month.<br>
+                            Alice works for an IT company and has agreed to test a new email client that her company has
+                            recently introduced. To test the new email client, Alice has to interact with it by READING ALL her
+                            emails in her inbox and checking that any links in them work.
+
+                            <!-- Please READ ALL THE EMAILS in the inbox and check that the links in them, if any, are working. -->
                             <br>Please behave as naturally as you would interact with your own email client.
                             <br>The study ends when you have interacted with all the emails.</p>
                     </div>
@@ -729,14 +741,16 @@ else
                         <!-- Modal footer -->
                         <div class="flex items-center p-6 justify-between rounded-b">
                             <button id="button-advanced" type="button"
-                                    class="text-white underline font-medium text-sm text-center">Show Details
+                                    class="text-white underline font-medium text-sm text-center">{{ $show_details != "always" ? "Show" : "Hide" }} Details
                             </button>
                             <button id="button_hide_modal" type="button"
                                     class="bg-white hover:bg-gray-200 rounded-lg text-sm font-medium px-5 py-2.5"
                                     style="color: #b80000;">Back to safety
                             </button>
                         </div>
-                        <div id="div-advanced" class="hidden text-white px-6 pb-6">
+                        <!-- if the condition is to always show the details, do not hide the footer by default -->
+                        <div id="div-advanced" class="{{ $show_details != "always" ? 'hidden' : '' }} text-white px-6 pb-6">
+                            <div id="detailed_explanation"></div>
                             <!--This email has a <b>fraudulent purpose</b> and may <b>steal your personal data</b>.
                             <br/>-->
                             <!-- This site is a <b>scam</b> with the purpose of <b>stealing your personal data</b>.-->
@@ -756,6 +770,7 @@ $( () => {
     document.body.style.overflowY = "hidden";
 })
 @if(isset($selected_email))
+    console.log ("warning type: {{$selected_email->warning_type}}")
     // Show email questionnaire when going back
     $('a').not("#email_content *").each(function (e) {
         $(this).on('click', (e) => {
@@ -764,12 +779,11 @@ $( () => {
         });
     });
     // Links:
-    console.log ("warning type: {{$selected_email->warning_type}}")
     $("#email_content").find('a').not('#phishing_link').each(function (e) {
         $(this).on('click', (e) => {
             e.preventDefault();
             $.ajax({
-                url: ("{{ route('warning_log') }}?email_id={{$selected_email->id}}&warning_type={{$selected_email->warning_type}}&show_explanation={{$show_explanation}}&msg=clicked_link&url=" + $(this).attr("href")).replace(/%20/g, '+'),
+                url: ("{{ route('warning_log') }}?email_id={{$selected_email->id}}&warning_type={{$selected_email->warning_type}}&show_explanation={{$show_explanation}}&show_details={{$show_details}}&msg=clicked_link&url=" + $(this).attr("href")).replace(/%20/g, '+'),
                 type: 'GET',
                 dataType: 'json',
                 complete: () => { window.location.href = '{{route('next_step') . '/' . $selected_email->id}}'},
@@ -785,7 +799,8 @@ $( () => {
         e.stopPropagation();
         let url = new URL(phishing_link.attr('href'));
         let warning_message = "{!! $show_explanation ? $selected_email->$warning_explanation : __('warning.no_explanation_website') !!}"
-        open_warning(url.hostname, {{ $selected_email->id }}, warning_message);
+        let detailed_explanation = "{!! $show_details !== 'no' ? $selected_email->detailed_explanation : ''  !!}"
+        open_warning(url.hostname, {{ $selected_email->id }}, warning_message, detailed_explanation);
     });
     @elseif($warning_type == "popup_email" && $selected_email->show_warning)  // Prevent visiting the phishing link in the popup email condition (after having ignored the warning)
     // Popup email
@@ -796,7 +811,7 @@ $( () => {
         e.stopPropagation();
 
         $.ajax({
-            url: ("{{ route('warning_log') }}?email_id={{$selected_email->id}}&warning_type=popup_email&show_explanation={{$show_explanation}}&msg=clicked_link&url=" + window.location.href).replace(/%20/g, '+'),
+            url: ("{{ route('warning_log') }}?email_id={{$selected_email->id}}&warning_type=popup_email&show_explanation={{$show_explanation}}&show_details={{$show_details}}&msg=clicked_link&url=" + window.location.href).replace(/%20/g, '+'),
             type: 'GET',
             dataType: 'json',
             complete: function (data) {
@@ -921,8 +936,12 @@ $( () => {
 
 const modal = new Modal(document.getElementById('warning_open'));
 
-function open_warning(url, email_id, warning_text) {
+function open_warning(url, email_id, warning_text, detailed_explanation="") {
     $("#warning_text").html(warning_text);
+    if (detailed_explanation != "") {
+        $("#detailed_explanation").html(detailed_explanation);
+        $("#detailed_explanation").addClass("mb-6");
+    }
     const warning_type = "{{$warning_type}}";
     $.ajax({
         url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=warning_shown&url=" + window.location.href).replace(/%20/g, '+'),
@@ -955,7 +974,7 @@ function open_warning(url, email_id, warning_text) {
                 dataType: 'json'
             });
         } else {
-            $("#button-advanced").text("Advanced");
+            $("#button-advanced").text("Show Details");
             $("#div-advanced").hide();
             $.ajax({
                 url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=hide_details&url=" + window.location.href).replace(/%20/g, '+'),

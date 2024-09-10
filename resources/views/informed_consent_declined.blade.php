@@ -16,9 +16,11 @@
                         If you performed this action by mistake, or changed your mind, <a href="#" style="text-decoration: underline; color:#1c64f2" onclick="window.location.replace('{{route('welcome')}}')">click here to go back </a> to the previous page.
                         <br><br>
                         Goodbye!<br>
-                        The team of IVU Lab, University of Bari, Italy
+                        The team of IVU Lab (University of Bari, Italy),<br> CYS group (King's College London, UK)
+
                         <div class="mt-6" style="display: flex;justify-content: center;">
-                            <img src="{{asset("/assets/img/UNIBA_logo.svg")}}" alt="uniba logo" style="max-width: 25%">
+                            <img src="{{asset("/assets/img/UNIBA_logo.svg")}}" alt="university of bari logo" style="max-width: 25%">
+                            <img src="{{asset("/assets/img/KCL_logo.png")}}" alt="king's college london logo" style="max-width: 20%">
                             <img src="{{asset("/assets/img/IVUx-Logo.svg")}}" alt="ivu lab logo" style="max-width: 25%">
                         </div>
                     </div>

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 class Controller extends BaseController
 {
@@ -15,17 +16,12 @@ class Controller extends BaseController
 
     public function download_info_sheet(Request $request)
     {
+        Storage::disk('local')->put('example.txt', 'Contents');
         $file_name = "information-sheet-for-anonymous-studies.pdf";
-        $file_in_storage = "storage/downloads/" . $file_name;
-        $file_public_path = "public/downloads/".$file_name;
-        error_log("##d####");
-
-        // Ensure the file exists in storage
-        if (Storage::exists($file_public_path)) {
-            //$file_size = Storage::size($file_public_path);
-            error_log("###############");
-            return response()->download($file_in_storage, $file_name);
-        } else {
+        //$file_public_path = asset('storage/'. $file_name);
+        try {
+            return response()->file("storage/$file_name");
+        } catch (FileNotFoundException) {
             abort(404, 'File not found');
         }
     }

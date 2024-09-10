@@ -46,11 +46,11 @@ class MailController extends Controller
             } else {
                 return view('email_page', ['folder' => $folder, 'emails' => $emails]);
             }
-        } else {
+        } else {  // If all emails have been seen by the participant, show them the last part of the study
             if (Auth::user()->followUpQuestionnaire != null) {
-                return redirect(route('thankyou'));
+                return redirect(route('thankyou'));  // Be sure that the user has not filled in the questionnaire already
             } else {
-                return redirect(route('post_test'));
+                return redirect(route('debriefing'));  // the questionnaires come after the debriefing
             }
         }
     }
