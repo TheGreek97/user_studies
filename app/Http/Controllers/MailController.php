@@ -25,17 +25,37 @@ class MailController extends Controller
         $seed = (int) Auth::id();  // in this way, the order is randomized according to the user id
         MailController::seededShuffle($emails, $seed);
 
+        // preprocess the emails
+        foreach ($emails as $k => $e) {
+            // replace the name in the email parts with the name of the user
+            $e->content = str_replace("{user_name}", Auth::user()->name, $e->content);
+            $e->subject = str_replace("{user_name}", Auth::user()->name, $e->subject);
+            $e->preview_text = str_replace("{user_name}", Auth::user()->name, $e->preview_text);
+            //echo $e->date . "  =>  ";
+            // replace the dates in the email with coherent dates
+            $email_current_datetime = strtotime($e->date . ' -3 minutes');  // get the datetime of the email - 5 minutes
+            $email_current_datetime = date('l d F Y H:i', $email_current_datetime);  // "Wednesday 28 August 2024 20:21"
+            $e->content = str_replace("{now_date}", $email_current_datetime, $e->content);
+            //echo $email_current_datetime . " ##### ";
+            $emails[$k] = $e;
+        }
         if (!in_array($folder, ['inbox', 'sent', 'draft', 'trash']))
             return redirect(route('show', ['folder' => 'inbox', 'emails' => $emails]));
-        if ($id != null) {    // Show a specific e-mail
-            $email = Email::findOr($id, function () {
-                return null;
-            });
-            // get the phishing emails (with the right warning, i.e., passive or active) + legitimate emails
+        if ($id != null) {    // Show a specific e-mail (this can probably be optimized)
+            $email = null;
+            // search the email in the collection of emails
+            foreach($emails as $e) {
+                if ($e->id == $id) {
+                    $email = $e;
+                    break;
+                }
+            }
             if ($email != null) {
-                $email["warning_type"] = Auth::user()->warning_type;
+                // if email was found, show the email page
+                $email->warning_type = Auth::user()->warning_type;
                 return view('email_page', ['folder' => $folder, 'emails' => $emails, 'selected_email' => $email]);
             } else {
+                // else show all the emails
                 return redirect(route('show', ['folder' => $folder, 'emails' => $emails]));
             }
         }  // Else, show the mails list

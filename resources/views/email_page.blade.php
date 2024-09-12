@@ -593,14 +593,14 @@ else
                                                     </td>
                                                     <td class="px-4 py-4 py-4">
                                                         <p class="text-ellipsis font-bold text-gray-600 dark:text-gray-300 truncate text-sm">
-                                                            {{ str_replace("{user_name}", \Illuminate\Support\Facades\Auth::user()->name, $email->subject) }}
+                                                            {{ $email->subject }}
                                                         </p>
                                                         <p class="text-gray-600 dark:text-gray-400 overflow-hidden truncate text-xs">
-                                                            {{ str_replace("{user_name}", \Illuminate\Support\Facades\Auth::user()->name, $email->preview_text) }}
+                                                            {{ $email->preview_text }}
                                                         </p>
                                                     </td>
                                                     <td class="px-4 py-4 text-xs font-bold truncate">
-                                                        {{ \Carbon\Carbon::parse($email->date)->format('d M')}}
+                                                        {{ date("d M", strtotime($email->date)) }}
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -676,7 +676,7 @@ else
                                     </a>
                                 </div>
                                 <h2 class="my-4 text-xl font-bold text-gray-700 dark:text-gray-200">
-                                    {{ str_replace("{user_name}", \Illuminate\Support\Facades\Auth::user()->name, $selected_email->subject) }}
+                                    {{ $selected_email->subject }}
                                 </h2>
                                 <div class="flex flex-row mb-4">
                                     <div class="pt-0.5">
@@ -699,11 +699,11 @@ else
                                     </div>
                                     <div
                                         class="flex-1 pt-0.5 font-semibold text-right text-gray-500 text-xs align-middle dark:text-gray-400">
-                                        {!! \Carbon\Carbon::parse($selected_email->date)->format('d M Y') . "<br>" . \Carbon\Carbon::parse($selected_email->date)->format('H:m:s') !!}
+                                        {!! date("d M Y", strtotime($selected_email->date)) . "<br>" . date('H:i', strtotime($selected_email->date)) !!}
                                     </div>
                                 </div>
                                 <div id="email_content" class="px-10 pt-4 dark:bg-white" style="padding-bottom: 2.5rem">
-                                    {!! str_replace("{user_name}", \Illuminate\Support\Facades\Auth::user()->name, $selected_email->content) !!}
+                                    {!! $selected_email->content !!}
                                 </div>
                             </div>
                         @endif
@@ -798,9 +798,9 @@ $( () => {
         e.preventDefault();
         e.stopPropagation();
         let url = new URL(phishing_link.attr('href'));
-        let warning_message = "{!! $show_explanation ? $selected_email->$warning_explanation : __('warning.no_explanation_website') !!}"
-        let detailed_explanation = "{!! $show_details !== 'no' ? $selected_email->detailed_explanation : ''  !!}"
-        open_warning(url.hostname, {{ $selected_email->id }}, warning_message, detailed_explanation);
+        let warning_message = `{!! $show_explanation ? $selected_email->$warning_explanation : __('warning.no_explanation_website') !!}`
+        let detailed_explanation = `{!! $show_details !== 'no' ? $selected_email->detailed_explanation : ''  !!}`
+        open_warning(url.hostname, {{ $selected_email->id }}, warning_message, detailed_explanation, url);
     });
     @elseif($warning_type == "popup_email" && $selected_email->show_warning)  // Prevent visiting the phishing link in the popup email condition (after having ignored the warning)
     // Popup email
@@ -936,10 +936,22 @@ $( () => {
 
 const modal = new Modal(document.getElementById('warning_open'));
 
-function open_warning(url, email_id, warning_text, detailed_explanation="") {
+function open_warning(url, email_id, warning_text, detailed_explanation="", full_url="") {
     $("#warning_text").html(warning_text);
-    if (detailed_explanation != "") {
-        $("#detailed_explanation").html(detailed_explanation);
+    if (detailed_explanation !== "") {
+        let detailed_explanation_features = JSON.parse(detailed_explanation)
+        // truncate the URL to show in the detailed explanation
+        let max_url_visible_length = 100
+        full_url = full_url.length > max_url_visible_length ? full_url.substring(0, max_url_visible_length - 3) + "..." : full_url
+
+        let detailed_explanation_text = `These are some reasons why this link could be dangerous (${full_url}):`
+        detailed_explanation_text += `<ul style="list-style: initial; padding: revert;">`
+        for (let i = 0; i < detailed_explanation_features.length; i++) {
+            let obj = detailed_explanation_features[i]
+            detailed_explanation_text += `<li><b>${obj["feature"]}: </b> ${obj["explanation"]}</li>`
+        }
+        detailed_explanation_text += "</ul>"
+        $("#detailed_explanation").html(detailed_explanation_text);
         $("#detailed_explanation").addClass("mb-6");
     }
     const warning_type = "{{$warning_type}}";
@@ -989,7 +1001,7 @@ function open_warning(url, email_id, warning_text, detailed_explanation="") {
             type: 'GET',
             dataType: 'json'
         });
-        $("#button-advanced").text("Advanced");
+        $("#button-advanced").text("Show Details");
         $("#div-advanced").hide();
         $("#button_hide_modal").off("click");
         $("#button-advanced").off("click");

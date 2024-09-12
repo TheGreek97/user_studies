@@ -73,18 +73,86 @@ class EmailSeeder extends Seeder
             }
         }
 
-        //TODO add detailed explanations
-        function get_detailed_explanation(string $feature, string $url) : string{
-            switch ($feature) {
-                case 'ip_url':
-                    return "URL - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. ";  // TODO: FILL this
-                case 'link_mismatch':
-                    return "Link mismatch - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";  // TODO: FILL this
-                case 'tld_mispositioned':
-                    return "TLD mispositioned - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";  // TODO: FILL this
-                default:
-                    return "";
-            }
+        // Detailed explanations
+        function get_detailed_explanation(string $feature, string $url) : string {
+            $detailed_explanations = match ($feature) {
+                'link_mismatch' =>  [
+                    [
+                        "feature" => "Displayed link different from actual URL",
+                        "explanation" => "The link text says 'protect your account' but the actual URL points to a suspicious address. This is a common tactic used in phishing emails to trick users into clicking on malicious links."
+                    ],
+                    [
+                        "feature" => "Generic greeting",
+                        "explanation" => "The email starts with 'Hello Alice,' which is slightly personalized but still generic. Legitimate companies often use more personalized greetings."
+                    ],
+                    [
+                        "feature" => "Suspicious URL",
+                        "explanation" => "The URL provided for account protection does not match the official Facebook domain. Always check the URL carefully before clicking."
+                    ],
+                    [
+                        "feature" => "Unexpected email",
+                        "explanation" => "Receiving an email about a password change that you did not initiate is a red flag. Always verify such claims through official channels."
+                    ],
+                    [
+                        "feature" => "Email formatting and content",
+                        "explanation" => "While the email mimics Facebook's style, there are subtle inconsistencies in formatting and language that can indicate it is not genuine."
+                    ]
+                ],
+                'ip_url' => [
+                    [
+                        "feature" => "Suspicious URL",
+                        "explanation" => "The email contains a URL that is an IP address (http://92.233.24.33/instagram/login.php). Legitimate companies typically use domain names rather than IP addresses."
+                    ],
+                    [
+                        "feature" => "Sender Email Address",
+                        "explanation" => "The sender's email address is 'noreply@lnstagram.com'. The domain 'lnstagram.com' is suspiciously similar to 'instagram.com', which is a common tactic used in phishing to deceive recipients."
+                    ],
+                    [
+                        "feature" => "Generic Greeting",
+                        "explanation" => "The email starts with 'Hey user,' instead of addressing the recipient by name. Legitimate companies usually personalize their emails."
+                    ],
+                    [
+                        "feature" => "Unusual Location",
+                        "explanation" => "The email mentions a login from 'Nashik, India' which might be unusual for the recipient. Phishing emails often use alarming information to prompt action."
+                    ],
+                    [
+                        "feature" => "Urgent Call to Action",
+                        "explanation" => "The email urges the recipient to 'click the link below and reset your password to be safe.' This creates a sense of urgency, which is a common phishing tactic."
+                    ]
+                ],
+                'tld_mispositioned' => [
+                    [
+                        "feature" => "Suspicious Sender Address",
+                        "explanation" => "The email is sent from 'amazon.it@amazonservices.com.cz', which is not a typical Amazon domain. Legitimate emails from Amazon would come from an '@amazon.com' domain."
+                    ],
+                    [
+                        "feature" => "Urgent Language",
+                        "explanation" => "The email states that the account will be permanently disabled within 24 hours, creating a false sense of urgency to rush the recipient into action."
+                    ],
+                    [
+                        "feature" => "Unusual URL",
+                        "explanation" => "The link provided in the email points to 'amazonservices.com.cz', which is not a standard Amazon URL. The '.com.cz' domain is suspicious and not typically associated with Amazon."
+                    ],
+                    [
+                        "feature" => "Generic Greeting",
+                        "explanation" => "The email starts with 'Dear Customer' instead of addressing the recipient by name, which is common in phishing emails."
+                    ],
+                    [
+                        "feature" => "Threatening Consequences",
+                        "explanation" => "The email threatens that the account will be permanently disabled, which is a tactic often used in phishing to scare recipients into compliance."
+                    ]
+                ],
+                default => "",
+            };
+            return json_encode($detailed_explanations);
+        }
+
+        function get_near_date(): string
+        {
+            return Carbon::today()  // returns the date of today at 00:00
+                ->subDays(mt_rand(1, 15))  // get a date between 1 and 15 days in the past
+                ->addMinutes(mt_rand(540, 1320))  // add between 540 (09:00) and 1320 (22:00) minutes to 00:00
+                ->toDateTimeString();
         }
 
 
@@ -97,7 +165,7 @@ class EmailSeeder extends Seeder
         $email->preview_text = 'Hi {user_name}, this is to provide you with useful information regarding U2’s event scheduled in LONDON.';
         $email->content = '<p class="p1"><img style="display: block; margin-left: auto; margin-right: auto;" src="' . asset("/assets/img/email/ticketone.png"). '" alt="" width="300" height="113" /></p>
             <p class="p1">Hi {user_name},<br /><br />this is to provide you with useful information regarding <strong>U2’s event</strong> scheduled in <strong>LONDON</strong>.<br /><br />We confirm that the concert will be held this evening, <strong>November 16th</strong>, at <strong>The London Palladium</strong>.<br /><br />Below we report what the organizer shared:<br /><br />"U2 @ The London Palladium - IMPORTANT SERVICE INFORMATION: <br /><strong>The opening of the gates is scheduled for around 5:30 pm</strong>.<br /><br />We invite you not to go to the venue too early, also to avoid the hottest hours.<br /><br />U2\'s concert is supposed to start between 9.30 pm and 10 pm. <br /><br />At the end of the concert, it is advisable to wait at least half an hour before leaving the venue in order not to obstruct traffic. <br /><br />To assure safety, the outflow will be managed in stages by our security personnel, checking the exits at regular intervals of time.<br /><br />Inside the venue there are food & beverage areas, including vegetarian choices too.<br />The internal regulations of The London Palladium can be consulted at this link: <a href="https://lwtheatres.co.uk/lw-theatres-audience-guide/" style="text-decoration: underline; color: #0001F1;"><span class="s1">https://lwtheatres.co.uk/lw-theatres-audience-guide/</span></a><br /><br /><br />Kind Regards,<br />TicketOne Staff</p>';
-        $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->date = get_near_date();
         $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
@@ -108,7 +176,8 @@ class EmailSeeder extends Seeder
         $email->from_email = "no-reply@mycicero.eu";
         $email->subject = "End of parking confirmed";
         $email->preview_text = 'Your parking time is over. Dear user, your parking time is over.';
-        $date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->date = get_near_date();
+        $parking_date = Carbon::parse($email->date)->subDays(1)->format("Y-m-d");
         $email->content = '<div>
         <div class="adM"> </div>
         <table style="border-collapse: collapse; max-width: 900px;" width="100%" align="center">
@@ -177,7 +246,7 @@ class EmailSeeder extends Seeder
         <tr>
         <td> </td>
         <td style="padding-left: 10px; padding-top: 3px; padding-bottom: 3px; background: #white;" width="97%"><span style="font-family: Calibri,sans-serif; color: #4f4f4f; font-size: 1.1em;">
-        <strong> Date and time</strong>: '. $date. ' 14:04 to '. $date.' 14:36</span></td>
+        <strong> Date and time</strong>: '. $parking_date. ' 14:04 to '. $parking_date.' 14:36</span></td>
         <td> </td>
         </tr>
         <tr>
@@ -236,7 +305,6 @@ class EmailSeeder extends Seeder
         <div class="adL"> </div>
         </div>';
         $email->show_warning = false;
-        $email->date = $date;
         $email->type = 'inbox';
         $email->save();
 
@@ -255,7 +323,7 @@ class EmailSeeder extends Seeder
         <p class="p2"> </p>
         <p class="p1"><span class="s1">We’d like to</span> thank you for the trust you had put in us and hope you would like to entrust your policy to us in the future.</p>
         <p class="p1">Our best regards.</p></div>';
-        $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->date = get_near_date();
         $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
@@ -311,7 +379,7 @@ class EmailSeeder extends Seeder
         </tbody>
         </table>
         </div>';
-        $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->date = get_near_date();
         //$email->date = Carbon::parse('2022-08-19 15:28')->toDateTimeString();
         $email->show_warning = false;
         $email->type = 'inbox';
@@ -325,7 +393,7 @@ class EmailSeeder extends Seeder
         $email->preview_text = 'We have sent you this email to notify you of an update of the Terms of Service.';
         $email->content = file_get_contents(EMAIL_DIR . "/youtube_legit.htm");
         $email->content = str_replace ("____asset_path_____", asset("/assets/img/email/youtube.png"), $email->content);
-        $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->date = get_near_date();
         $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
@@ -347,7 +415,7 @@ class EmailSeeder extends Seeder
         Alternatively, you can also visit one of our branches near you - <a style="text-decoration: underline; color: #e31a0e;" href="https://www.unicredit.it/it/contatti-e-agenzie/locator.html">where is the closest branch?</a>
         </p>
         <br><p>Best regards,<br />UniCredit Bank</p></div>';
-        $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->date = get_near_date();
         $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
@@ -374,7 +442,7 @@ class EmailSeeder extends Seeder
         <br><p class="p1">For any further information, please read our guide to <strong>DAZN subscription plans</strong> at <a href="https://www.dazn.com">this link</a> or contact our <a href="https://www.dazn.com/contacts">customer service</a>.</p>
         <p class="p1"> </p>
         <p class="p1">The DAZN Team</p></div>';
-        $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->date = get_near_date();
         $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
@@ -391,7 +459,7 @@ class EmailSeeder extends Seeder
         <p>Thank you for having chosen our services.<br /><br />Best regards,<br />European Hospital spa</p>
         <p>
         <br/><img src="'.asset('/assets/img/email/farmacia.jpeg').'" alt="" width="100" height="75" /></p></div>';
-        $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->date = get_near_date();
         $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
@@ -403,7 +471,7 @@ class EmailSeeder extends Seeder
         $email->from_email = "accounts@unity3d.com";
         $email->preview_text = 'Here\'s how to renew your plan';
         $email->content = file_get_contents(EMAIL_DIR . "/unity_legit.htm");
-        $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->date = get_near_date();
         $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
@@ -416,7 +484,7 @@ class EmailSeeder extends Seeder
         $email->preview_text = 'Delivered: Your Amazon.com order';
         $email->content = file_get_contents(EMAIL_DIR . "/amazon_legit.htm");
         $email->content = str_replace('____asset_path_____', asset("img/email/amazon.jpg"), $email->content);
-        $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->date = get_near_date();
         $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
@@ -565,7 +633,7 @@ class EmailSeeder extends Seeder
             </td>
            </tr>
           </table>";
-        $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->date = get_near_date();
         $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
@@ -591,14 +659,14 @@ class EmailSeeder extends Seeder
         $email->subject = "New device login detected";
         $email->from_name = "Instagram";
         $email->from_email = "noreply@lnstagram.com";
-        $date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->date = get_near_date();
         $email->preview_text = 'Dear user, we\'re writing to inform you that we detected a login to your account from a new device.';
         $url = "http://92.233.24.33/instagram/login.php";
         $email->content = '<div><p class="p1"><strong><img style="display: block; margin-left: auto; margin-right: auto;" src="'. asset("assets/img/email/instagram.png").'" alt="" width="300" height="165" /></strong><strong>Hey user,</strong></p>
         <p> </p>
         <p class="p1">We\'re writing to inform you that we detected a login to your account from a new device.<br /><br /></p>
         <p class="p1"><strong>When:</strong></p>
-        <p class="p1"><em> '.  $date .' CEST</em></p>
+        <p class="p1"><em> '.  $email->date .'</em></p>
         <p class="p1"><strong>Device:</strong></p>
         <p class="p1"><em>Huawei P30 Pro</em></p>
         <p class="p1"><strong>Near:<span class="Apple-converted-space"> </span></strong></p>
@@ -610,8 +678,6 @@ class EmailSeeder extends Seeder
         <br/>
         <p class="p1" style="margin-bottom: 5rem">Sincerely,<br/>Instagram Technical Staff</p>
         </div>';
-        $email->date = $date;
-        //$email->date = Carbon::parse('2022-12-10 18:12')->toDateTimeString();
         $email->type = 'inbox';
         $email->show_warning = true;
         $email->warning_explanation_1 = get_explanation("basic", $url);
@@ -645,8 +711,8 @@ class EmailSeeder extends Seeder
         $email->show_warning = true;
         $email->warning_explanation_1 = get_explanation("basic", $url);
         $email->warning_explanation_2 = get_explanation("tld_mispositioned", $url);
-        $email->detailed_explanation = get_detailed_explanation("link_mismatch", $url);
-        $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->detailed_explanation = get_detailed_explanation("tld_mispositioned", $url);
+        $email->date = get_near_date();
         $email->type = 'inbox';
         $email->save();
 
@@ -672,7 +738,7 @@ class EmailSeeder extends Seeder
                             <td style="font-size:14px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;color:#3D4452;padding-bottom:6px;">Hello {user_name},</td>
                           </tr>
                           <tr>
-                            <td style="font-size:14px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;color:#3D4452;padding-top:6px;padding-bottom:6px;">Your Facebook password has been modified Saturday 17 December 2022 at 22:29 (UTC+01)
+                            <td style="font-size:14px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;color:#3D4452;padding-top:6px;padding-bottom:6px;">Your Facebook password has been modified on {now_date}
                             </td>
                           </tr>
                           <tr>
@@ -773,7 +839,7 @@ class EmailSeeder extends Seeder
         $email->warning_explanation_1 = get_explanation("basic", $url);
         $email->warning_explanation_2 = get_explanation("link_mismatch", $url);
         $email->detailed_explanation = get_detailed_explanation("link_mismatch", $url);
-        $email->date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+        $email->date = get_near_date();
         $email->type = 'inbox';
         $email->save();
 
@@ -789,4 +855,5 @@ class EmailSeeder extends Seeder
             $email->save();
         }
     }
+
 }
