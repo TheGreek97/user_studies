@@ -73,6 +73,7 @@ class EmailSeeder extends Seeder
             }
         }
 
+        //TODO add detailed explanations
         function get_detailed_explanation(string $feature, string $url) : string{
             switch ($feature) {
                 case 'ip_url':

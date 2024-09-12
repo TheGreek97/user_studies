@@ -62,7 +62,7 @@
 
                     <!--- WARNING QUESTIONS --->
                     <div x-show="step === 1" id="section-1">
-                        <p class="text-2xl w-full text-center">Section 1 of 4</p>
+                        <p class="text-2xl w-full text-center">Section 1 of 5</p>
                         <p class="text-lg text-left pt-5">
                             @if($user->shown_warning > 0) {{-- it means that the user was shown a warning --}}
                                 You were exposed to this type of alert during the study:
@@ -362,7 +362,7 @@
 
                     <!--- NASA-TLX Questionnaire --->
                     <div x-show="step === 2" id="section-2">
-                        <p class="text-2xl w-full text-center">Section 2 of 4</p>
+                        <p class="text-2xl w-full text-center">Section 2 of 5</p>
                         <div class="my-5">
                             <p class="font-bold pb-1">How mentally demanding was the task of interacting with the alert?</p>
                             <label for="tick-1"
@@ -571,9 +571,550 @@
                         </div>
                     </div>
 
-                    <!--- CYBERSECURITY QUESTIONNAIRE --->
+
+                    <!-- NEED FOR COGNITION - 9-point Likert scale questions -->
                     <div x-show="step === 3" id="section-3">
-                        <p class="text-2xl w-full text-center">Section 3 of 4</p>
+                        <p class="text-2xl w-full text-center">Section 3 of 5</p>
+                        <div class="my-3"> Express your agreement with the <b>18</b> following sentences on a scale from -4 to +4 <br>
+                            <i>(-4= strongly disagree; 0= neither disagree or agree; +4= strongly agree)</i>
+                        </div>
+                        <div class="my-5">
+                            <p class="font-bold pb-1">1. I would prefer complex to simple problems.</p>
+                            <label for="n4c-1"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    Strongly disagree
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    Strongly agree
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="n4c-1" value="0" min="-4" max="4" step="1"
+                                       name="n4c_1" class="w-full">
+                                <datalist id="n4c-1">
+                                    <option value="-4" label="-4"></option>
+                                    <option value="-3" label="-3"></option>
+                                    <option value="-2" label="-2"></option>
+                                    <option value="-1" label="-1"></option>
+                                    <option value="0" label="0"></option>
+                                    <option value="1" label="+1"></option>
+                                    <option value="2" label="+2"></option>
+                                    <option value="3" label="+3"></option>
+                                    <option value="4" label="+4"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <p class="font-bold pb-1">2. I like to have the responsibility of handling a situation that requires a lot of thinking.</p>
+                            <label for="n4c-2"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    Strongly disagree
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    Strongly agree
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="n4c-2" value="0" min="-4" max="4" step="1"
+                                       name="n4c_2" class="w-full">
+                                <datalist id="n4c-2">
+                                    <option value="-4" label="-4"></option>
+                                    <option value="-3" label="-3"></option>
+                                    <option value="-2" label="-2"></option>
+                                    <option value="-1" label="-1"></option>
+                                    <option value="0" label="0"></option>
+                                    <option value="1" label="+1"></option>
+                                    <option value="2" label="+2"></option>
+                                    <option value="3" label="+3"></option>
+                                    <option value="4" label="+4"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <p class="font-bold pb-1">3. Thinking is not my idea of fun.</p>
+                            <label for="n4c-3"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    Strongly disagree
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    Strongly agree
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="n4c-3" value="0" min="-4" max="4" step="1"
+                                       name="n4c_3" class="w-full">
+                                <datalist id="n4c-3">
+                                    <option value="-4" label="-4"></option>
+                                    <option value="-3" label="-3"></option>
+                                    <option value="-2" label="-2"></option>
+                                    <option value="-1" label="-1"></option>
+                                    <option value="0" label="0"></option>
+                                    <option value="1" label="+1"></option>
+                                    <option value="2" label="+2"></option>
+                                    <option value="3" label="+3"></option>
+                                    <option value="4" label="+4"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <p class="font-bold pb-1">4. I would rather do something that requires little thought than something that is sure to challenge my thinking abilities.</p>
+                            <label for="n4c-4"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    Strongly disagree
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    Strongly agree
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="n4c-4" value="0" min="-4" max="4" step="1"
+                                       name="n4c_4" class="w-full">
+                                <datalist id="n4c-4">
+                                    <option value="-4" label="-4"></option>
+                                    <option value="-3" label="-3"></option>
+                                    <option value="-2" label="-2"></option>
+                                    <option value="-1" label="-1"></option>
+                                    <option value="0" label="0"></option>
+                                    <option value="1" label="+1"></option>
+                                    <option value="2" label="+2"></option>
+                                    <option value="3" label="+3"></option>
+                                    <option value="4" label="+4"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <p class="font-bold pb-1">5. I try to anticipate and avoid situations where there is likely a chance I will have to think in depth about something.</p>
+                            <label for="n4c-5"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    Strongly disagree
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    Strongly agree
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="n4c-5" value="0" min="-4" max="4" step="1"
+                                       name="n4c_5" class="w-full">
+                                <datalist id="n4c-5">
+                                    <option value="-4" label="-4"></option>
+                                    <option value="-3" label="-3"></option>
+                                    <option value="-2" label="-2"></option>
+                                    <option value="-1" label="-1"></option>
+                                    <option value="0" label="0"></option>
+                                    <option value="1" label="+1"></option>
+                                    <option value="2" label="+2"></option>
+                                    <option value="3" label="+3"></option>
+                                    <option value="4" label="+4"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <p class="font-bold pb-1">6. I find satisfaction in deliberating hard and for long hours.</p>
+                            <label for="n4c-6"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    Strongly disagree
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    Strongly agree
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="n4c-6" value="0" min="-4" max="4" step="1"
+                                       name="n4c_6" class="w-full">
+                                <datalist id="n4c-6">
+                                    <option value="-4" label="-4"></option>
+                                    <option value="-3" label="-3"></option>
+                                    <option value="-2" label="-2"></option>
+                                    <option value="-1" label="-1"></option>
+                                    <option value="0" label="0"></option>
+                                    <option value="1" label="+1"></option>
+                                    <option value="2" label="+2"></option>
+                                    <option value="3" label="+3"></option>
+                                    <option value="4" label="+4"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <p class="font-bold pb-1">7. I only think as hard as I have to.</p>
+                            <label for="n4c-7"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    Strongly disagree
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    Strongly agree
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="n4c-7" value="0" min="-4" max="4" step="1"
+                                       name="n4c_7" class="w-full">
+                                <datalist id="n4c-7">
+                                    <option value="-4" label="-4"></option>
+                                    <option value="-3" label="-3"></option>
+                                    <option value="-2" label="-2"></option>
+                                    <option value="-1" label="-1"></option>
+                                    <option value="0" label="0"></option>
+                                    <option value="1" label="+1"></option>
+                                    <option value="2" label="+2"></option>
+                                    <option value="3" label="+3"></option>
+                                    <option value="4" label="+4"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <p class="font-bold pb-1">8. I prefer to think about small, daily projects to long-term ones.</p>
+                            <label for="n4c-8"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    Strongly disagree
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    Strongly agree
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="n4c-8" value="0" min="-4" max="4" step="1"
+                                       name="n4c_8" class="w-full">
+                                <datalist id="n4c-8">
+                                    <option value="-4" label="-4"></option>
+                                    <option value="-3" label="-3"></option>
+                                    <option value="-2" label="-2"></option>
+                                    <option value="-1" label="-1"></option>
+                                    <option value="0" label="0"></option>
+                                    <option value="1" label="+1"></option>
+                                    <option value="2" label="+2"></option>
+                                    <option value="3" label="+3"></option>
+                                    <option value="4" label="+4"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <p class="font-bold pb-1">9. I like tasks that require little thought once I’ve learned them.</p>
+                            <label for="n4c-9"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    Strongly disagree
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    Strongly agree
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="n4c-9" value="0" min="-4" max="4" step="1"
+                                       name="n4c_9" class="w-full">
+                                <datalist id="n4c-9">
+                                    <option value="-4" label="-4"></option>
+                                    <option value="-3" label="-3"></option>
+                                    <option value="-2" label="-2"></option>
+                                    <option value="-1" label="-1"></option>
+                                    <option value="0" label="0"></option>
+                                    <option value="1" label="+1"></option>
+                                    <option value="2" label="+2"></option>
+                                    <option value="3" label="+3"></option>
+                                    <option value="4" label="+4"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <p class="font-bold pb-1">10. The idea of relying on thought to make my way to the top appeals to me.</p>
+                            <label for="n4c-10"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    Strongly disagree
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    Strongly agree
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="n4c-10" value="0" min="-4" max="4" step="1"
+                                       name="n4c_10" class="w-full">
+                                <datalist id="n4c-10">
+                                    <option value="-4" label="-4"></option>
+                                    <option value="-3" label="-3"></option>
+                                    <option value="-2" label="-2"></option>
+                                    <option value="-1" label="-1"></option>
+                                    <option value="0" label="0"></option>
+                                    <option value="1" label="+1"></option>
+                                    <option value="2" label="+2"></option>
+                                    <option value="3" label="+3"></option>
+                                    <option value="4" label="+4"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <p class="font-bold pb-1">11. I really enjoy a task that involves coming up with new solutions to problems.</p>
+                            <label for="n4c-11"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    Strongly disagree
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    Strongly agree
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="n4c-11" value="0" min="-4" max="4" step="1"
+                                       name="n4c_11" class="w-full">
+                                <datalist id="n4c-11">
+                                    <option value="-4" label="-4"></option>
+                                    <option value="-3" label="-3"></option>
+                                    <option value="-2" label="-2"></option>
+                                    <option value="-1" label="-1"></option>
+                                    <option value="0" label="0"></option>
+                                    <option value="1" label="+1"></option>
+                                    <option value="2" label="+2"></option>
+                                    <option value="3" label="+3"></option>
+                                    <option value="4" label="+4"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <p class="font-bold pb-1">12. Learning new ways to think doesn’t excite me very much.</p>
+                            <label for="n4c-12"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    Strongly disagree
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    Strongly agree
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="n4c-12" value="0" min="-4" max="4" step="1"
+                                       name="n4c_12" class="w-full">
+                                <datalist id="n4c-12">
+                                    <option value="-4" label="-4"></option>
+                                    <option value="-3" label="-3"></option>
+                                    <option value="-2" label="-2"></option>
+                                    <option value="-1" label="-1"></option>
+                                    <option value="0" label="0"></option>
+                                    <option value="1" label="+1"></option>
+                                    <option value="2" label="+2"></option>
+                                    <option value="3" label="+3"></option>
+                                    <option value="4" label="+4"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <p class="font-bold pb-1">13. I prefer my life to be filled with puzzles that I must solve.</p>
+                            <label for="n4c-13"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    Strongly disagree
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    Strongly agree
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="n4c-13" value="0" min="-4" max="4" step="1"
+                                       name="n4c_13" class="w-full">
+                                <datalist id="n4c-13">
+                                    <option value="-4" label="-4"></option>
+                                    <option value="-3" label="-3"></option>
+                                    <option value="-2" label="-2"></option>
+                                    <option value="-1" label="-1"></option>
+                                    <option value="0" label="0"></option>
+                                    <option value="1" label="+1"></option>
+                                    <option value="2" label="+2"></option>
+                                    <option value="3" label="+3"></option>
+                                    <option value="4" label="+4"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <p class="font-bold pb-1">13. Select "-2" as an answer to this question.</p>
+                            <label for="n4c-attention"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    Strongly disagree
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    Strongly agree
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="n4c-attention" value="0" min="-4" max="4" step="1"
+                                       name="n4c_attention" class="w-full">
+                                <datalist id="n4c-attention">
+                                    <option value="-4" label="-4"></option>
+                                    <option value="-3" label="-3"></option>
+                                    <option value="-2" label="-2"></option>
+                                    <option value="-1" label="-1"></option>
+                                    <option value="0" label="0"></option>
+                                    <option value="1" label="+1"></option>
+                                    <option value="2" label="+2"></option>
+                                    <option value="3" label="+3"></option>
+                                    <option value="4" label="+4"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <p class="font-bold pb-1">14. The notion of thinking abstractly is appealing to me.</p>
+                            <label for="n4c-14"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    Strongly disagree
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    Strongly agree
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="n4c-14" value="0" min="-4" max="4" step="1"
+                                       name="n4c_14" class="w-full">
+                                <datalist id="n4c-14">
+                                    <option value="-4" label="-4"></option>
+                                    <option value="-3" label="-3"></option>
+                                    <option value="-2" label="-2"></option>
+                                    <option value="-1" label="-1"></option>
+                                    <option value="0" label="0"></option>
+                                    <option value="1" label="+1"></option>
+                                    <option value="2" label="+2"></option>
+                                    <option value="3" label="+3"></option>
+                                    <option value="4" label="+4"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <p class="font-bold pb-1">15. I would prefer a task that is intellectual, difficult, and important to one that is somewhat important but does not require much thought.</p>
+                            <label for="n4c-15"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    Strongly disagree
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    Strongly agree
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="n4c-15" value="0" min="-4" max="4" step="1"
+                                       name="n4c_15" class="w-full">
+                                <datalist id="n4c-15">
+                                    <option value="-4" label="-4"></option>
+                                    <option value="-3" label="-3"></option>
+                                    <option value="-2" label="-2"></option>
+                                    <option value="-1" label="-1"></option>
+                                    <option value="0" label="0"></option>
+                                    <option value="1" label="+1"></option>
+                                    <option value="2" label="+2"></option>
+                                    <option value="3" label="+3"></option>
+                                    <option value="4" label="+4"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <p class="font-bold pb-1">16. I feel relief rather than satisfaction after completing a task that required a lot of mental effort.</p>
+                            <label for="n4c-16"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    Strongly disagree
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    Strongly agree
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="n4c-16" value="0" min="-4" max="4" step="1"
+                                       name="n4c_16" class="w-full">
+                                <datalist id="n4c-16">
+                                    <option value="-4" label="-4"></option>
+                                    <option value="-3" label="-3"></option>
+                                    <option value="-2" label="-2"></option>
+                                    <option value="-1" label="-1"></option>
+                                    <option value="0" label="0"></option>
+                                    <option value="1" label="+1"></option>
+                                    <option value="2" label="+2"></option>
+                                    <option value="3" label="+3"></option>
+                                    <option value="4" label="+4"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <p class="font-bold pb-1">17. It’s enough for me that something gets the job done; I don’t care how or why it works.</p>
+                            <label for="n4c-17"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    Strongly disagree
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    Strongly agree
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="n4c-17" value="0" min="-4" max="4" step="1"
+                                       name="n4c_17" class="w-full">
+                                <datalist id="n4c-17">
+                                    <option value="-4" label="-4"></option>
+                                    <option value="-3" label="-3"></option>
+                                    <option value="-2" label="-2"></option>
+                                    <option value="-1" label="-1"></option>
+                                    <option value="0" label="0"></option>
+                                    <option value="1" label="+1"></option>
+                                    <option value="2" label="+2"></option>
+                                    <option value="3" label="+3"></option>
+                                    <option value="4" label="+4"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <p class="font-bold pb-1">18. I usually end up deliberating about issues even when they do not affect me personally.</p>
+                            <label for="n4c-18"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                <div>
+                                    Strongly disagree
+                                </div>
+                                <div class="flex-1"></div>
+                                <div>
+                                    Strongly agree
+                                </div>
+                            </label>
+                            <div class="w-full">
+                                <input type="range" list="n4c-18" value="0" min="-4" max="4" step="1"
+                                       name="n4c_18" class="w-full">
+                                <datalist id="n4c-18">
+                                    <option value="-4" label="-4"></option>
+                                    <option value="-3" label="-3"></option>
+                                    <option value="-2" label="-2"></option>
+                                    <option value="-1" label="-1"></option>
+                                    <option value="0" label="0"></option>
+                                    <option value="1" label="+1"></option>
+                                    <option value="2" label="+2"></option>
+                                    <option value="3" label="+3"></option>
+                                    <option value="4" label="+4"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--- CYBERSECURITY QUESTIONNAIRE --->
+                    <div x-show="step === 4" id="section-4">
+                        <p class="text-2xl w-full text-center">Section 4 of 5</p>
                         <div class="my-8">
                             <p class="font-bold pb-1">What does the “https://” at the beginning of a URL denote, as
                                 opposed to
@@ -1046,8 +1587,8 @@
                     </div>
 
                     <!-- DEMOGRAPHICS -->
-                    <div x-show="step === 4" class="pt-1">
-                        <p class="text-2xl w-full text-center">Section 4 of 4</p>
+                    <div x-show="step === 5" class="pt-1">
+                        <p class="text-2xl w-full text-center">Section 5 of 5</p>
                         <div class="my-5">
                             <p class="font-bold pb-1">What is your ©PROLIFIC ID?</p>
                             <input required type="text" name="prolific_id" min="10" max="100" placeholder="Prolific ID"
@@ -1098,7 +1639,9 @@
                             </div>
                         </div>
                     </div>
-                    <div x-show="step === 5" class="pt-1">
+
+                    <!-- Loading view -->
+                    <div x-show="step === 6" class="pt-1">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                              stroke="currentColor" class="w-12 h-12 mx-auto stroke-green-500 animate-spin">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -1108,6 +1651,7 @@
                             Loading
                         </div>
                     </div>
+
                     <div class="text-center mt-14 mb-10">
                         <div x-show="step !== 6" class="flex flex-row w-full" :class="{'space-x-6' : step > 0}">
                             <div x-show="step > 1">
@@ -1131,7 +1675,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
             function load() {
-                let num_steps = 4;
+                let num_steps = 5;
                 $("#form").show();
                 return {
                     step: 1,
@@ -1189,7 +1733,17 @@
                                         $(this).removeClass('border-red-500');
                                 });
                                 break;
-                            case 3:  // Cybersecurity skills questionnaire
+                            case 3:  // Need for Cognition questionnaire
+                                $("#section-3 :input").each(function () {
+                                    check = ($(this).val() != "" && check);
+                                    if ($(this).val() == "") {
+                                        $(this).addClass('border-red-500');
+                                        $(this).change(_ => $(this).removeClass('border-red-500'));
+                                    } else
+                                        $(this).removeClass('border-red-500');
+                                });
+                                break;
+                            case 4:  // Cybersecurity skills questionnaire
                                 for (let i = 1; i <= 11; i++) {  // 10 questions + attention check question
                                     let input_answer_i = $('input[name=cyber_' + i + ']');
                                     if (!input_answer_i.is(':checked')) {
@@ -1204,7 +1758,7 @@
                                         check = (check && true);
                                 }
                                 break;
-                            case 4:  // Demographics questionnaire
+                            case 5:  // Demographics questionnaire
                                 let input_gender = $("input[name=gender]")
                                 if (!input_gender.is(':checked')) {
                                     check = false;

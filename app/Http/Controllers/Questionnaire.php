@@ -39,6 +39,7 @@ class Questionnaire extends Controller
     public function storeFollowUp(Request $request)
     {
         $questionnaire = new FollowUpQuestionnaire();
+        // Warning questionnaire
         $questionnaire->read_warning = $request->read_warning;
         $questionnaire->reaction = $request->reaction;
         $questionnaire->understood_warning = $request->understood_warning;
@@ -55,6 +56,7 @@ class Questionnaire extends Controller
         }
         $questionnaire->first_word = $request->first_word;  // attention check
 
+        // NASA-TLX questionnaire
         $questionnaire->nasa_mental_demand = $request->nasa_mental_demand;
         $questionnaire->nasa_physical_demand = $request->nasa_physical_demand;
         $questionnaire->nasa_temporal_demand = $request->nasa_temporal_demand;
@@ -63,7 +65,28 @@ class Questionnaire extends Controller
         $questionnaire->nasa_frustration_level = $request->nasa_frustration_level;
         $questionnaire->nasa_mental_demand_reverse = $request->nasa_mental_demand_reverse;  // attention check (reverse-coding question)
 
+        // Need for Cognition questionnaire
+        $questionnaire->n4c_1 = $request->n4c_1;
+        $questionnaire->n4c_2 = $request->n4c_2;
+        $questionnaire->n4c_3 = $request->n4c_3;
+        $questionnaire->n4c_4 = $request->n4c_4;
+        $questionnaire->n4c_5 = $request->n4c_5;
+        $questionnaire->n4c_6 = $request->n4c_6;
+        $questionnaire->n4c_7 = $request->n4c_7;
+        $questionnaire->n4c_8 = $request->n4c_8;
+        $questionnaire->n4c_9 = $request->n4c_9;
+        $questionnaire->n4c_10 = $request->n4c_10;
+        $questionnaire->n4c_11 = $request->n4c_11;
+        $questionnaire->n4c_12 = $request->n4c_12;
+        $questionnaire->n4c_13 = $request->n4c_13;
+        $questionnaire->n4c_14 = $request->n4c_14;
+        $questionnaire->n4c_15 = $request->n4c_15;
+        $questionnaire->n4c_16 = $request->n4c_16;
+        $questionnaire->n4c_17 = $request->n4c_17;
+        $questionnaire->n4c_18 = $request->n4c_18;
+        $questionnaire->n4c_attention = $request->n4c_attention;
 
+        // Cyber-security knowledge
         $questionnaire->cyber_1 = $request->cyber_1;
         $questionnaire->cyber_2 = $request->cyber_2;
         $questionnaire->cyber_3 = $request->cyber_3;
@@ -77,6 +100,8 @@ class Questionnaire extends Controller
         $questionnaire->cyber_control = $request->cyber_11 == 1;   // attention check
         $questionnaire->user_id = Auth::id();
         $questionnaire->save();
+
+        // Demographic questionnaire
         $user = Auth::user();
         $user->gender = $request->gender;
         $user->age = $request->age;
