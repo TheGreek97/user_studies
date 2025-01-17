@@ -47,19 +47,43 @@ class StudyAuth
         "explanation_type" => "string"])]
     private function getWarningTypeToAssign(): array
     {
-        $users = DB::table('users')
-            ->select('llm', 'explanation_type', DB::raw('count(*) as total'))
-            ->whereNotNull('study_completed')
-            ->where('warning_type', '=', 'popup_link')
-            ->where('show_explanation', '=', '1')
-            ->whereNotNull(['llm', 'explanation_type'])
-            ->groupBy('llm', 'explanation_type')
+
+        // Step 1: Define possible values for 'llm' and 'explanation_type'
+        $llmValues = ['llama3_3', 'claude3_5'];
+        $explanationValues = ['feature_based', 'counterfactual'];
+
+        // Step 2: Generate all possible combinations
+        $combinations = collect($llmValues)
+            ->crossJoin($explanationValues) // Create Cartesian product
+            ->map(function ($combo) {
+                return ['llm' => $combo[0], 'explanation_type' => $combo[1]];
+            });
+
+        // Step 3: Create a query to count users for each combination
+        $users_counts = DB::table(DB::raw('('.$combinations->map(function ($combo) {
+                return 'SELECT "'.$combo['llm'].'" AS llm, "'.$combo['explanation_type'].'" AS explanation_type';
+            })->implode(' UNION ALL ').') AS combinations'))
+            ->leftJoin('users', function ($join) {
+                $join->on('combinations.llm', '=', 'users.llm')
+                    ->on('combinations.explanation_type', '=', 'users.explanation_type')
+                    ->whereNotNull('study_completed')
+                    ->where('warning_type', '=', 'popup_link')
+                    ->where('show_explanation', '=', '1')
+                    ->where('show_details', '=', 'no');
+            })
+            ->select('combinations.llm', 'combinations.explanation_type', DB::raw('COUNT(users.id) AS user_count'))
+
+            ->groupBy('combinations.llm', 'combinations.explanation_type')
             ->get();
 
-        //$show_details = StudyAuth::getLeastPopularValueInColumn($users, "show_details", ["no", "on_demand"]);
-        $llm = StudyAuth::getLeastPopularValueInColumn($users, "llm", ["llama3.2-11b", "claude3.5sonnet"]);
-        $explanation_type = StudyAuth::getLeastPopularValueInColumn($users, "explanation_type", ["feature_based", "counterfactual"]);
+        // Step 4: Find the minimum count
+        $minCount = $users_counts->min('user_count');
 
+        // Step 5: Select a random least popular combination
+        $leastPopularCombination = $users_counts->where('user_count', $minCount)->random();
+        $llm = $leastPopularCombination->llm;
+        $explanation_type = $leastPopularCombination->explanation_type;
+        //echo ("$llm - $explanation_type");
         return ["type" => "popup_link", "show_explanation" => 1, "show_details" => "no",
             "llm" => $llm, "explanation_type" => $explanation_type];
     }

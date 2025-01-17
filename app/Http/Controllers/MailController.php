@@ -172,33 +172,31 @@ class MailController extends Controller
         if ($counterfactual) {  // Counterfactuals
             $explanations = match ($feature) {
                 'ip_url' => [
-                    "llama3.2-11b" => "The link http://92.233.24.33/instagram/login.php is an IP address, not a website name. The email would have been considered safe if it had used a website name like instagram.com instead. A safe link might have looked like: https://instagram.com/login",
-                    "claude3.5sonnet" => "The link in the email points to a string of numbers (92.233.24.33/instagram/login.php) instead of the official Instagram website name. The email would have been safe if the link used Instagram's actual website name, which helps users verify they're going to the real Instagram site. A safe link would have looked like: https://instagram.com/account/reset"
+                    "llama3_3" => "The link http://92.233.24.33 is a string of numbers instead of a normal website name. The email would have been considered safe if it used a recognizable website name, like a company's official name, which helps verify the link's authenticity. A safe link might have looked like: https://instagram.com/login",
+                    "claude3_5" => "The link in the email points to a string of numbers (92.233.24.33/instagram/login.php) instead of the official Instagram website name. The email would have been safe if the link used Instagram's actual website name, which helps users verify they're going to the real Instagram site. A safe link would have looked like: https://instagram.com/account/reset"
                 ],
                 'link_mismatch' => [
-                    "llama3.2-11b" => "The displayed link \"https://www.facebook.com/hacked/disavow?u=100000125023309&nArdInDS2&lit_IT&ext1548538159\" is different from the actual link it points to, which is not specified in the email.\n
-                The email would have been considered safe if the displayed link matched the actual link, which would have reassured users about the link's authenticity and helped prevent exposure to fake sites that steal personal details.\n
-                A safe link might have looked like: https://www.facebook.com/hacked/disavow?u=100000125023309",
-                    "claude3.5sonnet" => "The email shows a Facebook link but actually takes you to a different website: appears as 'facebook.com/hacked' but leads to 'phish-site.net/fake-login'. The email would have been safe if the link you see matched exactly where it takes you, which helps ensure you're going to the real Facebook website. A safe link would show and lead to the same place, like: facebook.com/help/security"
+                    "llama3_3" => "The link text \"protect your account\" hides the actual link https://www.facebook.com/hacked/disavow?u=100000125023309&nArdInDS2&lit_IT&ext1548538159. The email would have been considered safe if the link text matched the actual link, which helps ensure the link is trustworthy and not trying to trick you. A safe link might have looked like: https://www.facebook.com/account-security",
+                    "claude3_5" => "The email shows a Facebook link but actually takes you to a different website: appears as 'facebook.com/hacked' but leads to 'phish-site.net/fake-login'. The email would have been safe if the link you see matched exactly where it takes you, which helps ensure you're going to the real Facebook website. A safe link would show and lead to the same place, like: facebook.com/help/security"
                 ],
                 'tld_mispositioned' => [
-                    "llama3.2-11b" => "This email uses a website address that has '.com.cz' instead of just '.com', which is the usual top-level domain for Amazon. The email could have been considered safe if the website address had matched Amazon's usual domain. A safe link might have looked like: https://www.amazon.com/account-security",
-                    "claude3.5sonnet" => "The link 'amazonservices.com.cz' tries to trick you by putting '.com' in the middle instead of at the end. The email would have been considered safe if the website address ended with '.com' or matched Amazon's official website format. A safe link from Amazon would look like: https://amazon.com/account or https://amazon.it/account"
+                    "llama3_3" => "The link https://amazonservices.com.cz/account.php has a suspicious web address with a \".com\" in the wrong place. The email could have been considered safe if the \".com\" was at the end of the address. A safe link might have looked like: https://amazon.com/account-update",
+                    "claude3_5" => "The link 'amazonservices.com.cz' tries to trick you by putting '.com' in the middle instead of at the end. The email would have been considered safe if the website address ended with '.com' or matched Amazon's official website format. A safe link from Amazon would look like: https://amazon.com/account or https://amazon.it/account"
                 ]
             };
         } else {  // Feature-based
             $explanations = match ($feature) {
                 'ip_url' => [
-                    "llama3.2-11b" => "The link http://92.233.24.33/instagram/login.php is an IP address, not a legitimate website address. This could be a trick to take you to a fake website that looks like Instagram. If you click on this link, you might be asked to enter your login information, which could be stolen by the scammers. This could lead to your account being compromised and your personal information being used for malicious purposes.",
-                    "claude3.5sonnet" => "The link shows numbers (92.233.24.33) instead of \"instagram.com\" like real Instagram emails would use. This is a deceptive trick to send you to a fake website. If you enter your account details there, attackers will gain control of your Instagram account"
+                    "llama3_3" => "The link http://92.233.24.33 is a string of numbers instead of a normal website name. This site might be fake and try to trick you. You might be giving away your private information.",
+                    "claude3_5" => "The link shows numbers (92.233.24.33) instead of \"instagram.com\" like real Instagram emails would use. This is a deceptive trick to send you to a fake website. If you enter your account details there, attackers will gain control of your Instagram account."
                 ],
                 'link_mismatch' => [
-                    "llama3.2-11b" => "The link in the email \"https://www.facebook.com/hacked/disavow?u=100000125023309&nArdInDS2&lit_IT&ext1548538159\" is not the real Facebook login page. This link might be a trick to take you to a fake website that looks like Facebook. If you click on this link, you might be asked to enter your login information, which could be stolen by scammers.",
-                    "claude3.5sonnet" => "The link shown as 'protect your account' may take you somewhere different than what you see. Attackers use this trick to make you think you're going to Facebook when you're not. This could lead to your Facebook password being stolen."
+                    "llama3_3" => "The link \"https://www.facebook.com/hacked/disavow?u=100000125023309&nArdInDS2&lit_IT&ext1548538159\" is an imitation of the original Facebook link. This site might be intended to take you to a different place. You might be disclosing private information.",
+                    "claude3_5" => "The link shown as 'protect your account' may take you somewhere different than what you see. Attackers use this trick to make you think you're going to Facebook when you're not. This could lead to your Facebook password being stolen."
                 ],
                 'tld_mispositioned' => [
-                    "llama3.2-11b" => "The email address \"amazon.it@amazonservices.com.cz\" seems to be trying to trick you by using a mix of different country codes (.it,.com,.cz). This could be an attempt to make the email look more legitimate. If you click on the link \"https://amazonservices.com.cz/account.php\", you might be taken to a fake website that could steal your personal information.",
-                    "claude3.5sonnet" => "The website amazonservices.com.cz is trying to look like a real Amazon page by using 'amazon' in its address. This is a trick to make you think you're visiting Amazon when you're not. If you enter your login details, scammers could take control of your real Amazon account."
+                    "llama3_3" => "The link https://amazonservices.com.cz/account.php has a strange company name extension. This site might be pretending to be something it's not. You might be disclosing private information.",
+                    "claude3_5" => "The website amazonservices.com.cz is trying to look like a real Amazon page by using 'amazon' in its address. This is a trick to make you think you're visiting Amazon when you're not. If you enter your login details, scammers could take control of your real Amazon account."
                 ]
             };
         }

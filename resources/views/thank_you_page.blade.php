@@ -15,17 +15,19 @@
                         We want to reassure you that the actions taken during the test will not have any consequence for you,
                         as all the emails have been manually produced by our team and are not actually harmful.
                         <br><br>
-                        <b>IMPORTANT!</b> In order to prove your participation to this study and BE REWARDED, <b>you must go back to ©Prolific</b> by <br/>
+                        <b>IMPORTANT!</b> In order to prove your participation to this study and be rewarded, <b>you must go back to ©Prolific</b> by <br/>
                         <div class="text-center mt-2">
                             <a href="https://app.prolific.co/submissions/complete?cc=C19FFAV6" style="color:dodgerblue; text-decoration: underline; font-weight: bold">CLICKING HERE</a>
                         </div>
                         <br>
                         Goodbye!<br>
-                        The team of IVU Lab, University of Bari, Italy,
-                        <br> CYS group (King's College London, UK)
+                        The team of IVU Lab, University of Bari, Italy, <br>
+                        The team of University of Cagliari, Italy, <br>
+                        CYS group, King's College London, UK
 
                         <div class="mt-6 flex flex-row justify-center">
                             <img src="{{asset("/assets/img/UNIBA_logo.svg")}}" alt="university of bari logo" style="max-width: 25%">
+                            <img src="{{asset("/assets/img/UNICA_logo.png")}}" alt="university of bari logo" style="max-width: 25%">
                             <img src="{{asset("/assets/img/KCL_logo.png")}}" alt="king's college london logo" style="max-width: 20%">
                             <img src="{{asset("/assets/img/IVUx-Logo.svg")}}" alt="ivu lab logo" style="max-width: 25%">
                         </div>

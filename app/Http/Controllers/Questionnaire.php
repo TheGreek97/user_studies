@@ -26,13 +26,17 @@ class Questionnaire extends Controller
 
     public function showFollowUp()
     {
-        return view('followupquestionnaire')->with("user_ignored_warning", Auth::user()->warning_ignored);
+        $user = Auth::user();
+        $warning_image = $this->getWarningToShow($user);
+
         if (Auth::user()->followUpQuestionnaire != null) {
             return redirect(route('thankyou'));
         } elseif (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) < MailController::MAILS_NUMBER) {
             return redirect(route('show', ['folder' => 'inbox']));
         } else {
-            return view('followupquestionnaire')->with("user_ignored_warning", Auth::user()->warning_ignored);
+            return view('followupquestionnaire')
+                ->with("user_ignored_warning", Auth::user()->warning_ignored)
+                ->with("url_image_warning", $warning_image);
         }
     }
 
@@ -72,18 +76,6 @@ class Questionnaire extends Controller
         $questionnaire->n4c_4 = $request->n4c_4;
         $questionnaire->n4c_5 = $request->n4c_5;
         $questionnaire->n4c_6 = $request->n4c_6;
-        $questionnaire->n4c_7 = $request->n4c_7;
-        $questionnaire->n4c_8 = $request->n4c_8;
-        $questionnaire->n4c_9 = $request->n4c_9;
-        $questionnaire->n4c_10 = $request->n4c_10;
-        $questionnaire->n4c_11 = $request->n4c_11;
-        $questionnaire->n4c_12 = $request->n4c_12;
-        $questionnaire->n4c_13 = $request->n4c_13;
-        $questionnaire->n4c_14 = $request->n4c_14;
-        $questionnaire->n4c_15 = $request->n4c_15;
-        $questionnaire->n4c_16 = $request->n4c_16;
-        $questionnaire->n4c_17 = $request->n4c_17;
-        $questionnaire->n4c_18 = $request->n4c_18;
         $questionnaire->n4c_attention = $request->n4c_attention;
 
         // Cyber-security knowledge
@@ -151,5 +143,41 @@ class Questionnaire extends Controller
             $score +=1;
         }
         return $score;
+    }
+
+    private function getWarningToShow ($user) : string {
+        // Based on what the user saw during the experiment, show a different image
+        if ($user->show_explanation) {
+            // if the exp condition involved showing a warning
+            // $user->warning_shown contains a decimal representing a binary value 000:
+            // 0: no warning was shown, 1: instagram warning only was shown, 2: amazon warning only was shown
+            // 3: instagram and amazon warnings only were shown (1+2),
+            // 4: the facebook (false positive) warning only was shown,
+            // 5: the facebook and the instagram warnings only were shown (4+1),
+            // 6: the facebook and the amazon warnings only were shown (4+2)
+            // 7: all the 3 warnings were shown (1+2+4)
+
+            $warning_name = match ($user->shown_warning) {
+                1, 5 => "ip_addr",
+                2, 6 => "tld_misp",
+                0, 3, 4, 7 => (rand(0, 1) === 0) ? "ip_addr" : "tld_misp" // take one at random between the two true positive warnings
+            };
+        }
+        else {
+            $warning_name = "no_exp";
+            if ($user->warning_type == "tooltip") {
+                $warning_name = $warning_name . "_" . match ($user->shown_warning) {
+                        0, 7 => (rand(0, 2) === 0) ? "ig" : ((rand(0, 1) === 0) ? "amazon" : "fb"),
+                        1 => "ig",
+                        2 => "amazon",
+                        3 => (rand(0, 1) === 0) ? "ig" : "amazon", // random between ig and amazon
+                        4 => "fb",
+                        5 => (rand(0, 1) === 0) ? "ig" : "fb", // random between ig and facebook
+                        6 => (rand(0, 1) === 0) ? "fb" : "amazon", // random between facebook and amazon
+                    };
+            }
+        }
+        $llm = $user->llm;
+        return asset("/assets/img/warnings/$llm/".$user->explanation_type."_$warning_name.png");
     }
 }

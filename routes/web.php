@@ -52,7 +52,7 @@ Route::middleware([
     'log'
 ])->group(function () {
     Route::get('/welcome', function () {
-        if (Auth::user()->followUpQuestionnaire != null) {  // study already completed
+        if (Auth::user() && Auth::user()->followUpQuestionnaire != null) {  // study already completed
             return redirect(route('thankyou'));
         } else {
             if (session()->has('consent')) {

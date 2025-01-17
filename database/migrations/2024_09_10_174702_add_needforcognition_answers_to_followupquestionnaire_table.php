@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('followupquestionnaire', function (Blueprint $table) {
-            for ($i = 1; $i <= 18; $i++) {
+            for ($i = 1; $i <= 6; $i++) {
                 $table->integer('n4c_'.$i)->nullable();
             }
             $table->integer('n4c_attention')->nullable();
@@ -29,7 +29,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('followupquestionnaire', function (Blueprint $table) {
-            for ($i = 1; $i <= 18; $i++) {
+            for ($i = 1; $i <= 6; $i++) {
                 $table->dropColumn('n4c_'.$i);
             }
             $table->dropColumn('n4c_attention');

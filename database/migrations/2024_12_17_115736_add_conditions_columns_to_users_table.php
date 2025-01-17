@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum("llm", ["llama3.2-11b", "claude3.5sonnet"])->nullable();
+            $table->enum("llm", ["llama3_3", "claude3_5"])->nullable();
             $table->enum("explanation_type", ["feature_based", "counterfactual"])->nullable();
         });
     }
