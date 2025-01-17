@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('emails', function (Blueprint $table) {
-            $table->longText('detailed_explanation')->nullable();
+        Schema::table('users', function (Blueprint $table) {
+            $table->enum("llm", ["llama3.2-11b", "claude3.5sonnet"])->nullable();
+            $table->enum("explanation_type", ["feature_based", "counterfactual"])->nullable();
         });
     }
 
@@ -25,8 +26,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('emails', function (Blueprint $table) {
-            $table->dropColumn('detailed_explanation');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn("llm");
+            $table->dropColumn("explanation_type");
         });
     }
 };
