@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ActivityLogs;
 use App\Models\Email;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,7 @@ class MailController extends Controller
         if (!session()->has('consent')) {
             return redirect(route('welcome'));
         }
+        $auth_user = Auth::user();
         info("ID " . $id);
         $emails = DB::table('emails')
             ->where('type', $folder)
@@ -27,16 +29,35 @@ class MailController extends Controller
 
         // preprocess the emails
         foreach ($emails as $k => $e) {
+            // Set the date to the email
+            $e->date = $this->get_near_date();
             // replace the name in the email parts with the name of the user
-            $e->content = str_replace("{user_name}", Auth::user()->name, $e->content);
-            $e->subject = str_replace("{user_name}", Auth::user()->name, $e->subject);
-            $e->preview_text = str_replace("{user_name}", Auth::user()->name, $e->preview_text);
-            //echo $e->date . "  =>  ";
-            // replace the dates in the email with coherent dates
-            $email_current_datetime = strtotime($e->date . ' -3 minutes');  // get the datetime of the email - 5 minutes
-            $email_current_datetime = date('l d F Y H:i', $email_current_datetime);  // "Wednesday 28 August 2024 20:21"
-            $e->content = str_replace("{now_date}", $email_current_datetime, $e->content);
-            //echo $email_current_datetime . " ##### ";
+            $e->content = str_replace("{user_name}", $auth_user->name, $e->content);
+            $e->subject = str_replace("{user_name}", $auth_user->name, $e->subject);
+            $e->preview_text = str_replace("{user_name}", $auth_user->name, $e->preview_text);
+
+            // RENDER DATES
+            // Replace {now_email_datetime} with the current date time of the email - 3 minutes.
+            $email_current_datetime = date('l d F Y H:i', strtotime($e->date . ' -3 minutes')); // Format e.g. "Monday 26 August 2024 20:21"
+            $e->content = str_replace("{now_email_datetime}", $email_current_datetime, $e->content);
+            // Replace {yesterday_email_date} with the previous date wrt the email's date
+            $email_yesterday_date = date('d/F/Y', strtotime($e->date . ' -1 day')); // Format e.g. "26/08/2024
+            $e->content = str_replace("{yesterday_email_date}", $email_yesterday_date, $e->content);
+
+            // Set the explanation message for phishing emails
+            if ($e->show_warning) {
+                $counterfactual = $auth_user->explanation_type == "counterfactual";
+                if ($auth_user->show_explanation) {
+                    if ($auth_user->show_details == "no") {
+                        $e->warning_explanation = $this->get_explanation($e->phishing_feature, $auth_user->llm, $counterfactual);
+                    } else {
+                        $e->warning_explanation = $this->get_detailed_explanation($e->phishing_feature, $auth_user->llm, $counterfactual);
+                    }
+                } else {  // if no specific explanation will be shown, just show a generic message
+                    $e->warning_explanation = "This email was blocked because it may trick you into doing something dangerous like installing software or revealing personal information like passwords or credit cards.";
+                }
+            }
+
             $emails[$k] = $e;
         }
         if (!in_array($folder, ['inbox', 'sent', 'draft', 'trash']))
@@ -52,7 +73,7 @@ class MailController extends Controller
             }
             if ($email != null) {
                 // if email was found, show the email page
-                $email->warning_type = Auth::user()->warning_type;
+                $email->warning_type = $auth_user->warning_type;
                 return view('email_page', ['folder' => $folder, 'emails' => $emails, 'selected_email' => $email]);
             } else {
                 // else show all the emails
@@ -67,7 +88,7 @@ class MailController extends Controller
                 return view('email_page', ['folder' => $folder, 'emails' => $emails]);
             }
         } else {  // If all emails have been seen by the participant, show them the last part of the study
-            if (Auth::user()->followUpQuestionnaire != null) {
+            if ($auth_user->followUpQuestionnaire != null) {
                 return redirect(route('thankyou'));  // Be sure that the user has not filled in the questionnaire already
             } else {
                 return redirect(route('debriefing'));  // the questionnaires come after the debriefing
@@ -82,8 +103,8 @@ class MailController extends Controller
         $log->url = $request->input('url');
         $log->warning_type = $request->input('warning_type');
         $action = $request->input('msg');
+        $user = Auth::User();
         if (str_starts_with($action, "warning_shown") || str_starts_with($action, "tooltip_shown")) {
-            $user = Auth::User();
             // Based on the email that was shown, add a bit value to the $user->shown_warning property
             if ($request->input('email_id') == 12)  // Instagram email
                 $warning_shown_value = 1;  // 001
@@ -100,7 +121,6 @@ class MailController extends Controller
             $user->save();
         }
         if (str_starts_with($action, "warning_ignored") || str_starts_with($action, "tooltip_click")) {
-            $user = Auth::User();
             $user->ignored_warning = true;
             $user->save();
         }
@@ -109,24 +129,7 @@ class MailController extends Controller
         $log->save();
     }
 
-    /*
-        public function warning_browser(Request $request)
-        {
-            $decodedurl = urldecode($request->input('url'));
-            $backurl = urldecode($request->input('backurl'));
-            $parsedurl = parse_url($decodedurl);
-            $hostname = $parsedurl['host'];
-            $log = new ActivityLogs;
-            $log->user_id = Auth::id();
-            $log->url = $request->url();
-            $log->warning_type = "browser_native";
-            $log->user_action = "Warning mostrato";
-            $log->email_id = $request->input('email_id');
-            $log->save();
-            return view('chrome_warning', ['url' => $decodedurl, 'hostname' => $hostname, 'backurl' => $backurl, 'email_id' => $request->input('email_id')]);
-        }
-    */
-    private function seededShuffle(&$array, $seed)
+    private function seededShuffle(&$array, int $seed): void
     {
         // Generate an array of random numbers based on the seed
         srand($seed);
@@ -140,7 +143,7 @@ class MailController extends Controller
         $array = collect($array_list);
     }
 
-    private function get_user_action($key){
+    private function get_user_action(string $key): string{
         switch ($key) {
             case "clicked_link":
                 return "Clicked link in email";
@@ -164,4 +167,82 @@ class MailController extends Controller
         }
     }
 
+    private function get_explanation (string $feature, string $llm, bool $counterfactual=false): string
+    {
+        if ($counterfactual) {  // Counterfactuals
+            $explanations = match ($feature) {
+                'ip_url' => [
+                    "llama3.2-11b" => "The link http://92.233.24.33/instagram/login.php is an IP address, not a website name. The email would have been considered safe if it had used a website name like instagram.com instead. A safe link might have looked like: https://instagram.com/login",
+                    "claude3.5sonnet" => "The link in the email points to a string of numbers (92.233.24.33/instagram/login.php) instead of the official Instagram website name. The email would have been safe if the link used Instagram's actual website name, which helps users verify they're going to the real Instagram site. A safe link would have looked like: https://instagram.com/account/reset"
+                ],
+                'link_mismatch' => [
+                    "llama3.2-11b" => "The displayed link \"https://www.facebook.com/hacked/disavow?u=100000125023309&nArdInDS2&lit_IT&ext1548538159\" is different from the actual link it points to, which is not specified in the email.\n
+                The email would have been considered safe if the displayed link matched the actual link, which would have reassured users about the link's authenticity and helped prevent exposure to fake sites that steal personal details.\n
+                A safe link might have looked like: https://www.facebook.com/hacked/disavow?u=100000125023309",
+                    "claude3.5sonnet" => "The email shows a Facebook link but actually takes you to a different website: appears as 'facebook.com/hacked' but leads to 'phish-site.net/fake-login'. The email would have been safe if the link you see matched exactly where it takes you, which helps ensure you're going to the real Facebook website. A safe link would show and lead to the same place, like: facebook.com/help/security"
+                ],
+                'tld_mispositioned' => [
+                    "llama3.2-11b" => "This email uses a website address that has '.com.cz' instead of just '.com', which is the usual top-level domain for Amazon. The email could have been considered safe if the website address had matched Amazon's usual domain. A safe link might have looked like: https://www.amazon.com/account-security",
+                    "claude3.5sonnet" => "The link 'amazonservices.com.cz' tries to trick you by putting '.com' in the middle instead of at the end. The email would have been considered safe if the website address ended with '.com' or matched Amazon's official website format. A safe link from Amazon would look like: https://amazon.com/account or https://amazon.it/account"
+                ]
+            };
+        } else {  // Feature-based
+            $explanations = match ($feature) {
+                'ip_url' => [
+                    "llama3.2-11b" => "The link http://92.233.24.33/instagram/login.php is an IP address, not a legitimate website address. This could be a trick to take you to a fake website that looks like Instagram. If you click on this link, you might be asked to enter your login information, which could be stolen by the scammers. This could lead to your account being compromised and your personal information being used for malicious purposes.",
+                    "claude3.5sonnet" => "The link shows numbers (92.233.24.33) instead of \"instagram.com\" like real Instagram emails would use. This is a deceptive trick to send you to a fake website. If you enter your account details there, attackers will gain control of your Instagram account"
+                ],
+                'link_mismatch' => [
+                    "llama3.2-11b" => "The link in the email \"https://www.facebook.com/hacked/disavow?u=100000125023309&nArdInDS2&lit_IT&ext1548538159\" is not the real Facebook login page. This link might be a trick to take you to a fake website that looks like Facebook. If you click on this link, you might be asked to enter your login information, which could be stolen by scammers.",
+                    "claude3.5sonnet" => "The link shown as 'protect your account' may take you somewhere different than what you see. Attackers use this trick to make you think you're going to Facebook when you're not. This could lead to your Facebook password being stolen."
+                ],
+                'tld_mispositioned' => [
+                    "llama3.2-11b" => "The email address \"amazon.it@amazonservices.com.cz\" seems to be trying to trick you by using a mix of different country codes (.it,.com,.cz). This could be an attempt to make the email look more legitimate. If you click on the link \"https://amazonservices.com.cz/account.php\", you might be taken to a fake website that could steal your personal information.",
+                    "claude3.5sonnet" => "The website amazonservices.com.cz is trying to look like a real Amazon page by using 'amazon' in its address. This is a trick to make you think you're visiting Amazon when you're not. If you enter your login details, scammers could take control of your real Amazon account."
+                ]
+            };
+        }
+
+        $explanation = $explanations[$llm];  // choose the explanation of the related llm
+        return $explanation;
+    }
+
+    /**
+     * @param string $feature the name of the feature
+     * @param string $llm the name of the LLM
+     * @return string The detailed explanation in form of an image to be rendered
+     */
+    private function get_detailed_explanation(string $feature, string $llm, bool $counterfactual = false) : string {
+        $subfolder = $counterfactual ? "counterfactual" : "feature_based";
+        $img_path = asset("assets/img/detailed_warnings/$subfolder/$feature - $llm.png");
+        $detailed_explanation = `<img style="display: block; margin-left: auto; margin-right: auto;" src="$img_path" alt="" width="300" height="165" />`;
+        return $detailed_explanation;
+    }
+
+    private function get_near_date(): string
+    {
+        return Carbon::today()  // returns the date of today at 00:00
+        ->subDays(mt_rand(1, 15))  // get a date between 1 and 15 days in the past
+        ->addMinutes(mt_rand(540, 1320))  // add between 540 (09:00) and 1320 (22:00) minutes to 00:00
+        ->toDateTimeString();
+    }
+
+
+    /*
+        public function warning_browser(Request $request)
+        {
+            $decodedurl = urldecode($request->input('url'));
+            $backurl = urldecode($request->input('backurl'));
+            $parsedurl = parse_url($decodedurl);
+            $hostname = $parsedurl['host'];
+            $log = new ActivityLogs;
+            $log->user_id = Auth::id();
+            $log->url = $request->url();
+            $log->warning_type = "browser_native";
+            $log->user_action = "Warning mostrato";
+            $log->email_id = $request->input('email_id');
+            $log->save();
+            return view('chrome_warning', ['url' => $decodedurl, 'hostname' => $hostname, 'backurl' => $backurl, 'email_id' => $request->input('email_id')]);
+        }
+    */
 }

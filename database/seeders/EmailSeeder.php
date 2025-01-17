@@ -11,151 +11,13 @@ class EmailSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
+     * Insert the string {user_name} within the email->content to render the user's name
+     * Insert the string {now_email_datetime} within the email->content to render the current email's datetime (at runtime)
+     * Insert the string {yesterday_email_date} within the email->content to render yesterday's date wrt the email
      * @return void
      */
     public function run()
     {
-        function get_explanation ($type='basic', $url=null): string
-        {
-            /*$success = preg_match("/(?:https?:\/\/)?[^\/]*\//", $url, $matches);
-            if ($success) {
-                $url = substr($matches[0], 0, strlen($matches[0])-1);
-            }*/
-            switch ($type) {
-                case 'basic':
-                    //if ($url !== null)
-                    return "This email was blocked because it may trick you into doing something dangerous like installing software or revealing personal information like passwords or credit cards.";
-                    //else
-                    // return "";
-                    #return "The target URL in the mail can be a fake one. This site might be intended to take you to a different place. You might be disclosing private information.";
-                case 'image':
-                    return "In the e-mail there is an image, a typical element of possible malicious e-mails. There is a potential risk to your data if you continue";
-                case 'links':
-                    return "The presence of many links in the body makes the email suspicious. This email may have been created to cheat you. Your private information is at risk.";
-                case 'grammar':
-                    return "This email has many grammatical errors, a typical feature of a scam email. Your data could be stolen";
-                case 'spec_chars':
-                    return "Special characters have been detected in the email body. This increases the likelihood of the risk of having received a fake email. There is a potential risk of being scammed if you proceed";
-                case 'sus_words':
-                    return "Suspicious words such as “remove“ or “dear“ were found in the content of the e-mail. This is typical of fraudulent emails. Your private information is at risk.";
-                case 'age':
-                    return "The URL in the email leads to a website created recently. Young websites are famous for criminal activity. There is a potential risk if you proceed.";
-                case 'expiration':
-                    return "The URL in the email leads to a site hosted on a dangerous domain that is about to expire. This is typical of websites used only for criminal activity. Your private information may be stolen.";
-                case 'ranking':
-                    return "Google calculates a ranking for web pages. A high ranking indicates a high possibility that the searcher will click on this result. The URL in the email leads to a low-ranking website, typical of malicious websites. Proceeding might expose your private information to theft.";
-                case 'no_https':
-                    return "The e-mail contains a link to a website. However, this website has no certificate that guarantees a secure connection to the site. The absence of a certificate is a clear sign of a fake website. Your data is not safe.";
-                case 'self_https':
-                    return "A protected connection seems guaranteed by this website. Nevertheless, a self-signed certificate is adopted to create the connection. This is a reason why a website may be fake. You are likely to be exposed to the theft of private information";
-                case 'spec_chars_url':
-                    return "A URL made up of suspicious special characters was found in the email body. These types of URLs may be meant to take you to a different place. The risk of disclosing private information is high.";
-                case 'sensitive_words_url':
-                    return "The URL present in the e-mail body contains many sensitive words. This might happen when a URL is fraudulent. If you continue, you are likely to be exposed to the theft of private information";
-                case 'ip_url':
-                    return "The link in the email uses a string of numbers instead of a normal web address. This is unusual and often a sign of a fake site trying to steal your details. If you enter your information, it could be stolen and misused.";
-                    //return "Usually, websites use the URL instead of the IP address to make it easier for you to browse the web. However, an IP address was found in the email. Similar e-mails are harmful and steal private information. There is a potential risk of being cheated if you proceed.";
-                case 'link_mismatch':
-                    return "The link text says \"protect your account\", but it points somewhere else. This could trick you into visiting a harmful site. You might give away your personal details or password.";
-                    //return "This email reports a link that is different from the actual one ". $url .". This site might be intended to take you to a different place. You might be disclosing private information.";
-                case 'tld_mispositioned':
-                    return "The sender's email address has a familiar company name in an unusual place. This could trick you into thinking it's from a trusted source when it's not. If fooled, you might give away personal details to scammers.";
-                    //return "In the URL present in the email (". $url .") the top-level domain (e.g., “.com“) is in an abnormal position. This could indicate that the URL leads to a fake website. Such websites might steal your personal information";
-                case 'num_subdomains':
-                    return "There are many subdomains in the URL contained in the email. This anomaly is a sign of malicious email. Don't share your private information";
-                case 'url_length':
-                    return "There is a long URL in the email. An email with a very long URL is more likely to have criminal aims. Your information might be stolen if you proceed";
-                case 'url_shortened':
-                    return "The link in the email has been shortened through external services. This practice is used to hide the true destination of the link and avoid being detected as a scam site. If you proceed you will be exposed to a site that has the intent to steal your data";
-                default:
-                    return "";
-            }
-        }
-
-        // Detailed explanations
-        function get_detailed_explanation(string $feature, string $url) : string {
-            $detailed_explanations = match ($feature) {
-                'link_mismatch' =>  [
-                    [
-                        "feature" => "Displayed link different from actual URL",
-                        "explanation" => "The link text says 'protect your account' but the actual URL points to a suspicious address. This is a common tactic used in phishing emails to trick users into clicking on malicious links."
-                    ],
-                    [
-                        "feature" => "Generic greeting",
-                        "explanation" => "The email starts with 'Hello Alice,' which is slightly personalized but still generic. Legitimate companies often use more personalized greetings."
-                    ],
-                    [
-                        "feature" => "Suspicious URL",
-                        "explanation" => "The URL provided for account protection does not match the official Facebook domain. Always check the URL carefully before clicking."
-                    ],
-                    [
-                        "feature" => "Unexpected email",
-                        "explanation" => "Receiving an email about a password change that you did not initiate is a red flag. Always verify such claims through official channels."
-                    ],
-                    [
-                        "feature" => "Email formatting and content",
-                        "explanation" => "While the email mimics Facebook's style, there are subtle inconsistencies in formatting and language that can indicate it is not genuine."
-                    ]
-                ],
-                'ip_url' => [
-                    [
-                        "feature" => "Suspicious URL",
-                        "explanation" => "The email contains a URL that is an IP address (http://92.233.24.33/instagram/login.php). Legitimate companies typically use domain names rather than IP addresses."
-                    ],
-                    [
-                        "feature" => "Sender Email Address",
-                        "explanation" => "The sender's email address is 'noreply@lnstagram.com'. The domain 'lnstagram.com' is suspiciously similar to 'instagram.com', which is a common tactic used in phishing to deceive recipients."
-                    ],
-                    [
-                        "feature" => "Generic Greeting",
-                        "explanation" => "The email starts with 'Hey user,' instead of addressing the recipient by name. Legitimate companies usually personalize their emails."
-                    ],
-                    [
-                        "feature" => "Unusual Location",
-                        "explanation" => "The email mentions a login from 'Nashik, India' which might be unusual for the recipient. Phishing emails often use alarming information to prompt action."
-                    ],
-                    [
-                        "feature" => "Urgent Call to Action",
-                        "explanation" => "The email urges the recipient to 'click the link below and reset your password to be safe.' This creates a sense of urgency, which is a common phishing tactic."
-                    ]
-                ],
-                'tld_mispositioned' => [
-                    [
-                        "feature" => "Suspicious Sender Address",
-                        "explanation" => "The email is sent from 'amazon.it@amazonservices.com.cz', which is not a typical Amazon domain. Legitimate emails from Amazon would come from an '@amazon.com' domain."
-                    ],
-                    [
-                        "feature" => "Urgent Language",
-                        "explanation" => "The email states that the account will be permanently disabled within 24 hours, creating a false sense of urgency to rush the recipient into action."
-                    ],
-                    [
-                        "feature" => "Unusual URL",
-                        "explanation" => "The link provided in the email points to 'amazonservices.com.cz', which is not a standard Amazon URL. The '.com.cz' domain is suspicious and not typically associated with Amazon."
-                    ],
-                    [
-                        "feature" => "Generic Greeting",
-                        "explanation" => "The email starts with 'Dear Customer' instead of addressing the recipient by name, which is common in phishing emails."
-                    ],
-                    [
-                        "feature" => "Threatening Consequences",
-                        "explanation" => "The email threatens that the account will be permanently disabled, which is a tactic often used in phishing to scare recipients into compliance."
-                    ]
-                ],
-                default => "",
-            };
-            return json_encode($detailed_explanations);
-        }
-
-        function get_near_date(): string
-        {
-            return Carbon::today()  // returns the date of today at 00:00
-                ->subDays(mt_rand(1, 15))  // get a date between 1 and 15 days in the past
-                ->addMinutes(mt_rand(540, 1320))  // add between 540 (09:00) and 1320 (22:00) minutes to 00:00
-                ->toDateTimeString();
-        }
-
-
         //** LEGITIMATE EMAILS **
         // 1
         $email = new Email();
@@ -165,7 +27,7 @@ class EmailSeeder extends Seeder
         $email->preview_text = 'Hi {user_name}, this is to provide you with useful information regarding U2’s event scheduled in LONDON.';
         $email->content = '<p class="p1"><img style="display: block; margin-left: auto; margin-right: auto;" src="' . asset("/assets/img/email/ticketone.png"). '" alt="" width="300" height="113" /></p>
             <p class="p1">Hi {user_name},<br /><br />this is to provide you with useful information regarding <strong>U2’s event</strong> scheduled in <strong>LONDON</strong>.<br /><br />We confirm that the concert will be held this evening, <strong>November 16th</strong>, at <strong>The London Palladium</strong>.<br /><br />Below we report what the organizer shared:<br /><br />"U2 @ The London Palladium - IMPORTANT SERVICE INFORMATION: <br /><strong>The opening of the gates is scheduled for around 5:30 pm</strong>.<br /><br />We invite you not to go to the venue too early, also to avoid the hottest hours.<br /><br />U2\'s concert is supposed to start between 9.30 pm and 10 pm. <br /><br />At the end of the concert, it is advisable to wait at least half an hour before leaving the venue in order not to obstruct traffic. <br /><br />To assure safety, the outflow will be managed in stages by our security personnel, checking the exits at regular intervals of time.<br /><br />Inside the venue there are food & beverage areas, including vegetarian choices too.<br />The internal regulations of The London Palladium can be consulted at this link: <a href="https://lwtheatres.co.uk/lw-theatres-audience-guide/" style="text-decoration: underline; color: #0001F1;"><span class="s1">https://lwtheatres.co.uk/lw-theatres-audience-guide/</span></a><br /><br /><br />Kind Regards,<br />TicketOne Staff</p>';
-        $email->date = get_near_date();
+
         $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
@@ -176,7 +38,6 @@ class EmailSeeder extends Seeder
         $email->from_email = "no-reply@mycicero.eu";
         $email->subject = "End of parking confirmed";
         $email->preview_text = 'Your parking time is over. Dear user, your parking time is over.';
-        $email->date = get_near_date();
         $parking_date = Carbon::parse($email->date)->subDays(1)->format("Y-m-d");
         $email->content = '<div>
         <div class="adM"> </div>
@@ -246,7 +107,7 @@ class EmailSeeder extends Seeder
         <tr>
         <td> </td>
         <td style="padding-left: 10px; padding-top: 3px; padding-bottom: 3px; background: #white;" width="97%"><span style="font-family: Calibri,sans-serif; color: #4f4f4f; font-size: 1.1em;">
-        <strong> Date and time</strong>: '. $parking_date. ' 14:04 to '. $parking_date.' 14:36</span></td>
+        <strong> Date and time</strong>: {yesterday_email_date} 14:04 to {yesterday_email_date} 14:36</span></td>
         <td> </td>
         </tr>
         <tr>
@@ -323,7 +184,6 @@ class EmailSeeder extends Seeder
         <p class="p2"> </p>
         <p class="p1"><span class="s1">We’d like to</span> thank you for the trust you had put in us and hope you would like to entrust your policy to us in the future.</p>
         <p class="p1">Our best regards.</p></div>';
-        $email->date = get_near_date();
         $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
@@ -379,7 +239,6 @@ class EmailSeeder extends Seeder
         </tbody>
         </table>
         </div>';
-        $email->date = get_near_date();
         //$email->date = Carbon::parse('2022-08-19 15:28')->toDateTimeString();
         $email->show_warning = false;
         $email->type = 'inbox';
@@ -393,7 +252,6 @@ class EmailSeeder extends Seeder
         $email->preview_text = 'We have sent you this email to notify you of an update of the Terms of Service.';
         $email->content = file_get_contents(EMAIL_DIR . "/youtube_legit.htm");
         $email->content = str_replace ("____asset_path_____", asset("/assets/img/email/youtube.png"), $email->content);
-        $email->date = get_near_date();
         $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
@@ -415,7 +273,6 @@ class EmailSeeder extends Seeder
         Alternatively, you can also visit one of our branches near you - <a style="text-decoration: underline; color: #e31a0e;" href="https://www.unicredit.it/it/contatti-e-agenzie/locator.html">where is the closest branch?</a>
         </p>
         <br><p>Best regards,<br />UniCredit Bank</p></div>';
-        $email->date = get_near_date();
         $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
@@ -442,7 +299,6 @@ class EmailSeeder extends Seeder
         <br><p class="p1">For any further information, please read our guide to <strong>DAZN subscription plans</strong> at <a href="https://www.dazn.com">this link</a> or contact our <a href="https://www.dazn.com/contacts">customer service</a>.</p>
         <p class="p1"> </p>
         <p class="p1">The DAZN Team</p></div>';
-        $email->date = get_near_date();
         $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
@@ -459,7 +315,6 @@ class EmailSeeder extends Seeder
         <p>Thank you for having chosen our services.<br /><br />Best regards,<br />European Hospital spa</p>
         <p>
         <br/><img src="'.asset('/assets/img/email/farmacia.jpeg').'" alt="" width="100" height="75" /></p></div>';
-        $email->date = get_near_date();
         $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
@@ -471,7 +326,6 @@ class EmailSeeder extends Seeder
         $email->from_email = "accounts@unity3d.com";
         $email->preview_text = 'Here\'s how to renew your plan';
         $email->content = file_get_contents(EMAIL_DIR . "/unity_legit.htm");
-        $email->date = get_near_date();
         $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
@@ -484,7 +338,6 @@ class EmailSeeder extends Seeder
         $email->preview_text = 'Delivered: Your Amazon.com order';
         $email->content = file_get_contents(EMAIL_DIR . "/amazon_legit.htm");
         $email->content = str_replace('____asset_path_____', asset("img/email/amazon.jpg"), $email->content);
-        $email->date = get_near_date();
         $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
@@ -633,7 +486,6 @@ class EmailSeeder extends Seeder
             </td>
            </tr>
           </table>";
-        $email->date = get_near_date();
         $email->show_warning = false;
         $email->type = 'inbox';
         $email->save();
@@ -659,30 +511,27 @@ class EmailSeeder extends Seeder
         $email->subject = "New device login detected";
         $email->from_name = "Instagram";
         $email->from_email = "noreply@lnstagram.com";
-        $email->date = get_near_date();
         $email->preview_text = 'Dear user, we\'re writing to inform you that we detected a login to your account from a new device.';
-        $url = "http://92.233.24.33/instagram/login.php";
+        $email->phishing_url = "http://92.233.24.33/instagram/login.php";
         $email->content = '<div><p class="p1"><strong><img style="display: block; margin-left: auto; margin-right: auto;" src="'. asset("assets/img/email/instagram.png").'" alt="" width="300" height="165" /></strong><strong>Hey user,</strong></p>
         <p> </p>
         <p class="p1">We\'re writing to inform you that we detected a login to your account from a new device.<br /><br /></p>
         <p class="p1"><strong>When:</strong></p>
-        <p class="p1"><em> '.  $email->date .'</em></p>
+        <p class="p1"><em> {now_email_datetime} </em></p>
         <p class="p1"><strong>Device:</strong></p>
         <p class="p1"><em>Huawei P30 Pro</em></p>
         <p class="p1"><strong>Near:<span class="Apple-converted-space"> </span></strong></p>
         <p class="p1"><em>Nashik, India<br /><br /></em></p>
         <p class="p1"><strong>If this was you</strong>, you can ignore this message.<br /><br /></p>
         <p class="p1"><strong>If this wasn\'t you</strong>, click the link below and reset your password to be safe.<br>
-        <a id="phishing_link" href="'. $url .'" style="text-decoration: underline; color:#3366CC;">instagram.com/reset.</a>
+        <a id="phishing_link" href="'. $email->phishing_url .'" style="text-decoration: underline; color:#3366CC;">instagram.com/reset.</a>
         </p>
         <br/>
         <p class="p1" style="margin-bottom: 5rem">Sincerely,<br/>Instagram Technical Staff</p>
         </div>';
+        $email->phishing_feature = "ip_url";
         $email->type = 'inbox';
         $email->show_warning = true;
-        $email->warning_explanation_1 = get_explanation("basic", $url);
-        $email->warning_explanation_2 = get_explanation("ip_url", $url);
-        $email->detailed_explanation = get_detailed_explanation("ip_url", $url);
         $email->save();
 
 
@@ -692,7 +541,7 @@ class EmailSeeder extends Seeder
         $email->from_name = "Amazon";
         $email->from_email = "amazon.it@amazonservices.com.cz";
         $email->preview_text = 'Hello customer, We have faced some problems with your account.';
-        $url = "https://amazonservices.com.cz/account.php";
+        $email->phishing_url = "https://amazonservices.com.cz/account.php";
 
         $email->content = '<div><p class="p1"><img src="'. asset("/assets/img/email/amazon.jpg"). '" alt="" width="100" /></p>
         <p class="p1">Dear Customer,<br /><br />
@@ -703,16 +552,13 @@ class EmailSeeder extends Seeder
         You can proceed to the updating procedure by clicking the link below:</p>
         <br>
         <div style="margin-left: auto; margin-right: auto; border-radius: 5px; background-color: #ffd814; color: #000000; display: inline-block; text-align: center;" align="center" id="tooltip-button">
-            <a style="color: #000000; text-decoration: none; display: block; padding: 14px 30px 15px;" id="phishing_link" href="'. $url. '"> Update now </a>
+            <a style="color: #000000; text-decoration: none; display: block; padding: 14px 30px 15px;" id="phishing_link" href="'. $email->phishing_url. '"> Update now </a>
             </div>
         <br><br><p class="p1">Thank you for being part of the Amazon community,<span class="Apple-converted-space"> </span></p>
         <p class="p1">we look forward to hearing from you soon.</p><br>
         <p class="p1">Best regards, <br>Amazon Customer Service</p></div>';
+        $email->phishing_feature = "tld_mispositioned";
         $email->show_warning = true;
-        $email->warning_explanation_1 = get_explanation("basic", $url);
-        $email->warning_explanation_2 = get_explanation("tld_mispositioned", $url);
-        $email->detailed_explanation = get_detailed_explanation("tld_mispositioned", $url);
-        $email->date = get_near_date();
         $email->type = 'inbox';
         $email->save();
 
@@ -722,7 +568,7 @@ class EmailSeeder extends Seeder
         $email->from_name = "Facebook";
         $email->from_email = "security@facebookmail.com";
         $email->preview_text = 'Hello {user_name}, Your Facebook password has been modified.';
-        $url = "https://www.facebook.com/hacked/disavow?u=100000125023309&amp;nArdInDS2&amp;lit_IT&amp;ext1548538159";
+        $email->phishing_url = "https://www.facebook.com/hacked/disavow?u=100000125023309&amp;nArdInDS2&amp;lit_IT&amp;ext1548538159";
         $email->content ='<body style="margin:0;padding:0;" dir="ltr" bgcolor="#ffffff">
           <table border="0" cellspacing="0" cellpadding="0" align="center" id="email_table" style="border-collapse:collapse;">
             <tr>
@@ -738,7 +584,7 @@ class EmailSeeder extends Seeder
                             <td style="font-size:14px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;color:#3D4452;padding-bottom:6px;">Hello {user_name},</td>
                           </tr>
                           <tr>
-                            <td style="font-size:14px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;color:#3D4452;padding-top:6px;padding-bottom:6px;">Your Facebook password has been modified on {now_date}
+                            <td style="font-size:14px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;color:#3D4452;padding-top:6px;padding-bottom:6px;">Your Facebook password has been modified on {now_email_datetime}
                             </td>
                           </tr>
                           <tr>
@@ -780,7 +626,7 @@ class EmailSeeder extends Seeder
                           <tr>
                             <td style="font-size:14px;font-family:LucidaGrande,tahoma,verdana,arial,sans-serif;color:#3D4452;padding-top:6px;padding-bottom:6px;">
                               <strong>If it wasn\'t you,</strong> <br/>
-                              <a href="'. $url .'" id="phishing_link" style="color:#3b5998;text-decoration:none;">protect your account</a>
+                              <a href="'. $email->phishing_url .'" id="phishing_link" style="color:#3b5998;text-decoration:none;">protect your account</a>
                             </td>
                           </tr>
                           <tr>
@@ -835,11 +681,8 @@ class EmailSeeder extends Seeder
           </table>
           </body>
         ';
+        $email->phishing_feature = "link_mismatch";
         $email->show_warning = true;
-        $email->warning_explanation_1 = get_explanation("basic", $url);
-        $email->warning_explanation_2 = get_explanation("link_mismatch", $url);
-        $email->detailed_explanation = get_detailed_explanation("link_mismatch", $url);
-        $email->date = get_near_date();
         $email->type = 'inbox';
         $email->save();
 

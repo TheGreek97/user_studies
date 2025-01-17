@@ -4,17 +4,6 @@ use \Illuminate\Support\Facades\Auth;
 $warning_type = Auth::user()->warning_type;
 $show_explanation = Auth::user()->show_explanation;
 $show_details = Auth::user()->show_details;
-if (! $show_explanation) {
-    $warning_explanation = "warning_explanation_1"; // Generic explanation message
-} else {
-    $warning_explanation = "warning_explanation_2"; // Specific explanation message
-}
-
-/*if (\Illuminate\Support\Facades\Auth::id() % 2 == 0)
-    $random_warning_explanation = "warning_explanation_1";
-else
-    $random_warning_explanation = "warning_explanation_2";
-*/
 ?>
 <x-app-layout>
     <x-slot name="slot">
@@ -524,7 +513,7 @@ else
                     </div>
                 </header>
 
-                <main class="h-full overflow-y-auto">
+                <main class="h-full overflow-y-auto mb-6">
                     <div class="container px-6 mx-auto grid mb-10">
                         @if(!isset($selected_email))
                             <h2
@@ -579,7 +568,7 @@ else
                                                 <tr class="text-gray-700 cursor-pointer hover:bg-gray-200 hover:dark:bg-gray-600 dark:text-gray-400"
                                                     @if($email->type === "inbox")
                                                         @if($email->show_warning && $warning_type === "popup_email")
-                                                            onclick="open_warning('{{ route('show', ['folder' => $folder,'id' => $email->id]) }}', {{ $email->id }}, '{!! $email->$warning_explanation !!}')"
+                                                            onclick="open_warning('{{ route('show', ['folder' => $folder,'id' => $email->id]) }}', {{ $email->id }}, '{!! $email->warning_explanation !!}')"
                                                         @else
                                                             onclick="window.location.href = '{{ route('show', ['folder' => $folder, 'id' => $email->id]) }}'"
                                                         @endif
@@ -798,8 +787,8 @@ $( () => {
         e.preventDefault();
         e.stopPropagation();
         let url = new URL(phishing_link.attr('href'));
-        let warning_message = `{!! $show_explanation ? $selected_email->$warning_explanation : __('warning.no_explanation_website') !!}`
-        let detailed_explanation = `{!! $show_details !== 'no' ? $selected_email->detailed_explanation : ''  !!}`
+        let warning_message = `{!! $show_explanation ? $selected_email->warning_explanation : __('warning.no_explanation_website') !!}`
+        let detailed_explanation = `{!! /* $show_details !== 'no' ? $selected_email->detailed_explanation : ''  */ ""!!}`
         open_warning(url.hostname, {{ $selected_email->id }}, warning_message, detailed_explanation, url);
     });
     @elseif($warning_type == "popup_email" && $selected_email->show_warning)  // Prevent visiting the phishing link in the popup email condition (after having ignored the warning)
@@ -826,7 +815,7 @@ $( () => {
     let tooltips = $(".tooltip")
     let allow_to_go_back  // Ensures the user stays on a phishing email for a minimum of X seconds before allowing them to go back
     let phishing_link_html = $("#phishing_link")
-    let explanation = "{{ $selected_email->$warning_explanation }}"
+    let explanation = "{{ $selected_email->warning_explanation }}"
     let default_explanation = `Link goes to: <br> <a href="${phishing_link_html.attr("href")}" style="text-decoration: underline;/* color: #0001F1; */" id="actual_phishing_link"><span class="s2">${phishing_link_html.attr("href")}</span></a>`
     if ("{{$show_explanation}}" === "1") {
         explanation = explanation + "<br/>" + default_explanation
@@ -929,7 +918,7 @@ $( () => {
     @elseif($selected_email->warning_type == "base_passive")
         banner = $("#passive_banner"); // TO DO: Implement passive banners (if needed)
         banner.show();
-        banner.innerHTML = "{{$selected_email->$warning_explanation}}"
+        banner.innerHTML = "{{$selected_email->warning_explanation}}"
     --}}
     @endif
 @endif

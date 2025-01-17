@@ -28,8 +28,11 @@ class StudyAuth
             $new_user->email = 'alice1994@livemail.it';
             $new_user->password = Hash::make('prolific');
             $new_user->warning_type = $least_popular_condition["type"];
-            $new_user->show_explanation = $least_popular_condition["explanation"];
-            $new_user->show_details = $least_popular_condition["details"] ?? "no";
+            $new_user->show_explanation = $least_popular_condition["show_explanation"];
+            $new_user->show_details = $least_popular_condition["show_details"];
+            $new_user->llm = $least_popular_condition["llm"];
+            $new_user->explanation_type = $least_popular_condition["explanation_type"];
+
             $new_user->save();
             Auth::login($new_user);
         }
@@ -40,42 +43,55 @@ class StudyAuth
     /*
      * Returns the least popular condition (not showing details, showing details always, or only on-demand) for study #2
      */
-    #[ArrayShape(["type" => "string", "explanation" => "boolean", "details" => "string"])]
+    #[ArrayShape(["type" => "string", "show_explanation" => "boolean", "show_details" => "string", "llm" => "string",
+        "explanation_type" => "string"])]
     private function getWarningTypeToAssign(): array
     {
         $users = DB::table('users')
-            ->select('show_details', DB::raw('count(*) as total'))
+            ->select('llm', 'explanation_type', DB::raw('count(*) as total'))
             ->whereNotNull('study_completed')
             ->where('warning_type', '=', 'popup_link')
             ->where('show_explanation', '=', '1')
-            ->groupBy('show_details')
+            ->whereNotNull(['llm', 'explanation_type'])
+            ->groupBy('llm', 'explanation_type')
             ->get();
 
-        $conditions_count= [];
-        foreach (["no", "always", "on_demand"] as $cond) {
-            $temp_group = $users->where('show_details', "=", $cond)->first();
+        //$show_details = StudyAuth::getLeastPopularValueInColumn($users, "show_details", ["no", "on_demand"]);
+        $llm = StudyAuth::getLeastPopularValueInColumn($users, "llm", ["llama3.2-11b", "claude3.5sonnet"]);
+        $explanation_type = StudyAuth::getLeastPopularValueInColumn($users, "explanation_type", ["feature_based", "counterfactual"]);
+
+        return ["type" => "popup_link", "show_explanation" => 1, "show_details" => "no",
+            "llm" => $llm, "explanation_type" => $explanation_type];
+    }
+
+
+    private function getLeastPopularValueInColumn($users, $column, $values): string
+    {
+        $conditions_count_details= [];
+        foreach ($values as $cond) {
+            $temp_group = $users->where($column, "=", $cond)->first();
             if ($temp_group) {
-                $conditions_count[$cond] = $temp_group->total;
+                $conditions_count_details[$cond] = $temp_group->total;
             } else {
-                $conditions_count[$cond] = 0;
+                $conditions_count_details[$cond] = 0;
             }
         }
         # Take the condition with the minimum value
-        $condition_to_assign = array_keys($conditions_count, min($conditions_count));
-        if (count($condition_to_assign) > 1) {  // If there are 2 or more minimum values, take one condition at random between them
-            $random_idx = rand(0, count($condition_to_assign)-1);
-            $condition_to_assign = $condition_to_assign[$random_idx];
+        $conditions_array = array_keys($conditions_count_details, min($conditions_count_details));
+        if (count($conditions_array) > 1) {  // If there are 2 or more minimum values, take one condition at random between them
+            $random_idx = rand(0, count($conditions_array)-1);
+            $least_popular_condition = $conditions_array[$random_idx];
         } else {
-            $condition_to_assign = $condition_to_assign[0];
+            $least_popular_condition = $conditions_array[0];
         }
-        return ["type" => "popup_link", "explanation" => 1, "details" => $condition_to_assign];
+        return $least_popular_condition;
     }
 
 
     /*
      * [OLD] Returns the least popular warning type. This method was used to assign users to conditions in the first
      * studies (with 900 participants)
-     */
+
     #[ArrayShape(["type" => "string", "explanation" => "boolean"])]
     private function getWarningTypeToAssign_old(): array
     {
@@ -165,7 +181,5 @@ class StudyAuth
             'active_after_no_exp' => 0
         };
         return ["type" => $type, "explanation" => $show_explanation];
-    }
-
-
+    }  */
 }
