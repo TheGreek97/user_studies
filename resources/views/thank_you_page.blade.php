@@ -26,8 +26,8 @@
                         CYS group, King's College London, UK
 
                         <div class="mt-6 flex flex-row justify-center">
-                            <img src="{{asset("/assets/img/UNIBA_logo.svg")}}" alt="university of bari logo" style="max-width: 25%">
-                            <img src="{{asset("/assets/img/UNICA_logo.png")}}" alt="university of bari logo" style="max-width: 25%">
+                            <img src="{{asset("/assets/img/UNIBA_logo.svg")}}" alt="university of Bari logo" style="max-width: 25%">
+                            <img src="{{asset("/assets/img/UNICA_logo.png")}}" alt="university of Cagliari logo" style="max-width: 25%">
                             <img src="{{asset("/assets/img/KCL_logo.png")}}" alt="king's college london logo" style="max-width: 20%">
                             <img src="{{asset("/assets/img/IVUx-Logo.svg")}}" alt="ivu lab logo" style="max-width: 25%">
                         </div>

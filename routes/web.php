@@ -73,7 +73,11 @@ Route::middleware([
     Route::post('/nextstep/{mail?}', [Questionnaire::class, 'storeEmailQuestionnaire']); //->name('next_step');
 
     Route::get('/finish', function (){
-        return view("thank_you_page");
+        if (Auth::user() && Auth::user()->study_completed == null) { // If study not completed
+            return redirect(route('next_step'));
+        } else {
+            return view("thank_you_page");
+        }
     })->name('thankyou');
 
     Route::get('/debriefing', function() {
