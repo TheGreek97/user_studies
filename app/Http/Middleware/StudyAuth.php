@@ -20,19 +20,30 @@ class StudyAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user() === null) {
-            $least_popular_condition = $this->getWarningTypeToAssign();
+        $prolificId = $request->query('PROLIFIC_PID');
+
+        if ($prolificId && User::hasCompletedPreviousStudy($prolificId)) {  //  user already executed the study on Prolific
+            $user = User::where('prolific_id_auto', $prolificId)
+                ->whereNotNull('study_completed')
+                ->first();
+            session(['study_already_taken' => '1']);
+            session(['consent' => '1']);
+            Auth::login($user);
+        } else if (Auth::user() === null) {
+           // new user
+           $least_popular_condition = $this->getWarningTypeToAssign();
 
             $new_user = new User();
             $new_user->name = "Alice";
-            $new_user->email = 'alice1994@livemail.it';
+            $birth_year = now()->year - 28;  // Alice is 28 years old, according to the scenario
+            $new_user->email = "alice$birth_year@livemail.it";
             $new_user->password = Hash::make('prolific');
             $new_user->warning_type = $least_popular_condition["type"];
             $new_user->show_explanation = $least_popular_condition["show_explanation"];
             $new_user->show_details = $least_popular_condition["show_details"];
             $new_user->llm = $least_popular_condition["llm"];
             $new_user->explanation_type = $least_popular_condition["explanation_type"];
-
+            $new_user->prolific_id_auto = $prolificId;
             $new_user->save();
             Auth::login($new_user);
         }
@@ -47,7 +58,6 @@ class StudyAuth
         "explanation_type" => "string"])]
     private function getWarningTypeToAssign(): array
     {
-
         // Step 1: Define possible values for 'llm' and 'explanation_type'
         $llmValues = ['llama3_3', 'claude3_5'];
         $explanationValues = ['feature_based', 'counterfactual'];

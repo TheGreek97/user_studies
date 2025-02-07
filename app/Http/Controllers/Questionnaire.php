@@ -28,9 +28,11 @@ class Questionnaire extends Controller
     {
         $user = Auth::user();
         $warning_image = $this->getWarningToShow($user);
-
+        return view('followupquestionnaire')
+            ->with("user_ignored_warning", Auth::user()->ignored_warning)
+            ->with("url_image_warning", $warning_image);
         if (Auth::user()->followUpQuestionnaire != null) {
-            return redirect(route('thankyou'));
+            return redirect(route('thank_you'));
         } elseif (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) < MailController::MAILS_NUMBER) {
             return redirect(route('show', ['folder' => 'inbox']));
         } else {
@@ -107,7 +109,7 @@ class Questionnaire extends Controller
         $user->expertise_score = $this->computeExpertiseScore($answers);
         $user->study_completed = Carbon::now();
         $user->save();
-        return redirect(route('thankyou'));
+        return redirect(route('thank_you'));
     }
 
     private function computeExpertiseScore($q){

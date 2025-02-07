@@ -25,7 +25,7 @@
                             @if($user->shown_warning > 0) {{-- it means that the user was shown a warning --}}
                                 You were exposed to this type of alert during the study:
                             @else   {{-- it means that the user was not shown a warning during the study --}}
-                                Image that the following alert would have been shown when a link in an email was
+                                Imagine that the following alert would have been shown when a link in an email was
                             @if($user->warning_type === "tooltip") hovered: @else clicked: @endif
                             @endif
                         </p>
@@ -301,6 +301,7 @@
                                 </div>
                             </div>
                         </div>
+                        {{--
                         @if ($user_ignored_warning)
                             <div class="my-10">
                                 <p class="font-bold pb-1">Why did you choose to ignore the warning?</p>
@@ -309,6 +310,7 @@
                                        class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"/>
                             </div>
                         @endif
+                        --}}
                         <div class="my-10">
                             <p class="font-bold pb-1">What is the first word in this warning dialog?</p>
                             <input required type="text" name="first_word"

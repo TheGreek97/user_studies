@@ -89,7 +89,7 @@ class MailController extends Controller
             }
         } else {  // If all emails have been seen by the participant, show them the last part of the study
             if ($auth_user->followUpQuestionnaire != null) {
-                return redirect(route('thankyou'));  // Be sure that the user has not filled in the questionnaire already
+                return redirect(route('thank_you'));  // Be sure that the user has not filled in the questionnaire already
             } else {
                 return redirect(route('debriefing'));  // the questionnaires come after the debriefing
             }
