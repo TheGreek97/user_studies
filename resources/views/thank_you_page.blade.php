@@ -17,7 +17,7 @@
                         <br><br>
                         <b>IMPORTANT!</b> In order to prove your participation to this study and be rewarded, <b>you must go back to ©Prolific</b> by <br/>
                         <div class="text-center mt-2">
-                            <a href="https://app.prolific.co/submissions/complete?cc=C19FFAV6" style="color:dodgerblue; text-decoration: underline; font-weight: bold">CLICKING HERE</a>
+                            <a href="https://app.prolific.com/submissions/complete?cc=CNC6Y0RK" style="color:dodgerblue; text-decoration: underline; font-weight: bold">CLICKING HERE</a>
                         </div>
                         <br>
                         Goodbye!<br>
