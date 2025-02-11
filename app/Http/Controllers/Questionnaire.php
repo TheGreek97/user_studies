@@ -28,9 +28,6 @@ class Questionnaire extends Controller
     {
         $user = Auth::user();
         $warning_image = $this->getWarningToShow($user);
-        return view('followupquestionnaire')
-            ->with("user_ignored_warning", Auth::user()->ignored_warning)
-            ->with("url_image_warning", $warning_image);
         if (Auth::user()->followUpQuestionnaire != null) {
             return redirect(route('thank_you'));
         } elseif (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) < MailController::MAILS_NUMBER) {
@@ -100,7 +97,9 @@ class Questionnaire extends Controller
         $user->gender = $request->gender;
         $user->age = $request->age;
         $user->num_hours_day_internet = $request->num_hours_day_internet;
-        $user->prolific_id = $request->prolific_id;
+        if ($request->prolific_id) {
+            $user->prolific_id = $request->prolific_id;
+        }
         $answers = [];
         for ($i=1; $i<=10; $i++){
             $question = "cyber_".$i;

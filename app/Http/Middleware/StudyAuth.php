@@ -20,32 +20,37 @@ class StudyAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        $prolificId = $request->query('PROLIFIC_PID');
-
-        if ($prolificId && User::hasCompletedPreviousStudy($prolificId)) {  //  user already executed the study on Prolific
-            $user = User::where('prolific_id_auto', $prolificId)
-                ->whereNotNull('study_completed')
-                ->first();
-            session(['study_already_taken' => '1']);
-            session(['consent' => '1']);
-            Auth::login($user);
-        } else if (Auth::user() === null) {
-           // new user
-           $least_popular_condition = $this->getWarningTypeToAssign();
+        $prolificId_request = $request->query('PROLIFIC_PID');
+        if ($prolificId_request) {
+            $user= User::userCompletedPreviousStudy($prolificId_request);
+            if ($user !== null) {  //  user already executed the study on Prolific
+                session(['study_already_taken' => '1']);
+                session(['consent' => '1']);
+                Auth::login($user);
+            }
+        }
+        if (Auth::user() === null) {
+           // create new user
+            $least_popular_condition = $this->getWarningTypeToAssign();
 
             $new_user = new User();
             $new_user->name = "Alice";
             $birth_year = now()->year - 28;  // Alice is 28 years old, according to the scenario
             $new_user->email = "alice$birth_year@livemail.it";
-            $new_user->password = Hash::make('prolific');
+            $new_user->password = Hash::make('prolific');  // dummy password -> not used
             $new_user->warning_type = $least_popular_condition["type"];
             $new_user->show_explanation = $least_popular_condition["show_explanation"];
             $new_user->show_details = $least_popular_condition["show_details"];
             $new_user->llm = $least_popular_condition["llm"];
             $new_user->explanation_type = $least_popular_condition["explanation_type"];
-            $new_user->prolific_id_auto = $prolificId;
+            $new_user->prolific_id = $prolificId_request;
             $new_user->save();
             Auth::login($new_user);
+        } else {
+            if ($prolificId_request){
+                Auth::user()->prolific_id = $prolificId_request;
+                Auth::user()->save();
+            }
         }
         return $next($request);
     }

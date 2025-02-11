@@ -16,7 +16,7 @@ class Controller extends BaseController
 
     public function download_info_sheet(Request $request)
     {
-        Storage::disk('local')->put('example.txt', 'Contents');
+        //Storage::disk('local')->put('example.txt', 'Contents');
         $file_name = "information-sheet-for-anonymous-studies.pdf";
         //$file_public_path = asset('storage/'. $file_name);
         try {

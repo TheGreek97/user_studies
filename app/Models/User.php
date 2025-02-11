@@ -5,7 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+    use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -33,8 +33,7 @@ class User extends Authenticatable
         'shown_warning',
         'expertise_score',
         'study_completed',
-        'prolific_id',
-        'prolific_id_auto'
+        'prolific_id'
     ];
 
     protected $guarded = [
@@ -87,15 +86,15 @@ class User extends Authenticatable
         return $this->hasMany(ActivityLogs::class);
     }
 
-    public static function hasCompletedPreviousStudy($prolificId): bool
+    public static function userCompletedPreviousStudy($prolificId)
     {
         if ($prolificId == null) {
-            return false;
+            return null;
         }
-        // Query the database to find the user by the prolific_id_auto column
+        // Query the database to find the user by the prolific_id column
         return DB::table('users')
-            ->where('prolific_id_auto', $prolificId)
+            ->where('prolific_id', $prolificId)
             ->whereNotNull('study_completed')
-            ->exists();
+            ->first();
     }
 }
