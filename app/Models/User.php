@@ -92,8 +92,7 @@ class User extends Authenticatable
             return null;
         }
         // Query the database to find the user by the prolific_id column
-        return DB::table('users')
-            ->where('prolific_id', $prolificId)
+        return User::where('prolific_id', $prolificId)
             ->whereNotNull('study_completed')
             ->first();
     }

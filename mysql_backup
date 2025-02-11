@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# MySQL credentials
+# mysql_user="laravel"
+# mysql_password=""
+mysql_loginpath="local" # Set with mysql_config_editor set --login-path=local --host=localhost --user=laravel --password
+database_name="email_client_phishing_test"
+remote_folder="/WarningMessagesStudyBackup/"
+
+# Backup file name
+backup_file="backup_$(date +%Y%m%d%H%M%S).sql"
+
+# Perform MySQL backup
+# mysqldump -u "$mysql_user" -p"$mysql_password" "$database_name" > "$backup_file"
+mysqldump --login-path="$mysql_loginpath" "$database_name" > "$backup_file"
+
+
+gzip "$backup_file" # Compress the dump
+
+# Upload the backup to OneDrive using rclone
+rclone copy "$backup_file.gz" dropbox:"$remote_folder"
+
+# Clean up the local backup file (optional)
+rm "$backup_file.gz"
+
+# Output a debug message
+current_dt=$(date "+%H:%M:%S %d/%m/%y") # get current datetime
+
+echo "Performed dataset backup at ${current_dt}"

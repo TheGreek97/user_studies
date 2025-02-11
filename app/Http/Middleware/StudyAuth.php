@@ -26,6 +26,7 @@ class StudyAuth
             if ($user !== null) {  //  user already executed the study on Prolific
                 session(['study_already_taken' => '1']);
                 session(['consent' => '1']);
+		Auth::logout();  // logout any previous user and login as the new one (who completed the study)
                 Auth::login($user);
             }
         }
