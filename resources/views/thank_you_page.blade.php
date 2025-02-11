@@ -19,6 +19,10 @@
                         <div class="text-center mt-2">
                             <a href="https://app.prolific.com/submissions/complete?cc=CNC6Y0RK" style="color:dodgerblue; text-decoration: underline; font-weight: bold">CLICKING HERE</a>
                         </div>
+                        <div class="text-center mt-2">
+                            If the link is not working, copy the following URL in the address bar of your browser: <br>
+                            https://app.prolific.com/submissions/complete?cc=CNC6Y0RK
+                        </div>
                         <br>
                         Goodbye!<br>
                         <div style="font-style: italic">
