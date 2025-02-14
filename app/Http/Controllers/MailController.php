@@ -16,11 +16,44 @@ class MailController extends Controller
 
     public function show($folder = 'inbox', $id = null)
     {
+
+        // Logging to track redirection logic along with session data for debugging
+        //Log::info('Current route: ' . FRequest::url());
+        //Log::info('Current session:', session()->all());
+
         if (!session()->has('consent')) {
             return redirect(route('welcome'));
         }
         $auth_user = Auth::user();
         info("ID " . $id);
+
+        //First shows the 3 questionnaires
+        if (!session()->has('questionnaires_done')) {
+
+            if (session()->has('questionnaire1_view') && session('questionnaire1_view') === true) {
+                return view('questionnaires.bfi2xs');
+            } elseif (session()->has('questionnaire2_view') && session('questionnaire2_view') === true) {
+                return view('questionnaires.stp-ii-b');
+            } elseif (session()->has('questionnaire3_view') && session('questionnaire3_view') === true) {
+                return view('questionnaires.tei-que-sf');
+            }
+            
+            return view('questionnaires_screen');
+
+        }
+        if(session()->has('questionnaire_5done') ) {
+            return redirect(route('thankyou'));
+        }
+
+        //Final Demographic Questionnaire (and PROLIFIC ID)
+        if(session()->has('questionnaire_4done') ) {
+            return view('questionnaires.demographicQuestionnaire');
+        }
+        //Training Reaction Questionnaire
+        if (session()->has('questionnaire4_view') && session('questionnaire4_view') === true) {
+            return view('questionnaires.training_reaction_questionnaire');
+        }
+        //Else: EMAIL CLASSIFICATION     
         $emails = DB::table('emails')
             ->where('type', $folder)
             ->get();
@@ -80,18 +113,31 @@ class MailController extends Controller
                 return redirect(route('show', ['folder' => $folder, 'emails' => $emails]));
             }
         }  // Else, show the mails list
-        if (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) < self::MAILS_NUMBER) {
-            if (session()->has('startStudy')) {
-                session()->remove('startStudy');
-                return view('email_page', ['folder' => $folder, 'emails' => $emails, 'startStudy' => true]);
-            } else {
-                return view('email_page', ['folder' => $folder, 'emails' => $emails]);
+        if(!session('post_phase')){
+            //PRE-CLASSIFICATION
+            if (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) < self::MAILS_NUMBER) {
+                if (session()->has('startStudy')) {
+                    session()->remove('startStudy');
+                    return view('email_page', ['folder' => $folder, 'emails' => $emails, 'startStudy' => true]);
+                } else {
+                    return view('email_page', ['folder' => $folder, 'emails' => $emails]);
+                }
+            } else {  // If all emails have been seen by the participant, show them the training
+                    return redirect(route('training'));
             }
-        } else {  // If all emails have been seen by the participant, show them the last part of the study
-            if ($auth_user->followUpQuestionnaire != null) {
-                return redirect(route('thank_you'));  // Be sure that the user has not filled in the questionnaire already
-            } else {
-                return redirect(route('debriefing'));  // the questionnaires come after the debriefing
+        } else {
+            //POST-CLASSIFICATION    (double the count of answers for user)
+            if (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) < (self::MAILS_NUMBER * 2)) {
+                if (session()->has('startStudy')) {
+                    session()->remove('startStudy');
+                    return view('email_page', ['folder' => $folder, 'emails' => $emails, 'startStudy' => true]);
+                } else {
+                    return view('email_page', ['folder' => $folder, 'emails' => $emails]);
+                }
+            } else {  
+                //Training Reaction Questionnaire
+                session(['questionnaire4_view' => true]);
+                return redirect(route('questionnaire4'));
             }
         }
     }

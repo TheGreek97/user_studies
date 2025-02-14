@@ -1,15 +1,17 @@
 <x-app-layout>
     <x-slot name="slot">
-       <div class="min-h-screen bg-gray-200 flex justify-center items-center">
+        <div class="min-h-screen bg-gray-200 flex justify-center items-center">
             <div class="p-12 m-10 bg-white rounded-2xl shadow-xl z-20">
                 <div class="text-left font-bold my-3 text-3xl w-full">
-                    Thank you for accepting our invitation to participate in our study <br> <i>"Evaluation of an email client"</i>
+                    Thank you for accepting our invitation to participate in our study <br> <i>"Evaluation of an email
+                        client"</i>
                     <div class="font-medium text-lg mt-5">
                         Ethical Clearance Reference Number: HR-23/24-41353
                         <br>
                         Version Number: 09/05/24
                         <br>
-                        YOU CAN DOWNLOAD A COPY OF THIS INFORMATION SHEET BY <a class="font-bold underline" href="{{route("download_information_sheet")}}" target="_blank">CLICKING HERE</a>
+                        YOU CAN DOWNLOAD A COPY OF THIS INFORMATION SHEET BY <a class="font-bold underline"
+                            href="{{route("download_information_sheet")}}" target="_blank">CLICKING HERE</a>
                     </div>
                 </div>
                 <p class="text-xl max-w-4xl text-left pt-4 font-bold capitalize">
@@ -26,7 +28,8 @@
                     Ask me if there is anything that is not clear or if you would like more information.
                 </p>
 
-                <div class="text-lg pt-3 font-bold italic" style="color:darkred"> What is the purpose of the study?</div>
+                <div class="text-lg pt-3 font-bold italic" style="color:darkred"> What is the purpose of the study?
+                </div>
                 <p class="text-xl max-w-4xl text-left pt-4">
                     The purpose of the study is the usability evaluation of the prototype of an email client we are
                     developing. We are indeed testing this prototype with users to address possible usability
@@ -107,7 +110,8 @@
                     information you provide will not allow you to be identified in any research
                     outputs/publications. Your data will be held securely for a minimum of 10 years after the
                     study has been completed, as recommended by
-                    <a href="https://www.ukri.org/wp-content/uploads/2021/08/MRC-0208212-Good-research-practice_2014.pdf">
+                    <a
+                        href="https://www.ukri.org/wp-content/uploads/2021/08/MRC-0208212-Good-research-practice_2014.pdf">
                         MRC principles and guidelines for good research practice</a>.
                     The stored data in its raw form will only be used by the research team.
                     The data will be stored in the ReCaS data center of the University of Bari, Italy.
@@ -132,29 +136,34 @@
                     If you have any questions or require more information about this study, please contact me
                     using the following contact details:
                     <br><br>
-                    Francesco Greco: <a href="mailto:francesco.greco@kcl.ac.uk">francesco.greco@kcl.ac.uk</a>, <a href="tel:+44 (0)20 78482078">+44 (0)20 78482078</a>
+                    Francesco Greco: <a href="mailto:francesco.greco@kcl.ac.uk">francesco.greco@kcl.ac.uk</a>, <a
+                        href="tel:+44 (0)20 78482078">+44 (0)20 78482078</a>
                 </p>
 
-                <div class="text-lg pt-3 font-bold italic">What if I have further questions, or if something goes wrong?</div>
+                <div class="text-lg pt-3 font-bold italic">What if I have further questions, or if something goes wrong?
+                </div>
                 <p class="text-xl max-w-4xl text-left pt-4">
                     If this study has harmed you in any way or if you wish to make a complaint about the conduct
                     of the study you can contact King's College London using the details below for further advice
                     and information:
                     <br><br>
-                    Prof. Luca Viganò: <a href="mailto:luca.vigano@kcl.ac.uk">luca.vigano@kcl.ac.uk</a>, <a href="tel:+44 (0)20 78482078">+44 (0)20 78482078</a>
+                    Prof. Luca Viganò: <a href="mailto:luca.vigano@kcl.ac.uk">luca.vigano@kcl.ac.uk</a>, <a
+                        href="tel:+44 (0)20 78482078">+44 (0)20 78482078</a>
                     <br><br>
                     (N)7.18<br>
                     Bush House<br>
                     Strand campus, 30 Aldwych, London, WC2B 4BG
                 </p>
 
-                <div class="text-lg pt-3 max-w-4xl font-bold italic">Thank you for reading this information sheet and for considering taking part in this research.
-                <br>To proceed to the study, please read carefully the following statements and express
+                <div class="text-lg pt-3 max-w-4xl font-bold italic">Thank you for reading this information sheet and
+                    for considering taking part in this research.
+                    <br>To proceed to the study, please read carefully the following statements and express
                     your consent by pressing the <b>"AGREE"</b> button at the bottom of this page.
                 </div>
 
                 <div class="text-lg pt-3 font-bold italic">Consent</div>
-                <div class="text-lg" style="font-style: italic;"> Informed Consent for the Collection of Personal Data </div>
+                <div class="text-lg" style="font-style: italic;"> Informed Consent for the Collection of Personal Data
+                </div>
                 <div class="text-xl max-w-4xl text-left pt-4">
                     <p>
                         Please give your consent only after you have read the Information Sheet.
@@ -173,11 +182,13 @@
                         <li>
                             I understand my personal information will be processed for the purposes explained to me in
                             the Information Sheet. I understand that such information will be handled under the terms of
-                            UK data protection law, including the UK General Data Protection Regulation (UK GDPR) and the
+                            UK data protection law, including the UK General Data Protection Regulation (UK GDPR) and
+                            the
                             Data Protection Act 2018.
                         </li>
                         <li>
-                            I understand that my information may be subject to review by responsible individuals from the
+                            I understand that my information may be subject to review by responsible individuals from
+                            the
                             College for monitoring and audit purposes.
                         </li>
                         <li>
@@ -192,7 +203,8 @@
                             detailed in the information sheet and explained to me by the researcher.
                         </li>
                         <li>
-                            I understand that the information I have submitted will be published as a report in aggregated
+                            I understand that the information I have submitted will be published as a report in
+                            aggregated
                             form.
                         </li>
                         <li>
@@ -208,11 +220,13 @@
                 <div class="text-center mt-10">
                     <div class="w-full">
                         <div class="flex flex-row">
-                            <button style="margin: 0 1rem;" onclick="window.location.replace('{{ route('no_consent') }}')"
-                                    class="py-3 w-1/2 text-lg text-white bg-blue-500 hover:bg-blue-800 rounded-2xl"> DISAGREE
+                            <button style="margin: 0 1rem;"
+                                onclick="window.location.replace('{{ route('no_consent') }}')"
+                                class="py-3 w-1/2 text-lg text-white bg-blue-500 hover:bg-blue-800 rounded-2xl">
+                                DISAGREE
                             </button>
                             <button style="margin: 0 1rem;" onclick="window.location.replace('{{ route('consent') }}')"
-                                    class="py-3 w-1/2 text-lg text-white bg-blue-500 hover:bg-blue-800 rounded-2xl"> AGREE
+                                class="py-3 w-1/2 text-lg text-white bg-blue-500 hover:bg-blue-800 rounded-2xl"> AGREE
                             </button>
                         </div>
                     </div>

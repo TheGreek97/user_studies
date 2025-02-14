@@ -8,11 +8,16 @@ $show_details = Auth::user()->show_details;
 <x-app-layout>
     <x-slot name="slot">
         <div style="position: sticky; top: 0; left: 0; z-index: 10;"
-             class="p-6 shadow-lg bg-gray-700 text-white flash-element">
-            <p>
-                <span class="font-semibold">GOAL:</span> Please READ ALL THE EMAILS in the inbox and check that the links in them, if any, are working. Please behave as naturally as you would interact with your own email client.
-                The study ends when you have interacted with all the emails.
-            </p>
+                class="p-6 shadow-lg bg-gray-700 text-white flash-element">
+            @if(session('post_phase'))
+                <p>
+                    <span class="font-semibold">POST-TRAINING GOAL:</span> Please review all the emails in your inbox once again and now answer based on the knowledge you've gained during the training.
+                </p>
+            @else
+                <p>
+                    <span class="font-semibold">PRE-TRAINING GOAL:</span> For each email, determine if it is a phishing attempt and rate your confidence on a scale of 1 to 7.
+                </p>
+            @endif
         </div>
 
         <!-- Task presentation modal -->
@@ -21,27 +26,36 @@ $show_details = Auth::user()->show_details;
             <div class="relative p-4 w-full max-w-2xl max-h-full">
                 <!-- Modal content -->
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                    <!-- Modal header -->
-                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                            GOAL
-                        </h3>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="p-4 md:p-5 space-y-4">
-                        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                            We ask you to imagine that you are Alice, a 28-year-old woman living in Rome, Italy.<br>
-                            Alice uses several social networks, including Instagram, Facebook, Twitter and TikTok. Alice also
-                            uses eBay and Amazon to shop online with her Italian credit card. Alice loves music and goes to
-                            live concerts every month.<br>
-                            Alice works for an IT company and has agreed to test a new email client that her company has
-                            recently introduced. To test the new email client, Alice has to interact with it by READING ALL her
-                            emails in her inbox and checking that any links in them work.
-
-                            <!-- Please READ ALL THE EMAILS in the inbox and check that the links in them, if any, are working. -->
-                            <br>Please behave as naturally as you would interact with your own email client.
-                            <br>The study ends when you have interacted with all the emails.</p>
-                    </div>
+                    @if(session('post_phase'))
+                        <!-- Modal header -->
+                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                POST-TRAINING GOAL:
+                            </h3>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="p-4 md:p-5 space-y-4">
+                            <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                Please review all the emails in your inbox once again and now answer based on the knowledge you've gained during the training.
+                            </p>
+                        </div>
+                    @else
+                        <!-- Modal header -->
+                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                PRE-TRAINING GOAL:
+                            </h3>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="p-4 md:p-5 space-y-4">
+                            <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                Please carefully read each email in the inbox below. For every email, you need to:
+                                <br>- Determine whether you believe it is a phishing attempt or not.
+                                <br>- Rate how confident you are in your decision on a scale of 1 to 7.<br>
+                                Ensure both responses are provided in the designated fields for each email.
+                            </p>
+                        </div>
+                    @endif
                     <!-- Modal footer -->
                     <div class="flex items-end p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600" style="flex-direction: row-reverse">
                         <button id="close-task-modal-btn" data-modal-hide="static-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Start</button>
@@ -562,7 +576,11 @@ $show_details = Auth::user()->show_details;
                                             class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
                                         >
                                         @foreach($emails ?? [] as $email)
-                                            @if(count(DB::table('useremailquestionnaire')->where('user_id', \Illuminate\Support\Facades\Auth::id())->where('email_id', $email->id)->get()) > 0)
+                                            {{-- If we are in the post_phase, the count should be 2 to be marked as answered --}}
+                                            @if(count(DB::table('useremailquestionnaire')
+                                            ->where('user_id', \Illuminate\Support\Facades\Auth::id())
+                                            ->where('email_id', $email->id)
+                                            ->get()) > (session('post_phase') ? 1 : 0)) 
                                                 <tr class="text-gray-700 cursor-not-allowed bg-gray-300">
                                             @else
                                                 <tr class="text-gray-700 cursor-pointer hover:bg-gray-200 hover:dark:bg-gray-600 dark:text-gray-400"
@@ -694,6 +712,56 @@ $show_details = Auth::user()->show_details;
                                 <div id="email_content" class="px-10 pt-4 dark:bg-white" style="padding-bottom: 2.5rem">
                                     {!! $selected_email->content !!}
                                 </div>
+
+                                <div class="border-2 border-blue-500  rounded-lg shadow-md p-4">
+                                    <h3 class="text-xl font-bold text-gray-800">Evaluate this email</h3>
+                                    <div class="my-5">
+                                        <p class="font-semibold pb-1">Do you think this email is a phishing attempt?</p>
+                                        <select required id="phishing" name="phishing" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            <option value="" selected>Select an answer</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="my-5">
+                                        <p class="font-semibold pb-1">Rate your confidence in your decision:</p>
+                                        <label for="confidence-range"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
+                                            <div>
+                                                Not confident at all
+                                            </div>
+                                            <div class="flex-1"></div>
+                                            <div>
+                                                Completely confident
+                                            </div>
+                                        </label>
+                                        <div class="w-full">
+                                            <input type="range" list="confidence-ticks" value="4" min="1" max="7" step="1"
+                                                name="confidence" id="confidence-range" class="w-full">
+                                            <datalist id="confidence-ticks">
+                                                <option value="1" label="1"></option>
+                                                <option value="2" label="2"></option>
+                                                <option value="3" label="3"></option>
+                                                <option value="4" label="4"></option>
+                                                <option value="5" label="5"></option>
+                                                <option value="6" label="6"></option>
+                                                <option value="7" label="7"></option>
+                                            </datalist>
+                                        </div>
+                                    </div>                                    
+                                    
+                                    <div class="text-center my-6">
+                                        <form method="POST" id="myForm" action="{{ route('save-email-classification') }}">
+                                            @csrf
+                                            <input type="hidden" name="emailId" value="test@example.com">
+                                            <input type="hidden" name="confidence" value="7">
+                                            <input type="hidden" name="phishing" value="true">
+                                            
+                                            <button id="submit_btn" class="py-3 w-64 text-xl text-white bg-blue-500 rounded-2xl">Submit your response</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         @endif
                     </div>
@@ -753,6 +821,58 @@ $show_details = Auth::user()->show_details;
             <!-- End active warning modal -->
         </div>
 
+<x-modal name="error-modal" id="errorModal" title="Compile all the questions!" :show="false">
+    <div class="p-4 rounded-lg relative text-center">
+        <p id="modalMessage" class="text-2xl font-semibold text-red-700 pb-8"></p>
+        <x-primary-button x-on:click="$dispatch('close')">Close</x-primary-button>
+    </div>
+</x-modal>
+
+<script>
+            @if(isset($selected_email))
+                document.getElementById("submit_btn").addEventListener("click", function(event) {
+                    event.preventDefault();
+            
+                    let phishing = document.getElementById("phishing").value;
+                    let confidence = document.getElementById("confidence-range").value;
+            
+                    let modalMessage = document.getElementById("modalMessage");
+                    let emailId = {{ $selected_email->id }}; 
+            
+                    let errors = [];
+            
+                    if (!phishing) {
+                        errors.push("Please select an answer for 'Do you think this email is a phishing attempt?'.");
+                    }
+            
+                    if (isNaN(confidence) || confidence < 1 || confidence > 10) {
+                        errors.push("Please select a confidence level between 1 and 10.");
+                    }
+            
+                    if (errors.length > 0) {
+                        const modalEvent = new CustomEvent('open-modal', {
+                            detail: 'error-modal', 
+                        });
+                        window.dispatchEvent(modalEvent);
+            
+                        modalMessage.innerHTML = errors.join("<br>");
+                
+                    } else {
+                        let formData = new FormData();
+                        formData.append("phishing", phishing);
+                        formData.append("confidence", confidence);
+                        formData.append("emailId", emailId);
+            
+                        let form = document.getElementById("myForm"); 
+                        form.querySelector("input[name='phishing']").value = phishing;
+                        form.querySelector("input[name='confidence']").value = confidence;
+                        form.querySelector("input[name='emailId']").value = emailId;
+            
+                        form.submit();
+                    }
+                });
+            @endif
+</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 $( () => {
@@ -764,7 +884,7 @@ $( () => {
     $('a').not("#email_content *").each(function (e) {
         $(this).on('click', (e) => {
             e.preventDefault();
-            window.location.href = '{{ route('next_step', $selected_email->id) }}?nolink';
+            //window.location.href = '{{ route('next_step', $selected_email->id) }}?nolink';
         });
     });
     // Links:
@@ -775,7 +895,9 @@ $( () => {
                 url: ("{{ route('warning_log') }}?email_id={{$selected_email->id}}&warning_type={{$selected_email->warning_type}}&show_explanation={{$show_explanation}}&show_details={{$show_details}}&msg=clicked_link&url=" + $(this).attr("href")).replace(/%20/g, '+'),
                 type: 'GET',
                 dataType: 'json',
-                complete: () => { window.location.href = '{{route('next_step') . '/' . $selected_email->id}}'},
+                complete: () => { 
+                    //window.location.href = '{{route('next_step') . '/' . $selected_email->id}}'
+                },
                 async: false
             });
         });
@@ -804,7 +926,7 @@ $( () => {
             type: 'GET',
             dataType: 'json',
             complete: function (data) {
-                window.location.href = '{{route('next_step') . '/' . $selected_email->id}}';
+                //window.location.href = '{{route('next_step') . '/' . $selected_email->id}}';
             },
             async: false
         });
@@ -883,7 +1005,7 @@ $( () => {
             type: 'GET',
             dataType: 'json',
             complete: function (data) {
-                window.location.href = '{{route('next_step') . '/' . $selected_email->id}}';
+                //window.location.href = '{{route('next_step') . '/' . $selected_email->id}}';
             },
             async: false
         });
@@ -912,7 +1034,7 @@ $( () => {
         $('a').not("#email_content *").each(function (e) {
             $(this).on('click', (e) => {
                 e.preventDefault();
-                window.location.href = '{{ route('next_step', $selected_email->id) }}?nolink';
+                //window.location.href = '{{ route('next_step', $selected_email->id) }}?nolink';
             });
         });
     @elseif($selected_email->warning_type == "base_passive")
@@ -957,9 +1079,9 @@ function open_warning(url, email_id, warning_text, detailed_explanation="", full
             dataType: 'json',
             complete: function (data) {
                 @if(\Illuminate\Support\Facades\Auth::user()->warning_type == 'popup_email')
-                    window.location.href = '{{route('show')}}/inbox/' + email_id; // (Before email opening)
+                    //window.location.href = '{{route('show')}}/inbox/' + email_id; // (Before email opening)
                 @else
-                    window.location.href = '{{route('next_step')}}/' + email_id;  // popup_link (After email opening)
+                    //window.location.href = '{{route('next_step')}}/' + email_id;  // popup_link (After email opening)
                 @endif
             },
             async: false
@@ -996,9 +1118,9 @@ function open_warning(url, email_id, warning_text, detailed_explanation="", full
         $("#button-advanced").off("click");
         $("#warning_unsafe_link").off("click");
         if (warning_type==="popup_email") {
-            window.location.href = '{{route('next_step')}}/' + email_id + '?nolink&noquest';
+            //window.location.href = '{{route('next_step')}}/' + email_id + '?nolink&noquest';
         } else {
-            window.location.href = '{{route('next_step')}}/' + email_id + '?nolink';
+            //window.location.href = '{{route('next_step')}}/' + email_id + '?nolink';
         }
         modal.hide();
     });
