@@ -16,6 +16,8 @@ class UserEmailQuestionnaire extends Model
         'phishing',
         'user_id',
         'title_email',
+        'response_time_seconds',
+        'phase',
     ];
 
     public function user()

@@ -26,6 +26,8 @@ class TrainingReactionController extends Controller
             'q5' => ['required', 'integer'],
             'q6' => ['required', 'integer'],
             'q7' => ['required', 'string'],
+            'trivial_question' => ['required', 'boolean'],
+            'fastClickCount' => ['required', 'integer'],
         ]);
 
         $alreadyAnswered = TrainingReaction::where([

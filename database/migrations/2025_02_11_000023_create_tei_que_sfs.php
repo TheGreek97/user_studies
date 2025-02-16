@@ -44,6 +44,8 @@ return new class extends Migration
             $table->string('q28');
             $table->string('q29');
             $table->string('q30');
+            $table->boolean('trivial_question');
+            $table->string('fastClickCount');
             $table->timestamps();
         });
     }

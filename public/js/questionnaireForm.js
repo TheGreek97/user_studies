@@ -95,7 +95,48 @@ function fixStepIndicator(n) {
 }
 
 function updateSectionCounter(currentTab, totalSteps) {
-    // Get the section number display
     var sectionDisplay = document.querySelector('.section-counter');
-    sectionDisplay.textContent = 'Section ' + (currentTab + 1) + ' of ' + totalSteps;
+    if (totalSteps === 1) {
+        sectionDisplay.textContent = '';
+    } else {
+        sectionDisplay.textContent = 'Section ' + (currentTab + 1) + ' of ' + totalSteps;
+    }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    let isDisabled = false;
+    let timerStartedForQuestion = null;
+    let disabledClickCount = 0;  
+
+    document.querySelectorAll("input[type='radio']").forEach(radio => {
+        radio.addEventListener("click", function () {
+            const questionId = this.name;  
+            // If a timer has already started for this question, do nothing
+            if (timerStartedForQuestion === questionId) {
+                return; 
+            }
+
+            if (isDisabled) {
+                this.checked = false;  // Uncheck the radio button if clicked
+                disabledClickCount++; 
+                document.getElementById("fastClickCount").value = disabledClickCount;
+
+                // Trigger the the modal
+                const modalEvent = new CustomEvent('open-modal', {
+                    detail: 'to-fast-modal'
+                });
+                window.dispatchEvent(modalEvent);
+                return;
+            }
+
+            // Set isDisabled to true for 3 seconds for this question
+            isDisabled = true;
+            timerStartedForQuestion = questionId;
+
+            setTimeout(() => {
+                isDisabled = false;
+                timerStartedForQuestion = null;
+            }, 3000); //TIMER 3 SECONDS
+        });
+    });
+});

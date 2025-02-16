@@ -49,6 +49,8 @@ class StPIIBController extends Controller
             'q28' => ['required', 'integer'],
             'q29' => ['required', 'integer'],
             'q30' => ['required', 'integer'],
+            'trivial_question' => ['required', 'boolean'],
+            'fastClickCount' => ['required', 'integer'],
         ]);
 
         $alreadyAnswered = StPIIB::where([
@@ -69,11 +71,10 @@ class StPIIBController extends Controller
             }
 
         } else {
-            return back()->with('error', 'Already answered');
+            return redirect()->route('questionnaire3')->with('error', 'Already answered');
         }
         session(['questionnaire_2done' => true]);
-        session(['questionnaire2_view' => false]);
-        return redirect()->route('questionnaires')->with('success', 'Questionnaire completed successfully!');
+        return redirect()->route('questionnaire3')->with('success', 'Questionnaire 2 completed successfully!');
     }
 
     public function calculateScales($id)
@@ -92,16 +93,16 @@ class StPIIBController extends Controller
 
         // Calculate scales
         $scales = [
-            'lack_of_premeditation' => ($responses[1] + $responses[2] + $responses[3]) / 3,
-            'need_for_consistency' => ($responses[4] + $responses[5] + $responses[6]) / 3,
-            'sensation_seeking' => ($responses[7] + $responses[8] + $responses[9]) / 3,
-            'lack_of_self_control' => ($responses[10] + $responses[11] + $responses[12]) / 3,
-            'social_influence' => ($responses[13] + $responses[14] + $responses[15]) / 3,
-            'need_for_avoidance_of_similarity' => ($responses[16] + $responses[17] + $responses[18]) / 3,
-            'risk_preferences' => ($responses[19] + $responses[20] + $responses[21]) / 3,
-            'positive_attitudes_towards_advertising' => ($responses[22] + $responses[23] + $responses[24]) / 3,
-            'need_for_cognition' => ($responses[25] + $responses[26] + $responses[27]) / 3,
-            'need_for_uniqueness' => ($responses[28] + $responses[29] + $responses[30]) / 3,
+            'stp_lack_of_premeditation' => ($responses[1] + $responses[2] + $responses[3]) / 3,
+            'stp_need_for_consistency' => ($responses[4] + $responses[5] + $responses[6]) / 3,
+            'stp_sensation_seeking' => ($responses[7] + $responses[8] + $responses[9]) / 3,
+            'stp_lack_of_self_control' => ($responses[10] + $responses[11] + $responses[12]) / 3,
+            'stp_social_influence' => ($responses[13] + $responses[14] + $responses[15]) / 3,
+            'stp_need_for_avoidance_of_similarity' => ($responses[16] + $responses[17] + $responses[18]) / 3,
+            'stp_risk_preferences' => ($responses[19] + $responses[20] + $responses[21]) / 3,
+            'stp_positive_attitudes_towards_advertising' => ($responses[22] + $responses[23] + $responses[24]) / 3,
+            'stp_need_for_cognition' => ($responses[25] + $responses[26] + $responses[27]) / 3,
+            'stp_need_for_uniqueness' => ($responses[28] + $responses[29] + $responses[30]) / 3,
         ];
 
         return $scales;

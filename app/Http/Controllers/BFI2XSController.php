@@ -33,6 +33,8 @@ class BFI2XSController extends Controller
             'q13' => ['required', 'integer'],
             'q14' => ['required', 'integer'],
             'q15' => ['required', 'integer'],
+            'trivial_question' => ['required', 'boolean'],
+            'fastClickCount' => ['required', 'integer'],
         ]);
 
         $alreadyAnswered = BFI2XS::where([
@@ -55,8 +57,7 @@ class BFI2XSController extends Controller
             return back()->with('error', 'Already answered');
         }
         session(['questionnaire_1done' => true]);
-        session(['questionnaire1_view' => false]);
-        return redirect()->route('questionnaires')->with('success', 'Questionnaire completed successfully!');
+        return redirect()->route('questionnaire2')->with('success', 'Questionnaire 1 completed successfully!');
     }
 
     public function calculateScales($id)
@@ -75,11 +76,11 @@ class BFI2XSController extends Controller
 
         // Calculate scales
         $scales = [
-            'extraversion' => ($responses[1] + $responses[6] + $responses[11]) / 3,
-            'agreeableness' => ($responses[2] + $responses[7] + $responses[12]) / 3,
-            'conscientiousness' => ($responses[3] + $responses[8] + $responses[13]) / 3,
-            'negative_emotionality' => ($responses[4] + $responses[9] + $responses[14]) / 3,
-            'open_mindedness' => ($responses[5] + $responses[10] + $responses[15]) / 3,
+            'bfi_extraversion' => ($responses[1] + $responses[6] + $responses[11]) / 3,
+            'bfi_agreeableness' => ($responses[2] + $responses[7] + $responses[12]) / 3,
+            'bfi_conscientiousness' => ($responses[3] + $responses[8] + $responses[13]) / 3,
+            'bfi_negative_emotionality' => ($responses[4] + $responses[9] + $responses[14]) / 3,
+            'bfi_open_mindedness' => ($responses[5] + $responses[10] + $responses[15]) / 3,
         ];
 
         return $scales;

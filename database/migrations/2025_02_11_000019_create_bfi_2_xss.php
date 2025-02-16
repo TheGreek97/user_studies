@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string('q13');
             $table->string('q14');
             $table->string('q15');
+            $table->boolean('trivial_question');
+            $table->string('fastClickCount');
             $table->timestamps();
         });
     }

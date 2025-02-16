@@ -11,11 +11,11 @@ $show_details = Auth::user()->show_details;
                 class="p-6 shadow-lg bg-gray-700 text-white flash-element">
             @if(session('post_phase'))
                 <p>
-                    <span class="font-semibold">POST-TRAINING GOAL:</span> Please review all the emails in your inbox once again and now answer based on the knowledge you've gained during the training.
+                    <span class="font-semibold">GOAL:</span> Please review all the emails in your inbox once again and now answer based on the knowledge you've gained during the training.
                 </p>
             @else
                 <p>
-                    <span class="font-semibold">PRE-TRAINING GOAL:</span> For each email, determine if it is a phishing attempt and rate your confidence on a scale of 1 to 7.
+                    <span class="font-semibold">GOAL:</span> For each email, determine if it is a phishing attempt and rate your confidence on a scale of 1 to 7.
                 </p>
             @endif
         </div>
@@ -30,12 +30,12 @@ $show_details = Auth::user()->show_details;
                         <!-- Modal header -->
                         <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                             <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                POST-TRAINING GOAL:
+                                GOAL:
                             </h3>
                         </div>
                         <!-- Modal body -->
                         <div class="p-4 md:p-5 space-y-4">
-                            <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                            <p class="text-base leading-relaxed text-gray-900 dark:text-gray-400">
                                 Please review all the emails in your inbox once again and now answer based on the knowledge you've gained during the training.
                             </p>
                         </div>
@@ -43,12 +43,12 @@ $show_details = Auth::user()->show_details;
                         <!-- Modal header -->
                         <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                             <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                PRE-TRAINING GOAL:
+                                GOAL:
                             </h3>
                         </div>
                         <!-- Modal body -->
                         <div class="p-4 md:p-5 space-y-4">
-                            <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                            <p class="text-base leading-relaxed text-gray-900 dark:text-gray-400">
                                 Please carefully read each email in the inbox below. For every email, you need to:
                                 <br>- Determine whether you believe it is a phishing attempt or not.
                                 <br>- Rate how confident you are in your decision on a scale of 1 to 7.<br>
@@ -528,7 +528,7 @@ $show_details = Auth::user()->show_details;
                 </header>
 
                 <main class="overflow-y-auto" style="height:85%;">
-                    <div class="container px-6 mx-auto grid mb-10">
+                    <div class="px-0 md:px-6 mx-5 md:mx-auto grid mb-10"> 
                         @if(!isset($selected_email))
                             <h2
                                 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200 flex flex-row align-middle content-center"
@@ -616,140 +616,174 @@ $show_details = Auth::user()->show_details;
                                 </div>
                             </div>
                         @else
-                            <div
-                                class="w-full h-full rounded-lg shadow-xs my-10 p-3 bg-white dark:bg-gray-800 overflow-y-hidden">
-                                <div class="w-full flex flex-row space-x-2 pb-2">
-                                    <a data-tooltip-target="tooltip-back" data-tooltip-placement="bottom"
-                                       class="cursor-pointer hover:bg-gray-200 rounded-full p-2"
-                                       href="{{ route('show', ['folder' => $folder]) }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                                        </svg>
-                                        <div id="tooltip-back" role="tooltip"
-                                             class="text-xs inline-block absolute invisible z-10 py-1 px-2 font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-100 tooltip dark:bg-gray-700">
-                                            Go back
+                            <div class="h-auto rounded-lg shadow-xs my-10 p-3 bg-white dark:bg-gray-800 overflow-y-hidden mr-[240px] md:mr-[280px]" >
+                                    <!-- Contenuti del primo div -->
+                                        <div class="w-full flex flex-row space-x-2 pb-2">
+                                            <a data-tooltip-target="tooltip-back" data-tooltip-placement="bottom"
+                                            class="cursor-pointer hover:bg-gray-200 rounded-full p-2"
+                                            href="{{ route('show', ['folder' => $folder]) }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                                                </svg>
+                                                <div id="tooltip-back" role="tooltip"
+                                                    class="text-xs inline-block absolute invisible z-10 py-1 px-2 font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-100 tooltip dark:bg-gray-700">
+                                                    Go back
+                                                </div>
+                                            </a>
+                                            <a data-tooltip-target="tooltip-spam" data-tooltip-placement="bottom"
+                                            class="cursor-pointer hover:bg-gray-200 rounded-full p-2" href="#">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
+                                                </svg>
+                                                <div id="tooltip-spam" role="tooltip"
+                                                    class="text-xs inline-block absolute invisible z-10 py-1 px-2 font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-100 tooltip dark:bg-gray-700">
+                                                    Report Spam
+                                                </div>
+                                            </a>
+                                            <a data-tooltip-target="tooltip-delete" data-tooltip-placement="bottom"
+                                            class="cursor-pointer hover:bg-gray-200 rounded-full p-2" href="#">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                </svg>
+                                                <div id="tooltip-delete" role="tooltip"
+                                                    class="text-xs inline-block absolute invisible z-10 py-1 px-2 font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-100 tooltip dark:bg-gray-700">
+                                                    Delete
+                                                </div>
+                                            </a>
+                                            <a data-tooltip-target="tooltip-reply" data-tooltip-placement="bottom"
+                                            class="cursor-pointer hover:bg-gray-200 rounded-full p-2" href="#">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
+                                                </svg>
+                                                <div id="tooltip-reply" role="tooltip"
+                                                    class="text-xs inline-block absolute invisible z-10 py-1 px-2 font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-100 tooltip dark:bg-gray-700">
+                                                    Reply
+                                                </div>
+                                            </a>
+                                            <a data-tooltip-target="tooltip-forward" data-tooltip-placement="bottom"
+                                            class="cursor-pointer hover:bg-gray-200 rounded-full p-2" href="#">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                    style="transform: scale(-1,1)" fill="none" viewBox="0 0 24 24"
+                                                    stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
+                                                </svg>
+                                                <div id="tooltip-forward" role="tooltip"
+                                                    class="text-xs inline-block absolute invisible z-10 py-1 px-2 font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-100 tooltip dark:bg-gray-700">
+                                                    Forward
+                                                </div>
+                                            </a>
                                         </div>
-                                    </a>
-                                    <a data-tooltip-target="tooltip-spam" data-tooltip-placement="bottom"
-                                       class="cursor-pointer hover:bg-gray-200 rounded-full p-2" href="#">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
-                                        </svg>
-                                        <div id="tooltip-spam" role="tooltip"
-                                             class="text-xs inline-block absolute invisible z-10 py-1 px-2 font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-100 tooltip dark:bg-gray-700">
-                                            Report Spam
+                                        <h2 class="my-4 text-xl font-bold text-gray-700 dark:text-gray-200">
+                                            {{ $selected_email->subject }}
+                                        </h2>
+                                        <div class="flex flex-row mb-4">
+                                            <div class="pt-0.5">
+                                                <img class="object-cover w-8 h-8 rounded-full"
+                                                    src="https://ui-avatars.com/api/?name={{$selected_email->from_name}}"
+                                                    alt=""
+                                                    aria-hidden="true">
+                                            </div>
+                                            <div class="ml-3">
+                                                <div class="flex flex-row items-center">
+                                                    <h3 class="text-sm font-semibold dark:text-white">
+                                                        {{ $selected_email->from_name }}
+                                                    </h3>
+                                                    <span class="ml-1 text-xs font-semibold text-gray-500 dark:text-gray-400">
+                                                        {{ $selected_email->from_email }}
+                                                    </span>
+                                                </div>
+                                                <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400">
+                                                    to me</h4>
+                                            </div>
+                                            <div
+                                                class="flex-1 pt-0.5 font-semibold text-right text-gray-500 text-xs align-middle dark:text-gray-400">
+                                                {!! date("d M Y", strtotime($selected_email->date)) . "<br>" . date('H:i', strtotime($selected_email->date)) !!}
+                                            </div>
                                         </div>
-                                    </a>
-                                    <a data-tooltip-target="tooltip-delete" data-tooltip-placement="bottom"
-                                       class="cursor-pointer hover:bg-gray-200 rounded-full p-2" href="#">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                        </svg>
-                                        <div id="tooltip-delete" role="tooltip"
-                                             class="text-xs inline-block absolute invisible z-10 py-1 px-2 font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-100 tooltip dark:bg-gray-700">
-                                            Delete
+                                        <div id="email_content" class="px-10 pt-4 dark:bg-white" style="padding-bottom: 2.5rem">
+                                            {!! $selected_email->content !!}
                                         </div>
-                                    </a>
-                                    <a data-tooltip-target="tooltip-reply" data-tooltip-placement="bottom"
-                                       class="cursor-pointer hover:bg-gray-200 rounded-full p-2" href="#">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
-                                        </svg>
-                                        <div id="tooltip-reply" role="tooltip"
-                                             class="text-xs inline-block absolute invisible z-10 py-1 px-2 font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-100 tooltip dark:bg-gray-700">
-                                            Reply
-                                        </div>
-                                    </a>
-                                    <a data-tooltip-target="tooltip-forward" data-tooltip-placement="bottom"
-                                       class="cursor-pointer hover:bg-gray-200 rounded-full p-2" href="#">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
-                                             style="transform: scale(-1,1)" fill="none" viewBox="0 0 24 24"
-                                             stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
-                                        </svg>
-                                        <div id="tooltip-forward" role="tooltip"
-                                             class="text-xs inline-block absolute invisible z-10 py-1 px-2 font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-100 tooltip dark:bg-gray-700">
-                                            Forward
-                                        </div>
-                                    </a>
-                                </div>
-                                <h2 class="my-4 text-xl font-bold text-gray-700 dark:text-gray-200">
-                                    {{ $selected_email->subject }}
-                                </h2>
-                                <div class="flex flex-row mb-4">
-                                    <div class="pt-0.5">
-                                        <img class="object-cover w-8 h-8 rounded-full"
-                                             src="https://ui-avatars.com/api/?name={{$selected_email->from_name}}"
-                                             alt=""
-                                             aria-hidden="true">
-                                    </div>
-                                    <div class="ml-3">
-                                        <div class="flex flex-row items-center">
-                                            <h3 class="text-sm font-semibold dark:text-white">
-                                                {{ $selected_email->from_name }}
-                                            </h3>
-                                            <span class="ml-1 text-xs font-semibold text-gray-500 dark:text-gray-400">
-                                                {{ $selected_email->from_email }}
-                                            </span>
-                                        </div>
-                                        <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400">
-                                            to me</h4>
-                                    </div>
-                                    <div
-                                        class="flex-1 pt-0.5 font-semibold text-right text-gray-500 text-xs align-middle dark:text-gray-400">
-                                        {!! date("d M Y", strtotime($selected_email->date)) . "<br>" . date('H:i', strtotime($selected_email->date)) !!}
-                                    </div>
-                                </div>
-                                <div id="email_content" class="px-10 pt-4 dark:bg-white" style="padding-bottom: 2.5rem">
-                                    {!! $selected_email->content !!}
-                                </div>
-
-                                <div class="border-2 border-blue-500  rounded-lg shadow-md p-4">
-                                    <h3 class="text-xl font-bold text-gray-800">Evaluate this email</h3>
-                                    <div class="my-5">
-                                        <p class="font-semibold pb-1">Do you think this email is a phishing attempt?</p>
-                                        <select required id="phishing" name="phishing" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                            <option value="" selected>Select an answer</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                        </select>
+                            </div>
+                            <div class="w-[240px] md:w-[265px] h-[590px] md:h-[665px] border-2 border-blue-500 rounded-lg shadow-md p-4 fixed right-5 top-50 my-10 bg-white dark:bg-gray-800 z-20">
+                                    <h3 class="md:text-2xl font-bold text-gray-800">Evaluate this email</h3>
+                                    <div x-data="{ phishing: '' }" class="space-y-3 my-6">
+                                        <p class="md:text-lg text-gray-900 dark:text-white font-semibold">Do you think this email is a phishing attempt?</p>
+                                        <label class="flex items-center space-x-2 cursor-pointer">
+                                            <input type="radio" x-model="phishing" name="phishing" value="yes"
+                                                class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
+                                                focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 
+                                                dark:bg-gray-700 dark:border-gray-600">
+                                            <span class="md:text-lg text-gray-900 dark:text-white">Yes</span>
+                                        </label>
+                                    
+                                        <label class="flex items-center space-x-2 cursor-pointer">
+                                            <input type="radio" x-model="phishing" name="phishing" value="no"
+                                                class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
+                                                focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 
+                                                dark:bg-gray-700 dark:border-gray-600">
+                                            <span class="md:text-lg text-gray-900 dark:text-white">No</span>
+                                        </label>
                                     </div>
                                     
-                                    <div class="my-5">
-                                        <p class="font-semibold pb-1">Rate your confidence in your decision:</p>
-                                        <label for="confidence-range"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-row w-full">
-                                            <div>
-                                                Not confident at all
-                                            </div>
-                                            <div class="flex-1"></div>
-                                            <div>
-                                                Completely confident
-                                            </div>
-                                        </label>
-                                        <div class="w-full">
-                                            <input type="range" list="confidence-ticks" value="4" min="1" max="7" step="1"
-                                                name="confidence" id="confidence-range" class="w-full">
-                                            <datalist id="confidence-ticks">
-                                                <option value="1" label="1"></option>
-                                                <option value="2" label="2"></option>
-                                                <option value="3" label="3"></option>
-                                                <option value="4" label="4"></option>
-                                                <option value="5" label="5"></option>
-                                                <option value="6" label="6"></option>
-                                                <option value="7" label="7"></option>
-                                            </datalist>
+                                    <!-- Vertical Range Input -->
+                                    <div class="my-6">
+                                        <p class="md:text-lg text-gray-900 dark:text-white font-semibold ">Rate your confidence in your decision:</p>
+                                        <div class="flex flex-col items-start space-y-3">
+                                            <!-- Label for "Not confident at all" -->
+                                            <label class="flex items-center space-x-2 cursor-pointer w-full">
+                                                <input type="radio" name="confidence" value="1" class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                                                <span class="text-lg text-gray-900 dark:text-white">1</span>
+                                                <span class="ml-2 w-full md:text-lg text-gray-900 dark:text-white">Not confident at all</span>
+                                            </label>
+                                        
+                                            <!-- Label for "2" -->
+                                            <label class="flex items-center space-x-2 cursor-pointer w-full">
+                                                <input type="radio" name="confidence" value="2" class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                                                <span class="md:text-lg text-gray-900 dark:text-white">2</span>
+                                            </label>
+                                        
+                                            <!-- Label for "3" -->
+                                            <label class="flex items-center space-x-2 cursor-pointer w-full">
+                                                <input type="radio" name="confidence" value="3" class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                                                <span class="md:text-lg text-gray-900 dark:text-white">3</span>
+                                            </label>
+                                        
+                                            <!-- Label for "4" -->
+                                            <label class="flex items-center space-x-2 cursor-pointer w-full">
+                                                <input type="radio" name="confidence" value="4" class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                                                <span class="md:text-lg text-gray-900 dark:text-white">4</span>
+                                            </label>
+                                        
+                                            <!-- Label for "5" -->
+                                            <label class="flex items-center space-x-2 cursor-pointer w-full">
+                                                <input type="radio" name="confidence" value="5" class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                                                <span class="md:text-lg text-gray-900 dark:text-white">5</span>
+                                            </label>
+                                        
+                                            <!-- Label for "6" -->
+                                            <label class="flex items-center space-x-2 cursor-pointer w-full">
+                                                <input type="radio" name="confidence" value="6" class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                                                <span class="md:text-lg text-gray-900 dark:text-white">6</span>
+                                            </label>
+                                        
+                                            <!-- Label for "Completely confident" -->
+                                            <label class="flex items-center space-x-2 cursor-pointer w-full">
+                                                <input type="radio" name="confidence" value="7" class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                                                <span class="md:text-lg text-gray-900 dark:text-white">7</span>
+                                                <span class="ml-2 w-full md:text-lg text-gray-900 dark:text-white">Completely confident</span>
+                                            </label>
                                         </div>
-                                    </div>                                    
+                                        
+                                    </div>
                                     
                                     <div class="text-center my-6">
                                         <form method="POST" id="myForm" action="{{ route('save-email-classification') }}">
@@ -757,12 +791,12 @@ $show_details = Auth::user()->show_details;
                                             <input type="hidden" name="emailId" value="test@example.com">
                                             <input type="hidden" name="confidence" value="7">
                                             <input type="hidden" name="phishing" value="true">
-                                            
-                                            <button id="submit_btn" class="py-3 w-64 text-xl text-white bg-blue-500 rounded-2xl">Submit your response</button>
+                                            <input type="hidden" name="time_spent">
+                             
+                                            <button id="submit_btn" class="py-3 w-full md:text-xl text-white bg-blue-500 rounded-2xl">Submit your response</button>
                                         </form>
                                     </div>
-                                </div>
-                            </div>
+                            </div>  
                         @endif
                     </div>
                 </main>
@@ -823,55 +857,83 @@ $show_details = Auth::user()->show_details;
 
 <x-modal name="error-modal" id="errorModal" title="Compile all the questions!" :show="false">
     <div class="p-4 rounded-lg relative text-center">
-        <p id="modalMessage" class="text-2xl font-semibold text-red-700 pb-8"></p>
+        <p class="text-2xl font-semibold text-red-700 pb-8">Evaluate the email !</p>
+        <p id="modalMessage" class="text-lg text-gray-800 pb-8"></p>
+        <x-primary-button x-on:click="$dispatch('close')">Close</x-primary-button>
+    </div>
+</x-modal>
+
+<x-modal name="to-fast-modal" id="to-fast-modal" title="Compile all the questions slowly!" :show="false" x-data="{ show: false }" x-show="show" @open-modal.window="show = true">
+    <div class="p-4 rounded-lg relative text-center">
+        <p class="text-2xl font-semibold text-red-700 pb-8">You're going too fast!</p>
+        <p class="text-lg text-gray-800 pb-8">
+            Please slow down and carefully observe the email before answering. <br> 
+        </p>
         <x-primary-button x-on:click="$dispatch('close')">Close</x-primary-button>
     </div>
 </x-modal>
 
 <script>
-            @if(isset($selected_email))
-                document.getElementById("submit_btn").addEventListener("click", function(event) {
-                    event.preventDefault();
-            
-                    let phishing = document.getElementById("phishing").value;
-                    let confidence = document.getElementById("confidence-range").value;
-            
-                    let modalMessage = document.getElementById("modalMessage");
-                    let emailId = {{ $selected_email->id }}; 
-            
-                    let errors = [];
-            
-                    if (!phishing) {
-                        errors.push("Please select an answer for 'Do you think this email is a phishing attempt?'.");
-                    }
-            
-                    if (isNaN(confidence) || confidence < 1 || confidence > 10) {
-                        errors.push("Please select a confidence level between 1 and 10.");
-                    }
-            
-                    if (errors.length > 0) {
-                        const modalEvent = new CustomEvent('open-modal', {
-                            detail: 'error-modal', 
-                        });
-                        window.dispatchEvent(modalEvent);
-            
-                        modalMessage.innerHTML = errors.join("<br>");
-                
-                    } else {
-                        let formData = new FormData();
-                        formData.append("phishing", phishing);
-                        formData.append("confidence", confidence);
-                        formData.append("emailId", emailId);
-            
-                        let form = document.getElementById("myForm"); 
-                        form.querySelector("input[name='phishing']").value = phishing;
-                        form.querySelector("input[name='confidence']").value = confidence;
-                        form.querySelector("input[name='emailId']").value = emailId;
-            
-                        form.submit();
-                    }
-                });
-            @endif
+@if(isset($selected_email))
+
+    let startTime = Date.now();
+
+    document.getElementById("submit_btn").addEventListener("click", function(event) {
+        event.preventDefault();
+
+        // Get the selected phishing radio button value
+        let phishingRadio = document.querySelector('input[name="phishing"]:checked');
+        let phishing = phishingRadio ? phishingRadio.value : null;
+
+        // Get the selected confidence radio button value
+        let confidenceRadio = document.querySelector('input[name="confidence"]:checked');
+        let confidence = confidenceRadio ? confidenceRadio.value : null;
+
+        let modalMessage = document.getElementById("modalMessage");
+        let emailId = {{ $selected_email->id }};
+
+        let errors = [];
+
+        let elapsedTime = (Date.now() - startTime) / 1000;
+        if (elapsedTime < 5) {
+            window.dispatchEvent(new CustomEvent('open-modal', { detail: 'to-fast-modal' }));
+            return;
+        }
+
+        // Validate phishing selection
+        if (!phishing) {
+            errors.push("Please select an answer for 'Do you think this email is a phishing attempt?'");
+        }
+
+        // Validate confidence selection
+        if (!confidence) {
+            errors.push("Please select a confidence level between 1 and 7.");
+        }
+
+        // Show errors if any
+        if (errors.length > 0) {
+            const modalEvent = new CustomEvent('open-modal', {
+                detail: 'error-modal', 
+            });
+            window.dispatchEvent(modalEvent);
+            modalMessage.innerHTML = errors.join("<br>");
+        } else {
+            // Submit the form data
+            let formData = new FormData();
+            formData.append("phishing", phishing);
+            formData.append("confidence", confidence);
+            formData.append("emailId", emailId);
+
+            let form = document.getElementById("myForm"); 
+            form.querySelector("input[name='phishing']").value = phishing;
+            form.querySelector("input[name='confidence']").value = confidence;
+            form.querySelector("input[name='emailId']").value = emailId;
+            form.querySelector("input[name='time_spent']").value = elapsedTime; 
+
+            form.submit();
+        }
+    });
+@endif
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>

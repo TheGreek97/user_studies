@@ -14,11 +14,6 @@
                              <!-- DEMOGRAPHICS -->
                             <div class="pt-1">
                                 <div class="my-5">
-                                    <p class="font-bold pb-1">What is your ©PROLIFIC ID?</p>
-                                    <input required type="text" name="prolific_id" min="10" max="100" placeholder="Prolific ID"
-                                        class="block text-sm px-4 rounded-lg py-3 border outline-none"/>
-                                </div>
-                                <div class="my-5">
                                     <p class="font-bold pb-1">How old are you?</p>
                                     <input required type="number" name="age" min="10" max="100" value="20"
                                         class="block text-sm px-4 rounded-lg py-3 border outline-none"/>

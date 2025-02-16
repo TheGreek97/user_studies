@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Request as FRequest;
 
 class MailController extends Controller
 {
@@ -28,24 +30,20 @@ class MailController extends Controller
         info("ID " . $id);
 
         //First shows the 3 questionnaires
-        if (!session()->has('questionnaires_done')) {
-
-            if (session()->has('questionnaire1_view') && session('questionnaire1_view') === true) {
-                return view('questionnaires.bfi2xs');
-            } elseif (session()->has('questionnaire2_view') && session('questionnaire2_view') === true) {
-                return view('questionnaires.stp-ii-b');
-            } elseif (session()->has('questionnaire3_view') && session('questionnaire3_view') === true) {
-                return view('questionnaires.tei-que-sf');
-            }
-            
-            return view('questionnaires_screen');
-
+        if (!session()->has('questionnaire_1done')) {
+            return view('questionnaires.bfi2xs');
+        } elseif (!session()->has('questionnaire_2done')) {
+            return view('questionnaires.stp-ii-b');
+        } elseif (!session()->has('questionnaire_3done')) {
+            return view('questionnaires.tei-que-sf');
         }
+           
+        //Final Demographic Questionnaire done 
         if(session()->has('questionnaire_5done') ) {
-            return redirect(route('thankyou'));
+            return redirect(route('thank_you'));
         }
 
-        //Final Demographic Questionnaire (and PROLIFIC ID)
+        //Final Demographic Questionnaire
         if(session()->has('questionnaire_4done') ) {
             return view('questionnaires.demographicQuestionnaire');
         }

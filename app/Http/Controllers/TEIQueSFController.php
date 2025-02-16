@@ -48,12 +48,13 @@ class TEIQueSFController extends Controller
             'q28' => ['required', 'integer'],
             'q29' => ['required', 'integer'],
             'q30' => ['required', 'integer'],
+            'trivial_question' => ['required', 'boolean'],
+            'fastClickCount' => ['required', 'integer'],
         ]);
-
         $alreadyAnswered = TEIQueSF::where([
             'user_id' => Auth::id(),
         ])->exists();
-
+        
         // Check if the user has already answered
         if (!$alreadyAnswered) {
             $validatedData['user_id'] = Auth::id();
@@ -68,11 +69,10 @@ class TEIQueSFController extends Controller
             }
 
         } else {
-            return back()->with('error', 'Already answered');
+            return redirect(route('show', ['folder' => 'inbox']))->with('error', 'Already answered');
         }
         session(['questionnaire_3done' => true]);
-        session(['questionnaire3_view' => false]);
-        return redirect()->route('questionnaires')->with('success', 'Questionnaire completed successfully!');
+        return redirect(route('show', ['folder' => 'inbox']))->with('success', 'Questionnaire 3 completed successfully!');
     }
 
     public function calculateScales($id)
@@ -91,11 +91,11 @@ class TEIQueSFController extends Controller
 
         // Calculate scales
         $scales = [
-            'total_tei' => array_sum($responses) / count($responses),
-            'well_being' => ($responses[5] + $responses[20] + $responses[9] + $responses[24] + $responses[12] + $responses[27]) / 6,
-            'self_controll' => ($responses[4] + $responses[19] + $responses[7] + $responses[22] + $responses[15] + $responses[30]) / 6,
-            'emotionality' => ($responses[1] + $responses[16] + $responses[2] + $responses[17] + $responses[8] + $responses[23] + $responses[13] + $responses[28]) / 8,
-            'sociability' => ($responses[6] + $responses[21] + $responses[10] + $responses[25] + $responses[11] + $responses[26]) / 6,
+            'tei_total_tei' => array_sum($responses) / count($responses),
+            'tei_well_being' => ($responses[5] + $responses[20] + $responses[9] + $responses[24] + $responses[12] + $responses[27]) / 6,
+            'tei_self_controll' => ($responses[4] + $responses[19] + $responses[7] + $responses[22] + $responses[15] + $responses[30]) / 6,
+            'tei_emotionality' => ($responses[1] + $responses[16] + $responses[2] + $responses[17] + $responses[8] + $responses[23] + $responses[13] + $responses[28]) / 8,
+            'tei_sociability' => ($responses[6] + $responses[21] + $responses[10] + $responses[25] + $responses[11] + $responses[26]) / 6,
         ];
 
         return $scales;

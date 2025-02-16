@@ -11,29 +11,18 @@ use Illuminate\Support\Facades\Log;
 
 class QuestionnairesController extends Controller
 {
-    /**
-     * Display a listing of the questionnaires.
-     */
-    public function index()
-    {
-        return view('questionnaires_screen');
-    }
-
     public function showQuestionnaire1()
     {
-        session(['questionnaire1_view' => true]);
         return view('questionnaires.bfi2xs'); 
     }
 
     public function showQuestionnaire2()
     {
-        session(['questionnaire2_view' => true]);
         return view('questionnaires.stp-ii-b'); 
     }
 
     public function showQuestionnaire3()
     {
-        session(['questionnaire3_view' => true]);
         return view('questionnaires.tei-que-sf'); 
     }
 
@@ -56,15 +45,20 @@ class QuestionnairesController extends Controller
                 'emailId'    => 'required|integer|exists:emails,id', 
                 'confidence' => 'required|integer|min:1|max:10', 
                 'phishing'   => 'required|in:yes,no', 
+                'time_spent' => 'required|numeric|min:1' 
             ]);
+
+            $phase = session('post_phase') ? 'post' : 'pre';
 
             $dataToInsert = [
                 'email_id'   => $validatedData['emailId'],
                 'confidence' => $validatedData['confidence'],
                 'phishing'   => $validatedData['phishing'] === 'yes' ? 1 : 0,
+                'response_time_seconds' => min(999.99, $validatedData['time_spent']),
                 'user_id'    => Auth::id(),
-                'title_email' => 'null' 
-            ];            
+                'title_email' => 'null',
+                'phase'      => $phase,
+            ];         
     
             UserEmailQuestionnaire::create($dataToInsert);
 
@@ -84,7 +78,6 @@ class QuestionnairesController extends Controller
         $user->gender = $request->gender;
         $user->age = $request->age;
         $user->num_hours_day_internet = $request->num_hours_day_internet;
-        $user->prolific_id = $request->prolific_id;
         $answers = [];
         for ($i=1; $i<=10; $i++){
             $question = "cyber_".$i;
@@ -94,7 +87,7 @@ class QuestionnairesController extends Controller
         $user->study_completed = Carbon::now();
         $user->save();
         session(['questionnaire_5done' => true]);
-        return redirect(route('thankyou'));
+        return redirect(route('thank_you'));
         
     }
 
