@@ -16,8 +16,12 @@ return new class extends Migration
         Schema::create('useremailquestionnaire', function (Blueprint $table) {
             $table->id();
             $table->string("title_email");
-            $table->string("sender_email");
-            $table->string("how_many_hyperlinks")->default(1);
+            //$table->string("sender_email");
+            //$table->string("how_many_hyperlinks")->default(1);
+            $table->enum("phase", ["pre", "post"]);
+            $table->integer("confidence")->check('confidence BETWEEN 1 AND 10');
+            $table->boolean("phishing");
+            $table->decimal('response_time_seconds', 5, 2)->nullable();
             $table->unsignedBigInteger("user_id");
             $table->unsignedBigInteger("email_id");
             $table->foreign('user_id')->references('id')->on('users');
