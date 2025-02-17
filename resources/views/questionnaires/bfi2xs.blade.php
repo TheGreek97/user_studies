@@ -15,7 +15,7 @@
                                 $questions = trans('questionnaire-campaign.bfi2xs.question');
                                 $questionsPerTab = 16;
                                 $totalQuestions = count($questions);
-                                $correctAnswer = 3;
+                                $correctAnswer = 1;
                                 $trivialPosition = rand(3, $totalQuestions - 3);
                             @endphp
 
