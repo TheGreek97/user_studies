@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Request as FRequest;
 
 class MailController extends Controller
 {
-    const MAILS_NUMBER = 14;
+    const MAILS_NUMBER = 20;
 
     public function show($folder = 'inbox', $id = null)
     {
@@ -51,12 +51,10 @@ class MailController extends Controller
         if (session()->has('questionnaire4_view') && session('questionnaire4_view') === true) {
             return view('questionnaires.training_reaction_questionnaire');
         }
-        //Else: EMAIL CLASSIFICATION     
-        $emails = DB::table('emails')
-            ->where('type', $folder)
-            ->get();
-        $seed = (int) Auth::id();  // in this way, the order is randomized according to the user id
-        MailController::seededShuffle($emails, $seed);
+        //Else: EMAIL CLASSIFICATION 
+        
+        //Divide emails proportionally into pre and post-test groups and return the appropriate group
+        $emails = $this->retrieveEmailsForThePhase($folder);
 
         // preprocess the emails
         foreach ($emails as $k => $e) {
@@ -287,4 +285,91 @@ class MailController extends Controller
             return view('chrome_warning', ['url' => $decodedurl, 'hostname' => $hostname, 'backurl' => $backurl, 'email_id' => $request->input('email_id')]);
         }
     */
+
+
+    /**
+     * Subdivide emails into pre and post-test groups based on phishing, counterpart, and difficulty level.
+     *
+     * @param string $folder The folder to filter emails by.
+     * @return \Illuminate\Support\Collection A shuffled collection of emails.
+     */
+    public function retrieveEmailsForThePhase($folder)
+    {
+        // Retrieve the emails from the database
+        $emails = DB::table('emails')
+            ->where('type', $folder)
+            ->get();
+            
+        $seed = (int) Auth::id();  // Randomize according to user id
+
+        // subdivision by phishing
+        $phishing_emails = $emails->where('phishing', 1);
+        $genuine_emails = $emails->where('phishing', 0);
+
+        // subdivision by counterpart (1 = has a counterpart, 0 = no counterpart)
+        $c_phishing_emails = $phishing_emails->where('counterpart', 1);
+        $not_c_phishing_emails = $phishing_emails->where('counterpart', 0);
+        $c_genuine_emails = $genuine_emails->where('counterpart', 1);
+        $not_c_genuine_emails = $genuine_emails->where('counterpart', 0);
+
+        // Final subdivision by difficulty_level (low, medium, high)
+        $groupedEmails = [
+            'phishing' => [
+                'counterpart' => [
+                    'low' => $c_phishing_emails->where('difficulty_level', 'low'),
+                    'medium' => $c_phishing_emails->where('difficulty_level', 'medium'),
+                    'high' => $c_phishing_emails->where('difficulty_level', 'high'),
+                ],
+                'no_counterpart' => [
+                    'low' => $not_c_phishing_emails->where('difficulty_level', 'low'),
+                    'medium' => $not_c_phishing_emails->where('difficulty_level', 'medium'),
+                    'high' => $not_c_phishing_emails->where('difficulty_level', 'high'),
+                ],
+            ],
+            'genuine' => [
+                'counterpart' => [
+                    'low' => $c_genuine_emails->where('difficulty_level', 'low'),
+                    'medium' => $c_genuine_emails->where('difficulty_level', 'medium'),
+                    'high' => $c_genuine_emails->where('difficulty_level', 'high'),
+                ],
+                'no_counterpart' => [
+                    'low' => $not_c_genuine_emails->where('difficulty_level', 'low'),
+                    'medium' => $not_c_genuine_emails->where('difficulty_level', 'medium'),
+                    'high' => $not_c_genuine_emails->where('difficulty_level', 'high'),
+                ],
+            ],
+        ];
+
+        // Initialize pre and post-test emails arrays
+        $pre_test_emails = [];
+        $post_test_emails = [];
+        
+        foreach ($groupedEmails as $category => $types) { // phishing / genuine
+            foreach ($types as $counterpartType => $difficultyGroups) { // counterpart / no_counterpart
+                foreach ($difficultyGroups as $difficulty => $emails) { // low / medium / high
+                    MailController::seededShuffle($emails, $seed); // Shuffle the emails before splitting them into pre and post groups
+                    $half = (int) ceil($emails->count() / 2); // we divide in half for pre and post groups
+                    
+                    $pre_test_emails[$category][$counterpartType][$difficulty] = collect($emails->slice(0, $half));
+                    $post_test_emails[$category][$counterpartType][$difficulty] = collect($emails->slice($half));
+                }
+            }
+        }
+    
+        //ASSIGN A GROUP OF EMAILS
+        if(!session('post_phase')){
+            //PRE-CLASSIFICATION
+            $emails = collect($pre_test_emails)->flatten(3); 
+            MailController::seededShuffle($emails, $seed);
+            // Shuffle again for pre-test group (to remove the predefinited order of groups)
+        } else {
+            //POST-CLASSIFICATION
+            $emails = collect($post_test_emails)->flatten(3); 
+            MailController::seededShuffle($emails, $seed);
+            // Shuffle again for post-test group (to remove the predefinited order of groups)
+        }
+
+        // Return the shuffled collection of emails
+        return $emails;
+    }
 }

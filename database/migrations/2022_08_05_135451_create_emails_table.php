@@ -25,6 +25,10 @@ return new class extends Migration
             $table->enum('warning_type', ['popup_email', 'popup_link', 'tooltip', 'browser_native'])->nullable();
             $table->longText('warning_explanation_1')->nullable();
             $table->longText('warning_explanation_2')->nullable();
+            // New fields:
+            $table->enum('difficulty_level', ['low', 'medium', 'high']);
+            $table->boolean('phishing')->default(0);  // 0 = false, 1 = true
+            $table->boolean('counterpart')->default(0);  // 0 = false, 1 = true
             //$table->unsignedBigInteger('user_id');
             //$table->timestamps();
             //$table->foreign('user_id')->references('id')->on('users');
