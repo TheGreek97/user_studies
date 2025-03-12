@@ -576,11 +576,10 @@ $show_details = Auth::user()->show_details;
                                             class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
                                         >
                                         @foreach($emails ?? [] as $email)
-                                            {{-- If we are in the post_phase, the count should be 2 to be marked as answered --}}
                                             @if(count(DB::table('useremailquestionnaire')
                                             ->where('user_id', \Illuminate\Support\Facades\Auth::id())
                                             ->where('email_id', $email->id)
-                                            ->get()) > (session('post_phase') ? 1 : 0)) 
+                                            ->get()) > 0) 
                                                 <tr class="text-gray-700 cursor-not-allowed bg-gray-300">
                                             @else
                                                 <tr class="text-gray-700 cursor-pointer hover:bg-gray-200 hover:dark:bg-gray-600 dark:text-gray-400"
