@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Request as FRequest;
 
 class MailController extends Controller
 {
-    const MAILS_NUMBER = 20;
+    const MAILS_NUMBER = 21;
 
     public function show($folder = 'inbox', $id = null)
     {
@@ -28,6 +28,12 @@ class MailController extends Controller
         }
         $auth_user = Auth::user();
         info("ID " . $id);
+
+        // session([
+        //     'questionnaire_1done' => true,
+        //     'questionnaire_2done' => true,
+        //     'questionnaire_3done' => true,
+        // ]);
 
         //First shows the 3 questionnaires
         if (!session()->has('questionnaire_1done')) {
@@ -56,14 +62,15 @@ class MailController extends Controller
         //Divide emails proportionally into pre and post-test groups and return the appropriate group
         $emails = $this->retrieveEmailsForThePhase($folder);
 
+
         // preprocess the emails
         foreach ($emails as $k => $e) {
             // Set the date to the email
             $e->date = $this->get_near_date();
             // replace the name in the email parts with the name of the user
-            $e->content = str_replace("{user_name}", $auth_user->name, $e->content);
-            $e->subject = str_replace("{user_name}", $auth_user->name, $e->subject);
-            $e->preview_text = str_replace("{user_name}", $auth_user->name, $e->preview_text);
+            $e->content = str_replace("{USER NAME}", $auth_user->name, $e->content);
+            $e->subject = str_replace("{USER NAME}", $auth_user->name, $e->subject);
+            $e->preview_text = str_replace("{USER NAME}", $auth_user->name, $e->preview_text);
 
             // RENDER DATES
             // Replace {now_email_datetime} with the current date time of the email - 3 minutes.
@@ -103,7 +110,17 @@ class MailController extends Controller
             if ($email != null) {
                 // if email was found, show the email page
                 $email->warning_type = $auth_user->warning_type;
-                return view('email_page', ['folder' => $folder, 'emails' => $emails, 'selected_email' => $email]);
+                 // Get the email file path
+                $filePath = public_path($email->page_path); // Ensure the path is accessible
+
+                // Read and modify the file contents
+                if (file_exists($filePath)) {
+                    $htmlContent = file_get_contents($filePath);
+                    $htmlContent = str_replace('{USER NAME}', e($auth_user->name), $htmlContent);
+                } else {
+                    $htmlContent = "<p>Email content not found.</p>";
+                }
+                return view('email_page', ['folder' => $folder, 'emails' => $emails, 'selected_email' => $email, 'htmlContent' => $htmlContent]);
             } else {
                 // else show all the emails
                 return redirect(route('show', ['folder' => $folder, 'emails' => $emails]));
@@ -299,6 +316,7 @@ class MailController extends Controller
         $emails = DB::table('emails')
             ->where('type', $folder)
             ->get();
+        //Log::info("Total emails retrieved: " . $emails->count());
             
         $seed = (int) Auth::id();  // Randomize according to user id
 
@@ -311,6 +329,13 @@ class MailController extends Controller
         $not_c_phishing_emails = $phishing_emails->where('counterpart', 0);
         $c_genuine_emails = $genuine_emails->where('counterpart', 1);
         $not_c_genuine_emails = $genuine_emails->where('counterpart', 0);
+
+        //Log::info("Phishing emails: " . $phishing_emails->count());
+        //Log::info("Genuine emails: " . $genuine_emails->count());
+        //Log::info("Counterpart phishing emails: " . $c_phishing_emails->count());
+        //Log::info("No counterpart phishing emails: " . $not_c_phishing_emails->count());
+        //Log::info("Counterpart genuine emails: " . $c_genuine_emails->count());
+        //Log::info("No counterpart genuine emails: " . $not_c_genuine_emails->count());
 
         // Final subdivision by difficulty_level (low, medium, high)
         $groupedEmails = [
@@ -328,14 +353,36 @@ class MailController extends Controller
             ],
             'genuine' => [
                 'counterpart' => [
-                    'low' => $c_genuine_emails->where('difficulty_level', 'low'),
                     'medium' => $c_genuine_emails->where('difficulty_level', 'medium'),
                     'high' => $c_genuine_emails->where('difficulty_level', 'high'),
                 ],
                 'no_counterpart' => [
-                    'low' => $not_c_genuine_emails->where('difficulty_level', 'low'),
                     'medium' => $not_c_genuine_emails->where('difficulty_level', 'medium'),
                     'high' => $not_c_genuine_emails->where('difficulty_level', 'high'),
+                ],
+            ],
+        ];
+        $splitPoints = [
+            'phishing' => [
+                'counterpart' => [
+                    'low' => 2,  // Divide after 3 elements
+                    'medium' => 2,
+                    'high' => 2,
+                ],
+                'no_counterpart' => [
+                    'low' => 1,
+                    'medium' => 2,
+                    'high' => 1,
+                ],
+            ],
+            'genuine' => [
+                'counterpart' => [
+                    'medium' => 3,
+                    'high' => 3,
+                ],
+                'no_counterpart' => [
+                    'medium' => 2,
+                    'high' => 3,
                 ],
             ],
         ];
@@ -348,10 +395,14 @@ class MailController extends Controller
             foreach ($types as $counterpartType => $difficultyGroups) { // counterpart / no_counterpart
                 foreach ($difficultyGroups as $difficulty => $emails) { // low / medium / high
                     MailController::seededShuffle($emails, $seed); // Shuffle the emails before splitting them into pre and post groups
-                    $half = (int) ceil($emails->count() / 2); // we divide in half for pre and post groups
+                    $splitPoint = $splitPoints[$category][$counterpartType][$difficulty] ?? (int) ceil($emails->count() / 2);
+                    $splitPoint = min($splitPoint, $emails->count()); // we divide in half for pre and post groups
                     
-                    $pre_test_emails[$category][$counterpartType][$difficulty] = collect($emails->slice(0, $half));
-                    $post_test_emails[$category][$counterpartType][$difficulty] = collect($emails->slice($half));
+                    $pre_test_emails[$category][$counterpartType][$difficulty] = collect($emails->slice(0, $splitPoint));
+                    $post_test_emails[$category][$counterpartType][$difficulty] = collect($emails->slice($splitPoint));
+
+                    //Log::info("Category: $category, Counterpart: $counterpartType, Difficulty: $difficulty");
+                    //Log::info("Total: " . $emails->count() . ", Pre-test: " . $pre_test_emails[$category][$counterpartType][$difficulty]->count() . ", Post-test: " . $post_test_emails[$category][$counterpartType][$difficulty]->count());
                 }
             }
         }
@@ -362,11 +413,13 @@ class MailController extends Controller
             $emails = collect($pre_test_emails)->flatten(3); 
             MailController::seededShuffle($emails, $seed);
             // Shuffle again for pre-test group (to remove the predefinited order of groups)
+            //Log::info("Final pre-test email count: " . $emails->count());
         } else {
             //POST-CLASSIFICATION
             $emails = collect($post_test_emails)->flatten(3); 
             MailController::seededShuffle($emails, $seed);
             // Shuffle again for post-test group (to remove the predefinited order of groups)
+            //Log::info("Final post-test email count: " . $emails->count());
         }
 
         // Return the shuffled collection of emails

@@ -1,5 +1,5 @@
 <?php
-use \Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 
 $warning_type = Auth::user()->warning_type;
 $show_explanation = Auth::user()->show_explanation;
@@ -8,27 +8,31 @@ $show_details = Auth::user()->show_details;
 <x-app-layout>
     <x-slot name="slot">
         <div style="position: sticky; top: 0; left: 0; z-index: 10;"
-                class="p-6 shadow-lg bg-gray-700 text-white flash-element">
-            @if(session('post_phase'))
+            class="p-6 shadow-lg bg-gray-700 text-white flash-element">
+            @if (session('post_phase'))
                 <p>
-                    <span class="font-semibold">GOAL:</span> Please review all the emails in your inbox once again and now answer based on the knowledge you've gained during the training.
+                    <span class="font-semibold">GOAL:</span> Please review all the emails in your inbox once again and
+                    now answer based on the knowledge you've gained during the training.
                 </p>
             @else
                 <p>
-                    <span class="font-semibold">GOAL:</span> For each email, determine if it is a phishing attempt and rate your confidence on a scale of 1 to 7.
+                    <span class="font-semibold">GOAL:</span> For each email, determine if it is a phishing attempt and
+                    rate your confidence on a scale of 1 to 7.
                 </p>
             @endif
         </div>
 
         <!-- Task presentation modal -->
-        <div id="task-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" style="z-index: 99; background: rgba(0,0,0,30%);"
-             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div id="task-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+            style="z-index: 99; background: rgba(0,0,0,30%);"
+            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative p-4 w-full max-w-2xl max-h-full">
                 <!-- Modal content -->
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                    @if(session('post_phase'))
+                    @if (session('post_phase'))
                         <!-- Modal header -->
-                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                        <div
+                            class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                             <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
                                 GOAL:
                             </h3>
@@ -36,12 +40,14 @@ $show_details = Auth::user()->show_details;
                         <!-- Modal body -->
                         <div class="p-4 md:p-5 space-y-4">
                             <p class="text-base leading-relaxed text-gray-900 dark:text-gray-400">
-                                Please review all the emails in your inbox once again and now answer based on the knowledge you've gained during the training.
+                                Please review all the emails in your inbox once again and now answer based on the
+                                knowledge you've gained during the training.
                             </p>
                         </div>
                     @else
                         <!-- Modal header -->
-                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                        <div
+                            class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                             <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
                                 GOAL:
                             </h3>
@@ -57,83 +63,74 @@ $show_details = Auth::user()->show_details;
                         </div>
                     @endif
                     <!-- Modal footer -->
-                    <div class="flex items-end p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600" style="flex-direction: row-reverse">
-                        <button id="close-task-modal-btn" data-modal-hide="static-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Start</button>
+                    <div class="flex items-end p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600"
+                        style="flex-direction: row-reverse">
+                        <button id="close-task-modal-btn" data-modal-hide="static-modal" type="button"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Start</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        @if(isset($startStudy))
-        <script type="module">
-            {// show the modal
-                // set the modal menu element
-                const $targetEl = document.getElementById('task-modal')
+        @if (isset($startStudy))
+            <script type="module">
+                { // show the modal
+                    // set the modal menu element
+                    const $targetEl = document.getElementById('task-modal')
 
-                // options with default values
-                const options = {
-                    placement: 'bottom-right',
-                    backdrop: 'static',
-                    backdropClasses:
-                        'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
-                    closable: true,
-                    onHide: () => {
-                        console.log('modal is hidden');
+                    // options with default values
+                    const options = {
+                        placement: 'bottom-right',
+                        backdrop: 'static',
+                        backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
+                        closable: true,
+                        onHide: () => {
+                            console.log('modal is hidden');
+                        }
+                    };
+
+                    // instance options object
+                    const instanceOptions = {
+                        id: 'modalEl',
+                        override: true
+                    };
+                    /*
+                     * $targetEl: required
+                     * options: optional
+                     */
+                    const modal = new Modal($targetEl, options, instanceOptions);
+
+                    function shrinkModalToNavbar() {
+                        $targetEl.firstElementChild.classList.add("modal-shrink") // add the animation to the modal
+                        setTimeout(() => modal.hide(), 1100) // wait 2 second for the animation to complete, then hide the modal
                     }
-                };
 
-                // instance options object
-                const instanceOptions = {
-                    id: 'modalEl',
-                    override: true
-                };
-                /*
-                 * $targetEl: required
-                 * options: optional
-                 */
-                const modal = new Modal($targetEl, options, instanceOptions);
-
-                function shrinkModalToNavbar () {
-                    $targetEl.firstElementChild.classList.add("modal-shrink") // add the animation to the modal
-                    setTimeout(() => modal.hide(), 1100) // wait 2 second for the animation to complete, then hide the modal
+                    modal.show()
+                    document.getElementById('close-task-modal-btn').onclick = shrinkModalToNavbar
                 }
-
-                modal.show()
-                document.getElementById('close-task-modal-btn').onclick = shrinkModalToNavbar
-            }
-
-        </script>
+            </script>
         @endif
 
-        <div
-            class="flex h-screen bg-gray-100 dark:bg-gray-900"
-            :class="{ 'overflow-hidden': isSideMenuOpen }">
+        <div class="flex h-screen bg-gray-100 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
             <!-- Desktop sidebar -->
-            <aside
-                class="z-20 hidden w-56 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
+            <aside class="z-20 hidden w-56 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
                 <div class="py-4 text-gray-500 dark:text-gray-400">
-                    <a
-                        class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
-                        href="#"
-                    >
+                    <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
                         {{ config('app.name', 'E-Mail Client') }}
                     </a>
                     <div class="px-6 my-6">
                         <button data-modal-toggle="compose_modal"
-                                class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
-                        >
+                            class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">
                             Compose
                             <span class="ml-2" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
-                                                                       class="h-4 w-4"
-                                                                       fill="none" viewBox="0 0 24 24"
-                                                                       stroke="currentColor"
-                                                                       stroke-width="2">
-                              <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
-                            </svg></span>
+                                    class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                </svg></span>
                         </button>
                         <!-- Compose modal -->
-                        <div id="compose_modal" tabindex="-1" aria-hidden="true"
+                        {{-- <div id="compose_modal" tabindex="-1" aria-hidden="true"
                              class="bg-black bg-opacity-50 hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
                             <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
                                 <!-- Modal content -->
@@ -180,99 +177,75 @@ $show_details = Auth::user()->show_details;
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <ul class="mt-6">
                         <li class="relative px-6 py-3">
-                            @if($folder === 'inbox')
-                                <span
-                                    class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
-                                    aria-hidden="true"
-                                ></span>
+                            @if ($folder === 'inbox')
+                                <span class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
+                                    aria-hidden="true"></span>
                             @endif
-                            <a
-                                href="{{ route('show', ['folder' => 'inbox']) }}"
-                                @if($folder === 'inbox')
-                                class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                            <a href="{{ route('show', ['folder' => 'inbox']) }}"
+                                @if ($folder === 'inbox') class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                                 @else
-                                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                @endif
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                     stroke="currentColor" stroke-width="2">
+                                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" @endif>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20"/>
+                                        d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20" />
                                 </svg>
-                                <span class="ml-4">Inbox (14)</span>
+                                <span class="ml-4">Inbox (21)</span>
                             </a>
                         </li>
                     </ul>
                     <ul>
                         <li class="relative px-6 py-3">
-                            @if($folder === 'sent')
-                                <span
-                                    class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
-                                    aria-hidden="true"
-                                ></span>
+                            @if ($folder === 'sent')
+                                <span class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
+                                    aria-hidden="true"></span>
                             @endif
-                            <a
-                                href="{{ route('show', ['folder' => 'sent']) }}"
-                                @if($folder === 'sent')
-                                class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                            <a href="{{ route('show', ['folder' => 'sent']) }}"
+                                @if ($folder === 'sent') class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                                 @else
-                                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                @endif
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                     stroke="currentColor" stroke-width="2">
+                                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" @endif>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                                 </svg>
                                 <span class="ml-4">Sent (0)</span>
                             </a>
                         </li>
                         <li class="relative px-6 py-3">
-                            @if($folder === 'draft')
-                                <span
-                                    class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
-                                    aria-hidden="true"
-                                ></span>
+                            @if ($folder === 'draft')
+                                <span class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
+                                    aria-hidden="true"></span>
                             @endif
-                            <a
-                                href="{{ route('show', ['folder' => 'draft']) }}"
-                                @if($folder === 'draft')
-                                class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                            <a href="{{ route('show', ['folder' => 'draft']) }}"
+                                @if ($folder === 'draft') class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                                 @else
-                                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                @endif
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                     stroke="currentColor" stroke-width="2">
+                                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" @endif>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                        d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                                 </svg>
                                 <span class="ml-4">Drafts (0)</span>
                             </a>
                         </li>
                         <li class="relative px-6 py-3">
-                            @if($folder === 'trash')
-                                <span
-                                    class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
-                                    aria-hidden="true"
-                                ></span>
+                            @if ($folder === 'trash')
+                                <span class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
+                                    aria-hidden="true"></span>
                             @endif
-                            <a
-                                href="{{ route('show', ['folder' => 'trash']) }}"
-                                @if($folder === 'trash')
-                                class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                            <a href="{{ route('show', ['folder' => 'trash']) }}"
+                                @if ($folder === 'trash') class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                                 @else
-                                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                @endif
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                     stroke="currentColor" stroke-width="2">
+                                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" @endif>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                 </svg>
                                 <span class="ml-4">Trash (0)</span>
                             </a>
@@ -282,70 +255,49 @@ $show_details = Auth::user()->show_details;
             </aside>
             <!-- Mobile sidebar -->
             <!-- Backdrop -->
-            <div
-                x-show="isSideMenuOpen"
-                x-transition:enter="transition ease-in-out duration-150"
-                x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100"
-                x-transition:leave="transition ease-in-out duration-150"
-                x-transition:leave-start="opacity-100"
+            <div x-show="isSideMenuOpen" x-transition:enter="transition ease-in-out duration-150"
+                x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in-out duration-150" x-transition:leave-start="opacity-100"
                 x-transition:leave-end="opacity-0"
-                class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
-            ></div>
+                class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
+            </div>
             <aside
                 class="fixed inset-y-0 z-20 flex-shrink-0 w-64 mt-16 overflow-y-auto bg-white dark:bg-gray-800 md:hidden"
-                x-show="isSideMenuOpen"
-                x-transition:enter="transition ease-in-out duration-150"
-                x-transition:enter-start="opacity-0 transform -translate-x-20"
-                x-transition:enter-end="opacity-100"
-                x-transition:leave="transition ease-in-out duration-150"
-                x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0 transform -translate-x-20"
-                @click.away="closeSideMenu"
-                @keydown.escape="closeSideMenu"
-            >
+                x-show="isSideMenuOpen" x-transition:enter="transition ease-in-out duration-150"
+                x-transition:enter-start="opacity-0 transform -translate-x-20" x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in-out duration-150" x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0 transform -translate-x-20" @click.away="closeSideMenu"
+                @keydown.escape="closeSideMenu">
                 <div class="py-4 text-gray-500 dark:text-gray-400">
-                    <a
-                        class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
-                        href="#"
-                    >
+                    <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
                         Email Client
                     </a>
                     <div class="mx-6 my-6">
                         <button
-                            class="flex items-center justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
-                        >
+                            class="flex items-center justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">
                             Compose
                             <span class="ml-2" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
-                                                                       class="h-4 w-4"
-                                                                       fill="none" viewBox="0 0 24 24"
-                                                                       stroke="currentColor"
-                                                                       stroke-width="2">
-  <path stroke-linecap="round" stroke-linejoin="round"
-        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
-</svg></span>
+                                    class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                </svg></span>
                         </button>
                     </div>
                     <ul class="mt-6">
                         <li class="relative px-6 py-3">
-                            @if($folder === 'inbox')
-                                <span
-                                    class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
-                                    aria-hidden="true"
-                                ></span>
+                            @if ($folder === 'inbox')
+                                <span class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
+                                    aria-hidden="true"></span>
                             @endif
-                            <a
-                                @if($folder === 'inbox')
-                                class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                            <a @if ($folder === 'inbox') class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                                 @else
-                                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                @endif
-                                href="{{ route('show', ['folder' => 'inbox']) }}"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                     stroke="currentColor" stroke-width="2">
+                                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" @endif
+                                href="{{ route('show', ['folder' => 'inbox']) }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20"/>
+                                        d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20" />
                                 </svg>
                                 <span class="ml-4">Inbox</span>
                             </a>
@@ -353,64 +305,48 @@ $show_details = Auth::user()->show_details;
                     </ul>
                     <ul>
                         <li class="relative px-6 py-3">
-                            @if($folder === 'sent')
-                                <span
-                                    class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
-                                    aria-hidden="true"
-                                ></span>
+                            @if ($folder === 'sent')
+                                <span class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
+                                    aria-hidden="true"></span>
                             @endif
-                            <a
-                                @if($folder === 'sent')
-                                class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                            <a @if ($folder === 'sent') class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                                 @else
-                                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                @endif
-                                href="{{ route('show', ['folder' => 'sent']) }}"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                     stroke="currentColor" stroke-width="2">
+                                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" @endif
+                                href="{{ route('show', ['folder' => 'sent']) }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                                 </svg>
                                 <span class="ml-4">Sent</span>
                             </a>
                         </li>
                         <li class="relative px-6 py-3">
-                            @if($folder === 'draft')
-                                <span
-                                    class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
-                                    aria-hidden="true"
-                                ></span>
+                            @if ($folder === 'draft')
+                                <span class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
+                                    aria-hidden="true"></span>
                             @endif
-                            <a
-                                @if($folder === 'draft')
-                                class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                            <a @if ($folder === 'draft') class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                                 @else
-                                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                @endif
-                                href="{{ route('show', ['folder' => 'draft']) }}"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                     stroke="currentColor" stroke-width="2">
+                                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" @endif
+                                href="{{ route('show', ['folder' => 'draft']) }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                        d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                                 </svg>
                                 <span class="ml-4">Drafts</span>
                             </a>
                         </li>
                         <li class="relative px-6 py-3">
-                            <a
-                                @if($folder === 'trash')
-                                class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                            <a @if ($folder === 'trash') class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                                 @else
-                                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                @endif
-                                href="#"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                     stroke="currentColor" stroke-width="2">
+                                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" @endif
+                                href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                 </svg>
                                 <span class="ml-4">Trash</span>
                             </a>
@@ -421,69 +357,40 @@ $show_details = Auth::user()->show_details;
             <div class="flex flex-col flex-1 w-full">
                 <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
                     <div
-                        class="container flex items-center justify-between h-full px-6 mx-auto text-blue-600 dark:text-blue-300"
-                    >
+                        class="container flex items-center justify-between h-full px-6 mx-auto text-blue-600 dark:text-blue-300">
                         <!-- Mobile hamburger -->
                         <button
                             class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-blue"
-                            @click="toggleSideMenu"
-                            aria-label="Menu"
-                        >
-                            <svg
-                                class="w-6 h-6"
-                                aria-hidden="true"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                            >
-                                <path
-                                    fill-rule="evenodd"
+                            @click="toggleSideMenu" aria-label="Menu">
+                            <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
                                     d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                                    clip-rule="evenodd"
-                                ></path>
+                                    clip-rule="evenodd"></path>
                             </svg>
                         </button>
                         <!-- Search input -->
                         <div class="flex justify-center flex-1 lg:mr-32 opacity-0">
-                            <div
-                                class="relative w-full max-w-xl mr-6 focus-within:text-blue-500"
-                            >
+                            <div class="relative w-full max-w-xl mr-6 focus-within:text-blue-500">
                                 <div class="absolute inset-y-0 flex items-center pl-2">
-                                    <svg
-                                        class="w-4 h-4"
-                                        aria-hidden="true"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                    >
-                                        <path
-                                            fill-rule="evenodd"
+                                    <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
                                             d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                            clip-rule="evenodd"
-                                        ></path>
+                                            clip-rule="evenodd"></path>
                                     </svg>
                                 </div>
                                 <input
                                     class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-blue-300 focus:outline-none focus:shadow-outline-blue form-input"
-                                    type="text"
-                                    placeholder="Search for projects"
-                                    aria-label="Search"
-                                />
+                                    type="text" placeholder="Search for projects" aria-label="Search" />
                             </div>
                         </div>
                         <ul class="flex items-center flex-shrink-0 space-x-6">
                             <li class="relative">
-                                <button
-                                    class="align-middle rounded-full focus:shadow-outline-blue focus:outline-none"
-                                    x-ref="button"
-                                    x-on:click="toggleProfileMenu()"
-                                    aria-label="Account"
-                                    aria-haspopup="true"
-                                >
-                                    <img
-                                        class="object-cover w-8 h-8 rounded-full"
-                                        src="https://ui-avatars.com/api/?background=1C64F2&color=fff&name={{\Illuminate\Support\Facades\Auth::user()->name}}"
-                                        alt=""
-                                        aria-hidden="true"
-                                    />
+                                <button class="align-middle rounded-full focus:shadow-outline-blue focus:outline-none"
+                                    x-ref="button" x-on:click="toggleProfileMenu()" aria-label="Account"
+                                    aria-haspopup="true">
+                                    <img class="object-cover w-8 h-8 rounded-full"
+                                        src="https://ui-avatars.com/api/?background=1C64F2&color=fff&name={{ \Illuminate\Support\Facades\Auth::user()->name }}"
+                                        alt="" aria-hidden="true" />
                                 </button>
                                 {{-- <template x-if="isProfileMenuOpen">
                                     <ul
@@ -528,41 +435,42 @@ $show_details = Auth::user()->show_details;
                 </header>
 
                 <main class="overflow-y-auto" style="height:85%;">
-                    <div class="px-0 md:px-6 mx-5 md:mx-auto grid mb-10"> 
-                        @if(!isset($selected_email))
+                    <div class="px-0 md:px-6 mx-5 md:mx-auto grid mb-10">
+                        @if (!isset($selected_email))
                             <h2
-                                class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200 flex flex-row align-middle content-center"
-                            >
+                                class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200 flex flex-row align-middle content-center">
                                 <div class="pr-1">
                                     @switch($folder)
                                         @case('inbox')
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-full" fill="none"
-                                             viewBox="0 0 24 24"
-                                             stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20"/>
-                                        </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-full" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20" />
+                                            </svg>
                                         @break
+
                                         @case('sent')
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-full" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
-                                        </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-full" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                            </svg>
                                         @break
+
                                         @case('draft')
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-full" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                                        </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-full" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                            </svg>
                                         @break
+
                                         @case('trash')
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-full" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                        </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-full" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
                                         @break
                                     @endswitch
                                 </div>
@@ -572,230 +480,283 @@ $show_details = Auth::user()->show_details;
                             <div class="w-full overflow-hidden rounded-lg shadow-xs mb-10">
                                 <div class="w-full overflow-x-auto">
                                     <table class="w-full">
-                                        <tbody
-                                            class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
-                                        >
-                                        @foreach($emails ?? [] as $email)
-                                            @if(count(DB::table('useremailquestionnaire')
-                                            ->where('user_id', \Illuminate\Support\Facades\Auth::id())
-                                            ->where('email_id', $email->id)
-                                            ->get()) > 0) 
-                                                <tr class="text-gray-700 cursor-not-allowed bg-gray-300">
-                                            @else
-                                                <tr class="text-gray-700 cursor-pointer hover:bg-gray-200 hover:dark:bg-gray-600 dark:text-gray-400"
-                                                    @if($email->type === "inbox")
-                                                        @if($email->show_warning && $warning_type === "popup_email")
-                                                            onclick="open_warning('{{ route('show', ['folder' => $folder,'id' => $email->id]) }}', {{ $email->id }}, '{!! $email->warning_explanation !!}')"
-                                                        @else
-                                                            onclick="window.location.href = '{{ route('show', ['folder' => $folder, 'id' => $email->id]) }}'"
+                                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                            @foreach ($emails ?? [] as $email)
+                                                @php
+                                                    // Checks whether the current email has already been opened
+                                                    $currentOpened = DB::table('useremailquestionnaire')
+                                                                        ->where('user_id', \Illuminate\Support\Facades\Auth::id())
+                                                                        ->where('email_id', $email->id)
+                                                                        ->exists();
+                                    
+                                                     // Checks whether the previous email has already been opened
+                                                    $prevOpened = $loop->first ? true : false;
+                                                    if (!$loop->first) {
+                                                        // Recupera l'email precedente dall'array/collezione
+                                                        $prevEmail = $emails[$loop->index - 1];
+                                                        $prevOpened = DB::table('useremailquestionnaire')
+                                                                        ->where('user_id', \Illuminate\Support\Facades\Auth::id())
+                                                                        ->where('email_id', $prevEmail->id)
+                                                                        ->exists();
+                                                    }
+                                    
+                                                    // Email is clickable if it has NOT been opened and if (it is the first one or the previous one is opened)
+                                                    $clickable = !$currentOpened && $prevOpened;
+                                                @endphp
+                                                @if (!$clickable)
+                                                    @if (!$prevOpened)
+                                                        <tr class="text-gray-700 cursor-not-allowed bg-gray-50" title="Please answer the emails in the order given">
+                                                    @else
+                                                        <tr class="text-gray-700 cursor-not-allowed bg-gray-300"  title="You have already answered to this email">
+                                                    @endif
+                                                @else
+                                                    <tr class="text-gray-700 cursor-pointer hover:bg-gray-200 hover:dark:bg-gray-600 dark:text-gray-400"
+                                                        @if ($email->type === 'inbox') 
+                                                            @if ($email->show_warning && $warning_type === 'popup_email')
+                                                                onclick="open_warning('{{ route('show', ['folder' => $folder, 'id' => $email->id]) }}', {{ $email->id }}, '{!! $email->warning_explanation !!}')"
+                                                            @else
+                                                                onclick="window.location.href = '{{ route('show', ['folder' => $folder, 'id' => $email->id]) }}'" 
+                                                            @endif
                                                         @endif
-                                                    @endif
-                                                >
-                                                    @endif
-                                                    <td class="px-4 py-4 text-sm">
-                                                        <div class="flex items-center truncate font-semibold">
-                                                            <p>{{ $email->from_name }}</p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="px-4 py-4 py-4">
-                                                        <p class="text-ellipsis font-bold text-gray-600 dark:text-gray-300 truncate text-sm">
-                                                            {{ $email->subject }}
-                                                        </p>
-                                                        <p class="text-gray-600 dark:text-gray-400 overflow-hidden truncate text-xs">
-                                                            {{ $email->preview_text }}
-                                                        </p>
-                                                    </td>
-                                                    <td class="px-4 py-4 text-xs font-bold truncate">
-                                                        {{ date("d M", strtotime($email->date)) }}
-                                                    </td>
+                                                    >
+                                                @endif
+                                                <td class="px-4 py-4 text-sm">
+                                                    <div class="flex items-center truncate font-semibold">
+                                                        <p>{{ $email->from_name }}</p>
+                                                    </div>
+                                                </td>
+                                                <td class="px-4 py-4 py-4">
+                                                    <p
+                                                        class="text-ellipsis font-bold text-gray-600 dark:text-gray-300 truncate text-sm">
+                                                        {{ $email->subject }}
+                                                    </p>
+                                                    <p
+                                                        class="text-gray-600 dark:text-gray-400 overflow-hidden truncate text-xs">
+                                                        {{ $email->preview_text }}
+                                                    </p>
+                                                </td>
+                                                <td class="px-4 py-4 text-xs font-bold truncate">
+                                                    {{ date('d M', strtotime($email->date)) }}
+                                                </td>
                                                 </tr>
-                                                @endforeach
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         @else
-                            <div class="h-auto rounded-lg shadow-xs my-10 p-3 bg-white dark:bg-gray-800 overflow-y-hidden mr-[240px] md:mr-[280px]" >
-                                    <!-- Contenuti del primo div -->
-                                        <div class="w-full flex flex-row space-x-2 pb-2">
-                                            <a data-tooltip-target="tooltip-back" data-tooltip-placement="bottom"
-                                            class="cursor-pointer hover:bg-gray-200 rounded-full p-2"
-                                            href="{{ route('show', ['folder' => $folder]) }}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                                                </svg>
-                                                <div id="tooltip-back" role="tooltip"
-                                                    class="text-xs inline-block absolute invisible z-10 py-1 px-2 font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-100 tooltip dark:bg-gray-700">
-                                                    Go back
-                                                </div>
-                                            </a>
-                                            <a data-tooltip-target="tooltip-spam" data-tooltip-placement="bottom"
-                                            class="cursor-pointer hover:bg-gray-200 rounded-full p-2" href="#">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
-                                                </svg>
-                                                <div id="tooltip-spam" role="tooltip"
-                                                    class="text-xs inline-block absolute invisible z-10 py-1 px-2 font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-100 tooltip dark:bg-gray-700">
-                                                    Report Spam
-                                                </div>
-                                            </a>
-                                            <a data-tooltip-target="tooltip-delete" data-tooltip-placement="bottom"
-                                            class="cursor-pointer hover:bg-gray-200 rounded-full p-2" href="#">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                                </svg>
-                                                <div id="tooltip-delete" role="tooltip"
-                                                    class="text-xs inline-block absolute invisible z-10 py-1 px-2 font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-100 tooltip dark:bg-gray-700">
-                                                    Delete
-                                                </div>
-                                            </a>
-                                            <a data-tooltip-target="tooltip-reply" data-tooltip-placement="bottom"
-                                            class="cursor-pointer hover:bg-gray-200 rounded-full p-2" href="#">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
-                                                </svg>
-                                                <div id="tooltip-reply" role="tooltip"
-                                                    class="text-xs inline-block absolute invisible z-10 py-1 px-2 font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-100 tooltip dark:bg-gray-700">
-                                                    Reply
-                                                </div>
-                                            </a>
-                                            <a data-tooltip-target="tooltip-forward" data-tooltip-placement="bottom"
-                                            class="cursor-pointer hover:bg-gray-200 rounded-full p-2" href="#">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
-                                                    style="transform: scale(-1,1)" fill="none" viewBox="0 0 24 24"
-                                                    stroke="currentColor" stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
-                                                </svg>
-                                                <div id="tooltip-forward" role="tooltip"
-                                                    class="text-xs inline-block absolute invisible z-10 py-1 px-2 font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-100 tooltip dark:bg-gray-700">
-                                                    Forward
-                                                </div>
-                                            </a>
+                            <div
+                                class="h-auto rounded-lg shadow-xs my-10 p-3 bg-white dark:bg-gray-800 overflow-y-hidden mr-[240px] md:mr-[280px]">
+                                <!-- Contenuti del primo div -->
+                                <div class="w-full flex flex-row space-x-2 pb-2">
+                                    <a data-tooltip-target="tooltip-back" data-tooltip-placement="bottom"
+                                        class="cursor-pointer hover:bg-gray-200 rounded-full p-2"
+                                        href="{{ route('show', ['folder' => $folder]) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                        </svg>
+                                        <div id="tooltip-back" role="tooltip"
+                                            class="text-xs inline-block absolute invisible z-10 py-1 px-2 font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-100 tooltip dark:bg-gray-700">
+                                            Go back
                                         </div>
-                                        <h2 class="my-4 text-xl font-bold text-gray-700 dark:text-gray-200">
-                                            {{ $selected_email->subject }}
-                                        </h2>
-                                        <div class="flex flex-row mb-4">
-                                            <div class="pt-0.5">
-                                                <img class="object-cover w-8 h-8 rounded-full"
-                                                    src="https://ui-avatars.com/api/?name={{$selected_email->from_name}}"
-                                                    alt=""
-                                                    aria-hidden="true">
-                                            </div>
-                                            <div class="ml-3">
-                                                <div class="flex flex-row items-center">
-                                                    <h3 class="text-sm font-semibold dark:text-white">
-                                                        {{ $selected_email->from_name }}
-                                                    </h3>
-                                                    <span class="ml-1 text-xs font-semibold text-gray-500 dark:text-gray-400">
-                                                        {{ $selected_email->from_email }}
-                                                    </span>
-                                                </div>
-                                                <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400">
-                                                    to me</h4>
-                                            </div>
-                                            <div
-                                                class="flex-1 pt-0.5 font-semibold text-right text-gray-500 text-xs align-middle dark:text-gray-400">
-                                                {!! date("d M Y", strtotime($selected_email->date)) . "<br>" . date('H:i', strtotime($selected_email->date)) !!}
-                                            </div>
+                                    </a>
+                                    <a data-tooltip-target="tooltip-spam" data-tooltip-placement="bottom"
+                                        class="cursor-pointer hover:bg-gray-200 rounded-full p-2" href="#">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                                        </svg>
+                                        <div id="tooltip-spam" role="tooltip"
+                                            class="text-xs inline-block absolute invisible z-10 py-1 px-2 font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-100 tooltip dark:bg-gray-700">
+                                            Report Spam
                                         </div>
-                                        <div id="email_content" class="px-10 pt-4 dark:bg-white" style="padding-bottom: 2.5rem">
-                                            {!! $selected_email->content !!}
+                                    </a>
+                                    <a data-tooltip-target="tooltip-delete" data-tooltip-placement="bottom"
+                                        class="cursor-pointer hover:bg-gray-200 rounded-full p-2" href="#">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                        <div id="tooltip-delete" role="tooltip"
+                                            class="text-xs inline-block absolute invisible z-10 py-1 px-2 font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-100 tooltip dark:bg-gray-700">
+                                            Delete
                                         </div>
+                                    </a>
+                                    <a data-tooltip-target="tooltip-reply" data-tooltip-placement="bottom"
+                                        class="cursor-pointer hover:bg-gray-200 rounded-full p-2" href="#">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+                                        </svg>
+                                        <div id="tooltip-reply" role="tooltip"
+                                            class="text-xs inline-block absolute invisible z-10 py-1 px-2 font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-100 tooltip dark:bg-gray-700">
+                                            Reply
+                                        </div>
+                                    </a>
+                                    <a data-tooltip-target="tooltip-forward" data-tooltip-placement="bottom"
+                                        class="cursor-pointer hover:bg-gray-200 rounded-full p-2" href="#">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                            style="transform: scale(-1,1)" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+                                        </svg>
+                                        <div id="tooltip-forward" role="tooltip"
+                                            class="text-xs inline-block absolute invisible z-10 py-1 px-2 font-medium text-white bg-gray-700 rounded-lg shadow-sm opacity-0 transition-opacity duration-100 tooltip dark:bg-gray-700">
+                                            Forward
+                                        </div>
+                                    </a>
+                                </div>
+                                <h2 class="my-4 text-xl font-bold text-gray-700 dark:text-gray-200">
+                                    {{ $selected_email->subject }}
+                                </h2>
+                                <div class="flex flex-row mb-4">
+                                    <div class="pt-0.5">
+                                        <img class="object-cover w-8 h-8 rounded-full"
+                                            src="https://ui-avatars.com/api/?name={{ $selected_email->from_name }}"
+                                            alt="" aria-hidden="true">
+                                    </div>
+                                    <div class="ml-3">
+                                        <div class="flex flex-row items-center">
+                                            <h3 class="text-sm font-semibold dark:text-white">
+                                                {{ $selected_email->from_name }}
+                                            </h3>
+                                            <span class="ml-1 text-xs font-semibold text-gray-500 dark:text-gray-400">
+                                                {{ $selected_email->from_email }}
+                                            </span>
+                                        </div>
+                                        <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400">
+                                            to me</h4>
+                                    </div>
+                                    <div
+                                        class="flex-1 pt-0.5 font-semibold text-right text-gray-500 text-xs align-middle dark:text-gray-400">
+                                        {!! date('d M Y', strtotime($selected_email->date)) . '<br>' . date('H:i', strtotime($selected_email->date)) !!}
+                                    </div>
+                                </div>
+                                <div id="email_content" class="px-10 pt-4 dark:bg-white"
+                                    style="padding-bottom: 2.5rem">
+                                    {{-- <iframe 
+                                                id="email_frame" 
+                                                src="{{ asset($selected_email->page_path) }}" 
+                                                object-fit: contain;
+                                                width="100%" 
+                                                style="border:none; height: 60vh;"
+                                                sandbox="allow-scripts allow-same-origin">
+                                            </iframe> --}}
+
+                                    <iframe id="email_frame" style="width: 100%; height: 60vh; border: none;"
+                                        srcdoc="{!! htmlspecialchars($htmlContent ?? '', ENT_QUOTES, 'UTF-8') !!}">
+                                    </iframe>
+
+
+
+                                </div>
                             </div>
-                            <div class="w-[240px] md:w-[265px] h-[590px] md:h-[665px] border-2 border-blue-500 rounded-lg shadow-md p-4 fixed right-5 top-50 my-10 bg-white dark:bg-gray-800 z-20">
-                                    <h3 class="md:text-2xl font-bold text-gray-800">Evaluate this email</h3>
-                                    <div x-data="{ phishing: '' }" class="space-y-3 my-6">
-                                        <p class="md:text-lg text-gray-900 dark:text-white font-semibold">Do you think this email is a phishing attempt?</p>
-                                        <label class="flex items-center space-x-2 cursor-pointer">
-                                            <input type="radio" x-model="phishing" name="phishing" value="yes"
-                                                class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
+                            <div
+                                class="w-[240px] md:w-[265px] h-[590px] md:h-[665px] border-2 border-blue-500 rounded-lg shadow-md p-4 fixed right-5 top-50 my-10 bg-white dark:bg-gray-800 z-20">
+                                <h3 class="md:text-2xl font-bold text-gray-800">Evaluate this email</h3>
+                                <div x-data="{ phishing: '' }" class="space-y-3 my-6">
+                                    <p class="md:text-lg text-gray-900 dark:text-white font-semibold">Do you think this
+                                        email is a phishing attempt?</p>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" x-model="phishing" name="phishing" value="yes"
+                                            class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
                                                 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 
                                                 dark:bg-gray-700 dark:border-gray-600">
-                                            <span class="md:text-lg text-gray-900 dark:text-white">Yes</span>
-                                        </label>
-                                    
-                                        <label class="flex items-center space-x-2 cursor-pointer">
-                                            <input type="radio" x-model="phishing" name="phishing" value="no"
-                                                class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
+                                        <span class="md:text-lg text-gray-900 dark:text-white">Yes</span>
+                                    </label>
+
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" x-model="phishing" name="phishing" value="no"
+                                            class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
                                                 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 
                                                 dark:bg-gray-700 dark:border-gray-600">
-                                            <span class="md:text-lg text-gray-900 dark:text-white">No</span>
+                                        <span class="md:text-lg text-gray-900 dark:text-white">No</span>
+                                    </label>
+                                </div>
+
+                                <!-- Vertical Range Input -->
+                                <div class="my-6">
+                                    <p class="md:text-lg text-gray-900 dark:text-white font-semibold ">Rate your
+                                        confidence in your decision:</p>
+                                    <div class="flex flex-col items-start space-y-3">
+                                        <!-- Label for "Not confident at all" -->
+                                        <label class="flex items-center space-x-2 cursor-pointer w-full">
+                                            <input type="radio" name="confidence" value="1"
+                                                class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                                            <span class="text-lg text-gray-900 dark:text-white">1</span>
+                                            <span class="ml-2 w-full md:text-lg text-gray-900 dark:text-white">Not
+                                                confident at all</span>
+                                        </label>
+
+                                        <!-- Label for "2" -->
+                                        <label class="flex items-center space-x-2 cursor-pointer w-full">
+                                            <input type="radio" name="confidence" value="2"
+                                                class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                                            <span class="md:text-lg text-gray-900 dark:text-white">2</span>
+                                        </label>
+
+                                        <!-- Label for "3" -->
+                                        <label class="flex items-center space-x-2 cursor-pointer w-full">
+                                            <input type="radio" name="confidence" value="3"
+                                                class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                                            <span class="md:text-lg text-gray-900 dark:text-white">3</span>
+                                        </label>
+
+                                        <!-- Label for "4" -->
+                                        <label class="flex items-center space-x-2 cursor-pointer w-full">
+                                            <input type="radio" name="confidence" value="4"
+                                                class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                                            <span class="md:text-lg text-gray-900 dark:text-white">4</span>
+                                        </label>
+
+                                        <!-- Label for "5" -->
+                                        <label class="flex items-center space-x-2 cursor-pointer w-full">
+                                            <input type="radio" name="confidence" value="5"
+                                                class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                                            <span class="md:text-lg text-gray-900 dark:text-white">5</span>
+                                        </label>
+
+                                        <!-- Label for "6" -->
+                                        <label class="flex items-center space-x-2 cursor-pointer w-full">
+                                            <input type="radio" name="confidence" value="6"
+                                                class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                                            <span class="md:text-lg text-gray-900 dark:text-white">6</span>
+                                        </label>
+
+                                        <!-- Label for "Completely confident" -->
+                                        <label class="flex items-center space-x-2 cursor-pointer w-full">
+                                            <input type="radio" name="confidence" value="7"
+                                                class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                                            <span class="md:text-lg text-gray-900 dark:text-white">7</span>
+                                            <span
+                                                class="ml-2 w-full md:text-lg text-gray-900 dark:text-white">Completely
+                                                confident</span>
                                         </label>
                                     </div>
-                                    
-                                    <!-- Vertical Range Input -->
-                                    <div class="my-6">
-                                        <p class="md:text-lg text-gray-900 dark:text-white font-semibold ">Rate your confidence in your decision:</p>
-                                        <div class="flex flex-col items-start space-y-3">
-                                            <!-- Label for "Not confident at all" -->
-                                            <label class="flex items-center space-x-2 cursor-pointer w-full">
-                                                <input type="radio" name="confidence" value="1" class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
-                                                <span class="text-lg text-gray-900 dark:text-white">1</span>
-                                                <span class="ml-2 w-full md:text-lg text-gray-900 dark:text-white">Not confident at all</span>
-                                            </label>
-                                        
-                                            <!-- Label for "2" -->
-                                            <label class="flex items-center space-x-2 cursor-pointer w-full">
-                                                <input type="radio" name="confidence" value="2" class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
-                                                <span class="md:text-lg text-gray-900 dark:text-white">2</span>
-                                            </label>
-                                        
-                                            <!-- Label for "3" -->
-                                            <label class="flex items-center space-x-2 cursor-pointer w-full">
-                                                <input type="radio" name="confidence" value="3" class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
-                                                <span class="md:text-lg text-gray-900 dark:text-white">3</span>
-                                            </label>
-                                        
-                                            <!-- Label for "4" -->
-                                            <label class="flex items-center space-x-2 cursor-pointer w-full">
-                                                <input type="radio" name="confidence" value="4" class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
-                                                <span class="md:text-lg text-gray-900 dark:text-white">4</span>
-                                            </label>
-                                        
-                                            <!-- Label for "5" -->
-                                            <label class="flex items-center space-x-2 cursor-pointer w-full">
-                                                <input type="radio" name="confidence" value="5" class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
-                                                <span class="md:text-lg text-gray-900 dark:text-white">5</span>
-                                            </label>
-                                        
-                                            <!-- Label for "6" -->
-                                            <label class="flex items-center space-x-2 cursor-pointer w-full">
-                                                <input type="radio" name="confidence" value="6" class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
-                                                <span class="md:text-lg text-gray-900 dark:text-white">6</span>
-                                            </label>
-                                        
-                                            <!-- Label for "Completely confident" -->
-                                            <label class="flex items-center space-x-2 cursor-pointer w-full">
-                                                <input type="radio" name="confidence" value="7" class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
-                                                <span class="md:text-lg text-gray-900 dark:text-white">7</span>
-                                                <span class="ml-2 w-full md:text-lg text-gray-900 dark:text-white">Completely confident</span>
-                                            </label>
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="text-center my-6">
-                                        <form method="POST" id="myForm" action="{{ route('save-email-classification') }}">
-                                            @csrf
-                                            <input type="hidden" name="emailId" value="test@example.com">
-                                            <input type="hidden" name="confidence" value="7">
-                                            <input type="hidden" name="phishing" value="true">
-                                            <input type="hidden" name="time_spent">
-                             
-                                            <button id="submit_btn" class="py-3 w-full md:text-xl text-white bg-blue-500 rounded-2xl">Submit your response</button>
-                                        </form>
-                                    </div>
-                            </div>  
+
+                                </div>
+
+                                <div class="text-center my-6">
+                                    <form method="POST" id="myForm"
+                                        action="{{ route('save-email-classification') }}">
+                                        @csrf
+                                        <input type="hidden" name="emailId" value="test@example.com">
+                                        <input type="hidden" name="confidence" value="7">
+                                        <input type="hidden" name="phishing" value="true">
+                                        <input type="hidden" name="time_spent">
+
+                                        <button id="submit_btn"
+                                            class="py-3 w-full md:text-xl text-white bg-blue-500 rounded-2xl">Submit
+                                            your response</button>
+                                    </form>
+                                </div>
+                            </div>
                         @endif
                     </div>
                 </main>
@@ -803,7 +764,7 @@ $show_details = Auth::user()->show_details;
 
             <!-- Active warning modal -->
             <div id="warning_open" tabindex="-1" aria-hidden="true"
-                 class="hidden bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                class="hidden bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
                 <input type="hidden" value="" id="warning_id-1">
                 <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
                     <!-- Modal content -->
@@ -813,13 +774,13 @@ $show_details = Auth::user()->show_details;
                             <h2 class="text-2xl font-bold text-white flex flex-row align-middle content-center">
                                 <div class="pr-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-8" viewBox="0 0 20 20"
-                                         fill="currentColor">
+                                        fill="currentColor">
                                         <path fill-rule="evenodd"
-                                              d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                                              clip-rule="evenodd"/>
+                                            d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                                            clip-rule="evenodd" />
                                     </svg>
                                 </div>
-                                <div>Deceptive {{ $warning_type === "popup_link" ? "site" : "email"}} ahead</div>
+                                <div>Deceptive {{ $warning_type === 'popup_link' ? 'site' : 'email' }} ahead</div>
                             </h2>
                         </div>
                         <!-- Modal body -->
@@ -831,22 +792,25 @@ $show_details = Auth::user()->show_details;
                         <!-- Modal footer -->
                         <div class="flex items-center p-6 justify-between rounded-b">
                             <button id="button-advanced" type="button"
-                                    class="text-white underline font-medium text-sm text-center">{{ $show_details != "always" ? "Show" : "Hide" }} Details
+                                class="text-white underline font-medium text-sm text-center">{{ $show_details != 'always' ? 'Show' : 'Hide' }}
+                                Details
                             </button>
                             <button id="button_hide_modal" type="button"
-                                    class="bg-white hover:bg-gray-200 rounded-lg text-sm font-medium px-5 py-2.5"
-                                    style="color: #b80000;">Back to safety
+                                class="bg-white hover:bg-gray-200 rounded-lg text-sm font-medium px-5 py-2.5"
+                                style="color: #b80000;">Back to safety
                             </button>
                         </div>
                         <!-- if the condition is to always show the details, do not hide the footer by default -->
-                        <div id="div-advanced" class="{{ $show_details != "always" ? 'hidden' : '' }} text-white px-6 pb-6">
+                        <div id="div-advanced"
+                            class="{{ $show_details != 'always' ? 'hidden' : '' }} text-white px-6 pb-6">
                             <div id="detailed_explanation"></div>
                             <!--This email has a <b>fraudulent purpose</b> and may <b>steal your personal data</b>.
                             <br/>-->
                             <!-- This site is a <b>scam</b> with the purpose of <b>stealing your personal data</b>.-->
                             Click
                             <button id="warning_unsafe_link" class="text-white underline">here</button>
-                            (not safe) to {{ $warning_type === "popup_link" ? "visit the linked website" : "read it"}}.
+                            (not safe) to
+                            {{ $warning_type === 'popup_link' ? 'visit the linked website' : 'read it' }}.
                         </div>
                     </div>
                 </div>
@@ -854,339 +818,357 @@ $show_details = Auth::user()->show_details;
             <!-- End active warning modal -->
         </div>
 
-<x-modal name="error-modal" id="errorModal" title="Compile all the questions!" :show="false">
-    <div class="p-4 rounded-lg relative text-center">
-        <p class="text-2xl font-semibold text-red-700 pb-8">Evaluate the email !</p>
-        <p id="modalMessage" class="text-lg text-gray-800 pb-8"></p>
-        <x-primary-button x-on:click="$dispatch('close')">Close</x-primary-button>
-    </div>
-</x-modal>
+        <x-modal name="error-modal" id="errorModal" title="Compile all the questions!" :show="false">
+            <div class="p-4 rounded-lg relative text-center">
+                <p class="text-2xl font-semibold text-red-700 pb-8">Evaluate the email !</p>
+                <p id="modalMessage" class="text-lg text-gray-800 pb-8"></p>
+                <x-primary-button x-on:click="$dispatch('close')">Close</x-primary-button>
+            </div>
+        </x-modal>
 
-<x-modal name="to-fast-modal" id="to-fast-modal" title="Compile all the questions slowly!" :show="false" x-data="{ show: false }" x-show="show" @open-modal.window="show = true">
-    <div class="p-4 rounded-lg relative text-center">
-        <p class="text-2xl font-semibold text-red-700 pb-8">You're going too fast!</p>
-        <p class="text-lg text-gray-800 pb-8">
-            Please slow down and carefully observe the email before answering. <br> 
-        </p>
-        <x-primary-button x-on:click="$dispatch('close')">Close</x-primary-button>
-    </div>
-</x-modal>
+        <x-modal name="to-fast-modal" id="to-fast-modal" title="Compile all the questions slowly!" :show="false"
+            x-data="{ show: false }" x-show="show" @open-modal.window="show = true">
+            <div class="p-4 rounded-lg relative text-center">
+                <p class="text-2xl font-semibold text-red-700 pb-8">You're going too fast!</p>
+                <p class="text-lg text-gray-800 pb-8">
+                    Please slow down and carefully observe the email before answering. <br>
+                </p>
+                <x-primary-button x-on:click="$dispatch('close')">Close</x-primary-button>
+            </div>
+        </x-modal>
 
-<script>
-@if(isset($selected_email))
+        <script>
+            @if (isset($selected_email))
 
-    let startTime = Date.now();
+                let startTime = Date.now();
 
-    document.getElementById("submit_btn").addEventListener("click", function(event) {
-        event.preventDefault();
+                document.getElementById("submit_btn").addEventListener("click", function(event) {
+                    event.preventDefault();
 
-        // Get the selected phishing radio button value
-        let phishingRadio = document.querySelector('input[name="phishing"]:checked');
-        let phishing = phishingRadio ? phishingRadio.value : null;
+                    // Get the selected phishing radio button value
+                    let phishingRadio = document.querySelector('input[name="phishing"]:checked');
+                    let phishing = phishingRadio ? phishingRadio.value : null;
 
-        // Get the selected confidence radio button value
-        let confidenceRadio = document.querySelector('input[name="confidence"]:checked');
-        let confidence = confidenceRadio ? confidenceRadio.value : null;
+                    // Get the selected confidence radio button value
+                    let confidenceRadio = document.querySelector('input[name="confidence"]:checked');
+                    let confidence = confidenceRadio ? confidenceRadio.value : null;
 
-        let modalMessage = document.getElementById("modalMessage");
-        let emailId = {{ $selected_email->id }};
+                    let modalMessage = document.getElementById("modalMessage");
+                    let emailId = {{ $selected_email->id }};
 
-        let errors = [];
+                    let errors = [];
 
-        let elapsedTime = (Date.now() - startTime) / 1000;
-        if (elapsedTime < 5) {
-            window.dispatchEvent(new CustomEvent('open-modal', { detail: 'to-fast-modal' }));
-            return;
-        }
+                    let elapsedTime = (Date.now() - startTime) / 1000;
+                    if (elapsedTime < 5) {
+                        window.dispatchEvent(new CustomEvent('open-modal', {
+                            detail: 'to-fast-modal'
+                        }));
+                        return;
+                    }
 
-        // Validate phishing selection
-        if (!phishing) {
-            errors.push("Please select an answer for 'Do you think this email is a phishing attempt?'");
-        }
+                    // Validate phishing selection
+                    if (!phishing) {
+                        errors.push("Please select an answer for 'Do you think this email is a phishing attempt?'");
+                    }
 
-        // Validate confidence selection
-        if (!confidence) {
-            errors.push("Please select a confidence level between 1 and 7.");
-        }
+                    // Validate confidence selection
+                    if (!confidence) {
+                        errors.push("Please select a confidence level between 1 and 7.");
+                    }
 
-        // Show errors if any
-        if (errors.length > 0) {
-            const modalEvent = new CustomEvent('open-modal', {
-                detail: 'error-modal', 
-            });
-            window.dispatchEvent(modalEvent);
-            modalMessage.innerHTML = errors.join("<br>");
-        } else {
-            // Submit the form data
-            let formData = new FormData();
-            formData.append("phishing", phishing);
-            formData.append("confidence", confidence);
-            formData.append("emailId", emailId);
+                    // Show errors if any
+                    if (errors.length > 0) {
+                        const modalEvent = new CustomEvent('open-modal', {
+                            detail: 'error-modal',
+                        });
+                        window.dispatchEvent(modalEvent);
+                        modalMessage.innerHTML = errors.join("<br>");
+                    } else {
+                        // Submit the form data
+                        let formData = new FormData();
+                        formData.append("phishing", phishing);
+                        formData.append("confidence", confidence);
+                        formData.append("emailId", emailId);
 
-            let form = document.getElementById("myForm"); 
-            form.querySelector("input[name='phishing']").value = phishing;
-            form.querySelector("input[name='confidence']").value = confidence;
-            form.querySelector("input[name='emailId']").value = emailId;
-            form.querySelector("input[name='time_spent']").value = elapsedTime; 
+                        let form = document.getElementById("myForm");
+                        form.querySelector("input[name='phishing']").value = phishing;
+                        form.querySelector("input[name='confidence']").value = confidence;
+                        form.querySelector("input[name='emailId']").value = emailId;
+                        form.querySelector("input[name='time_spent']").value = elapsedTime;
 
-            form.submit();
-        }
-    });
-@endif
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-$( () => {
-    document.body.style.overflowY = "hidden";
-})
-@if(isset($selected_email))
-    console.log ("warning type: {{$selected_email->warning_type}}")
-    // Show email questionnaire when going back
-    $('a').not("#email_content *").each(function (e) {
-        $(this).on('click', (e) => {
-            e.preventDefault();
-            //window.location.href = '{{ route('next_step', $selected_email->id) }}?nolink';
-        });
-    });
-    // Links:
-    $("#email_content").find('a').not('#phishing_link').each(function (e) {
-        $(this).on('click', (e) => {
-            e.preventDefault();
-            $.ajax({
-                url: ("{{ route('warning_log') }}?email_id={{$selected_email->id}}&warning_type={{$selected_email->warning_type}}&show_explanation={{$show_explanation}}&show_details={{$show_details}}&msg=clicked_link&url=" + $(this).attr("href")).replace(/%20/g, '+'),
-                type: 'GET',
-                dataType: 'json',
-                complete: () => { 
-                    //window.location.href = '{{route('next_step') . '/' . $selected_email->id}}'
-                },
-                async: false
-            });
-        });
-    });
-    @if($warning_type == "popup_link" && $selected_email->show_warning) // Show the modal warning only for the Popup Link condition
-    // Popup Link
-    let phishing_link = $("#phishing_link")
-    phishing_link.on('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        let url = new URL(phishing_link.attr('href'));
-        let warning_message = `{!! $show_explanation ? $selected_email->warning_explanation : __('warning.no_explanation_website') !!}`
-        let detailed_explanation = `{!! /* $show_details !== 'no' ? $selected_email->detailed_explanation : ''  */ ""!!}`
-        open_warning(url.hostname, {{ $selected_email->id }}, warning_message, detailed_explanation, url);
-    });
-    @elseif($warning_type == "popup_email" && $selected_email->show_warning)  // Prevent visiting the phishing link in the popup email condition (after having ignored the warning)
-    // Popup email
-    let phishing_link = $("#phishing_link")
-    phishing_link.on('click', (e) => {
-        allow_to_go_back = true
-        e.preventDefault()
-        e.stopPropagation();
-
-        $.ajax({
-            url: ("{{ route('warning_log') }}?email_id={{$selected_email->id}}&warning_type=popup_email&show_explanation={{$show_explanation}}&show_details={{$show_details}}&msg=clicked_link&url=" + window.location.href).replace(/%20/g, '+'),
-            type: 'GET',
-            dataType: 'json',
-            complete: function (data) {
-                //window.location.href = '{{route('next_step') . '/' . $selected_email->id}}';
-            },
-            async: false
-        });
-    });
-    @elseif($warning_type === "tooltip" && $selected_email->show_warning)
-    // TOOLTIP
-    let message_sent = [];
-    let tooltips = $(".tooltip")
-    let allow_to_go_back  // Ensures the user stays on a phishing email for a minimum of X seconds before allowing them to go back
-    let phishing_link_html = $("#phishing_link")
-    let explanation = "{{ $selected_email->warning_explanation }}"
-    let default_explanation = `Link goes to: <br> <a href="${phishing_link_html.attr("href")}" style="text-decoration: underline;/* color: #0001F1; */" id="actual_phishing_link"><span class="s2">${phishing_link_html.attr("href")}</span></a>`
-    if ("{{$show_explanation}}" === "1") {
-        explanation = explanation + "<br/>" + default_explanation
-    } else {
-        explanation = default_explanation; // if there is no explanation to show, show the default one
-    }
-    let tooltip_warning_html = `
-        <table class="tooltip" data="{{$selected_email->from_email}}">
-            <tbody>
-               <tr>
-                  <td>
-                    <a href="#" class="phishing_link">${phishing_link_html.html()} </a>
-                    <span id="tooltip_balloon" class="tooltiptext tooltip-balloon">
-                        <div class="flex justify-between items-start">
-                            <div class="pr-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-10" viewBox="0 0 20 20"
-                                     fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                          d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div style="cursor: auto;">
-                                <span class="text-lg">FAKE WEBSITE, DON'T CLICK!</span><br/>
-                                <span>${explanation}</span>
-                            </div>
-                        </div>
-                    </span>
-                  </td>
-               </tr>
-           </tbody>
-        </table>
-    `
-
-    phishing_link_html.html(tooltip_warning_html)
-    phishing_link_html.attr("href", "#");
-    phishing_link_html.on("click", (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-    }
-    );
-    phishing_link_html.attr("style", phishing_link_html.attr("style")+"cursor: not-allowed;")
-
-    let tooltip_balloon = $("#tooltip_balloon")
-    phishing_link_html.mouseenter(() => {tooltip_balloon.addClass("visible"); console.log ("enter")})
-    phishing_link_html.mouseleave(() => setTimeout( () => {tooltip_balloon.removeClass("visible"); console.log ("escher")}, 100))
-    phishing_link_html.mouseover(function () {
-        setTimeout(() => {
-            if (!message_sent.includes($(this).attr('data'))) {
-                message_sent.push($(this).attr('data'));
-                $.ajax({
-                    url: ("{{ route('warning_log') }}?email_id={{ $selected_email->id }}&show_explanation={{$show_explanation}}&warning_type=tooltip&msg=tooltip_shown&url=" + window.location.href).replace(/%20/g, '+'),
-                    type: 'GET',
-                    dataType: 'json'
+                        form.submit();
+                    }
                 });
-            }
-            allow_to_go_back = true
-        }, 2000)
-    });
-    $("#tooltip_balloon a").on("click", (e) => {
-        allow_to_go_back = true
-        e.preventDefault()
-        $.ajax({
-            url: ("{{ route('warning_log') }}?email_id={{$selected_email->id}}&warning_type=tooltip&show_explanation={{$show_explanation}}&msg=tooltip_click&url=" + window.location.href).replace(/%20/g, '+'),
-            type: 'GET',
-            dataType: 'json',
-            complete: function (data) {
-                //window.location.href = '{{route('next_step') . '/' . $selected_email->id}}';
-            },
-            async: false
-        });
-    });
-    /*
-    $('a').not("#email_content *").each(function (e) {
-        $(this).on('click', (e) => {
-            if (allow_to_go_back) {
-                e.preventDefault();
-                window.location.href = '{{-- route('next_step', $selected_email->id) --}}?nolink';
-            } else {
-                e.preventDefault();
-                alert("Please be sure to check all the links in the email by hovering on them with the mouse.")
-            }
-        });
-    });*/
-    {{--
-    @elseif($selected_email->warning_type == "browser_native")
-        $("#email_content").find('a').each(function (e) {
-            $(this).on('click', (e) => {
-                e.preventDefault();
-                let url = new URL($(this).attr('href'));
-                window.location.href = '{{ route('warning_browser') }}?url=' + encodeURI(url) + '&backurl=' + encodeURI('{{ url('/nextstep', $selected_email->id)  }}') + '&email_id={{ $selected_email->id }}';
-            });
-        });
-        $('a').not("#email_content *").each(function (e) {
-            $(this).on('click', (e) => {
-                e.preventDefault();
-                //window.location.href = '{{ route('next_step', $selected_email->id) }}?nolink';
-            });
-        });
-    @elseif($selected_email->warning_type == "base_passive")
-        banner = $("#passive_banner"); // TO DO: Implement passive banners (if needed)
-        banner.show();
-        banner.innerHTML = "{{$selected_email->warning_explanation}}"
-    --}}
-    @endif
-@endif
+            @endif
+        </script>
+        {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
+        @php
+            // <script>
+                // $( () => {
+                //     document.body.style.overflowY = "hidden";
+                // })
+                // @if (isset($selected_email))
+                //     console.log ("warning type: {{ $selected_email->warning_type }}")
+                //     // Show email questionnaire when going back
+                //     $('a').not("#email_content *").each(function (e) {
+                //         $(this).on('click', (e) => {
+                //             e.preventDefault();
+                //             //window.location.href = '{{ route('next_step', $selected_email->id) }}?nolink';
+                //         });
+                //     });
+                //     // Links:
+                //     $("#email_content").find('a').not('#phishing_link').each(function (e) {
+                //         $(this).on('click', (e) => {
+                //             e.preventDefault();
+                //             $.ajax({
+                //                 url: ("{{ route('warning_log') }}?email_id={{ $selected_email->id }}&warning_type={{ $selected_email->warning_type }}&show_explanation={{ $show_explanation }}&show_details={{ $show_details }}&msg=clicked_link&url=" + $(this).attr("href")).replace(/%20/g, '+'),
+                //                 type: 'GET',
+                //                 dataType: 'json',
+                //                 complete: () => { 
+                //                     //window.location.href = '{{ route('next_step') . '/' . $selected_email->id }}'
+                //                 },
+                //                 async: false
+                //             });
+                //         });
+                //     });
+                //     @if ($warning_type == 'popup_link' && $selected_email->show_warning) // Show the modal warning only for the Popup Link condition
+                //     // Popup Link
+                //     let phishing_link = $("#phishing_link")
+                //     phishing_link.on('click', (e) => {
+                //         e.preventDefault();
+                //         e.stopPropagation();
+                //         let url = new URL(phishing_link.attr('href'));
+                //         let warning_message = `{!! $show_explanation ? $selected_email->warning_explanation : __('warning.no_explanation_website') !!}`
+                //         let detailed_explanation = `{!! /* $show_details !== 'no' ? $selected_email->detailed_explanation : ''  */ '' !!}`
+                //         open_warning(url.hostname, {{ $selected_email->id }}, warning_message, detailed_explanation, url);
+                //     });
+                //     @elseif ($warning_type == 'popup_email' && $selected_email->show_warning)  // Prevent visiting the phishing link in the popup email condition (after having ignored the warning)
+                //     // Popup email
+                //     let phishing_link = $("#phishing_link")
+                //     phishing_link.on('click', (e) => {
+                //         allow_to_go_back = true
+                //         e.preventDefault()
+                //         e.stopPropagation();
 
-const modal = new Modal(document.getElementById('warning_open'));
+                //         $.ajax({
+                //             url: ("{{ route('warning_log') }}?email_id={{ $selected_email->id }}&warning_type=popup_email&show_explanation={{ $show_explanation }}&show_details={{ $show_details }}&msg=clicked_link&url=" + window.location.href).replace(/%20/g, '+'),
+                //             type: 'GET',
+                //             dataType: 'json',
+                //             complete: function (data) {
+                //                 //window.location.href = '{{ route('next_step') . '/' . $selected_email->id }}';
+                //             },
+                //             async: false
+                //         });
+                //     });
+                //     @elseif ($warning_type === 'tooltip' && $selected_email->show_warning)
+                //     // TOOLTIP
+                //     let message_sent = [];
+                //     let tooltips = $(".tooltip")
+                //     let allow_to_go_back  // Ensures the user stays on a phishing email for a minimum of X seconds before allowing them to go back
+                //     let phishing_link_html = $("#phishing_link")
+                //     let explanation = "{{ $selected_email->warning_explanation }}"
+                //     let default_explanation = `Link goes to: <br> <a href="${phishing_link_html.attr("href")}" style="text-decoration: underline;/* color: #0001F1; */" id="actual_phishing_link"><span class="s2">${phishing_link_html.attr("href")}</span></a>`
+                //     if ("{{ $show_explanation }}" === "1") {
+                //         explanation = explanation + "<br/>" + default_explanation
+                //     } else {
+                //         explanation = default_explanation; // if there is no explanation to show, show the default one
+                //     }
+                //     let tooltip_warning_html = `
+    //         <table class="tooltip" data="{{ $selected_email->from_email }}">
+    //             <tbody>
+    //                <tr>
+    //                   <td>
+    //                     <a href="#" class="phishing_link">${phishing_link_html.html()} </a>
+    //                     <span id="tooltip_balloon" class="tooltiptext tooltip-balloon">
+    //                         <div class="flex justify-between items-start">
+    //                             <div class="pr-1">
+    //                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-10" viewBox="0 0 20 20"
+    //                                      fill="currentColor">
+    //                                     <path fill-rule="evenodd"
+    //                                           d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+    //                                           clip-rule="evenodd"/>
+    //                                 </svg>
+    //                             </div>
+    //                             <div style="cursor: auto;">
+    //                                 <span class="text-lg">FAKE WEBSITE, DON'T CLICK!</span><br/>
+    //                                 <span>${explanation}</span>
+    //                             </div>
+    //                         </div>
+    //                     </span>
+    //                   </td>
+    //                </tr>
+    //            </tbody>
+    //         </table>
+    //     `
 
-function open_warning(url, email_id, warning_text, detailed_explanation="", full_url="") {
-    $("#warning_text").html(warning_text);
-    if (detailed_explanation !== "") {
-        let detailed_explanation_features = JSON.parse(detailed_explanation)
-        // truncate the URL to show in the detailed explanation
-        let max_url_visible_length = 100
-        full_url = full_url.length > max_url_visible_length ? full_url.substring(0, max_url_visible_length - 3) + "..." : full_url
+                //     phishing_link_html.html(tooltip_warning_html)
+                //     phishing_link_html.attr("href", "#");
+                //     phishing_link_html.on("click", (e) => {
+                //         e.preventDefault()
+                //         e.stopPropagation()
+                //     }
+                //     );
+                //     phishing_link_html.attr("style", phishing_link_html.attr("style")+"cursor: not-allowed;")
 
-        let detailed_explanation_text = `These are some reasons why this link could be dangerous (${full_url}):`
-        detailed_explanation_text += `<ul style="list-style: initial; padding: revert;">`
-        for (let i = 0; i < detailed_explanation_features.length; i++) {
-            let obj = detailed_explanation_features[i]
-            detailed_explanation_text += `<li><b>${obj["feature"]}: </b> ${obj["explanation"]}</li>`
-        }
-        detailed_explanation_text += "</ul>"
-        $("#detailed_explanation").html(detailed_explanation_text);
-        $("#detailed_explanation").addClass("mb-6");
-    }
-    const warning_type = "{{$warning_type}}";
-    $.ajax({
-        url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=warning_shown&url=" + window.location.href).replace(/%20/g, '+'),
-        type: 'GET',
-        dataType: 'json'
-    });
-    $("#warning_unsafe_link").on('click', (e) => {
-        e.preventDefault();
-        $.ajax({
-            url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=warning_ignored&url=" + window.location.href).replace(/%20/g, '+'),
-            type: 'GET',
-            dataType: 'json',
-            complete: function (data) {
-                @if(\Illuminate\Support\Facades\Auth::user()->warning_type == 'popup_email')
-                    //window.location.href = '{{route('show')}}/inbox/' + email_id; // (Before email opening)
-                @else
-                    //window.location.href = '{{route('next_step')}}/' + email_id;  // popup_link (After email opening)
-                @endif
-            },
-            async: false
-        });
-    });
-    $("#button-advanced").on('click', () => {
-        if ($("#div-advanced").is(":hidden")) {
-            $("#button-advanced").text("Hide Details");
-            $("#div-advanced").show();
-            $.ajax({
-                url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=show_details&url=" + window.location.href).replace(/%20/g, '+'),
-                type: 'GET',
-                dataType: 'json'
-            });
-        } else {
-            $("#button-advanced").text("Show Details");
-            $("#div-advanced").hide();
-            $.ajax({
-                url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=hide_details&url=" + window.location.href).replace(/%20/g, '+'),
-                type: 'GET',
-                dataType: 'json'
-            });
-        }
-    });
-    $("#button_hide_modal").on('click', () => {
-        $.ajax({
-            url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=back_safety&url=" + window.location.href).replace(/%20/g, '+'),
-            type: 'GET',
-            dataType: 'json'
-        });
-        $("#button-advanced").text("Show Details");
-        $("#div-advanced").hide();
-        $("#button_hide_modal").off("click");
-        $("#button-advanced").off("click");
-        $("#warning_unsafe_link").off("click");
-        if (warning_type==="popup_email") {
-            //window.location.href = '{{route('next_step')}}/' + email_id + '?nolink&noquest';
-        } else {
-            //window.location.href = '{{route('next_step')}}/' + email_id + '?nolink';
-        }
-        modal.hide();
-    });
-    modal.show();
-}
-</script>
-</x-slot>
+                //     let tooltip_balloon = $("#tooltip_balloon")
+                //     phishing_link_html.mouseenter(() => {tooltip_balloon.addClass("visible"); console.log ("enter")})
+                //     phishing_link_html.mouseleave(() => setTimeout( () => {tooltip_balloon.removeClass("visible"); console.log ("escher")}, 100))
+                //     phishing_link_html.mouseover(function () {
+                //         setTimeout(() => {
+                //             if (!message_sent.includes($(this).attr('data'))) {
+                //                 message_sent.push($(this).attr('data'));
+                //                 $.ajax({
+                //                     url: ("{{ route('warning_log') }}?email_id={{ $selected_email->id }}&show_explanation={{ $show_explanation }}&warning_type=tooltip&msg=tooltip_shown&url=" + window.location.href).replace(/%20/g, '+'),
+                //                     type: 'GET',
+                //                     dataType: 'json'
+                //                 });
+                //             }
+                //             allow_to_go_back = true
+                //         }, 2000)
+                //     });
+                //     $("#tooltip_balloon a").on("click", (e) => {
+                //         allow_to_go_back = true
+                //         e.preventDefault()
+                //         $.ajax({
+                //             url: ("{{ route('warning_log') }}?email_id={{ $selected_email->id }}&warning_type=tooltip&show_explanation={{ $show_explanation }}&msg=tooltip_click&url=" + window.location.href).replace(/%20/g, '+'),
+                //             type: 'GET',
+                //             dataType: 'json',
+                //             complete: function (data) {
+                //                 //window.location.href = '{{ route('next_step') . '/' . $selected_email->id }}';
+                //             },
+                //             async: false
+                //         });
+                //     });
+                //     /*
+                //     $('a').not("#email_content *").each(function (e) {
+                //         $(this).on('click', (e) => {
+                //             if (allow_to_go_back) {
+                //                 e.preventDefault();
+                //                 window.location.href = '{{-- route('next_step', $selected_email->id) --}}?nolink';
+                //             } else {
+                //                 e.preventDefault();
+                //                 alert("Please be sure to check all the links in the email by hovering on them with the mouse.")
+                //             }
+                //         });
+                //     });*/
+                //     {{--
+//     @elseif($selected_email->warning_type == "browser_native")
+//         $("#email_content").find('a').each(function (e) {
+//             $(this).on('click', (e) => {
+//                 e.preventDefault();
+//                 let url = new URL($(this).attr('href'));
+//                 window.location.href = '{{ route('warning_browser') }}?url=' + encodeURI(url) + '&backurl=' + encodeURI('{{ url('/nextstep', $selected_email->id)  }}') + '&email_id={{ $selected_email->id }}';
+//             });
+//         });
+//         $('a').not("#email_content *").each(function (e) {
+//             $(this).on('click', (e) => {
+//                 e.preventDefault();
+//                 //window.location.href = '{{ route('next_step', $selected_email->id) }}?nolink';
+//             });
+//         });
+//     @elseif($selected_email->warning_type == "base_passive")
+//         banner = $("#passive_banner"); // TO DO: Implement passive banners (if needed)
+//         banner.show();
+//         banner.innerHTML = "{{$selected_email->warning_explanation}}"
+//     --}}
+                //     @endif
+                // @endif
+
+                // const modal = new Modal(document.getElementById('warning_open'));
+
+                // function open_warning(url, email_id, warning_text, detailed_explanation="", full_url="") {
+                //     $("#warning_text").html(warning_text);
+                //     if (detailed_explanation !== "") {
+                //         let detailed_explanation_features = JSON.parse(detailed_explanation)
+                //         // truncate the URL to show in the detailed explanation
+                //         let max_url_visible_length = 100
+                //         full_url = full_url.length > max_url_visible_length ? full_url.substring(0, max_url_visible_length - 3) + "..." : full_url
+
+                //         let detailed_explanation_text = `These are some reasons why this link could be dangerous (${full_url}):`
+                //         detailed_explanation_text += `<ul style="list-style: initial; padding: revert;">`
+                //         for (let i = 0; i < detailed_explanation_features.length; i++) {
+                //             let obj = detailed_explanation_features[i]
+                //             detailed_explanation_text += `<li><b>${obj["feature"]}: </b> ${obj["explanation"]}</li>`
+                //         }
+                //         detailed_explanation_text += "</ul>"
+                //         $("#detailed_explanation").html(detailed_explanation_text);
+                //         $("#detailed_explanation").addClass("mb-6");
+                //     }
+                //     const warning_type = "{{ $warning_type }}";
+                //     $.ajax({
+                //         url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=warning_shown&url=" + window.location.href).replace(/%20/g, '+'),
+                //         type: 'GET',
+                //         dataType: 'json'
+                //     });
+                //     $("#warning_unsafe_link").on('click', (e) => {
+                //         e.preventDefault();
+                //         $.ajax({
+                //             url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=warning_ignored&url=" + window.location.href).replace(/%20/g, '+'),
+                //             type: 'GET',
+                //             dataType: 'json',
+                //             complete: function (data) {
+                //                 @if (\Illuminate\Support\Facades\Auth::user()->warning_type == 'popup_email')
+                //                     //window.location.href = '{{ route('show') }}/inbox/' + email_id; // (Before email opening)
+                //                 @else
+                //                     //window.location.href = '{{ route('next_step') }}/' + email_id;  // popup_link (After email opening)
+                //                 @endif
+                //             },
+                //             async: false
+                //         });
+                //     });
+                //     $("#button-advanced").on('click', () => {
+                //         if ($("#div-advanced").is(":hidden")) {
+                //             $("#button-advanced").text("Hide Details");
+                //             $("#div-advanced").show();
+                //             $.ajax({
+                //                 url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=show_details&url=" + window.location.href).replace(/%20/g, '+'),
+                //                 type: 'GET',
+                //                 dataType: 'json'
+                //             });
+                //         } else {
+                //             $("#button-advanced").text("Show Details");
+                //             $("#div-advanced").hide();
+                //             $.ajax({
+                //                 url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=hide_details&url=" + window.location.href).replace(/%20/g, '+'),
+                //                 type: 'GET',
+                //                 dataType: 'json'
+                //             });
+                //         }
+                //     });
+                //     $("#button_hide_modal").on('click', () => {
+                //         $.ajax({
+                //             url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=back_safety&url=" + window.location.href).replace(/%20/g, '+'),
+                //             type: 'GET',
+                //             dataType: 'json'
+                //         });
+                //         $("#button-advanced").text("Show Details");
+                //         $("#div-advanced").hide();
+                //         $("#button_hide_modal").off("click");
+                //         $("#button-advanced").off("click");
+                //         $("#warning_unsafe_link").off("click");
+                //         if (warning_type==="popup_email") {
+                //             //window.location.href = '{{ route('next_step') }}/' + email_id + '?nolink&noquest';
+                //         } else {
+                //             //window.location.href = '{{ route('next_step') }}/' + email_id + '?nolink';
+                //         }
+                //         modal.hide();
+                //     });
+                //     modal.show();
+                // }
+                // 
+            // </script>
+        @endphp
+        <script>
+            document.getElementById('email_frame').onload = function() {
+                let iframe = document.getElementById('email_frame').contentWindow.document;
+                let links = iframe.querySelectorAll("a");
+
+                links.forEach(link => {
+                    link.addEventListener("click", function(event) {
+                        event.preventDefault(); // Impedisce la navigazione
+                    });
+                });
+            };
+        </script>
+    </x-slot>
 </x-app-layout>
