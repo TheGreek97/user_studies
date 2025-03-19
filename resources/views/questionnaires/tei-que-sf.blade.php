@@ -29,7 +29,7 @@
                                             @if (($tabIndex * $questionsPerTab + $index) == $trivialPosition)
                                                 <div class="py-4 flex flex-col border-b-2 border-gray-300">
                                                     <p class="text-left md:text-center text-lg md:text-xl font-semibold text-gray-800 py-3">
-                                                        Please select option {{ __("questionnaire-campaign.tei-que-sf.scale.$correctAnswer") }} for this question.
+                                                        This item is a quality control check, please select {{ __("questionnaire-campaign.tei-que-sf.scale.$correctAnswer") }}.
                                                     </p>
                                                     <div class="flex flex-col md:flex-row items-start md:items-start w-full md:justify-around gap-4">
                                                         @for ($i = 1; $i <= 7; $i++)

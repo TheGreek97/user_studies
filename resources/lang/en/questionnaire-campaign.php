@@ -195,7 +195,7 @@ return [
                 'focus' => 'Consistency',
             ],
             7 => [
-                'text' => 'I would like to travel to places that are strange ans far away.',
+                'text' => 'I would like to travel to places that are strange and far away.',
                 'focus' => 'Sensation Seeking',
             ],
             8 => [
@@ -215,7 +215,7 @@ return [
                 'focus' => 'Self-Control',
             ],
             12 => [
-                'text' => "Sometimes I can't stop myself from doing something, even if I know it is wrong.",
+                'text' => "Sometimes I can’t stop myself from doing something, even if I know it is wrong.",
                 'focus' => 'Self-Control',
             ],
             13 => [
@@ -243,15 +243,15 @@ return [
                 'focus' => 'Similarity',
             ],
             19 => [
-                'text' => 'Betting a day’s income at the horse races.',
+                'text' => 'I would not be worried by betting a day’s income at the horse races.',
                 'focus' => 'Risk Preferences',
             ],
             20 => [
-                'text' => 'Betting a day’s income at a high-stake poker game.',
+                'text' => 'I would not be worried by betting a day’s income at a high-stake poker game.',
                 'focus' => 'Risk Preferences',
             ],
             21 => [
-                'text' => 'Betting a day’s income on the outcome of a sporting event.',
+                'text' => 'I would not be worried by betting a day’s income on the outcome of a sporting event.',
                 'focus' => 'Risk Preferences',
             ],
             22 => [
@@ -310,7 +310,7 @@ return [
                 'focus' => 'Extraversion',
             ],
             2 => [
-                'text' => 'Is compassionate has a soft heart.',
+                'text' => 'Is compassionate, has a soft heart.',
                 'focus' => 'Agreeableness',
             ],
             3 => [

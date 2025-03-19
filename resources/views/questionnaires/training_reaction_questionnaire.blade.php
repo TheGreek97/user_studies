@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="slot">
         <div class="min-h-screen bg-gray-200 flex justify-center items-center">
-            <div class="pt-12 px-12 m-10 bg-white rounded-2xl shadow-xl z-20">
+            <div class="pt-12 px-12 m-10 bg-white rounded-2xl shadow-xl z-0">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-sky-900">
                         <!-- Questionnaire -->
@@ -32,7 +32,7 @@
                                             @if (($tabIndex * $questionsPerTab + $index) == $trivialPosition)
                                             <div class="py-4 flex flex-col border-b-2 border-gray-300">
                                                 <p class="text-left md:text-center text-lg md:text-xl font-semibold text-gray-800 py-3">
-                                                    Please select option {{ __("questionnaire-campaign.trainingReactionQuestionnaire.scale.$correctAnswer") }} for this question.
+                                                    This item is a quality control check, please select {{ __("questionnaire-campaign.trainingReactionQuestionnaire.scale.$correctAnswer") }}.
                                                 </p>
                                                 <div class="flex flex-col md:flex-row items-start md:items-start w-full md:justify-around gap-4">
                                                     @for ($i = 1; $i <= 5; $i++)

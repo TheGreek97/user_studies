@@ -57,7 +57,7 @@ class MailController extends Controller
         if (session()->has('post_phase_done') ) {
             return redirect()->route('questionnaire', ['step' => 4]);
         }
-        if (!session()->has('training_done')) {
+        if (session()->has('pre_phase_done') and !session()->has('training_done')) {
             return redirect()->route('training');
         }
         //Else: EMAIL CLASSIFICATION

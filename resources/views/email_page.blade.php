@@ -7,7 +7,7 @@ $show_details = Auth::user()->show_details;
 ?>
 <x-app-layout>
     <x-slot name="slot">
-        <div style="position: sticky; top: 0; left: 0; z-index: 10;"
+        <div style="position: sticky; top: 0; left: 0; z-index: 40;"
             class="p-6 shadow-lg bg-gray-700 text-white flash-element">
             @if (session('post_phase'))
                 <p>
@@ -553,24 +553,52 @@ $show_details = Auth::user()->show_details;
                                         {!! date('d M Y', strtotime($selected_email->date)) . '<br>' . date('H:i', strtotime($selected_email->date)) !!}
                                     </div>
                                 </div>
-                                <div id="email_content" class="px-10 pt-4 dark:bg-white"
-                                    style="padding-bottom: 2.5rem">
-                                    {{-- <iframe 
-                                                id="email_frame" 
-                                                src="{{ asset($selected_email->page_path) }}" 
-                                                object-fit: contain;
-                                                width="100%" 
-                                                style="border:none; height: 60vh;"
-                                                sandbox="allow-scripts allow-same-origin">
-                                            </iframe> --}}
-
-                                    <iframe id="email_frame" style="width: 100%; height: 60vh; border: none;"
-                                        srcdoc="{!! htmlspecialchars($htmlContent ?? '', ENT_QUOTES, 'UTF-8') !!}">
-                                    </iframe>
-
-
-
+                                <!--IFRAME-->
+                                <div id="email_content" class="px-1 pt-4 dark:bg-white" style="padding-bottom: 2.5rem; max-width: 1000px;"> 
+                                    <iframe id="email_frame" style="width: 100%; border: none;" 
+                                        srcdoc="{!! htmlspecialchars($htmlContent ?? '', ENT_QUOTES, 'UTF-8') !!}"><!--height: 60vh;-->
+                                    </iframe> 
                                 </div>
+                                <script>
+                                    const emailContent = document.getElementById('email_content');
+                                    const emailFrame = document.getElementById('email_frame');
+                                    const referenceWidth = 800; // larghezza di riferimento del contenuto
+                                    const extraSpace = 60; // spazio extra da aggiungere in fondo
+                                  
+                                    function adjustIframeSize() {
+                                      const currentWidth = emailContent.clientWidth;
+                                      const scale = currentWidth / referenceWidth;
+                                  
+                                      const iframeDocument = emailFrame.contentDocument || emailFrame.contentWindow.document;
+                                      if (iframeDocument && iframeDocument.body) {
+                                        // Imposta inizialmente il contenuto centrato
+                                        iframeDocument.body.style.transform = `scale(${scale})`;
+                                        iframeDocument.body.style.transformOrigin = 'top center'; // All'inizio è centrato
+                                        iframeDocument.body.style.width = referenceWidth + 'px';
+                                        iframeDocument.body.style.margin = '0 auto';
+                                  
+                                        // Rimuove lo scroll impostando overflow hidden
+                                        iframeDocument.body.style.overflow = 'hidden';
+                                        
+                                        // Calcola l'altezza necessaria in base al contenuto scalato e aggiungi spazio extra
+                                        const contentHeight = iframeDocument.body.scrollHeight;
+                                        emailFrame.style.height = (contentHeight * scale + extraSpace) + 'px';
+                                  
+                                        // Cambia il transform-origin a top-left quando la finestra è ridimensionata
+                                        if (currentWidth < referenceWidth) {
+                                          iframeDocument.body.style.transformOrigin = 'top left';
+                                        } else {
+                                          iframeDocument.body.style.transformOrigin = 'top center'; // Torna a center se la larghezza è sufficiente
+                                        }
+                                      }
+                                    }
+                                  
+                                    // Richiama la funzione al caricamento e al ridimensionamento della finestra
+                                    window.addEventListener('resize', adjustIframeSize);
+                                    window.addEventListener('load', adjustIframeSize);
+                                  </script>
+    
+                                
                             </div>
                             <div
                                 class="w-[240px] md:w-[265px] h-[590px] md:h-[665px] border-2 border-blue-500 rounded-lg shadow-md p-4 fixed right-5 top-50 my-10 bg-white dark:bg-gray-800 z-20">

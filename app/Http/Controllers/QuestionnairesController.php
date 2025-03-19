@@ -53,11 +53,6 @@ class QuestionnairesController extends Controller
 
     }
 
-    public function showQuestionnaire4()
-    {
-        return view('questionnaires.training_reaction_questionnaire');
-    }
-
     public function saveEmailClassification(Request $request)
     {
         try {
