@@ -31,11 +31,11 @@ class EmailSeeder extends Seeder
 
     //   // Assign difficulty levels based on rules
     //   if (($i >= 1 && $i <= 4) || ($i >= 13 && $i <= 16) || ($i >= 21 && $i <= 24) || ($i >= 33 && $i <= 36)) {
-    //     $difficulty = 'low';
+    //     $difficulty = 'easy';
     //   } elseif (($i >= 5 && $i <= 8) || ($i >= 17 && $i <= 18) || ($i >= 25 && $i <= 28) || ($i >= 37 && $i <= 38)) {
     //     $difficulty = 'medium';
     //   } else {
-    //     $difficulty = 'high';
+    //     $difficulty = 'hard';
     //   }
 
     //   $email = new Email();
@@ -62,24 +62,24 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/amazon.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'high'
+    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
     $email->save();
 
     // 2
-    $email = new Email();
-    $email->from_name = "Barclays Banking";
-    $email->from_email = "client.support@barclays.com";
-    $email->subject = "Important Disclosure Regarding Your Credit Card Account";
-    $email->preview_text = 'The following disclosure represents important details concerning your credit card. ';
-    $email->content = file_get_contents(EMAIL_DIR . "/barclays.htm");
-    $email->show_warning = false;
-    $email->type = 'inbox';
-    $email->difficulty_level = 'high';  // or 'medium' or 'high'
-    $email->phishing = 0;
-    $email->counterpart = 1;
-    $email->save();
+    // $email = new Email();
+    // $email->from_name = "Barclays Banking";
+    // $email->from_email = "client.support@barclays.com";
+    // $email->subject = "Important Disclosure Regarding Your Credit Card Account";
+    // $email->preview_text = 'The following disclosure represents important details concerning your credit card. ';
+    // $email->content = file_get_contents(EMAIL_DIR . "/barclays.htm");
+    // $email->show_warning = false;
+    // $email->type = 'inbox';
+    // $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
+    // $email->phishing = 0;
+    // $email->counterpart = 1;
+    // $email->save();
 
     // 3
     $email = new Email();
@@ -90,7 +90,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/booking.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'high'
+    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 0;
     $email->save();
@@ -105,7 +105,7 @@ class EmailSeeder extends Seeder
     //$email->date = Carbon::parse('2022-08-19 15:28')->toDateTimeString();
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'high'
+    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 0;
     $email->save();
@@ -119,7 +119,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/etsy.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'high';  // or 'medium' or 'high'
+    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 0;
     $email->save();
@@ -133,7 +133,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/facebook.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'high'
+    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
     $email->save();
@@ -147,7 +147,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/google.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'high';  // or 'medium' or 'high'
+    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
     $email->save();
@@ -161,24 +161,24 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/instagram.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'high';  // or 'medium' or 'high'
+    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
     $email->save();
 
     // 9
-    $email = new Email();
-    $email->subject = "Your LinkedIn Account Has Been Temporarily Restricted";
-    $email->from_name = "Linkedin";
-    $email->from_email = "noreply@linkedin.com";
-    $email->preview_text = 'Dear {USER NAME}, We noticed unusual activity from your account.';
-    $email->content = file_get_contents(EMAIL_DIR . "/linkedin.htm");
-    $email->show_warning = false;
-    $email->type = 'inbox';
-    $email->difficulty_level = 'high';  // or 'medium' or 'high'
-    $email->phishing = 0;
-    $email->counterpart = 1;
-    $email->save();
+    // $email = new Email();
+    // $email->subject = "Your LinkedIn Account Has Been Temporarily Restricted";
+    // $email->from_name = "Linkedin";
+    // $email->from_email = "noreply@linkedin.com";
+    // $email->preview_text = 'Dear {USER NAME}, We noticed unusual activity from your account.';
+    // $email->content = file_get_contents(EMAIL_DIR . "/linkedin.htm");
+    // $email->show_warning = false;
+    // $email->type = 'inbox';
+    // $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
+    // $email->phishing = 0;
+    // $email->counterpart = 1;
+    // $email->save();
 
     // 10
     $email = new Email();
@@ -189,7 +189,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/microsoft.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'high'
+    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
     $email->save();
@@ -203,7 +203,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/netflix.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'high'
+    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 0;
     $email->save();
@@ -217,7 +217,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/nike.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'high';  // or 'medium' or 'high'
+    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
     $email->save();
@@ -231,7 +231,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/nordVPN.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'high';  // or 'medium' or 'high'
+    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 0;
     $email->save();
@@ -245,24 +245,24 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/paypal.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'high'
+    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
     $email->save();
 
     // 15
-    $email = new Email();
-    $email->subject = "Have you provided your financial status? ⚠";
-    $email->from_name = "Revolut";
-    $email->from_email = "no-reply@revolut.com";
-    $email->preview_text = 'Hi {USER NAME}, We\'re required to collect some information about your financial status, in order to continue providing crypto products to you.';
-    $email->content = file_get_contents(EMAIL_DIR . "/revolut.htm");
-    $email->show_warning = false;
-    $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'high'
-    $email->phishing = 0;
-    $email->counterpart = 1;
-    $email->save();
+    // $email = new Email();
+    // $email->subject = "Have you provided your financial status? ⚠";
+    // $email->from_name = "Revolut";
+    // $email->from_email = "no-reply@revolut.com";
+    // $email->preview_text = 'Hi {USER NAME}, We\'re required to collect some information about your financial status, in order to continue providing crypto products to you.';
+    // $email->content = file_get_contents(EMAIL_DIR . "/revolut.htm");
+    // $email->show_warning = false;
+    // $email->type = 'inbox';
+    // $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
+    // $email->phishing = 0;
+    // $email->counterpart = 1;
+    // $email->save();
 
     // 16
     $email = new Email();
@@ -273,7 +273,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/ryanair.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'high';  // or 'medium' or 'high'
+    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 0;
     $email->save();
@@ -287,7 +287,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/shein.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'high';  // or 'medium' or 'high'
+    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 0;
     $email->save();
@@ -301,7 +301,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/spotify.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'high'
+    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 0;
     $email->save();
@@ -315,7 +315,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/vodafone.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'high';  // or 'medium' or 'high'
+    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
     $email->save();
@@ -329,7 +329,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/zalando.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'high'
+    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
     $email->save();
@@ -343,7 +343,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/zara.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'high';  // or 'medium' or 'high'
+    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 0;
     $email->save();
@@ -354,18 +354,18 @@ class EmailSeeder extends Seeder
 
     // PHISHING
     // 1 
-    $email = new Email();
-    $email->subject = "Loan Pre-Approval Notification – Action Required";
-    $email->from_name = "Barclays Bank Services";
-    $email->from_email = "noreply@89.30.204.109";
-    $email->preview_text = 'We are pleased to inform you that your recent loan application has pre-approved by Barclays Banking group.';
-    $email->content = file_get_contents(EMAIL_DIR . "/phishing/easy_barclays.htm");
-    $email->show_warning = false;
-    $email->type = 'inbox';
-    $email->difficulty_level = 'low';  // or 'medium' or 'high'
-    $email->phishing = 1;
-    $email->counterpart = 1;
-    $email->save();
+    // $email = new Email();
+    // $email->subject = "Loan Pre-Approval Notification – Action Required";
+    // $email->from_name = "Barclays Bank Services";
+    // $email->from_email = "noreply@89.30.204.109";
+    // $email->preview_text = 'We are pleased to inform you that your recent loan application has pre-approved by Barclays Banking group.';
+    // $email->content = file_get_contents(EMAIL_DIR . "/phishing/easy_barclays.htm");
+    // $email->show_warning = false;
+    // $email->type = 'inbox';
+    // $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
+    // $email->phishing = 1;
+    // $email->counterpart = 1;
+    // $email->save();
 
     // 2 
     $email = new Email();
@@ -376,7 +376,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/easy_barclays.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'low';  // or 'medium' or 'high'
+    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 0;
     $email->save();
@@ -390,7 +390,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/easy_facebook.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'low';  // or 'medium' or 'high'
+    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->save();
@@ -404,9 +404,9 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/easy_linkedin.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'low';  // or 'medium' or 'high'
+    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
     $email->phishing = 1;
-    $email->counterpart = 1;
+    $email->counterpart = 0;
     $email->save();
 
     // 5
@@ -418,7 +418,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/easy_sephora.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'low';  // or 'medium' or 'high'
+    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 0;
     $email->save();
@@ -432,7 +432,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/easy-fedex.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'low';  // or 'medium' or 'high'
+    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 0;
     $email->save();
@@ -446,24 +446,24 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/easy-revolut.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'low';  // or 'medium' or 'high'
-    $email->phishing = 1;
-    $email->counterpart = 1;
-    $email->save();
-
-    // 8
-    $email = new Email();
-    $email->subject = "Your Pre-Approved Loan Offer Awaits";
-    $email->from_name = "Crédit Agricole";
-    $email->from_email = "service@credit-agricole-group.com";
-    $email->preview_text = 'Dear Valued Customer, We are pleased to inform you that, based on your excellent financial history, you have been ...';
-    $email->content = file_get_contents(EMAIL_DIR . "/phishing/hard_credit-agricole.htm");
-    $email->show_warning = false;
-    $email->type = 'inbox';
-    $email->difficulty_level = 'high';  // or 'medium' or 'high'
+    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 0;
     $email->save();
+
+    // 8
+    // $email = new Email();
+    // $email->subject = "Your Pre-Approved Loan Offer Awaits";
+    // $email->from_name = "Crédit Agricole";
+    // $email->from_email = "service@credit-agricole-group.com";
+    // $email->preview_text = 'Dear Valued Customer, We are pleased to inform you that, based on your excellent financial history, you have been ...';
+    // $email->content = file_get_contents(EMAIL_DIR . "/phishing/hard_credit-agricole.htm");
+    // $email->show_warning = false;
+    // $email->type = 'inbox';
+    // $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
+    // $email->phishing = 1;
+    // $email->counterpart = 0;
+    // $email->save();
 
     // 9
     $email = new Email();
@@ -474,7 +474,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/hard_google.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'high';  // or 'medium' or 'high'
+    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->save();
@@ -488,7 +488,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/hard_paypal.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'high';  // or 'medium' or 'high'
+    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->save();
@@ -502,7 +502,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/hard_vodafone.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'high';  // or 'medium' or 'high'
+    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->save();
@@ -516,7 +516,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/hard_warnerbros.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'high';  // or 'medium' or 'high'
+    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 0;
     $email->save();
@@ -530,7 +530,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/hard-nike.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'high';  // or 'medium' or 'high'
+    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->save();
@@ -544,7 +544,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/hard-zalando.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'high';  // or 'medium' or 'high'
+    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->save();
@@ -558,24 +558,24 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/medium_amazon.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'high'
+    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->save();
 
     // 16
-    $email = new Email();
-    $email->subject = "Urgent: Action Required to Finalize Your Loan Pre-Approval";
-    $email->from_name = "Deutsche Bank Loan Services";
-    $email->from_email = "oreply@dutsche-bank.it";
-    $email->preview_text = 'Dear Valued Customer, We are pleased to inform you that your loan pre-approval is almost complete.';
-    $email->content = file_get_contents(EMAIL_DIR . "/phishing/medium_deutschebank.htm");
-    $email->show_warning = false;
-    $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'high'
-    $email->phishing = 1;
-    $email->counterpart = 0;
-    $email->save();
+    // $email = new Email();
+    // $email->subject = "Urgent: Action Required to Finalize Your Loan Pre-Approval";
+    // $email->from_name = "Deutsche Bank Loan Services";
+    // $email->from_email = "oreply@dutsche-bank.it";
+    // $email->preview_text = 'Dear Valued Customer, We are pleased to inform you that your loan pre-approval is almost complete.';
+    // $email->content = file_get_contents(EMAIL_DIR . "/phishing/medium_deutschebank.htm");
+    // $email->show_warning = false;
+    // $email->type = 'inbox';
+    // $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
+    // $email->phishing = 1;
+    // $email->counterpart = 0;
+    // $email->save();
 
     // 17
     $email = new Email();
@@ -586,7 +586,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/medium_GLS.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'high'
+    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 0;
     $email->save();
@@ -600,7 +600,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/medium_instagram.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'high'
+    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->save();
@@ -614,7 +614,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/medium_temu.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'high'
+    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 0;
     $email->save();
@@ -628,7 +628,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/medium_ups.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'high'
+    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 0;
     $email->save();
@@ -642,7 +642,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/medium-microsoft.htm");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'high'
+    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->save();

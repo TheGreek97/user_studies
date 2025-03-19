@@ -26,7 +26,7 @@ return new class extends Migration
             $table->longText('warning_explanation_1')->nullable();
             $table->longText('warning_explanation_2')->nullable();
             // New fields:
-            $table->enum('difficulty_level', ['low', 'medium', 'high']);
+            $table->enum('difficulty_level', ['easy', 'medium', 'hard']);
             $table->boolean('phishing')->default(0);  // 0 = false, 1 = true
             $table->boolean('counterpart')->default(0);  // 0 = false, 1 = true
             //$table->unsignedBigInteger('user_id');
