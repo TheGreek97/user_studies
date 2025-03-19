@@ -11,31 +11,51 @@ use Illuminate\Support\Facades\Log;
 
 class QuestionnairesController extends Controller
 {
-    public function showQuestionnaire1()
-    {
-        return view('questionnaires.bfi2xs'); 
-    }
 
-    public function showQuestionnaire2()
+    public function showQuestionnaire($step)
     {
-        return view('questionnaires.stp-ii-b'); 
-    }
+        $questionnaires = [
+            1 => 'questionnaires.bfi2xs',
+            2 => 'questionnaires.stp-ii-b',
+            3 => 'questionnaires.tei-que-sf',
+            4 => 'questionnaires.training_reaction_questionnaire', 
+            5 => 'questionnaires.demographicQuestionnaire', 
+        ];
 
-    public function showQuestionnaire3()
-    {
-        return view('questionnaires.tei-que-sf'); 
+        for ($i = 1; $i <= 3; $i++) {
+            if (!session()->has("questionnaire_{$i}done")) {
+                if ($i != $step) {
+                    return redirect(route('questionnaire', ['step' => $i]));
+                }
+                return view($questionnaires[$i]);
+            }
+        }
+
+        if (!session()->has('pre_phase_done') or !session()->has('post_phase_done') ) {
+            return redirect(route('show', ['folder' => 'inbox']));
+        }
+
+        if (!session()->has("questionnaire_4done")) {
+            if ($step != 4) {
+                return redirect(route('questionnaire', ['step' => 4]));
+            }
+            return view($questionnaires[4]);
+        }
+
+        if (!session()->has("questionnaire_5done")) {
+            if ($step != 5) {
+                return redirect(route('questionnaire', ['step' => 5]));
+            }
+            return view($questionnaires[5]);
+        } else {
+            return redirect(route('thank_you'));
+        }
+
     }
 
     public function showQuestionnaire4()
     {
-        session(['questionnaire3_view' => true]);
         return view('questionnaires.training_reaction_questionnaire');
-    }
-
-    public function finalData()
-    {
-        session(['questionnaire_4done' => true]);
-        return view('questionnaires.demographicQuestionnaire');
     }
 
     public function saveEmailClassification(Request $request)

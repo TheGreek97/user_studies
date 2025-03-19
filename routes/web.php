@@ -47,7 +47,7 @@ Route::get('/no-consent', function () {
 Route::get('/consent-grant', function (){
     session(['consent' => '1']);
     session(['startStudy' => '1']);
-    return redirect()->route('questionnaire1');
+    return redirect(route('questionnaire', ['step' => 1]));
     //return redirect(route('show', ['folder' => 'inbox']));
 })->name('consent');
 
@@ -79,7 +79,8 @@ Route::middleware([
 ])->group(function () {
     Route::get('/welcome', function () {
         if (session()->has('consent')) {
-            return redirect(route('show', ['folder' => 'inbox']));
+            //return redirect(route('show', ['folder' => 'inbox']));
+            return redirect(route('questionnaire', ['step' => 1]));
         } else {
             return view('welcome');
         }
@@ -112,11 +113,14 @@ Route::middleware([
     })->name('debriefing');
 
     Route::get('/training', function() {
+        if (!session()->has('pre_phase_done') || session()->has('training_done')) {
+            return redirect()->route('show', ['folder' => 'inbox']);
+        } 
         return view('training');
     })->name('training');
 
     Route::get('/set-post-phase', function () {
-        session(['post_phase' => true]);
+        session(['training_done' => true]);
         session(['startStudy' => '1']); //show again the popup message for the post classification
         return redirect()->route('show', ['folder' => 'inbox']);
     })->name('setPostPhase');   
@@ -125,8 +129,6 @@ Route::middleware([
 
     Route::post('/end', [Questionnaire::class, 'storeFollowUp']);
 
-    Route::get('/{folder?}/{id?}', [MailController::class, 'show'])->name('show');
-
     //Route::get('/warning_browser', [MailController::class, 'warning_browser'])->name('warning_browser');
 
     Route::post('/big-five-inventory', [BFI2XSController::class, 'create'])->name('big-five-inventory.create');
@@ -134,14 +136,14 @@ Route::middleware([
     Route::post('/trait-emotional-intelligence', [TEIQueSFController::class, 'create'])->name('trait-emotional-intelligence.create');
     Route::post('/training-reaction-questionnaire', [TrainingReactionController::class, 'create'])->name('training-reaction-questionnaire.create');
 
-    Route::post('/questionnaire1', [QuestionnairesController::class, 'showQuestionnaire1'])->name('questionnaire1');
-    Route::get('/questionnaire2', [QuestionnairesController::class, 'showQuestionnaire2'])->name('questionnaire2');
-    Route::get('/questionnaire3', [QuestionnairesController::class, 'showQuestionnaire3'])->name('questionnaire3');
-    Route::get('/questionnaire4', [QuestionnairesController::class, 'showQuestionnaire4'])->name('questionnaire4');
+    Route::get('/questionnaire/{step}', [QuestionnairesController::class, 'showQuestionnaire'])
+    ->name('questionnaire');
 
     Route::post('/save-email-classification', [QuestionnairesController::class, 'saveEmailClassification'])->name('save-email-classification');
-    Route::get('/final-data', [QuestionnairesController::class, 'finalData'])->name('final-data');
+    //Route::get('/final-data', [QuestionnairesController::class, 'finalData'])->name('final-data');
     Route::post('/save-final-data', [QuestionnairesController::class, 'saveFinalData'])->name('save-final-data');
+
+    Route::get('/{folder?}/{id?}', [MailController::class, 'show'])->name('show');
 
 });
 

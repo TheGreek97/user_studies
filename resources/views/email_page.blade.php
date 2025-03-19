@@ -72,6 +72,7 @@ $show_details = Auth::user()->show_details;
             </div>
         </div>
 
+
         @if (isset($startStudy))
             <script type="module">
                 { // show the modal
@@ -129,55 +130,6 @@ $show_details = Auth::user()->show_details;
                                         d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                 </svg></span>
                         </button>
-                        <!-- Compose modal -->
-                        {{-- <div id="compose_modal" tabindex="-1" aria-hidden="true"
-                             class="bg-black bg-opacity-50 hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-                            <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
-                                <!-- Modal content -->
-                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                    <button type="button"
-                                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                                            data-modal-toggle="compose_modal">
-                                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd"
-                                                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                                  clip-rule="evenodd"></path>
-                                        </svg>
-                                        <span class="sr-only">Close modal</span>
-                                    </button>
-                                    <div class="py-6 px-6 lg:px-8">
-                                        <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">New
-                                            message</h3>
-                                        <form class="space-y-6" action="#"> <!-- send message controller -->
-                                            <div>
-                                                <label for="to_email"
-                                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">To</label>
-                                                <input type="email" name="to_email" id="to_email"
-                                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                                       placeholder="name@company.com" required>
-                                            </div>
-                                            <div>
-                                                <label for="subject"
-                                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Subject</label>
-                                                <input type="text" name="subject" id="subject"
-                                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                                       placeholder="Lorem ipsum dolor sit amet..." required>
-                                            </div>
-                                            <div>
-                                                <textarea rows="4" name="content" id="content"
-                                                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                                          required></textarea>
-                                            </div>
-                                            <button type="submit"
-                                                    class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                                Send
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
                     <ul class="mt-6">
                         <li class="relative px-6 py-3">
@@ -392,43 +344,6 @@ $show_details = Auth::user()->show_details;
                                         src="https://ui-avatars.com/api/?background=1C64F2&color=fff&name={{ \Illuminate\Support\Facades\Auth::user()->name }}"
                                         alt="" aria-hidden="true" />
                                 </button>
-                                {{-- <template x-if="isProfileMenuOpen">
-                                    <ul
-                                        x-transition:leave="transition ease-in duration-150"
-                                        x-transition:leave-start="opacity-100"
-                                        x-transition:leave-end="opacity-0"
-                                        @mousedown.outside="closeProfileMenu($refs.button)"
-                                        class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700"
-                                        aria-label="submenu"
-                                    >
-                                        <li class="flex">
-                                            <form method="POST"
-                                                  class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                                  action="{{ route('logout') }}">
-                                                @csrf
-                                                <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                                   href="#"
-                                                   onclick="event.preventDefault();this.closest('form').submit();">
-                                                    <svg
-                                                        class="w-4 h-4 mr-3"
-                                                        aria-hidden="true"
-                                                        fill="none"
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        viewBox="0 0 24 24"
-                                                        stroke="currentColor"
-                                                    >
-                                                        <path
-                                                            d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
-                                                        ></path>
-                                                    </svg>
-                                                    <span>Log out</span>
-                                                </a>
-                                            </form>
-                                        </li>
-                                    </ul>
-                                </template> --}}
                             </li>
                         </ul>
                     </div>
@@ -818,25 +733,27 @@ $show_details = Auth::user()->show_details;
             <!-- End active warning modal -->
         </div>
 
-        <x-modal name="error-modal" id="errorModal" title="Compile all the questions!" :show="false">
-            <div class="p-4 rounded-lg relative text-center">
-                <p class="text-2xl font-semibold text-red-700 pb-8">Evaluate the email !</p>
-                <p id="modalMessage" class="text-lg text-gray-800 pb-8"></p>
-                <x-primary-button x-on:click="$dispatch('close')">Close</x-primary-button>
-            </div>
-        </x-modal>
+        <div style="position: sticky; top: 0; left: 0; z-index: 99;"
+        class="p-6 shadow-lg bg-gray-700 text-white">
+            <x-modal name="error-modal" id="errorModal" title="Compile all the questions!" :show="false">
+                <div class="p-4 rounded-lg relative text-center">
+                    <p class="text-2xl font-semibold text-red-700 pb-8">Evaluate the email !</p>
+                    <p id="modalMessage" class="text-lg text-gray-800 pb-8"></p>
+                    <x-primary-button x-on:click="$dispatch('close')">Close</x-primary-button>
+                </div>
+            </x-modal>
 
-        <x-modal name="to-fast-modal" id="to-fast-modal" title="Compile all the questions slowly!" :show="false"
-            x-data="{ show: false }" x-show="show" @open-modal.window="show = true">
-            <div class="p-4 rounded-lg relative text-center">
-                <p class="text-2xl font-semibold text-red-700 pb-8">You're going too fast!</p>
-                <p class="text-lg text-gray-800 pb-8">
-                    Please slow down and carefully observe the email before answering. <br>
-                </p>
-                <x-primary-button x-on:click="$dispatch('close')">Close</x-primary-button>
-            </div>
-        </x-modal>
-
+            <x-modal name="to-fast-modal" id="to-fast-modal" title="Compile all the questions slowly!" :show="false"
+                x-data="{ show: false }" x-show="show" @open-modal.window="show = true">
+                <div class="p-4 rounded-lg relative text-center">
+                    <p class="text-2xl font-semibold text-red-700 pb-8">You're going too fast!</p>
+                    <p class="text-lg text-gray-800 pb-8">
+                        Please slow down and carefully observe the email before answering. <br>
+                    </p>
+                    <x-primary-button x-on:click="$dispatch('close')">Close</x-primary-button>
+                </div>
+            </x-modal>
+        </div>
         <script>
             @if (isset($selected_email))
 
@@ -901,263 +818,6 @@ $show_details = Auth::user()->show_details;
                 });
             @endif
         </script>
-        {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
-        @php
-            // <script>
-                // $( () => {
-                //     document.body.style.overflowY = "hidden";
-                // })
-                // @if (isset($selected_email))
-                //     console.log ("warning type: {{ $selected_email->warning_type }}")
-                //     // Show email questionnaire when going back
-                //     $('a').not("#email_content *").each(function (e) {
-                //         $(this).on('click', (e) => {
-                //             e.preventDefault();
-                //             //window.location.href = '{{ route('next_step', $selected_email->id) }}?nolink';
-                //         });
-                //     });
-                //     // Links:
-                //     $("#email_content").find('a').not('#phishing_link').each(function (e) {
-                //         $(this).on('click', (e) => {
-                //             e.preventDefault();
-                //             $.ajax({
-                //                 url: ("{{ route('warning_log') }}?email_id={{ $selected_email->id }}&warning_type={{ $selected_email->warning_type }}&show_explanation={{ $show_explanation }}&show_details={{ $show_details }}&msg=clicked_link&url=" + $(this).attr("href")).replace(/%20/g, '+'),
-                //                 type: 'GET',
-                //                 dataType: 'json',
-                //                 complete: () => { 
-                //                     //window.location.href = '{{ route('next_step') . '/' . $selected_email->id }}'
-                //                 },
-                //                 async: false
-                //             });
-                //         });
-                //     });
-                //     @if ($warning_type == 'popup_link' && $selected_email->show_warning) // Show the modal warning only for the Popup Link condition
-                //     // Popup Link
-                //     let phishing_link = $("#phishing_link")
-                //     phishing_link.on('click', (e) => {
-                //         e.preventDefault();
-                //         e.stopPropagation();
-                //         let url = new URL(phishing_link.attr('href'));
-                //         let warning_message = `{!! $show_explanation ? $selected_email->warning_explanation : __('warning.no_explanation_website') !!}`
-                //         let detailed_explanation = `{!! /* $show_details !== 'no' ? $selected_email->detailed_explanation : ''  */ '' !!}`
-                //         open_warning(url.hostname, {{ $selected_email->id }}, warning_message, detailed_explanation, url);
-                //     });
-                //     @elseif ($warning_type == 'popup_email' && $selected_email->show_warning)  // Prevent visiting the phishing link in the popup email condition (after having ignored the warning)
-                //     // Popup email
-                //     let phishing_link = $("#phishing_link")
-                //     phishing_link.on('click', (e) => {
-                //         allow_to_go_back = true
-                //         e.preventDefault()
-                //         e.stopPropagation();
-
-                //         $.ajax({
-                //             url: ("{{ route('warning_log') }}?email_id={{ $selected_email->id }}&warning_type=popup_email&show_explanation={{ $show_explanation }}&show_details={{ $show_details }}&msg=clicked_link&url=" + window.location.href).replace(/%20/g, '+'),
-                //             type: 'GET',
-                //             dataType: 'json',
-                //             complete: function (data) {
-                //                 //window.location.href = '{{ route('next_step') . '/' . $selected_email->id }}';
-                //             },
-                //             async: false
-                //         });
-                //     });
-                //     @elseif ($warning_type === 'tooltip' && $selected_email->show_warning)
-                //     // TOOLTIP
-                //     let message_sent = [];
-                //     let tooltips = $(".tooltip")
-                //     let allow_to_go_back  // Ensures the user stays on a phishing email for a minimum of X seconds before allowing them to go back
-                //     let phishing_link_html = $("#phishing_link")
-                //     let explanation = "{{ $selected_email->warning_explanation }}"
-                //     let default_explanation = `Link goes to: <br> <a href="${phishing_link_html.attr("href")}" style="text-decoration: underline;/* color: #0001F1; */" id="actual_phishing_link"><span class="s2">${phishing_link_html.attr("href")}</span></a>`
-                //     if ("{{ $show_explanation }}" === "1") {
-                //         explanation = explanation + "<br/>" + default_explanation
-                //     } else {
-                //         explanation = default_explanation; // if there is no explanation to show, show the default one
-                //     }
-                //     let tooltip_warning_html = `
-    //         <table class="tooltip" data="{{ $selected_email->from_email }}">
-    //             <tbody>
-    //                <tr>
-    //                   <td>
-    //                     <a href="#" class="phishing_link">${phishing_link_html.html()} </a>
-    //                     <span id="tooltip_balloon" class="tooltiptext tooltip-balloon">
-    //                         <div class="flex justify-between items-start">
-    //                             <div class="pr-1">
-    //                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-10" viewBox="0 0 20 20"
-    //                                      fill="currentColor">
-    //                                     <path fill-rule="evenodd"
-    //                                           d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-    //                                           clip-rule="evenodd"/>
-    //                                 </svg>
-    //                             </div>
-    //                             <div style="cursor: auto;">
-    //                                 <span class="text-lg">FAKE WEBSITE, DON'T CLICK!</span><br/>
-    //                                 <span>${explanation}</span>
-    //                             </div>
-    //                         </div>
-    //                     </span>
-    //                   </td>
-    //                </tr>
-    //            </tbody>
-    //         </table>
-    //     `
-
-                //     phishing_link_html.html(tooltip_warning_html)
-                //     phishing_link_html.attr("href", "#");
-                //     phishing_link_html.on("click", (e) => {
-                //         e.preventDefault()
-                //         e.stopPropagation()
-                //     }
-                //     );
-                //     phishing_link_html.attr("style", phishing_link_html.attr("style")+"cursor: not-allowed;")
-
-                //     let tooltip_balloon = $("#tooltip_balloon")
-                //     phishing_link_html.mouseenter(() => {tooltip_balloon.addClass("visible"); console.log ("enter")})
-                //     phishing_link_html.mouseleave(() => setTimeout( () => {tooltip_balloon.removeClass("visible"); console.log ("escher")}, 100))
-                //     phishing_link_html.mouseover(function () {
-                //         setTimeout(() => {
-                //             if (!message_sent.includes($(this).attr('data'))) {
-                //                 message_sent.push($(this).attr('data'));
-                //                 $.ajax({
-                //                     url: ("{{ route('warning_log') }}?email_id={{ $selected_email->id }}&show_explanation={{ $show_explanation }}&warning_type=tooltip&msg=tooltip_shown&url=" + window.location.href).replace(/%20/g, '+'),
-                //                     type: 'GET',
-                //                     dataType: 'json'
-                //                 });
-                //             }
-                //             allow_to_go_back = true
-                //         }, 2000)
-                //     });
-                //     $("#tooltip_balloon a").on("click", (e) => {
-                //         allow_to_go_back = true
-                //         e.preventDefault()
-                //         $.ajax({
-                //             url: ("{{ route('warning_log') }}?email_id={{ $selected_email->id }}&warning_type=tooltip&show_explanation={{ $show_explanation }}&msg=tooltip_click&url=" + window.location.href).replace(/%20/g, '+'),
-                //             type: 'GET',
-                //             dataType: 'json',
-                //             complete: function (data) {
-                //                 //window.location.href = '{{ route('next_step') . '/' . $selected_email->id }}';
-                //             },
-                //             async: false
-                //         });
-                //     });
-                //     /*
-                //     $('a').not("#email_content *").each(function (e) {
-                //         $(this).on('click', (e) => {
-                //             if (allow_to_go_back) {
-                //                 e.preventDefault();
-                //                 window.location.href = '{{-- route('next_step', $selected_email->id) --}}?nolink';
-                //             } else {
-                //                 e.preventDefault();
-                //                 alert("Please be sure to check all the links in the email by hovering on them with the mouse.")
-                //             }
-                //         });
-                //     });*/
-                //     {{--
-//     @elseif($selected_email->warning_type == "browser_native")
-//         $("#email_content").find('a').each(function (e) {
-//             $(this).on('click', (e) => {
-//                 e.preventDefault();
-//                 let url = new URL($(this).attr('href'));
-//                 window.location.href = '{{ route('warning_browser') }}?url=' + encodeURI(url) + '&backurl=' + encodeURI('{{ url('/nextstep', $selected_email->id)  }}') + '&email_id={{ $selected_email->id }}';
-//             });
-//         });
-//         $('a').not("#email_content *").each(function (e) {
-//             $(this).on('click', (e) => {
-//                 e.preventDefault();
-//                 //window.location.href = '{{ route('next_step', $selected_email->id) }}?nolink';
-//             });
-//         });
-//     @elseif($selected_email->warning_type == "base_passive")
-//         banner = $("#passive_banner"); // TO DO: Implement passive banners (if needed)
-//         banner.show();
-//         banner.innerHTML = "{{$selected_email->warning_explanation}}"
-//     --}}
-                //     @endif
-                // @endif
-
-                // const modal = new Modal(document.getElementById('warning_open'));
-
-                // function open_warning(url, email_id, warning_text, detailed_explanation="", full_url="") {
-                //     $("#warning_text").html(warning_text);
-                //     if (detailed_explanation !== "") {
-                //         let detailed_explanation_features = JSON.parse(detailed_explanation)
-                //         // truncate the URL to show in the detailed explanation
-                //         let max_url_visible_length = 100
-                //         full_url = full_url.length > max_url_visible_length ? full_url.substring(0, max_url_visible_length - 3) + "..." : full_url
-
-                //         let detailed_explanation_text = `These are some reasons why this link could be dangerous (${full_url}):`
-                //         detailed_explanation_text += `<ul style="list-style: initial; padding: revert;">`
-                //         for (let i = 0; i < detailed_explanation_features.length; i++) {
-                //             let obj = detailed_explanation_features[i]
-                //             detailed_explanation_text += `<li><b>${obj["feature"]}: </b> ${obj["explanation"]}</li>`
-                //         }
-                //         detailed_explanation_text += "</ul>"
-                //         $("#detailed_explanation").html(detailed_explanation_text);
-                //         $("#detailed_explanation").addClass("mb-6");
-                //     }
-                //     const warning_type = "{{ $warning_type }}";
-                //     $.ajax({
-                //         url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=warning_shown&url=" + window.location.href).replace(/%20/g, '+'),
-                //         type: 'GET',
-                //         dataType: 'json'
-                //     });
-                //     $("#warning_unsafe_link").on('click', (e) => {
-                //         e.preventDefault();
-                //         $.ajax({
-                //             url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=warning_ignored&url=" + window.location.href).replace(/%20/g, '+'),
-                //             type: 'GET',
-                //             dataType: 'json',
-                //             complete: function (data) {
-                //                 @if (\Illuminate\Support\Facades\Auth::user()->warning_type == 'popup_email')
-                //                     //window.location.href = '{{ route('show') }}/inbox/' + email_id; // (Before email opening)
-                //                 @else
-                //                     //window.location.href = '{{ route('next_step') }}/' + email_id;  // popup_link (After email opening)
-                //                 @endif
-                //             },
-                //             async: false
-                //         });
-                //     });
-                //     $("#button-advanced").on('click', () => {
-                //         if ($("#div-advanced").is(":hidden")) {
-                //             $("#button-advanced").text("Hide Details");
-                //             $("#div-advanced").show();
-                //             $.ajax({
-                //                 url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=show_details&url=" + window.location.href).replace(/%20/g, '+'),
-                //                 type: 'GET',
-                //                 dataType: 'json'
-                //             });
-                //         } else {
-                //             $("#button-advanced").text("Show Details");
-                //             $("#div-advanced").hide();
-                //             $.ajax({
-                //                 url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=hide_details&url=" + window.location.href).replace(/%20/g, '+'),
-                //                 type: 'GET',
-                //                 dataType: 'json'
-                //             });
-                //         }
-                //     });
-                //     $("#button_hide_modal").on('click', () => {
-                //         $.ajax({
-                //             url: ("{{ route('warning_log') }}?email_id=" + email_id + "&warning_type=" + warning_type + "&msg=back_safety&url=" + window.location.href).replace(/%20/g, '+'),
-                //             type: 'GET',
-                //             dataType: 'json'
-                //         });
-                //         $("#button-advanced").text("Show Details");
-                //         $("#div-advanced").hide();
-                //         $("#button_hide_modal").off("click");
-                //         $("#button-advanced").off("click");
-                //         $("#warning_unsafe_link").off("click");
-                //         if (warning_type==="popup_email") {
-                //             //window.location.href = '{{ route('next_step') }}/' + email_id + '?nolink&noquest';
-                //         } else {
-                //             //window.location.href = '{{ route('next_step') }}/' + email_id + '?nolink';
-                //         }
-                //         modal.hide();
-                //     });
-                //     modal.show();
-                // }
-                // 
-            // </script>
-        @endphp
         <script>
             document.getElementById('email_frame').onload = function() {
                 let iframe = document.getElementById('email_frame').contentWindow.document;

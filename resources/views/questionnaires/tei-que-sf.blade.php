@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="slot">
         <div class="min-h-screen bg-gray-200 flex justify-center items-center">
-            <div class="pt-12 px-12 m-10 bg-white rounded-2xl shadow-xl z-20">
+            <div class="pt-12 px-12 m-10 bg-white rounded-2xl shadow-xl">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-sky-900">
                         <!-- Questionnaire -->
@@ -12,7 +12,7 @@
                             <p class="text-3xl font-bold text-center mb-4 cursor-pointer">Questionnaire 3 of 3</p>
                             @php
                                 $questions = trans('questionnaire-campaign.tei-que-sf.question');
-                                $questionsPerTab = 9;
+                                $questionsPerTab = 10;
                                 $totalQuestions = count($questions);
                                 $correctAnswer = 6;
                                 $trivialPosition = rand(0, $totalQuestions - 1);

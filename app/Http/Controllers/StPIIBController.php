@@ -74,7 +74,7 @@ class StPIIBController extends Controller
             return redirect()->route('questionnaire3')->with('error', 'Already answered');
         }
         session(['questionnaire_2done' => true]);
-        return redirect()->route('questionnaire3')->with('success', 'Questionnaire 2 completed successfully!');
+        return redirect()->route('questionnaire', ['step' => 3])->with('success', 'Questionnaire 2 completed successfully!');
     }
 
     public function calculateScales($id)

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="slot">
         <div class="min-h-screen bg-gray-200 flex justify-center items-center">
-            <div class="pt-12 px-12 m-10 bg-white rounded-2xl shadow-xl z-20">
+            <div class="pt-12 px-12 m-10 bg-white rounded-2xl shadow-xl">
                 <div class="p-6 text-sky-900">
                     <!-- Questionnaire -->
                     <form class="pb-4" action="{{ route('susceptibility-to-persuasion-ii.create') }}" method="POST">
@@ -11,7 +11,7 @@
                         <p class="text-3xl font-bold text-center mb-4 cursor-pointer">Questionnaire 2 of 3</p>
                         @php
                             $questions = trans('questionnaire-campaign.stp-ii-b.question');
-                            $questionsPerTab = 9;
+                            $questionsPerTab = 10;
                             $totalQuestions = count($questions);
                             $correctAnswer = 2;
                             $trivialPosition = rand(0, $totalQuestions - 1);

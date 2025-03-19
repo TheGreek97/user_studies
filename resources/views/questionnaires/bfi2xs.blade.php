@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="slot">
         <div class="min-h-screen bg-gray-200 flex justify-center items-center">
-            <div class="pt-12 px-12 m-10 bg-white rounded-2xl shadow-xl z-20">
+            <div class="pt-12 px-12 m-10 bg-white rounded-2xl shadow-xl">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-sky-900">
                         <!-- Questionnaire -->

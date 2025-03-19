@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Request as FRequest;
 
 class MailController extends Controller
 {
-    const MAILS_NUMBER = 21;
+    const MAILS_NUMBER = 12;
 
     public function show($folder = 'inbox', $id = null)
     {
@@ -37,11 +37,11 @@ class MailController extends Controller
 
         //First shows the 3 questionnaires
         if (!session()->has('questionnaire_1done')) {
-            return view('questionnaires.bfi2xs');
+            return redirect()->route('questionnaire', ['step' => 1]);
         } elseif (!session()->has('questionnaire_2done')) {
-            return view('questionnaires.stp-ii-b');
+            return redirect()->route('questionnaire', ['step' => 2]);
         } elseif (!session()->has('questionnaire_3done')) {
-            return view('questionnaires.tei-que-sf');
+            return redirect()->route('questionnaire', ['step' => 3]);
         }
 
         //Final Demographic Questionnaire done
@@ -51,11 +51,14 @@ class MailController extends Controller
 
         //Final Demographic Questionnaire
         if(session()->has('questionnaire_4done') ) {
-            return view('questionnaires.demographicQuestionnaire');
+            return redirect()->route('questionnaire', ['step' => 5]);
         }
         //Training Reaction Questionnaire
-        if (session()->has('questionnaire4_view') && session('questionnaire4_view') === true) {
-            return view('questionnaires.training_reaction_questionnaire');
+        if (session()->has('post_phase_done') ) {
+            return redirect()->route('questionnaire', ['step' => 4]);
+        }
+        if (!session()->has('training_done')) {
+            return redirect()->route('training');
         }
         //Else: EMAIL CLASSIFICATION
 
@@ -110,23 +113,14 @@ class MailController extends Controller
             if ($email != null) {
                 // if email was found, show the email page
                 $email->warning_type = $auth_user->warning_type;
-                 // Get the email file path
-                $filePath = public_path($email->page_path); // Ensure the path is accessible
-
-                // Read and modify the file contents
-                if (file_exists($filePath)) {
-                    $htmlContent = file_get_contents($filePath);
-                    $htmlContent = str_replace('{USER NAME}', e($auth_user->name), $htmlContent);
-                } else {
-                    $htmlContent = "<p>Email content not found.</p>";
-                }
-                return view('email_page', ['folder' => $folder, 'emails' => $emails, 'selected_email' => $email, 'htmlContent' => $htmlContent]);
+                //  // Get the email file path
+                return view('email_page', ['folder' => $folder, 'emails' => $emails, 'selected_email' => $email, 'htmlContent' => $email->content]);
             } else {
                 // else show all the emails
                 return redirect(route('show', ['folder' => $folder, 'emails' => $emails]));
             }
         }  // Else, show the mails list
-        if(!session('post_phase')){
+        if(!session('pre_phase_done')){
             //PRE-CLASSIFICATION
             if (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) < self::MAILS_NUMBER) {
                 if (session()->has('startStudy')) {
@@ -136,6 +130,7 @@ class MailController extends Controller
                     return view('email_page', ['folder' => $folder, 'emails' => $emails]);
                 }
             } else {  // If all emails have been seen by the participant, show them the training
+                    session(['pre_phase_done' => true]);
                     return redirect(route('training'));
             }
         } else {
@@ -149,8 +144,8 @@ class MailController extends Controller
                 }
             } else {
                 //Training Reaction Questionnaire
-                session(['questionnaire4_view' => true]);
-                return redirect(route('questionnaire4'));
+                session(['post_phase_done' => true]);
+                return redirect()->route('questionnaire', ['step' => 4]);
             }
         }
     }
@@ -284,26 +279,6 @@ class MailController extends Controller
         ->toDateTimeString();
     }
 
-
-    /*
-        public function warning_browser(Request $request)
-        {
-            $decodedurl = urldecode($request->input('url'));
-            $backurl = urldecode($request->input('backurl'));
-            $parsedurl = parse_url($decodedurl);
-            $hostname = $parsedurl['host'];
-            $log = new ActivityLogs;
-            $log->user_id = Auth::id();
-            $log->url = $request->url();
-            $log->warning_type = "browser_native";
-            $log->user_action = "Warning mostrato";
-            $log->email_id = $request->input('email_id');
-            $log->save();
-            return view('chrome_warning', ['url' => $decodedurl, 'hostname' => $hostname, 'backurl' => $backurl, 'email_id' => $request->input('email_id')]);
-        }
-    */
-
-
     /**
      * Subdivide emails into pre and post-test groups based on phishing, counterpart, and difficulty level.
      *
@@ -408,7 +383,7 @@ class MailController extends Controller
         }
 
         //ASSIGN A GROUP OF EMAILS
-        if(!session('post_phase')){
+        if(!session('pre_phase_done')){
             //PRE-CLASSIFICATION
             $emails = collect($pre_test_emails)->flatten(3);
             MailController::seededShuffle($emails, $seed);

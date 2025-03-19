@@ -57,7 +57,7 @@ class BFI2XSController extends Controller
             return back()->with('error', 'Already answered');
         }
         session(['questionnaire_1done' => true]);
-        return redirect()->route('questionnaire2')->with('success', 'Questionnaire 1 completed successfully!');
+        return redirect()->route('questionnaire', ['step' => 2])->with('success', 'Questionnaire 1 completed successfully!');
     }
 
     public function calculateScales($id)

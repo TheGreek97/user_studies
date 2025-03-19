@@ -129,14 +129,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            // Set isDisabled to true for 3 seconds for this question
+            // Set isDisabled to true for 2 seconds for this question
             isDisabled = true;
             timerStartedForQuestion = questionId;
 
             setTimeout(() => {
                 isDisabled = false;
                 timerStartedForQuestion = null;
-            }, 3000); //TIMER 3 SECONDS
+            }, 2000); //TIMER 2 SECONDS
         });
     });
 });
