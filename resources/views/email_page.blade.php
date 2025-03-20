@@ -112,7 +112,7 @@ $show_details = Auth::user()->show_details;
             </script>
         @endif
 
-        <div class="flex h-screen bg-gray-100 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
+        <div class="flex bg-gray-100 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }"  style="height: calc(100vh - 77px);">
             <!-- Desktop sidebar -->
             <aside class="z-20 hidden w-56 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
                 <div class="py-4 text-gray-500 dark:text-gray-400">
@@ -349,7 +349,7 @@ $show_details = Auth::user()->show_details;
                     </div>
                 </header>
 
-                <main class="overflow-y-auto" style="height:85%;">
+                <main class="overflow-y-auto" style="height:100%;">
                     <div class="px-0 md:px-6 mx-5 md:mx-auto grid mb-10">
                         @if (!isset($selected_email))
                             <h2
@@ -761,26 +761,26 @@ $show_details = Auth::user()->show_details;
             <!-- End active warning modal -->
         </div>
 
-        <div style="position: sticky; top: 0; left: 0; z-index: 99;"
-        class="p-6 shadow-lg bg-gray-700 text-white">
-            <x-modal name="error-modal" id="errorModal" title="Compile all the questions!" :show="false">
-                <div class="p-4 rounded-lg relative text-center">
-                    <p class="text-2xl font-semibold text-red-700 pb-8">Evaluate the email !</p>
-                    <p id="modalMessage" class="text-lg text-gray-800 pb-8"></p>
-                    <x-primary-button x-on:click="$dispatch('close')">Close</x-primary-button>
-                </div>
-            </x-modal>
+        <div style="position: sticky; top: 0; left: 0; z-index: 99; height: 5px;"
+        class="shadow-lg bg-gray-700 text-white">
+        <x-modal name="error-modal" id="errorModal" title="Compile all the questions!" :show="false">
+            <div class="p-4 rounded-lg relative text-center">
+                <p class="text-2xl font-semibold text-red-700 pb-8">Evaluate the email !</p>
+                <p id="modalMessage" class="text-lg text-gray-800 pb-8"></p>
+                <x-primary-button x-on:click="$dispatch('close')">Close</x-primary-button>
+            </div>
+        </x-modal>
 
-            <x-modal name="to-fast-modal" id="to-fast-modal" title="Compile all the questions slowly!" :show="false"
-                x-data="{ show: false }" x-show="show" @open-modal.window="show = true">
-                <div class="p-4 rounded-lg relative text-center">
-                    <p class="text-2xl font-semibold text-red-700 pb-8">You're going too fast!</p>
-                    <p class="text-lg text-gray-800 pb-8">
-                        Please slow down and carefully observe the email before answering. <br>
-                    </p>
-                    <x-primary-button x-on:click="$dispatch('close')">Close</x-primary-button>
-                </div>
-            </x-modal>
+        <x-modal name="to-fast-modal" id="to-fast-modal" title="Compile all the questions slowly!" :show="false"
+            x-data="{ show: false }" x-show="show" @open-modal.window="show = true">
+            <div class="p-4 rounded-lg relative text-center">
+                <p class="text-2xl font-semibold text-red-700 pb-8">You're going too fast!</p>
+                <p class="text-lg text-gray-800 pb-8">
+                    Please slow down and carefully observe the email before answering. <br>
+                </p>
+                <x-primary-button x-on:click="$dispatch('close')">Close</x-primary-button>
+            </div>
+        </x-modal>
         </div>
         <script>
             @if (isset($selected_email))

@@ -135,7 +135,7 @@ class MailController extends Controller
             }
         } else {
             //POST-CLASSIFICATION    (double the count of answers for user)
-            if (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) < (self::MAILS_NUMBER * 2)) {
+            if (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) <  (22)) {
                 if (session()->has('startStudy')) {
                     session()->remove('startStudy');
                     return view('email_page', ['folder' => $folder, 'emails' => $emails, 'startStudy' => true]);
