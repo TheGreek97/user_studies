@@ -63,7 +63,7 @@ class QuestionnairesController extends Controller
                 'time_spent' => 'required|numeric|min:1' 
             ]);
 
-            $phase = session('post_phase') ? 'post' : 'pre';
+            $phase = session('pre_phase_done') ? 'post' : 'pre';
 
             $dataToInsert = [
                 'email_id'   => $validatedData['emailId'],
