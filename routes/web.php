@@ -7,6 +7,7 @@ use App\Http\Controllers\Questionnaire;
 use App\Http\Controllers\QuestionnairesController;
 use App\Http\Controllers\StPIIBController;
 use App\Http\Controllers\TEIQueSFController;
+use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\TrainingReactionController;
 use App\Http\Middleware\RedirectIfStudyCompleted;
 use App\Http\Middleware\StudyAuth;
@@ -99,7 +100,7 @@ Route::middleware([
         if (Auth::check() && Auth::user()->study_completed === null) {
             return redirect()->route('show', ['folder' => 'inbox']);
         }
-    
+
         // Redirect based on session flag
         if (session()->has('study_already_taken')) {
             return view('sorry_page');
@@ -112,18 +113,13 @@ Route::middleware([
         return view('debriefing');
     })->name('debriefing');
 
-    Route::get('/training', function() {
-        if (!session()->has('pre_phase_done') || session()->has('training_done')) {
-            return redirect()->route('show', ['folder' => 'inbox']);
-        } 
-        return view('training');
-    })->name('training');
+    Route::get('/training', [TrainingController::class, 'showTraining'])->name('training');
 
     Route::get('/set-post-phase', function () {
         session(['training_done' => true]);
         session(['startStudy' => '1']); //show again the popup message for the post classification
         return redirect()->route('show', ['folder' => 'inbox']);
-    })->name('setPostPhase');   
+    })->name('setPostPhase');
 
     Route::get('/end', [Questionnaire::class, 'showFollowUp'])->name('post_test');
 
