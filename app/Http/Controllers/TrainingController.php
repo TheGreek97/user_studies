@@ -62,6 +62,7 @@ class TrainingController extends Controller
         return view('training', ['generatedHtml' => $finalHtml]);
     }
 
+
     private function getSectionPrompts($personalization, $length)
     {
         $user = Auth::user();
@@ -184,8 +185,20 @@ class TrainingController extends Controller
     }
 
 
-    private function getPersonalizationGuidelines($personality_traits, $max_guidelines = 5){
+    private function getPersonalizationGuidelines($main_personality_traits, $max_guidelines = 3){
         $guidelines = config('guidelines'); // Include the guidelines array
+        $counter = 1;
+        // remove traits with no guidelines
+        unset($main_personality_traits['Total Trait Emotional Intelligence']);
+        unset($main_personality_traits['Lack of self-control']);
+        foreach ($main_personality_traits as $trait) {
+            if ($counter > $max_guidelines)
+                break;
+            dd($trait);
+            // Take the trait name and polarity
 
+            // Construct the prompt fragment with the Language, Training Content, and Scenario
+            $counter++;
+        }
     }
 }
