@@ -174,86 +174,86 @@ $guidelines = [
     ],
     "Sensation seeking" => [
         "Communication Style" => [
-            "High" => "",
-            "Low" => ""
+            "High" => "Dynamic and engaging, positioning security as an evolving challenge.",
+            "Low" => "Emphasize stability and predictability in security practices."
         ],
         "Learning Content" => [
-            "High" => "",
-            "Low" => ""
+            "High" => "Teach how novelty-seeking behavior can be exploited by enticing phishing tactics. Emphasize how phishers exploit curiosity and the desire for  novel experiences of the user.",
+            "Low" => "Reinforce habitual security behaviors while ensuring adaptability to new threats."
         ],
         "Phishing Scenario" => [
-            "High" => "",
-            "Low" => ""
+            "High" => "Phishing lures featuring exciting investment opportunities, unexpected prizes, or unusual requests.",
+            "Low" => "Phishing attempt with minor deviations from routine communications, testing their ability to notice subtle changes."
         ]
     ],
     "Risk tolerance" => [
         "Communication Style" => [
-            "High" => "",
-            "Low" => ""
+            "High" => "Present security as a rational risk-reward balance, using data-driven messaging.",
+            "Low" => "Reassuring and clear, emphasizing security as a way to maintain control."
         ],
         "Learning Content" => [
-            "High" => "",
-            "Low" => ""
+            "High" => "Show how phishing manipulates risk-taking tendencies by masking potential downsides.",
+            "Low" => "Expand decision frameworks while ensuring efficiency in urgent situations."
         ],
         "Phishing Scenario" => [
-            "High" => "",
-            "Low" => ""
+            "High" => "Phishing emails creating artificial urgency, with forced delays to simulate a pause-before-action habit.",
+            "Low" => "Time-sensitive phishing simulations requiring quick but structured decision-making."
         ]
     ],
     "Lack of premeditation" => [
         "Communication Style" => [
-            "High" => "",
-            "Low" => ""
+            "High" => "Direct and action-oriented, promoting quick but thoughtful verification.",
+            "Low" => "Comprehensive and detailed, reinforcing deliberate security analysis."
         ],
         "Learning Content" => [
-            "High" => "",
-            "Low" => ""
+            "High" => "Teach automatic verification habits to interrupt impulsive responses.",
+            "Low" => "Expand decision frameworks while ensuring efficiency in urgent situations."
         ],
         "Phishing Scenario" => [
-            "High" => "",
-            "Low" => ""
+            "High" => "Phishing emails creating artificial urgency, with forced delays to simulate a pause-before-action habit.",
+            "Low" => "Time-sensitive phishing simulations requiring quick but structured decision-making."
         ]
     ],
     "Lack of self-control" => [
         "Communication Style" => [
-            "High" => "",
-            "Low" => ""
+            "High" => "Supportive and structured, breaking security behaviors into manageable steps.",
+            "Low" => "Measured and comprehensive, reinforcing vigilance over time."
         ],
         "Learning Content" => [
-            "High" => "",
-            "Low" => ""
+            "High" => "Focus on environmental safeguards and external security structures.",
+            "Low" => "Teach advanced threat analysis while preventing security fatigue."
         ],
         "Phishing Scenario" => [
-            "High" => "",
-            "Low" => ""
+            "High" => "Simulations including mandatory verification steps before proceeding with actions.",
+            "Low" => "Long-term phishing simulations testing vigilance across multiple interactions."
         ]
     ],
     "Need for cognition" => [
         "Communication Style" => [
-            "High" => "",
-            "Low" => ""
+            "High" => "Intellectually stimulating, incorporating complex security theories with a detailed and analytical communication.",
+            "Low" => "Straightforward and practical, avoiding unnecessary complexity."
         ],
         "Learning Content" => [
-            "High" => "",
-            "Low" => ""
+            "High" => "Provide in-depth analysis of phishing tactics and persuasion techniques, highlighting advanced defense strategies that require careful analysis and attention to detail. Content should challenge the user's analytical abilities while providing frameworks for systematic evaluation of emails.",
+            "Low" => "Emphasize simple and quick-to-apply heuristics to recognize phishing indicators with step-by-step response procedures. Reinforce basic detection strategies."
         ],
         "Phishing Scenario" => [
-            "High" => "",
-            "Low" => ""
+            "High" => "Include sophisticated and technically convincing spoofed emails with subtle inconsistencies that require analytical thinking to identify.",
+            "Low" => "Include simple phishing detection indicators that can be identified through application of simple rules rather than complex analysis."
         ]
     ],
     "Need for consistency" => [
         "Communication Style" => [
-            "High" => "",
-            "Low" => ""
+            "High" => "Frame security vigilance as aligned with their existing values and commitments.",
+            "Low" => "Encourage adaptability and situational security awareness."
         ],
         "Learning Content" => [
-            "High" => "",
-            "Low" => ""
+            "High" => "Explain how phishing exploits consistency biases through incremental requests.",
+            "Low" => "Teach both consistent best practices and the need for flexible responses to emerging threats."
         ],
         "Phishing Scenario" => [
-            "High" => "",
-            "Low" => ""
+            "High" => "Phishing examples using previous commitments (e.g., follow-up emails referencing past interactions).",
+            "Low" => "Phishing exercises requiring adaptability, testing their ability to detect non-standard attacks."
         ]
     ],
 ];
