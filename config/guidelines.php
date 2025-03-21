@@ -4,50 +4,50 @@ $guidelines = [
     // Big 5
     "Open mindedness" => [
         "Communication Style" => [
-            "High" => "Use rational, analytical, and exploratory language, stimulating the user's intellectual curiosity.",
-            "Low" => "Use straightforward, practical, and concrete language with clear guidelines."
+            "High" => "Rational, analytical, and exploratory language, stimulating the user's intellectual curiosity.",
+            "Low" => "Straightforward, practical, and concrete language with clear guidelines."
         ],
         "Learning Content" => [
             "High" => "Cover the psychological principles exploited by attackers, technical indicators of phishing, and sophisticated defense strategies.",
             "Low" => "Focus on fundamental phishing techniques and defense strategies, clear rules, and step-by-step procedures to identify phishing emails."
         ],
         "Phishing Scenario" => [
-            "High" => "Use sophisticated attacks with subtle deception, requiring deep analysis.",
-            "Low" => "Use common phishing attempts with clear and established red flags."
+            "High" => "Use a sophisticated attack with subtle deception, requiring deep analysis.",
+            "Low" => "Use a common phishing attempt with clear and established red flags."
         ]
     ],
     "Conscientiousness" => [
         "Communication Style" => [
             "High" => "Provide structured, sequential, systematic information with clear protocols and checklists based on best practices. Appeal to the user's sense of responsibility by emphasizing the importance of security.",
-            "Low" => "Use an engaging and dynamic communication format."
+            "Low" => "Engaging and dynamic, with concise guidance. Emphasize immediate, tangible consequences of phishing such as financial loss or account compromise, rather than long-term security benefits."
         ],
         "Learning Content" => [
             "High" => "Include thorough email verification steps and reporting protocols. Also emphasize the consequences of security breaches to reinforce the user's commitment to protective behaviors.",
-            "Low" => "Focus on quick, easy-to-apply detection methods and bite-sized modules. Provide a simplified decision framework."
+            "Low" => "Focus on quick, easy-to-apply detection methods and bite-sized paragraphs. Provide a simplified decision framework."
         ],
         "Phishing Scenario" => [
-            "High" => "Use subtle details requiring methodical examination (e.g., minor URL deviations).",
-            "Low" => "Highlight immediate consequences, using clear red flags and simple indicators."
+            "High" => "Use an attack with subtle details requiring methodical examination (e.g., minor URL deviations).",
+            "Low" => "Use an attack with clear red flags and simple indicators."
         ]
     ],
     "Extraversion" => [
         "Communication Style" => [
-            "High" => "Utilize a lively and conversational style to leverage the user's social nature.",
-            "Low" => "Use a measured and reflective communication style."
+            "High" => "Lively and conversational, to leverage the user's social nature.",
+            "Low" => "Measured and reflective communication style."
         ],
         "Learning Content" => [
             "High" => "Address social engineering tactics, social proof, and manipulation strategies.",
-            "Low" => "Focus on technical phishing detection (e.g., email headers, digital signatures)."
+            "Low" => "Focus on technical phishing detection (e.g., email headers, domain spoofing)."
         ],
         "Phishing Scenario" => [
-            "High" => "Show phishing through impersonation, urgency, and authority-based deception.",
+            "High" => "Use a phishing example that uses impersonation, urgency, and authority-based deception.",
             "Low" => "Use technically sophisticated deception (e.g., spoofed domains, disguised attachments)."
         ]
     ],
     "Agreeableness" => [
         "Communication Style" => [
             "High" => "Empathetic but direct about the manipulative nature of phishing attacks. Emphasize security as a way to protect others.",
-            "Low" => "Use direct, technical and analytical communication that reinforces the user's natural skepticism."
+            "Low" => "Direct, technical and analytical communication that reinforces the user's natural skepticism."
         ],
         "Learning Content" => [
             "High" => "Explain how attackers exploit trust, emphasizing verification processes.",
@@ -60,22 +60,22 @@ $guidelines = [
     ],
     "Negative emotionality" => [
         "Communication Style" => [
-            "High" => "Use reassuring and supportive messaging focused on empowerment rather than fear and alarmist language, which may induce anxiety.",
+            "High" => "Reassuring and supportive messaging focused on empowerment rather than fear and alarmist language, which may induce anxiety.",
             "Low" => "Straightforward and matter-of-fact, providing comprehensive insights into risks and realistic consequence."
         ],
         "Learning Content" => [
-            "High" => "Provide clear and confidence-building steps. Emphasize that even security experts occasionally encounter convincing phishing attempts, normalizing the experience of uncertainty and providing protocols for  addressing doubts.",
-            "Low" => "Provide in-depth information, challenging scenarios, and advanced response training."
+            "High" => "Provide clear and confidence-building steps. Emphasize that even security experts occasionally encounter convincing phishing attempts, normalizing the experience of uncertainty and providing protocols for addressing doubts.",
+            "Low" => "Provide in-depth information and advanced response training."
         ],
         "Phishing Scenario" => [
-            "High" => "Start with a simple phishing attempt. Focus on developing resilience and systematic response patterns that reduce emotional reactivity.",
-            "Low" => "Use high-pressure situations (e.g., time-sensitive threats) requiring composure."
+            "High" => "Use a simple phishing attempt. In the scenario presentation, focus on developing resilience and systematic response patterns that reduce emotional reactivity.",
+            "Low" => "Use a challenging scenario that exerts high-pressure (e.g., time-sensitive threats), requiring composure."
         ]
     ],
     // Trait Emotional Intelligence
     "Well-being" => [
         "Communication Style" => [
-            "High" => "Use confident, optimistic language that reinforces their positive outlook while encouraging cautious verification. Avoid fear-based messaging.",
+            "High" => "Confident and optimistic language that reinforces the user's positive outlook while encouraging cautious verification. Avoid fear-based messaging.",
             "Low" => "Supportive and non-judgmental, focusing on building confidence without increasing anxiety."
         ],
         "Learning Content" => [
@@ -83,13 +83,13 @@ $guidelines = [
             "Low" => "Show how attackers exploit fear and insecurity while providing clear, actionable detection strategies."
         ],
         "Phishing Scenario" => [
-            "High" => "Use examples of prize notifications, unexpected rewards, or flattery-based phishing.",
-            "Low" => "Use real-world cases of fear-based phishing, such as urgent warnings or account suspension threats."
+            "High" => "Use an example of prize notifications, unexpected rewards, or flattery-based phishing.",
+            "Low" => "Use a real-world case of fear-based phishing, such as urgent warnings or account suspension threats."
         ]
     ],
     "Sociability" => [
         "Communication Style" => [
-            "High" => "Conversational and engaging, leveraging their social skills while teaching skepticism in digital interactions.",
+            "High" => "Conversational and engaging, leveraging the user's social skills while teaching skepticism in digital interactions.",
             "Low" => "Clear, direct, and factual, minimizing reliance on social judgment."
         ],
         "Learning Content" => [
@@ -97,13 +97,13 @@ $guidelines = [
             "Low" => "Provide explicit, structured guidelines for detecting phishing without relying on social intuition."
         ],
         "Phishing Scenario" => [
-            "High" => "Demonstrate phishing via fake colleague requests, social media impersonation, or urgent team collaboration messages.",
-            "Low" => "Use examples emphasizing technical phishing indicators rather than social deception."
+            "High" => "Use a phishing email such as fake colleague requests, social media impersonation, or urgent team collaboration messages.",
+            "Low" => "Use an example that employs technical phishing indicators rather than social deception."
         ]
     ],
     "Emotionality" => [
         "Communication Style" => [
-            "High" => "Acknowledge emotional responses while guiding them toward verification rather than reaction.",
+            "High" => "Acknowledge emotional responses while guiding the user's toward verification rather than reaction.",
             "Low" => "Straightforward and fact-based, focusing on observable phishing markers rather than emotional nuance."
         ],
         "Learning Content" => [
@@ -112,64 +112,64 @@ $guidelines = [
         ],
         "Phishing Scenario" => [
             "High" => "Demonstrate how phishing emails exploit empathy, e.g., fake messages from distressed friends or fraudulent charities.",
-            "Low" => "Use explicit, rule-based examples of urgent requests that demand logical verification rather than emotional response."
+            "Low" => "Use an explicit, rule-based example of urgent requests that demand logical verification rather than emotional response."
         ]
     ],
     "Self-control" => [
         "Communication Style" => [
-            "High" => "Respect the user's methodical approach, introducing more advanced security techniques.",
+            "High" => "Use logical, structured messaging that reinforces the user's disciplined approach. Avoid alarmist tones and focus on practical, methodical security habits.",
             "Low" => "Dynamic and engaging, using short, digestible content to maintain attention."
         ],
         "Learning Content" => [
-            "High" => "Focus on complex phishing tactics requiring deep analysis, emphasizing long-term vigilance.",
-            "Low" => "Emphasize resisting urgency tactics, using simple decision frameworks for quick but effective security responses."
+            "High" => "Focus on advanced phishing tactics requiring deep analysis and systematic verification processes. Reinforce the user's tendency to think before acting.",
+            "Low" => "Emphasize resisting urgency tactics, using simple decision frameworks for quick but effective security responses that can constitute a good habit."
         ],
         "Phishing Scenario" => [
-            "High" => "Use advanced phishing cases that bypass standard verification steps, requiring nuanced decision-making.",
-            "Low" => "Use phishing examples with artificial time pressure, teaching pause-and-verify techniques."
+            "High" => "Use a scenario that tests the user's ability to remain cautious under complex, high-pressure situations (e.g., urgent financial requests, time-sensitive attacks).",
+            "Low" => "Use a phishing example with artificial time pressure and emotional manipulation, to teach pause-and-verify techniques that can mitigate the user's impulses."
         ]
     ],
     // Susceptibility to persuasion
     "Attitudes toward advertising" => [
         "Communication Style" => [
-            "High" => "Positive and engaging, reinforcing their openness while introducing skepticism.",
-            "Low" => "Acknowledge their skepticism while expanding awareness of non-advertising phishing threats."
+            "High" => "Positive and engaging, reinforcing the user's openness while introducing skepticism.",
+            "Low" => "Acknowledge the user's skepticism while expanding awareness of non-advertising phishing threats."
         ],
         "Learning Content" => [
             "High" => "Highlight key differences between legitimate marketing and phishing, with side-by-side comparisons.",
             "Low" => "Emphasize phishing attempts disguised as service notifications, security alerts, and invoices."
         ],
         "Phishing Scenario" => [
-            "High" => "Simulated phishing attempts mimicking promotional emails, with subtle inconsistencies in branding or sender details.",
-            "Low" => "Scenarios featuring phishing disguised as account warnings or IT security updates."
+            "High" => "Use an attempt that mimics promotional emails, with subtle inconsistencies in branding or sender details.",
+            "Low" => "Use a scenario featuring phishing disguised as account warnings or IT security updates."
         ]
     ],
     "Social influence" => [
         "Communication Style" => [
-            "High" => "Adopt a clear, authoritative tone that emphasizes social norms around security behaviors. ",
-            "Low" => "Direct, individual-focused, emphasizing personal security over social responsibility."
+            "High" => "Clear and authoritative tone that emphasizes social norms around security behaviors. ",
+            "Low" => "Direct and individual-focused, emphasizing personal security over social responsibility."
         ],
         "Learning Content" => [
             "High" => "Focus on social engineering techniques that exploit social validation (authority exploitation, social proof, urgency, fabricated consequences).",
-            "Low" => "Highlight phishing tactics that rely on technical exploits rather than social manipulation."
+            "Low" => "Highlight phishing tactics that rely on technical exploits rather than social manipulation and how to spot them (e.g., URL structure). Also emphasize independent verification techniques rather than relying on organizational norms or social cues."
         ],
         "Phishing Scenario" => [
-            "High" => "Phishing email  that appear to come from executives requesting urgent action, messages that suggest \"everyone else\" has already complied with a request, or communications that leverage shared interests to establish rapport before making requests.",
-            "Low" => "Spear-phishing attempts targeting personal credentials without social engineering tactics."
+            "High" => "Use an example that appears to come from executives requesting urgent action, a message that suggest \"everyone else\" has already complied with a request, or a communication that leverage shared interests to establish rapport before making requests.",
+            "Low" => "Use highly technical deception techniques rather than socially engineered attacks."
         ]
     ],
     "Need for uniqueness" => [
         "Communication Style" => [
-            "High" => "Emphasize security as a way to protect the user's unique digital identity.",
-            "Low" => "Present standardized security procedures as reliable and essential."
+            "High" => "Use messages that emphasize individual autonomy and independent thinking. Use a personalized tone rather than generic security advice.",
+            "Low" => "Use community-driven messaging, reinforcing \"security is a team effort\" and collective reinforcement such as \"Most employees who avoid phishing do this...\". Highlight how following established cybersecurity norms and best practices protects everyone."
         ],
         "Learning Content" => [
-            "High" => "Highlight phishing tactics offering “exclusive” deals or personalized opportunities",
-            "Low" => "Reinforce routine security practices while addressing personalized phishing attacks."
+            "High" => "Highlight phishing tactics offering “exclusive” deals or personalized opportunities. Briefly cover advance phishing tactics such as spear-phishing.",
+            "Low" => "Reinforce routine security practices and standard phishing detection techniques that have worked for the majority."
         ],
         "Phishing Scenario" => [
-            "High" => "Phishing emails targeting individuals with “special access” or \"VIP\" opportunities.",
-            "Low" => "Phishing disguised as standard company-wide notifications, reinforcing structured security habits."
+            "High" => "Use a scenario that mimics exclusive or VIP-targeted phishing attempts (e.g., fake invitations to elite groups, offers for secret investment opportunities).",
+            "Low" => "Use an attack that exploits the tendency to follow authority and peer behavior."
         ]
     ],
     "Sensation seeking" => [
@@ -178,42 +178,43 @@ $guidelines = [
             "Low" => "Emphasize stability and predictability in security practices."
         ],
         "Learning Content" => [
-            "High" => "Teach how novelty-seeking behavior can be exploited by enticing phishing tactics. Emphasize how phishers exploit curiosity and the desire for  novel experiences of the user.",
+            "High" => "Teach how novelty-seeking behavior can be exploited by enticing phishing tactics. Emphasize how phishers exploit the user's curiosity and desire for novel experiences.",
             "Low" => "Reinforce habitual security behaviors while ensuring adaptability to new threats."
         ],
         "Phishing Scenario" => [
-            "High" => "Phishing lures featuring exciting investment opportunities, unexpected prizes, or unusual requests.",
-            "Low" => "Phishing attempt with minor deviations from routine communications, testing their ability to notice subtle changes."
+            "High" => "Use a phishing attack featuring exciting investment opportunities, unexpected prizes, or unusual requests.",
+            "Low" => "Use a phishing attempt with minor deviations from routine communications, testing the user's ability to notice subtle changes."
         ]
     ],
     "Risk tolerance" => [
         "Communication Style" => [
-            "High" => "Present security as a rational risk-reward balance, using data-driven messaging.",
+            "High" => "Cautionary yet engaging messaging style, to counteract the user's overconfidence. Emphasize real-world consequences of phishing.",
             "Low" => "Reassuring and clear, emphasizing security as a way to maintain control."
         ],
         "Learning Content" => [
-            "High" => "Show how phishing manipulates risk-taking tendencies by masking potential downsides.",
-            "Low" => "Expand decision frameworks while ensuring efficiency in urgent situations."
+            "High" => "Show how phishing manipulates risk-taking tendencies and overconfidence by masking potential downsides. Highlight how even experienced users can be deceived.",
+            "Low" => "Provide structured, systematic phishing detection methods to reduce uncertainty."
         ],
         "Phishing Scenario" => [
-            "High" => "Phishing emails creating artificial urgency, with forced delays to simulate a pause-before-action habit.",
-            "Low" => "Time-sensitive phishing simulations requiring quick but structured decision-making."
+            "High" => "Use a phishing email that appeal to urgency and confidence.",
+            "Low" => "Use a phishing simulation mimicking common workplace emails, reinforcing verification steps."
         ]
     ],
     "Lack of premeditation" => [
         "Communication Style" => [
-            "High" => "Direct and action-oriented, promoting quick but thoughtful verification.",
+            "High" => "Concise, direct and action-oriented, promoting quick but thoughtful verification and highlighting immediate consequences.",
             "Low" => "Comprehensive and detailed, reinforcing deliberate security analysis."
         ],
         "Learning Content" => [
-            "High" => "Teach automatic verification habits to interrupt impulsive responses.",
-            "Low" => "Expand decision frameworks while ensuring efficiency in urgent situations."
+            "High" => "Teach rapid, automatic verification habits to interrupt impulsive responses. Highlight that impulsive clicks on links may lead to immediate security breaches.",
+            "Low" => "Teach step-by-step decision frameworks to reinforce the user's natural carefulness."
         ],
         "Phishing Scenario" => [
-            "High" => "Phishing emails creating artificial urgency, with forced delays to simulate a pause-before-action habit.",
-            "Low" => "Time-sensitive phishing simulations requiring quick but structured decision-making."
+            "High" => "Use a time-pressure simulation to show how urgency leads to mistakes.",
+            "Low" => "Use a phishing simulation that requires careful scrutiny and structured decision-making."
         ]
     ],
+    /* Would be redundant to "Self-control"
     "Lack of self-control" => [
         "Communication Style" => [
             "High" => "Supportive and structured, breaking security behaviors into manageable steps.",
@@ -227,10 +228,10 @@ $guidelines = [
             "High" => "Simulations including mandatory verification steps before proceeding with actions.",
             "Low" => "Long-term phishing simulations testing vigilance across multiple interactions."
         ]
-    ],
+    ],*/
     "Need for cognition" => [
         "Communication Style" => [
-            "High" => "Intellectually stimulating, incorporating complex security theories with a detailed and analytical communication.",
+            "High" => "Intellectually stimulating, incorporating more complex facts with a detailed and analytical communication.",
             "Low" => "Straightforward and practical, avoiding unnecessary complexity."
         ],
         "Learning Content" => [
@@ -238,22 +239,22 @@ $guidelines = [
             "Low" => "Emphasize simple and quick-to-apply heuristics to recognize phishing indicators with step-by-step response procedures. Reinforce basic detection strategies."
         ],
         "Phishing Scenario" => [
-            "High" => "Include sophisticated and technically convincing spoofed emails with subtle inconsistencies that require analytical thinking to identify.",
-            "Low" => "Include simple phishing detection indicators that can be identified through application of simple rules rather than complex analysis."
+            "High" => "Use a sophisticated and technically convincing spoofed email with subtle inconsistencies that require analytical thinking to identify.",
+            "Low" => "Use simple phishing detection indicators that can be identified through application of simple rules rather than complex analysis."
         ]
     ],
     "Need for consistency" => [
         "Communication Style" => [
-            "High" => "Frame security vigilance as aligned with their existing values and commitments.",
-            "Low" => "Encourage adaptability and situational security awareness."
+            "High" => "Emphasize the importance of consistency and adherence to policies in cybersecurity practices.",
+            "Low" => "Flexible, adaptive communication that allows room for creative problem-solving. Encourage critical thinking rather than strict rule-following."
         ],
         "Learning Content" => [
-            "High" => "Explain how phishing exploits consistency biases through incremental requests.",
-            "Low" => "Teach both consistent best practices and the need for flexible responses to emerging threats."
+            "High" => "Focus on standardized security protocols, step-by-step phishing detection checklists, and well-defined reporting structures. Highlight long-term security habits and repeat concepts.",
+            "Low" => "Focus on adaptable phishing detection strategies rather than rigid step-by-step rules. Encourage the user to stay informed and adjust their security behaviors as attackers come up with emerging phishing threats over time."
         ],
         "Phishing Scenario" => [
-            "High" => "Phishing examples using previous commitments (e.g., follow-up emails referencing past interactions).",
-            "Low" => "Phishing exercises requiring adaptability, testing their ability to detect non-standard attacks."
+            "High" => "Use predictable phishing simulations based on common tactics.",
+            "Low" => "Use an unpredictable phishing attempt that deviates from common patterns and requires flexible thinking to detect. Test the user's situational awareness and adaptability by also presenting an evolution of the phishing attack"
         ]
     ],
 ];
