@@ -63,6 +63,16 @@ class QuestionnairesController extends Controller
                 'time_spent' => 'required|numeric|min:1' 
             ]);
 
+            // Check if the email has already been saved for the current user
+            $existingEntry = UserEmailQuestionnaire::where('email_id', $validatedData['emailId'])
+                ->where('user_id', Auth::id())
+                ->first();
+
+            if ($existingEntry) {
+                // Optionally, add a flash message or similar to notify the user
+                return redirect(route('show', ['folder' => 'inbox']));
+            }
+
             $phase = session('pre_phase_done') ? 'post' : 'pre';
 
             $dataToInsert = [
