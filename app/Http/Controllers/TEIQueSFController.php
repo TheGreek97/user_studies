@@ -93,7 +93,7 @@ class TEIQueSFController extends Controller
         $scales = [
             'tei_total_tei' => array_sum($responses) / count($responses),
             'tei_well_being' => ($responses[5] + $responses[20] + $responses[9] + $responses[24] + $responses[12] + $responses[27]) / 6,
-            'tei_self_controll' => ($responses[4] + $responses[19] + $responses[7] + $responses[22] + $responses[15] + $responses[30]) / 6,
+            'tei_self_control' => ($responses[4] + $responses[19] + $responses[7] + $responses[22] + $responses[15] + $responses[30]) / 6,
             'tei_emotionality' => ($responses[1] + $responses[16] + $responses[2] + $responses[17] + $responses[8] + $responses[23] + $responses[13] + $responses[28]) / 8,
             'tei_sociability' => ($responses[6] + $responses[21] + $responses[10] + $responses[25] + $responses[11] + $responses[26]) / 6,
         ];
