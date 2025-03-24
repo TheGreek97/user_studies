@@ -23,49 +23,89 @@ class TrainingController extends Controller
         // OpenAI API Key
         $apiKey = env('OPENAI_API_KEY');
         $model = 'o3-mini';
-        $maxTokens = 500;  //TODO tweak
+        $reasoning_effort = 'medium';
+        $temperature = 0.00001;
 
         // Get prompts based on the user's conditions
         $personalization_condition = Auth::user()->training_personalization;
         $length_condition = Auth::user()->length_condition;
-        $prompts = $this->getSectionPrompts($personalization_condition, $length_condition);
+        $developer_prompt = $this->getDeveloperPrompt($personalization_condition, $length_condition);
+        $section_prompts = $this->getSectionPrompts($personalization_condition, $length_condition);
 
-        $context = []; // To store message history
+        $context = [['role' => 'developer', 'content' => $developer_prompt]];  // To store message history
         $generatedSections = [];
 
         // Sequential API calls
-        foreach ($prompts as $prompt) {
+        foreach ($section_prompts as $section => $prompt) {
             $response = Http::withHeaders([
                 'Authorization' => "Bearer $apiKey",
-                'Content-Type'  => 'application/json',
+                'Content-Type' => 'application/json',
             ])->post('https://api.openai.com/v1/chat/completions', [
                 'model'    => $model,
+                'reasoning_effort' => $reasoning_effort,
                 'messages' => array_merge($context, [['role' => 'user', 'content' => $prompt]]),
-                'max_tokens' => $maxTokens,
-                'temperature' => 0.7,
+                'temperature' => $temperature,
             ]);
 
             $generatedText = $response->json()['choices'][0]['message']['content'] ?? '<p>Failed to generate content.</p>';
 
             // Append generated content to the list
-            $generatedSections[] = $generatedText;
+            $generatedSections[$section] = $generatedText;
 
             // Maintain context by adding assistant's response
             $context[] = ['role' => 'user', 'content' => $prompt];
             $context[] = ['role' => 'assistant', 'content' => $generatedText];
         }
 
-        // Combine all sections into a single HTML string
-        $finalHtml = implode("\n", $generatedSections);
-
         // Pass to the view
-        return view('training', ['generatedHtml' => $finalHtml]);
+        return view('training', ['sections' => $generatedSections]);
+    }
+
+
+    private function getDeveloperPrompt($personalization_condition, $length_condition)
+    {
+        $user_name = Auth::user()->first_name;
+        $personalized_string = $personalization_condition == "no" ? "" : "personalized";
+        $minutes = $length_condition == "short" ? "9" : "18";
+
+        $prompt = "
+        CONTEXT
+        You are asked to generate $personalized_string educational material for an anti‑phishing training module. This training module will last about $minutes minutes and will be split into 5 submodules. The training module will have the following structure:
+        - Introduction to the Phishing Problem
+        - Realistic Phishing Scenario Presentation
+        - Defense Strategies
+        - Interactive Exercises
+        - Conclusions
+
+
+        OUTPUT FORMAT
+        Each submodule will be embedded in a webpage, so it must be valid HTML and wrapped in a <div> tag.
+
+
+        CONTENT AND STYLE REQUIREMENTS
+        - The language must be accessible and simple to make the concepts understandable by users with no expertise in cybersecurity.
+        - The content should be clear, engaging, and educational, and the user must be addressed by their first name, which is $user_name.
+        - The content should provide the hard facts and clear guidance expected from an “expert” while also incorporating relatable narratives and examples that create a more personal connection.
+        - The content should flow logically, ensuring a smooth and engaging user experience.
+        ";
+        if ($personalization_condition !== "no"){
+            $personalization_prompt = Auth::user()->getUserProfilePrompt();
+            $prompt .= "
+            PERSONALIZATION REQUIREMENTS
+            $personalization_prompt
+            ";
+            /*if ($personalization_condition == "primed"){
+                $main_traits = $user->getUserMainTraits();
+                $priming_guidelines = $this->getPersonalizationGuidelines($main_traits);
+                $prompt .= "\n\nPERSONALIZATION REQUIREMENTS\n". $priming_guidelines;
+            } else if ($personalization == "yes"){*/
+        }
+        return $prompt;
     }
 
 
     private function getSectionPrompts($personalization, $length)
     {
-        $user = Auth::user();
         if ($length == "short") {
             $sections_times = ["intro" => 1, "scenario" => 2, "defense_strats" => 3, "exercises" => 2, "conclusions" => 1];
             $n_exercises = 2;
@@ -88,7 +128,7 @@ class TrainingController extends Controller
                        $prompt .= "
                         - Explain what the problem of phishing is and why it’s dangerous.
                         - Include a statement that presents some psychological vulnerabilities exploited by attackers.
-                        - Give an overview of what the whole training module will cover. ";
+                        - Give an overview of what the whole training module will cover.";
                     } else {
                         $prompt .= "
                         - Explain what the problem of phishing is and why it’s dangerous.
@@ -143,17 +183,10 @@ class TrainingController extends Controller
                         Conclusions ($s_time minutes, approx. $s_words words):
                         - Provide a quick recap of the importance of phishing awareness.
                         - Provide a quick recap of the practical actions that the user can do to defend themselves. Be sure to cover only those already explained in the previous sub-modules.
-                        - Thank the user for attending the training and conclude the session. ";
+                        - Thank the user for attending the training and conclude the session.";
                 break;
             }
-            if ($personalization == "primed"){
-                $main_traits = $user->getUserMainTraits();
-                $priming_guidelines = $this->getPersonalizationGuidelines($main_traits);
-                $prompt .= "\n\nPERSONALIZATION REQUIREMENTS\n". $priming_guidelines;
-            } else if ($personalization == "yes"){
-                $personalization_prompt = $user->getUserProfilePrompt();
-                $prompt .= "\n\nPERSONALIZATION REQUIREMENTS\n". $personalization_prompt;
-            }
+            // TODO: priming condition
             $prompts[$section] = $prompt;  // save the prompt
         }
         return $prompts;
@@ -188,6 +221,7 @@ class TrainingController extends Controller
     private function getPersonalizationGuidelines($main_personality_traits, $max_guidelines = 3){
         $guidelines = config('guidelines'); // Include the guidelines array
         $counter = 1;
+        $prompt= "";
         // remove traits with no guidelines
         unset($main_personality_traits['Total Trait Emotional Intelligence']);
         unset($main_personality_traits['Lack of self-control']);
@@ -200,5 +234,8 @@ class TrainingController extends Controller
             // Construct the prompt fragment with the Language, Training Content, and Scenario
             $counter++;
         }
+        return $prompt;
     }
 }
+
+
