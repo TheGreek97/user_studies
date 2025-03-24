@@ -115,6 +115,8 @@ Route::middleware([
 
     Route::get('/training', [TrainingController::class, 'showTraining'])->name('training');
 
+    Route::get('/expelled', [QuestionnairesController::class, 'expelUser'])->name('expelUser');
+
     Route::get('/set-post-phase', function () {
         session(['training_done' => true]);
         session(['startStudy' => '1']); //show again the popup message for the post classification

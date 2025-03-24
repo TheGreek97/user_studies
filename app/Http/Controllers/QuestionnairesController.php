@@ -11,9 +11,19 @@ use Illuminate\Support\Facades\Log;
 
 class QuestionnairesController extends Controller
 {
+    public function expelUser()
+    {
+        session(['expelled' => true]);
+        return view('expelled');
+    }
 
     public function showQuestionnaire($step)
     {
+        
+        if (session()->has('expelled')) {
+            return redirect(route('expelUser'));
+        }
+        
         $questionnaires = [
             1 => 'questionnaires.bfi2xs',
             2 => 'questionnaires.stp-ii-b',

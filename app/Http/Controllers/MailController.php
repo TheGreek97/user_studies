@@ -23,6 +23,10 @@ class MailController extends Controller
         //Log::info('Current route: ' . FRequest::url());
         //Log::info('Current session:', session()->all());
 
+        if (session()->has('expelled')) {
+            return redirect(route('expelUser'));
+        }
+
         if (!session()->has('consent')) {
             return redirect(route('welcome'));
         }
@@ -70,7 +74,7 @@ class MailController extends Controller
             $_SESSION['emails'] = $this->retrieveEmailsForThePhase($folder);
         }
         $emailGroups = $_SESSION['emails'];
-
+        
          //ASSIGN A GROUP OF EMAILS
         if(!session('pre_phase_done')){
             //PRE-CLASSIFICATION
