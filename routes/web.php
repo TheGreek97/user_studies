@@ -140,6 +140,5 @@ Route::middleware([
     Route::post('/save-final-data', [QuestionnairesController::class, 'saveFinalData'])->name('save-final-data');
 
     Route::get('/{folder?}/{id?}', [MailController::class, 'show'])->name('show');
-
 });
 

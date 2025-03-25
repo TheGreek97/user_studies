@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Request as FRequest;
 
 class MailController extends Controller
 {
-    const MAILS_NUMBER = 12;
+    const MAILS_NUMBER = 0; //TODO change this
 
     public function show($folder = 'inbox', $id = null)
     {
