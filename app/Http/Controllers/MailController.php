@@ -68,7 +68,7 @@ class MailController extends Controller
         //Else: EMAIL CLASSIFICATION
 
         session_start();
-        //unset($_SESSION['emails']);
+        unset($_SESSION['emails']);
         //Divide emails proportionally into pre and post-test groups and return the appropriate group
         if (!isset($_SESSION['emails'])) {
             $_SESSION['emails'] = $this->retrieveEmailsForThePhase($folder);
@@ -90,15 +90,18 @@ class MailController extends Controller
             Log::info("Final post-test email count: " . $emails->count());
         }
 
-
+        $placeholders = ['{USER NAME}', '{USERNAME}', '{username}', '{user name}'];
         // preprocess the emails
         foreach ($emails as $k => $e) {
             // Set the date to the email
             $e->date = $this->get_near_date();
             // replace the name in the email parts with the name of the user
-            $e->content = str_replace("{USER NAME}", $auth_user->name, $e->content);
-            $e->subject = str_replace("{USER NAME}", $auth_user->name, $e->subject);
-            $e->preview_text = str_replace("{USER NAME}", $auth_user->name, $e->preview_text);
+            // Replace the placeholders in the content, subject, and preview_text
+            foreach ($placeholders as $placeholder) {
+                $e->content = str_replace($placeholder, $auth_user->name, $e->content);
+                $e->subject = str_replace($placeholder, $auth_user->name, $e->subject);
+                $e->preview_text = str_replace($placeholder, $auth_user->name, $e->preview_text);
+            }
 
             // RENDER DATES
             // Replace {now_email_datetime} with the current date time of the email - 3 minutes.
@@ -379,13 +382,21 @@ class MailController extends Controller
         $flattenedGroups = $this->flattenGroups($groupedEmails);
         
         static $iterationCount = 0;
-        // Eseguiamo la procedura per l'insieme "pre":
-        $assignmentPre = $this->backtrackAssignment($flattenedGroups, 0, [], [], [], 2, 0, $iterationCount);
-        Log::info("Numero totale di iterazioni di backtracking: " . $iterationCount);
+        $allowedDeviations = 0; #per rilassare 2 email per topic per fase se necessario
+        $maxDeviations = 5; // massimo numero di deviazioni consentite
+        do {
+            // Eseguiamo la procedura per l'insieme "pre":
+            $assignmentPre = $this->backtrackAssignment($flattenedGroups, 0, [], [], [], 2, $allowedDeviations, $iterationCount, 0);
+            if ($assignmentPre === false) {
+                Log::warning("backtrackAssignment fallito con allowedDeviations={$allowedDeviations}, riprovo rilassando il vincolo...");
+                $allowedDeviations++;
+            }
+        } while ($assignmentPre === false && $allowedDeviations <= $maxDeviations);
 
         if ($assignmentPre === false) {
-            //echo "Nessuna soluzione valida trovata per l'insieme PRE.";
+            Log::warning("backtrackAssignment PRE fallito del tutto!");
         } else {
+            Log::info("Numero totale di iterazioni di backtracking per PRE: " . $iterationCount);
 
             // echo "Soluzione per PRE:\n";
             // foreach ($assignmentPre as $groupKey => $emails) {
@@ -409,10 +420,27 @@ class MailController extends Controller
             // Rimuoviamo le email già usate dall'insieme per "post"
             $flattenedGroupsForPost = $this->removeUsedEmails($flattenedGroups, $usedEmails);
 
-            static $iterationCount = 0;
             // Analogamente, si esegue l'assegnazione per l'insieme "post".
-            $assignmentPost = $this->backtrackAssignment($flattenedGroupsForPost, 0, [], [], [], 2, 1,$iterationCount);
-            Log::info("Numero totale di iterazioni di backtracking: " . $iterationCount);
+            static $iterationCount = 0;
+            $allowedDeviations = 0;
+            $maxDeviations = 5;
+            do {    
+                $assignmentPost = $this->backtrackAssignment($flattenedGroupsForPost, 0, [], [], [], 2, $allowedDeviations, $iterationCount, 1);
+                if ($assignmentPost === false) {
+                    Log::warning("backtrackAssignment fallito con allowedDeviations={$allowedDeviations}, riprovo aumentando...");
+                    $allowedDeviations++;
+                }
+            } while ($assignmentPost === false && $allowedDeviations <= $maxDeviations);
+
+            if ($assignmentPost === false) {
+                Log::warning("backtrackAssignment POST fallito del tutto!");
+            } else {
+                Log::info("Numero totale di iterazioni di backtracking per POST: " . $iterationCount);
+
+                $pre_test_emails = collect($assignmentPre)->flatten(1)->all();
+                $post_test_emails = collect($assignmentPost)->flatten(1)->all();
+            }
+
             // if ($assignmentPost === false) {
             //     echo "Nessuna soluzione valida trovata per l'insieme POST.";
             // } else {
@@ -424,8 +452,6 @@ class MailController extends Controller
             //         }
             //     }
             // }
-            $pre_test_emails = collect($assignmentPre)->flatten(1)->all();
-            $post_test_emails = collect($assignmentPost)->flatten(1)->all();
 
         }
 
@@ -447,8 +473,9 @@ class MailController extends Controller
                     foreach ($levels as $difficulty => $emails) {
                         // Ogni gruppo è identificato da una stringa unica (es. phishing_counterpart_easy)
                         $groupKey = "{$mainCategory}_{$counterpartStatus}_{$difficulty}";
-                        // Imposta required = 2 per g_c_m e g_c_e
-                        $required = ($groupKey === 'genuine_counterpart_medium' || $groupKey === 'genuine_no_counterpart_easy') ? 2 : 1;
+                        // Imposta required = 2 per g_c_m e g_n_e
+                        $required_pre = ($groupKey === 'genuine_counterpart_easy' || $groupKey === 'genuine_no_counterpart_medium') ? 2 : 1;
+                        $required_post = ($groupKey === 'genuine_counterpart_medium' || $groupKey === 'genuine_no_counterpart_easy') ? 2 : 1;
 
                         // Inseriamo anche metadati utili per i vincoli (es. se appartiene a counterpart)
                         $groups[] = [
@@ -459,7 +486,8 @@ class MailController extends Controller
                             // La lista delle email per questo gruppo
                             'emails' => $emails->all(), // supponendo che ->all() restituisca un array di email
                             // Numero richiesto di email da estrarre (adattabile)
-                            'required' => $required,
+                            'required_pre' => $required_pre, 
+                            'required_post' => $required_post 
                         ];
                     }
                 }
@@ -501,12 +529,13 @@ class MailController extends Controller
          * @param array $topicCounts     Array che conta le occorrenze per topic nell'insieme corrente
          * @param array $usedCounterparts Array per tracciare i Counterpart_Email_ID già usati in gruppi counterpart.
          * @param int   $targetTopicCount Numero target per ciascun topic (ad es. 2)
+         * @param int   $allowedDeviations  Numero di Topic che possono violare la condizione di presenza 2 volte
          * @param int   $iterationCount  Contatore globale delle iterazioni del backtracking
-         * @param int   $iterationCount  Numero di Topic che possono violare la condizione di presenza 2 volte
+         * @param int   $pre_or_post     Requisiti split, 0 per pre, 1 per post
          *
          * @return mixed                 Soluzione completa (assignment) oppure false se nessuna soluzione valida
          */
-        function backtrackAssignment($groups, $groupIndex, $assignment, $topicCounts, $usedCounterparts, $targetTopicCount = 2, $allowedDeviations = 0, &$iterationCount) {
+        function backtrackAssignment($groups, $groupIndex, $assignment, $topicCounts, $usedCounterparts, $targetTopicCount = 2, $allowedDeviations = 0, &$iterationCount, $pre_or_post) {
             $iterationCount++;
             Log::info("Entrata in backtrackAssignment - Group Index: {$groupIndex}");
             if ($groupIndex === count($groups)) {
@@ -535,7 +564,7 @@ class MailController extends Controller
 
             $group =    $groups[$groupIndex];
             $groupKey = $group['key'];
-            $required = $group['required'];
+            $required = ($pre_or_post == 0) ? $group['required_pre'] : $group['required_post'];
 
             Log::info("Analizzando gruppo: {$groupKey}, richieste: {$required}, emails disponibili: " . count($group['emails']));
             // Se il gruppo non ha abbastanza email, abortiamo.
@@ -551,7 +580,7 @@ class MailController extends Controller
             Log::info("Generato " . count($combinations) . " combinazioni per {$groupKey}");
 
             foreach ($combinations as $comboIndex => $combo) {
-                Log::info("Analizzando combinazione #{$comboIndex} per {$groupKey}: " . json_encode($combo));
+                Log::info("Analizzando combinazione #{$comboIndex} per {$groupKey}: ");
                 $validCombo = true;
                 $topicCountsCopy = $topicCounts;
                 $usedCounterpartsCopy = $usedCounterparts;
@@ -599,7 +628,7 @@ class MailController extends Controller
                 $assignmentCopy[$groupKey] = $combo; // per il momento scegliamo l'email
 
                 // Procedi ricorsivamente al gruppo successivo
-                $result = $this->backtrackAssignment($groups, $groupIndex + 1, $assignmentCopy, $topicCountsCopy, $usedCounterpartsCopy, $targetTopicCount, $allowedDeviations, $iterationCount);
+                $result = $this->backtrackAssignment($groups, $groupIndex + 1, $assignmentCopy, $topicCountsCopy, $usedCounterpartsCopy, $targetTopicCount, $allowedDeviations, $iterationCount, $pre_or_post);
                 if ($result !== false) {
                     Log::info("Soluzione trovata e restituita.");
                     return $result;

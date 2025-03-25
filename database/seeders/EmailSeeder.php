@@ -433,7 +433,7 @@ class EmailSeeder extends Seeder
     $email->content = file_get_contents(EMAIL_DIR . "/zara.html");
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 0;
     $email->counterpart_email_id = null;
@@ -534,7 +534,7 @@ class EmailSeeder extends Seeder
     $email->id=24;
     $email->subject = "Your Shein Package Tracking Update";
     $email->from_name = "Shein Tracking";
-    $email->from_email = "tracking@fedxe.com";
+    $email->from_email = "tracking@shien.com";
     $email->preview_text = 'We are pleased to inform you that your package has been processed and is now in transit.';
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/easy-shein.html");
     $email->show_warning = false;
@@ -638,7 +638,7 @@ class EmailSeeder extends Seeder
     $email->from_name = "Zalando Order Tracking";
     $email->from_email = "tracking@zalando.return-services.de";
     $email->preview_text = 'Hello {USER NAME}, Your return is on its way. We will send you an email once the process is completed.';
-    $email->content = file_get_contents(EMAIL_DIR . "/phishing/hard-zalando.html");
+    $email->content = file_get_contents(EMAIL_DIR . "/phishing/medium_zalando.html");
     $email->show_warning = false;
     $email->type = 'inbox';
     $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
@@ -672,7 +672,7 @@ class EmailSeeder extends Seeder
     $email->from_name = "GLS Group Tracking";
     $email->from_email = "gls-group-tracking@live.com";
     $email->preview_text = 'Dear Customer, Your package is scheduled for delivery soon.';
-    $email->content = file_get_contents(EMAIL_DIR . "/phishing/medium_GLS.html");
+    $email->content = file_get_contents(EMAIL_DIR . "/phishing/hard_GLS.html");
     $email->show_warning = false;
     $email->type = 'inbox';
     $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
