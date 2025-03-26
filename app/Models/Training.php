@@ -17,7 +17,8 @@ class Training extends Model
         "defense_strategies",
         "exercises",
         "conclusion",
-        "complete"
+        "completed",
+        'user_id'
     ];
 
     public function user()

@@ -113,8 +113,6 @@ Route::middleware([
         return view('debriefing');
     })->name('debriefing');
 
-    Route::get('/training', [TrainingController::class, 'showTraining'])->name('training');
-
     Route::get('/set-post-phase', function () {
         session(['training_done' => true]);
         session(['startStudy' => '1']); //show again the popup message for the post classification
@@ -138,6 +136,10 @@ Route::middleware([
     Route::post('/save-email-classification', [QuestionnairesController::class, 'saveEmailClassification'])->name('save-email-classification');
     //Route::get('/final-data', [QuestionnairesController::class, 'finalData'])->name('final-data');
     Route::post('/save-final-data', [QuestionnairesController::class, 'saveFinalData'])->name('save-final-data');
+
+    Route::get('/create-training', [TrainingController::class, 'createTraining'])->name('training_create');
+
+    Route::get('/training', [TrainingController::class, 'showTraining'])->name('training');
 
     Route::get('/{folder?}/{id?}', [MailController::class, 'show'])->name('show');
 });

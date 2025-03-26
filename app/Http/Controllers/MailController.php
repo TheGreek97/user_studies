@@ -14,11 +14,10 @@ use Illuminate\Support\Facades\Request as FRequest;
 
 class MailController extends Controller
 {
-    const MAILS_NUMBER = 0; //TODO change this
+    const MAILS_NUMBER = 2;
 
     public function show($folder = 'inbox', $id = null)
     {
-
         // Logging to track redirection logic along with session data for debugging
         //Log::info('Current route: ' . FRequest::url());
         //Log::info('Current session:', session()->all());
@@ -35,13 +34,19 @@ class MailController extends Controller
         //     'questionnaire_3done' => true,
         // ]);
 
-        //First shows the 3 questionnaires
+        //First show the 3 questionnaires
         if (!session()->has('questionnaire_1done')) {
             return redirect()->route('questionnaire', ['step' => 1]);
         } elseif (!session()->has('questionnaire_2done')) {
             return redirect()->route('questionnaire', ['step' => 2]);
         } elseif (!session()->has('questionnaire_3done')) {
             return redirect()->route('questionnaire', ['step' => 3]);
+        }
+        echo("questionnaires done? " . session()->has("questionnaire_3done"));
+        echo("\ntraining generating: ". session()->has("training_generation_started"));
+        // Start training generation after questionnaire 3 is completed
+        if (session()->has("questionnaire_3done") && !session()->has("training_generation_started")){
+            return redirect()->route("training_create");
         }
 
         //Final Demographic Questionnaire done

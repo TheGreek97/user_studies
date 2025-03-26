@@ -18,8 +18,8 @@ class QuestionnairesController extends Controller
             1 => 'questionnaires.bfi2xs',
             2 => 'questionnaires.stp-ii-b',
             3 => 'questionnaires.tei-que-sf',
-            4 => 'questionnaires.training_reaction_questionnaire', 
-            5 => 'questionnaires.demographicQuestionnaire', 
+            4 => 'questionnaires.training_reaction_questionnaire',
+            5 => 'questionnaires.demographicQuestionnaire',
         ];
 
         for ($i = 1; $i <= 3; $i++) {
@@ -31,7 +31,7 @@ class QuestionnairesController extends Controller
             }
         }
 
-        if (!session()->has('pre_phase_done') or !session()->has('post_phase_done') ) {
+        if (!session()->has('pre_phase_done') || !session()->has('post_phase_done') ) {
             return redirect(route('show', ['folder' => 'inbox']));
         }
 
@@ -57,10 +57,10 @@ class QuestionnairesController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'emailId'    => 'required|integer|exists:emails,id', 
-                'confidence' => 'required|integer|min:1|max:10', 
-                'phishing'   => 'required|in:yes,no', 
-                'time_spent' => 'required|numeric|min:1' 
+                'emailId'    => 'required|integer|exists:emails,id',
+                'confidence' => 'required|integer|min:1|max:10',
+                'phishing'   => 'required|in:yes,no',
+                'time_spent' => 'required|numeric|min:1'
             ]);
 
             $phase = session('post_phase') ? 'post' : 'pre';
@@ -73,8 +73,8 @@ class QuestionnairesController extends Controller
                 'user_id'    => Auth::id(),
                 'title_email' => 'null',
                 'phase'      => $phase,
-            ];         
-    
+            ];
+
             UserEmailQuestionnaire::create($dataToInsert);
 
             return redirect(route('show', ['folder' => 'inbox']));
@@ -103,7 +103,7 @@ class QuestionnairesController extends Controller
         $user->save();
         session(['questionnaire_5done' => true]);
         return redirect(route('thank_you'));
-        
+
     }
 
 

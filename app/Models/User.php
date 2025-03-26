@@ -78,6 +78,11 @@ class User extends Authenticatable
         return $this->hasMany(UserEmailQuestionnaire::class);
     }
 
+    public function training()
+    {
+        return $this->hasOne(Training::class);
+    }
+
     public function followUpQuestionnaire()
     {
         return $this->hasOne(FollowUpQuestionnaire::class);
