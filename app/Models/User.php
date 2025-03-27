@@ -78,6 +78,11 @@ class User extends Authenticatable
         return $this->hasMany(UserEmailQuestionnaire::class);
     }
 
+    public function training()
+    {
+        return $this->hasOne(Training::class);
+    }
+
     public function followUpQuestionnaire()
     {
         return $this->hasOne(FollowUpQuestionnaire::class);
@@ -90,35 +95,36 @@ class User extends Authenticatable
 
     public function userProfile()
     {
-        return $this->hasOne(UserQuestionnaireScale::class);
+        $profile = $this->hasOne(UserQuestionnaireScale::class)->first();
+        return $profile;
     }
 
     public function getUserProfilePrompt(){
         $profile = $this->userProfile();
         return "The training material must be tailored to the user’s profile, which is defined by the following characteristics:
-            - Personality traits, measured under the Big five factors from 1 (low) to 5 (high):
-                Extraversion = $profile->bfi_extraversion
-                Agreeableness = $profile->bfi_agreeableness
-                Conscientiousness = $profile->bfi_conscientiousness
-                Negative emotionality = $profile->bfi_negative_emotionality
-                Open mindedness = $profile->bfi_open_mindedness
-            - Emotional intelligence factors, measured on a scale from 1 (low) to 7 (high):
-                Total Trait Emotional Intelligence = $profile->tei_total_tei
-                Well-being = $profile->tei_well_being
-                Self-Control = $profile->tei_self_control
-                Emotionality = $profile->tei_emotionality
-                Sociability = $profile->sociability
-            - Persuasion susceptibility factors, measured on a scale from 1 (low) to 7 (high):
-                Lack of premeditation = $profile->stp_lack_of_premeditation
-                Need for consistency = $profile->stp_need_for_consistency
-                Sensation seeking = $profile->stp_sensation_seeking
-                Lack of self-control = $profile->stp_lack_of_self_control
-                Social influence = $profile->stp_social_influence
-                Need for avoidance of similarity = $profile->stp_need_for_avoidance_of_similarity
-                Risk preferences = $profile->stp_risk_preferences
-                Need for cognition = $profile->need_for_cognition
-                Need for uniqueness = $profile->need_for_uniqueness
-        ";
+- Personality traits, measured under the Big five factors from 1 (low) to 5 (high):
+Extraversion = $profile->bfi_extraversion
+Agreeableness = $profile->bfi_agreeableness
+Conscientiousness = $profile->bfi_conscientiousness
+Negative emotionality = $profile->bfi_negative_emotionality
+Open mindedness = $profile->bfi_open_mindedness
+- Emotional intelligence factors, measured on a scale from 1 (low) to 7 (high):
+Total Trait Emotional Intelligence = $profile->tei_total_tei
+Well-being = $profile->tei_well_being
+Self-Control = $profile->tei_self_control
+Emotionality = $profile->tei_emotionality
+Sociability = $profile->tei_sociability
+- Persuasion susceptibility factors, measured on a scale from 1 (low) to 7 (high):
+Lack of premeditation = $profile->stp_lack_of_premeditation
+Need for consistency = $profile->stp_need_for_consistency
+Sensation seeking = $profile->stp_sensation_seeking
+Lack of self-control = $profile->stp_lack_of_self_control
+Social influence = $profile->stp_social_influence
+Need for avoidance of similarity = $profile->stp_need_for_avoidance_of_similarity
+Risk preferences = $profile->stp_risk_preferences
+Need for cognition = $profile->stp_need_for_cognition
+Need for uniqueness = $profile->stp_need_for_uniqueness
+";
     }
 
 

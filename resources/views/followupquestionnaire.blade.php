@@ -317,7 +317,6 @@
                                    placeholder="Type your answer here..." maxlength="255"
                                    class="block text-sm px-4 rounded-lg py-3 w-full border outline-none"/>
                         </div>
-
                     </div>
 
                     <!--- NASA-TLX Questionnaire --->
