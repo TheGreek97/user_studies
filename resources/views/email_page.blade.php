@@ -55,10 +55,10 @@ $show_details = Auth::user()->show_details;
                         <!-- Modal body -->
                         <div class="p-4 md:p-5 space-y-4">
                             <p class="text-base leading-relaxed text-gray-900 dark:text-gray-400">
-                                Please carefully read each email in the inbox below. For every email, you need to:
-                                <br>- Determine whether you believe it is a phishing attempt or not.
-                                <br>- Rate how confident you are in your decision on a scale of 1 to 7.<br>
-                                Ensure both responses are provided in the designated fields for each email.
+                                Please carefully read each email in the inbox below. <br>
+                                For every email, you need to:
+                                <br>- Determine whether you believe it is a <b>phishing attempt</b> or not.
+                                <br>- Rate how <b>confident</b> you are in your decision on a scale of 1 to 7.<br>
                             </p>
                         </div>
                     @endif
@@ -209,22 +209,22 @@ $show_details = Auth::user()->show_details;
             <!-- Backdrop -->
             <div x-show="isSideMenuOpen"
                  x-transition:enter="transition ease-in-out duration-150"
-                 x-transition:enter-start="opacity-0" 
+                 x-transition:enter-start="opacity-0"
                  x-transition:enter-end="opacity-100"
-                 x-transition:leave="transition ease-in-out duration-150" 
+                 x-transition:leave="transition ease-in-out duration-150"
                  x-transition:leave-start="opacity-100"
                  x-transition:leave-end="opacity-0"
                  class="fixed inset-0 z-25 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
             </div>
             <aside
                 class="fixed inset-y-0 z-20 flex-shrink-0 w-56 mt-16 overflow-y-auto bg-white dark:bg-gray-800 custom:hidden"
-                x-show="isSideMenuOpen" 
+                x-show="isSideMenuOpen"
                 x-transition:enter="transition ease-in-out duration-150"
-                x-transition:enter-start="opacity-0 transform -translate-x-20" 
+                x-transition:enter-start="opacity-0 transform -translate-x-20"
                 x-transition:enter-end="opacity-100"
-                x-transition:leave="transition ease-in-out duration-150" 
+                x-transition:leave="transition ease-in-out duration-150"
                 x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0 transform -translate-x-20" 
+                x-transition:leave-end="opacity-0 transform -translate-x-20"
                 @click.away="closeSideMenu"
                 @keydown.escape="closeSideMenu">
                 <div class="py-4 text-gray-500 dark:text-gray-400">
@@ -271,7 +271,7 @@ $show_details = Auth::user()->show_details;
                             <a @if ($folder === 'sent') class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                                 @else
                                 class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" @endif
-                                href="{{ route('show', ['folder' => 'sent']) }}">
+                                href="#">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -288,7 +288,7 @@ $show_details = Auth::user()->show_details;
                             <a @if ($folder === 'draft') class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                                 @else
                                 class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" @endif
-                                href="{{ route('show', ['folder' => 'draft']) }}">
+                                href="#">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -356,7 +356,7 @@ $show_details = Auth::user()->show_details;
                     </div>
                 </header>
 
-                <main class="overflow-y-auto" style="height:100%;">
+                <main class="overflow-y-auto" style="height:100%; padding: 0 2%">
                     <div class="px-0 md:px-6 mx-5 md:mx-auto grid mb-10">
                         @if (!isset($selected_email))
                             <h2
@@ -410,7 +410,7 @@ $show_details = Auth::user()->show_details;
                                                                         ->where('user_id', \Illuminate\Support\Facades\Auth::id())
                                                                         ->where('email_id', $email->id)
                                                                         ->exists();
-                                    
+
                                                      // Checks whether the previous email has already been opened
                                                     $prevOpened = $loop->first ? true : false;
                                                     if (!$loop->first) {
@@ -421,23 +421,23 @@ $show_details = Auth::user()->show_details;
                                                                         ->where('email_id', $prevEmail->id)
                                                                         ->exists();
                                                     }
-                                    
+
                                                     // Email is clickable if it has NOT been opened and if (it is the first one or the previous one is opened)
                                                     $clickable = !$currentOpened && $prevOpened;
                                                 @endphp
                                                 @if (!$clickable)
                                                     @if (!$prevOpened)
-                                                        <tr class="text-gray-700 cursor-not-allowed bg-gray-50" title="Please answer the emails in the order given">
+                                                        <tr class="text-gray-700 cursor-not-allowed bg-gray-50" title="Please answer the emails in order">
                                                     @else
                                                         <tr class="text-gray-700 cursor-not-allowed bg-gray-300"  title="You have already answered to this email">
                                                     @endif
                                                 @else
-                                                    <tr class="text-gray-700 cursor-pointer hover:bg-gray-200 hover:dark:bg-gray-600 dark:text-gray-400"
-                                                        @if ($email->type === 'inbox') 
+                                                    <tr class="text-gray-700 cursor-pointer hover:bg-gray-200 hover:dark:bg-gray-600 dark:text-gray-400 border-2 border-blue-800"
+                                                        @if ($email->type === 'inbox')
                                                             @if ($email->show_warning && $warning_type === 'popup_email')
                                                                 onclick="open_warning('{{ route('show', ['folder' => $folder, 'id' => $email->id]) }}', {{ $email->id }}, '{!! $email->warning_explanation !!}')"
                                                             @else
-                                                                onclick="window.location.href = '{{ route('show', ['folder' => $folder, 'id' => $email->id]) }}'" 
+                                                                onclick="window.location.href = '{{ route('show', ['folder' => $folder, 'id' => $email->id]) }}'"
                                                             @endif
                                                         @endif
                                                     >
@@ -467,7 +467,7 @@ $show_details = Auth::user()->show_details;
                                 </div>
                             </div>
                         @else
-                        <div class="h-auto rounded-lg shadow-xs my-10 p-3 bg-white dark:bg-gray-800 overflow-y-hidden 
+                        <div class="h-auto rounded-lg shadow-xs my-10 p-3 bg-white dark:bg-gray-800 overflow-y-hidden
                                     sm:mr-0 w-full md:w-auto md:mr-[280px]">
                                 <!-- Contenuti del primo div -->
                                 <div class="w-full flex flex-row space-x-2 pb-2">
@@ -561,21 +561,21 @@ $show_details = Auth::user()->show_details;
                                     </div>
                                 </div>
                                 <!--IFRAME-->
-                                <div id="email_content" class="px-1 pt-4 dark:bg-white" style="padding-bottom: 2.5rem; max-width: 1000px;"> 
-                                    <iframe id="email_frame" style="width: 100%; border: none;" 
+                                <div id="email_content" class="px-1 pt-4 dark:bg-white" style="padding-bottom: 2.5rem; max-width: 1000px;">
+                                    <iframe id="email_frame" style="width: 100%; border: none;"
                                         srcdoc="{!! htmlspecialchars($htmlContent ?? '', ENT_QUOTES, 'UTF-8') !!}"><!--height: 60vh;-->
-                                    </iframe> 
+                                    </iframe>
                                 </div>
                                 <script>
                                     const emailContent = document.getElementById('email_content');
                                     const emailFrame = document.getElementById('email_frame');
                                     const referenceWidth = 800; // larghezza di riferimento del contenuto
                                     const extraSpace = 60; // spazio extra da aggiungere in fondo
-                                  
+
                                     function adjustIframeSize() {
                                       const currentWidth = emailContent.clientWidth;
                                       const scale = currentWidth / referenceWidth;
-                                  
+
                                       const iframeDocument = emailFrame.contentDocument || emailFrame.contentWindow.document;
                                       if (iframeDocument && iframeDocument.body) {
                                         // Imposta inizialmente il contenuto centrato
@@ -583,14 +583,14 @@ $show_details = Auth::user()->show_details;
                                         iframeDocument.body.style.transformOrigin = 'top center'; // All'inizio è centrato
                                         iframeDocument.body.style.width = referenceWidth + 'px';
                                         iframeDocument.body.style.margin = '0 auto';
-                                  
+
                                         // Rimuove lo scroll impostando overflow hidden
                                         iframeDocument.body.style.overflow = 'hidden';
-                                        
+
                                         // Calcola l'altezza necessaria in base al contenuto scalato e aggiungi spazio extra
                                         const contentHeight = iframeDocument.body.scrollHeight;
                                         emailFrame.style.height = (contentHeight * scale + extraSpace) + 'px';
-                                  
+
                                         // Cambia il transform-origin a top-left quando la finestra è ridimensionata
                                         if (currentWidth < referenceWidth) {
                                           iframeDocument.body.style.transformOrigin = 'top left';
@@ -599,17 +599,17 @@ $show_details = Auth::user()->show_details;
                                         }
                                       }
                                     }
-                                  
+
                                     // Richiama la funzione al caricamento e al ridimensionamento della finestra
                                     window.addEventListener('resize', adjustIframeSize);
                                     window.addEventListener('load', adjustIframeSize);
                                   </script>
-    
-                                
+
+
                             </div>
-                            <div class="w-full sm:w-[90%] md:w-[265px] h-auto md:h-[665px] border-2 border-blue-500 rounded-lg shadow-md p-4 
-                                        bg-white dark:bg-gray-800 z-20 
-                                        sm:relative sm:left-1/2 sm:-translate-x-1/2 
+                            <div class="w-full sm:w-[90%] md:w-[265px] h-auto md:h-[665px] border-2 border-blue-500 rounded-lg shadow-md p-4
+                                        bg-white dark:bg-gray-800 z-20
+                                        sm:relative sm:left-1/2 sm:-translate-x-1/2
                                         md:fixed md:right-5 md:top-50 md:left-auto md:translate-x-0">
 
                                 <h3 class="md:text-2xl font-bold text-gray-800">Evaluate this email</h3>
@@ -618,16 +618,16 @@ $show_details = Auth::user()->show_details;
                                         email is a phishing attempt?</p>
                                     <label class="flex items-center space-x-2 cursor-pointer">
                                         <input type="radio" x-model="phishing" name="phishing" value="yes"
-                                            class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
-                                                focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 
+                                            class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded
+                                                focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800
                                                 dark:bg-gray-700 dark:border-gray-600">
                                         <span class="md:text-lg text-gray-900 dark:text-white">Yes</span>
                                     </label>
 
                                     <label class="flex items-center space-x-2 cursor-pointer">
                                         <input type="radio" x-model="phishing" name="phishing" value="no"
-                                            class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
-                                                focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 
+                                            class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded
+                                                focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800
                                                 dark:bg-gray-700 dark:border-gray-600">
                                         <span class="md:text-lg text-gray-900 dark:text-white">No</span>
                                     </label>

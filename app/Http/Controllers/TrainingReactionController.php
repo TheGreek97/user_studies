@@ -37,9 +37,9 @@ class TrainingReactionController extends Controller
         if (!$alreadyAnswered) {
             $validatedData['user_id'] = Auth::id();
             TrainingReaction::create($validatedData);
-        } 
+        }
         session(['questionnaire_4done' => true]);
-        return redirect()->route('questionnaire', ['step' => 5])->with('success', 'Questionnaire 4 completed successfully!');
+        return redirect()->route('save-final-data');
     }
 }
 

@@ -23,6 +23,7 @@ The <b>emails</b> are visible in the <b>emails_screens.pdf</b> file in the root 
     - DB_DATABASE with the name of the database created in the previous step
     - DB_USERNAME with the username of the database created in the previous step
     - DB_PASSWORD with the password of the database created in the previous step
+    - QUEUE_CONNECTION with "database"
 - Execute the following commands within the root folder of this repo
     - composer install --optimize-autoloader --no-dev
     - npm install
@@ -32,3 +33,4 @@ The <b>emails</b> are visible in the <b>emails_screens.pdf</b> file in the root 
     - php artisan route:cache (optional)
     - php artisan view:cache (optional)
     - php artisan db:seed
+    - php artisan queue:work

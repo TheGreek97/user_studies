@@ -40,29 +40,26 @@ class MailController extends Controller
         // ]);
 
         //First show the 3 questionnaires
-        if (!session()->has('questionnaire_1done')) {
+        if (!session()->has('questionnaire_0done')) {
+            return redirect()->route('questionnaire', ['step' => 0]);
+        } elseif (!session()->has('questionnaire_1done')) {
             return redirect()->route('questionnaire', ['step' => 1]);
         } elseif (!session()->has('questionnaire_2done')) {
             return redirect()->route('questionnaire', ['step' => 2]);
         } elseif (!session()->has('questionnaire_3done')) {
             return redirect()->route('questionnaire', ['step' => 3]);
         }
-        echo("questionnaires done? " . session()->has("questionnaire_3done"));
-        echo("\ntraining generating: ". session()->has("training_generation_started"));
+
         // Start training generation after questionnaire 3 is completed
         if (session()->has("questionnaire_3done") && !session()->has("training_generation_started")){
             return redirect()->route("training_create");
         }
 
-        //Final Demographic Questionnaire done
-        if(session()->has('questionnaire_5done') ) {
-            return redirect(route('thank_you'));
+        // Study completed
+        if(session()->has('questionnaire_4done') ) {
+            return redirect()->route('save-final-data');
         }
 
-        //Final Demographic Questionnaire
-        if(session()->has('questionnaire_4done') ) {
-            return redirect()->route('questionnaire', ['step' => 5]);
-        }
         //Training Reaction Questionnaire
         if (session()->has('post_phase_done') ) {
             return redirect()->route('questionnaire', ['step' => 4]);
@@ -74,12 +71,12 @@ class MailController extends Controller
 
         session_start();
         unset($_SESSION['emails']);
-        //Divide emails proportionally into pre and post-test groups and return the appropriate group
+        //Divide emails proportionally into pre- and post-test groups and return the appropriate group
         if (!isset($_SESSION['emails'])) {
             $_SESSION['emails'] = $this->retrieveEmailsForThePhase($folder);
         }
         $emailGroups = $_SESSION['emails'];
-        
+
          //ASSIGN A GROUP OF EMAILS
         if(!session('pre_phase_done')){
             //PRE-CLASSIFICATION
@@ -385,7 +382,7 @@ class MailController extends Controller
 
         // Prima di tutto appiattiamo i gruppi:
         $flattenedGroups = $this->flattenGroups($groupedEmails);
-        
+
         static $iterationCount = 0;
         $allowedDeviations = 0; #per rilassare 2 email per topic per fase se necessario
         $maxDeviations = 5; // massimo numero di deviazioni consentite
@@ -410,7 +407,7 @@ class MailController extends Controller
             //         echo "- Email: " . $email->id . " (Topic: " . $email->topic . ")\n";
             //     }
             // }
-    
+
             $usedEmails = []; // Raccogliamo le email usate nell'assegnazione PRE
             foreach ($assignmentPre as $groupKey => $emails) {
                 foreach ($emails as $email) {
@@ -429,7 +426,7 @@ class MailController extends Controller
             static $iterationCount = 0;
             $allowedDeviations = 0;
             $maxDeviations = 5;
-            do {    
+            do {
                 $assignmentPost = $this->backtrackAssignment($flattenedGroupsForPost, 0, [], [], [], 2, $allowedDeviations, $iterationCount, 1);
                 if ($assignmentPost === false) {
                     Log::warning("backtrackAssignment fallito con allowedDeviations={$allowedDeviations}, riprovo aumentando...");
@@ -468,7 +465,7 @@ class MailController extends Controller
     }
 
        /**
-         * Funzione per "appiattire" i gruppi in un array lineare, in modo da 
+         * Funzione per "appiattire" i gruppi in un array lineare, in modo da
          * poter iterare facilmente durante il backtracking.
          */
         function flattenGroups($groupedEmails) {
@@ -491,8 +488,8 @@ class MailController extends Controller
                             // La lista delle email per questo gruppo
                             'emails' => $emails->all(), // supponendo che ->all() restituisca un array di email
                             // Numero richiesto di email da estrarre (adattabile)
-                            'required_pre' => $required_pre, 
-                            'required_post' => $required_post 
+                            'required_pre' => $required_pre,
+                            'required_post' => $required_post
                         ];
                     }
                 }
@@ -638,7 +635,7 @@ class MailController extends Controller
                     Log::info("Soluzione trovata e restituita.");
                     return $result;
                 }
-    
+
             }
 
             // Se nessuna scelta porta a una soluzione valida, torna indietro
@@ -652,7 +649,7 @@ class MailController extends Controller
                 $group['emails'] = array_filter($group['emails'], function($email) use ($usedEmails) {
                     return !in_array($email->id, $usedEmails);
                 });
-        
+
                 // Rimuovi anche le email che sono controparte nelle email già utilizzate
                 $group['emails'] = array_filter($group['emails'], function($email) use ($usedEmails) {
                     // Controlla se la proprietà esiste
@@ -662,8 +659,8 @@ class MailController extends Controller
                     return true; // Se non esiste, non è da rimuovere
                 });
             }
-        
+
             return $flattenedGroups;
         }
-        
+
     }

@@ -109,10 +109,6 @@ Route::middleware([
         return view("thank_you_page");
     })->name('thank_you');
 
-    Route::get('/debriefing', function() {
-        return view('debriefing');
-    })->name('debriefing');
-
     Route::get('/expelled', [QuestionnairesController::class, 'expelUser'])->name('expelUser');
 
     Route::get('/set-post-phase', function () {
@@ -125,8 +121,7 @@ Route::middleware([
 
     Route::post('/end', [Questionnaire::class, 'storeFollowUp']);
 
-    //Route::get('/warning_browser', [MailController::class, 'warning_browser'])->name('warning_browser');
-
+    Route::post('/demographics', [QuestionnairesController::class, 'saveDemographicsData'])->name('demographics.create');
     Route::post('/big-five-inventory', [BFI2XSController::class, 'create'])->name('big-five-inventory.create');
     Route::post('/susceptibility-to-persuasion-ii', [StPIIBController::class, 'create'])->name('susceptibility-to-persuasion-ii.create');
     Route::post('/trait-emotional-intelligence', [TEIQueSFController::class, 'create'])->name('trait-emotional-intelligence.create');

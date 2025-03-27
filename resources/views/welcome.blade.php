@@ -1,3 +1,4 @@
+<!-- TODO: Update informed consent!! -->
 <x-app-layout>
     <x-slot name="slot">
         <div class="min-h-screen bg-gray-200 flex justify-center items-center">

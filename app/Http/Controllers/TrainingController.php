@@ -38,5 +38,3 @@ class TrainingController extends Controller
         return redirect()->route('show', ['folder' => 'inbox']);
     }
 }
-
-

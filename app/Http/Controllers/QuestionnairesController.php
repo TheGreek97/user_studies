@@ -19,20 +19,20 @@ class QuestionnairesController extends Controller
 
     public function showQuestionnaire($step)
     {
-        
+
         if (session()->has('expelled')) {
             return redirect(route('expelUser'));
         }
-        
+
         $questionnaires = [
+            0 => 'questionnaires.demographicQuestionnaire',
             1 => 'questionnaires.bfi2xs',
             2 => 'questionnaires.stp-ii-b',
             3 => 'questionnaires.tei-que-sf',
-            4 => 'questionnaires.training_reaction_questionnaire',
-            5 => 'questionnaires.demographicQuestionnaire',
+            4 => 'questionnaires.training_reaction_questionnaire'
         ];
 
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 0; $i <= 3; $i++) {
             if (!session()->has("questionnaire_{$i}done")) {
                 if ($i != $step) {
                     return redirect(route('questionnaire', ['step' => $i]));
@@ -50,15 +50,8 @@ class QuestionnairesController extends Controller
                 return redirect(route('questionnaire', ['step' => 4]));
             }
             return view($questionnaires[4]);
-        }
-
-        if (!session()->has("questionnaire_5done")) {
-            if ($step != 5) {
-                return redirect(route('questionnaire', ['step' => 5]));
-            }
-            return view($questionnaires[5]);
         } else {
-            return redirect(route('thank_you'));
+            return redirect(route('save-final-data'));
         }
 
     }
@@ -106,25 +99,27 @@ class QuestionnairesController extends Controller
         }
     }
 
-    public function saveFinalData(Request $request)
+    public function saveDemographicsData(Request $request)
     {
         // Demographic questionnaire
         $user = Auth::user();
+        $user->name = $request->first_name;
         $user->gender = $request->gender;
         $user->age = $request->age;
         $user->num_hours_day_internet = $request->num_hours_day_internet;
-        $answers = [];
-        for ($i=1; $i<=10; $i++){
-            $question = "cyber_".$i;
-            $answers[$question] = $request->$question;
-        }
-        $user->expertise_score = null;
-        $user->study_completed = Carbon::now();
         $user->save();
-        session(['questionnaire_5done' => true]);
-        return redirect(route('thank_you'));
-
+        session(['questionnaire_0done' => true]);
+        return redirect(route('questionnaire', ['step' => 1]));
     }
 
+    public function saveFinalData(Request $request)
+    {
+        $user = Auth::user();
+        if (! $user->study_completed) {
+            $user->study_completed = Carbon::now();
+            $user->save();
+        }
+        return redirect(route('thank_you'));
+    }
 
 }
