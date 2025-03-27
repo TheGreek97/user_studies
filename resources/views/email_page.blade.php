@@ -467,8 +467,7 @@ $show_details = Auth::user()->show_details;
                                 </div>
                             </div>
                         @else
-                        <div class="h-auto rounded-lg shadow-xs my-10 p-3 bg-white dark:bg-gray-800 overflow-y-hidden
-                                    sm:mr-0 w-full md:w-auto md:mr-[280px]">
+                            <div class="h-auto rounded-lg shadow-xs my-10 p-3 bg-white dark:bg-gray-800 overflow-y-hidden sm:mr-0 w-full md:w-auto md:mr-[280px]">
                                 <!-- Contenuti del primo div -->
                                 <div class="w-full flex flex-row space-x-2 pb-2">
                                     <a data-tooltip-target="tooltip-back" data-tooltip-placement="bottom"
@@ -607,10 +606,56 @@ $show_details = Auth::user()->show_details;
 
 
                             </div>
-                            <div class="w-full sm:w-[90%] md:w-[265px] h-auto md:h-[665px] border-2 border-blue-500 rounded-lg shadow-md p-4
+                            <style>
+                                /* Stile di base: applicato a tutte le viewport */
+                                .cssVersionDiv {
+                                background-color: #ffffff;            /* bg-white */
+                                border: 2px solid #3f83f8;            /* border-2 e border-blue-500 */
+                                border-radius: 8px;                     /* rounded-lg */
+                                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                                            0 2px 4px -2px rgba(0, 0, 0, 0.1); /* shadow-md */
+                                padding: 16px;                          /* p-4 (16px) */
+                                width: 100%;                            /* w-full */
+                                height: auto;                           /* h-auto */
+                                position: static;                       /* Posizionamento di default */
+                                z-index: 20;                            /* z-20 */
+                                }
+
+                                /* Modalità dark: se un elemento genitore ha la classe "dark" */
+                                .dark .cssVersionDiv {
+                                background-color: #1a1c23;              /* dark:bg-gray-800 */
+                                }
+
+                                /* Breakpoint small (sm: min-width 640px) */
+                                @media (min-width: 640px) {
+                                .cssVersionDiv {
+                                    width: 90%;                         /* sm:w-[90%] */
+                                    position: relative;                 /* sm:relative */
+                                    left: 50%;                          /* sm:left-1/2 */
+                                    transform: translateX(-50%);        /* sm:-translate-x-1/2 */
+                                }
+                                }
+
+                                /* Breakpoint medium (md: min-width 768px) */
+                                @media (min-width: 768px) {
+                                .cssVersionDiv {
+                                    width: 265px;                       /* md:w-[265px] */
+                                    height: 665px;                      /* md:h-[665px] */
+                                    position: fixed;                    /* md:fixed */
+                                    right: 20px;                        /* md:right-5 (equivale a 20px) */
+                                    top: 150px;                          /* md:top-50*/
+                                    left: auto;                        /* md:left-auto */
+                                    transform: none;                    /* md:translate-x-0 */
+                                }
+                                }
+
+                            </style>
+                            <div class="cssVersionDiv">
+                                {{-- class="w-full sm:w-[90%] md:w-[265px] h-auto md:h-[665px] border-2 border-blue-500 rounded-lg shadow-md p-4
                                         bg-white dark:bg-gray-800 z-20
                                         sm:relative sm:left-1/2 sm:-translate-x-1/2
-                                        md:fixed md:right-5 md:top-50 md:left-auto md:translate-x-0">
+                                        md:fixed md:right-5 md:top-50 md:left-auto md:translate-x-0" --}}
+                                
 
                                 <h3 class="md:text-2xl font-bold text-gray-800">Evaluate this email</h3>
                                 <div x-data="{ phishing: '' }" class="space-y-3 my-6">

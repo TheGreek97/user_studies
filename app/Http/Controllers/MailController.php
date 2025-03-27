@@ -70,7 +70,7 @@ class MailController extends Controller
         //Else: EMAIL CLASSIFICATION
 
         session_start();
-        unset($_SESSION['emails']);
+        //unset($_SESSION['emails']);
         //Divide emails proportionally into pre- and post-test groups and return the appropriate group
         if (!isset($_SESSION['emails'])) {
             $_SESSION['emails'] = $this->retrieveEmailsForThePhase($folder);
@@ -83,13 +83,13 @@ class MailController extends Controller
             $emails = collect($emailGroups['pre']);
             MailController::seededShuffle($emails, $seed);
             // Shuffle again for pre-test group (to remove the predefinited order of groups)
-            Log::info("Final pre-test email count: " . $emails->count());
+            //Log::info("Final pre-test email count: " . $emails->count());
         } else {
             //POST-CLASSIFICATION
             $emails = collect($emailGroups['post']);
             MailController::seededShuffle($emails, $seed);
             // Shuffle again for post-test group (to remove the predefinited order of groups)
-            Log::info("Final post-test email count: " . $emails->count());
+            //Log::info("Final post-test email count: " . $emails->count());
         }
 
         $placeholders = ['{USER NAME}', '{USERNAME}', '{username}', '{user name}'];
@@ -321,7 +321,7 @@ class MailController extends Controller
         $emails = DB::table('emails')
             ->where('type', $folder)
             ->get();
-        Log::info("Total emails retrieved: " . $emails->count());
+        //Log::info("Total emails retrieved: " . $emails->count());
         $seed = (int) Auth::id();  // Randomize according to user id
 
         // subdivision by phishing
@@ -334,12 +334,12 @@ class MailController extends Controller
         $c_genuine_emails = $genuine_emails->where('counterpart', 1);
         $not_c_genuine_emails = $genuine_emails->where('counterpart', 0);
 
-        Log::info("Phishing emails: " . $phishing_emails->count());
-        Log::info("Genuine emails: " . $genuine_emails->count());
-        Log::info("Counterpart phishing emails: " . $c_phishing_emails->count());
-        Log::info("No counterpart phishing emails: " . $not_c_phishing_emails->count());
-        Log::info("Counterpart genuine emails: " . $c_genuine_emails->count());
-        Log::info("No counterpart genuine emails: " . $not_c_genuine_emails->count());
+        //Log::info("Phishing emails: " . $phishing_emails->count());
+        //Log::info("Genuine emails: " . $genuine_emails->count());
+        //Log::info("Counterpart phishing emails: " . $c_phishing_emails->count());
+        //Log::info("No counterpart phishing emails: " . $not_c_phishing_emails->count());
+        //Log::info("Counterpart genuine emails: " . $c_genuine_emails->count());
+        //Log::info("No counterpart genuine emails: " . $not_c_genuine_emails->count());
 
         // Final subdivision by difficulty_level (low, medium, high)
         $groupedEmails = [
@@ -390,15 +390,15 @@ class MailController extends Controller
             // Eseguiamo la procedura per l'insieme "pre":
             $assignmentPre = $this->backtrackAssignment($flattenedGroups, 0, [], [], [], 2, $allowedDeviations, $iterationCount, 0);
             if ($assignmentPre === false) {
-                Log::warning("backtrackAssignment fallito con allowedDeviations={$allowedDeviations}, riprovo rilassando il vincolo...");
+                //Log::warning("backtrackAssignment fallito con allowedDeviations={$allowedDeviations}, riprovo rilassando il vincolo...");
                 $allowedDeviations++;
             }
         } while ($assignmentPre === false && $allowedDeviations <= $maxDeviations);
 
         if ($assignmentPre === false) {
-            Log::warning("backtrackAssignment PRE fallito del tutto!");
+            //Log::warning("backtrackAssignment PRE fallito del tutto!");
         } else {
-            Log::info("Numero totale di iterazioni di backtracking per PRE: " . $iterationCount);
+            //Log::info("Numero totale di iterazioni di backtracking per PRE: " . $iterationCount);
 
             // echo "Soluzione per PRE:\n";
             // foreach ($assignmentPre as $groupKey => $emails) {
@@ -429,15 +429,15 @@ class MailController extends Controller
             do {
                 $assignmentPost = $this->backtrackAssignment($flattenedGroupsForPost, 0, [], [], [], 2, $allowedDeviations, $iterationCount, 1);
                 if ($assignmentPost === false) {
-                    Log::warning("backtrackAssignment fallito con allowedDeviations={$allowedDeviations}, riprovo aumentando...");
+                    //Log::warning("backtrackAssignment fallito con allowedDeviations={$allowedDeviations}, riprovo aumentando...");
                     $allowedDeviations++;
                 }
             } while ($assignmentPost === false && $allowedDeviations <= $maxDeviations);
 
             if ($assignmentPost === false) {
-                Log::warning("backtrackAssignment POST fallito del tutto!");
+                //Log::warning("backtrackAssignment POST fallito del tutto!");
             } else {
-                Log::info("Numero totale di iterazioni di backtracking per POST: " . $iterationCount);
+                //Log::info("Numero totale di iterazioni di backtracking per POST: " . $iterationCount);
 
                 $pre_test_emails = collect($assignmentPre)->flatten(1)->all();
                 $post_test_emails = collect($assignmentPost)->flatten(1)->all();
@@ -539,9 +539,9 @@ class MailController extends Controller
          */
         function backtrackAssignment($groups, $groupIndex, $assignment, $topicCounts, $usedCounterparts, $targetTopicCount = 2, $allowedDeviations = 0, &$iterationCount, $pre_or_post) {
             $iterationCount++;
-            Log::info("Entrata in backtrackAssignment - Group Index: {$groupIndex}");
+            //Log::info("Entrata in backtrackAssignment - Group Index: {$groupIndex}");
             if ($groupIndex === count($groups)) {
-                Log::info("Verifica finale topicCounts: " . json_encode($topicCounts));
+                //Log::info("Verifica finale topicCounts: " . json_encode($topicCounts));
 
                 $violations = 0; // Contatore per i topic che non rispettano esattamente $targetTopicCount
                 //$allowedDeviations = 1; // Numero massimo di topic che possono non rispettare il target
@@ -549,18 +549,18 @@ class MailController extends Controller
                 // Verifica finale: ogni topic deve comparire esattamente $targetTopicCount volte
                 foreach ($topicCounts as $topic => $count) {
                     if ($count !== $targetTopicCount) {
-                        Log::warning("Topic '{$topic}' ha count {$count}, atteso: {$targetTopicCount}.");
+                        //Log::warning("Topic '{$topic}' ha count {$count}, atteso: {$targetTopicCount}.");
                         $violations++;
                         //return false; //nel passo precedente prova un altra combinazione
                     }
                 }
 
                 if ($violations > $allowedDeviations) {
-                    Log::warning("Troppe deviazioni ({$violations} su {$allowedDeviations} consentite). Fallimento!");
+                    //Log::warning("Troppe deviazioni ({$violations} su {$allowedDeviations} consentite). Fallimento!");
                     return false; // Nel passo precedente prova un'altra combinazione
                 }
 
-                Log::info("Assegnamento finale valido con {$violations} deviazioni permesse: " . json_encode($assignment));
+                //Log::info("Assegnamento finale valido con {$violations} deviazioni permesse: " . json_encode($assignment));
                 return $assignment;
             }
 
@@ -568,10 +568,10 @@ class MailController extends Controller
             $groupKey = $group['key'];
             $required = ($pre_or_post == 0) ? $group['required_pre'] : $group['required_post'];
 
-            Log::info("Analizzando gruppo: {$groupKey}, richieste: {$required}, emails disponibili: " . count($group['emails']));
+            //Log::info("Analizzando gruppo: {$groupKey}, richieste: {$required}, emails disponibili: " . count($group['emails']));
             // Se il gruppo non ha abbastanza email, abortiamo.
             if (count($group['emails']) < $required) {
-                Log::error("Gruppo {$groupKey} ha solo " . count($group['emails']) . " email, richieste: {$required}");
+                //Log::error("Gruppo {$groupKey} ha solo " . count($group['emails']) . " email, richieste: {$required}");
                 return false;
             }
 
@@ -579,10 +579,10 @@ class MailController extends Controller
             $combinations = $this->combinations($group['emails'], $required);
 
             // Stampa le combinazioni con solo gli ID
-            Log::info("Generato " . count($combinations) . " combinazioni per {$groupKey}");
+            //Log::info("Generato " . count($combinations) . " combinazioni per {$groupKey}");
 
             foreach ($combinations as $comboIndex => $combo) {
-                Log::info("Analizzando combinazione #{$comboIndex} per {$groupKey}: ");
+                //Log::info("Analizzando combinazione #{$comboIndex} per {$groupKey}: ");
                 $validCombo = true;
                 $topicCountsCopy = $topicCounts;
                 $usedCounterpartsCopy = $usedCounterparts;
@@ -592,10 +592,10 @@ class MailController extends Controller
                     // Verifica il vincolo del topic: se aggiungendo questa email si supera il conteggio target, scarta.
                     $emailTopic = $email->topic; //$email->topic;$email['topic'];
                     $newCount = isset($topicCounts[$emailTopic]) ? $topicCounts[$emailTopic] + 1 : 1;
-                    Log::info("Email {$email->id} - Topic: '{$emailTopic}', Nuovo count: {$newCount}");
+                    //Log::info("Email {$email->id} - Topic: '{$emailTopic}', Nuovo count: {$newCount}");
 
                     if ($newCount > $targetTopicCount) {
-                        Log::warning("Scartata combinazione #{$comboIndex} per {$groupKey}, topic '{$emailTopic}' superato limite di {$targetTopicCount}");
+                        //Log::warning("Scartata combinazione #{$comboIndex} per {$groupKey}, topic '{$emailTopic}' superato limite di {$targetTopicCount}");
                         $validCombo = false;
                         break;//continue; // scarta questa scelta
                     }
@@ -609,7 +609,7 @@ class MailController extends Controller
                         if (!empty($usedCounterparts)) {
                             // Se il counterpart è già usato da un gruppo di mainCategory differente
                             if (isset($usedCounterparts[$counterpartID]) && $usedCounterparts[$counterpartID] !== $group['mainCategory']) {
-                                Log::warning("Scartata combinazione #{$comboIndex} per {$groupKey}, email {$email->id} ha counterpart ID {$counterpartID} già usato in {$usedCounterparts[$counterpartID]}");
+                                //Log::warning("Scartata combinazione #{$comboIndex} per {$groupKey}, email {$email->id} ha counterpart ID {$counterpartID} già usato in {$usedCounterparts[$counterpartID]}");
                                 $validCombo = false;
                                 break;//continue;
                             }
@@ -624,7 +624,7 @@ class MailController extends Controller
                     continue; // Prova la prossima combinazione
                 }
 
-                Log::info("Combinazione #{$comboIndex} per {$groupKey} è valida, procedo con la ricorsione.");
+                //Log::info("Combinazione #{$comboIndex} per {$groupKey} è valida, procedo con la ricorsione.");
                 // Aggiungi la combinazione (soluzione parziale) all'assegnazione corrente
                 $assignmentCopy = $assignment;
                 $assignmentCopy[$groupKey] = $combo; // per il momento scegliamo l'email
@@ -632,14 +632,14 @@ class MailController extends Controller
                 // Procedi ricorsivamente al gruppo successivo
                 $result = $this->backtrackAssignment($groups, $groupIndex + 1, $assignmentCopy, $topicCountsCopy, $usedCounterpartsCopy, $targetTopicCount, $allowedDeviations, $iterationCount, $pre_or_post);
                 if ($result !== false) {
-                    Log::info("Soluzione trovata e restituita.");
+                    //Log::info("Soluzione trovata e restituita.");
                     return $result;
                 }
 
             }
 
             // Se nessuna scelta porta a una soluzione valida, torna indietro
-            Log::warning("Nessuna combinazione valida trovata per {$groupKey}, ritorno al livello superiore.");
+            //Log::warning("Nessuna combinazione valida trovata per {$groupKey}, ritorno al livello superiore.");
             return false; //nessuna combinazione del passo precedente va bene, deve andare al passo prima
         }
 
