@@ -60,7 +60,7 @@ class TEIQueSFController extends Controller
         $alreadyAnswered = TEIQueSF::where([
             'user_id' => Auth::id(),
         ])->exists();
-        
+
         // Check if the user has already answered
         if (!$alreadyAnswered) {
             $validatedData['user_id'] = Auth::id();

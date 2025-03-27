@@ -113,8 +113,6 @@ Route::middleware([
         return view('debriefing');
     })->name('debriefing');
 
-    Route::get('/training', [TrainingController::class, 'showTraining'])->name('training');
-
     Route::get('/expelled', [QuestionnairesController::class, 'expelUser'])->name('expelUser');
 
     Route::get('/set-post-phase', function () {
@@ -141,7 +139,10 @@ Route::middleware([
     //Route::get('/final-data', [QuestionnairesController::class, 'finalData'])->name('final-data');
     Route::post('/save-final-data', [QuestionnairesController::class, 'saveFinalData'])->name('save-final-data');
 
-    Route::get('/{folder?}/{id?}', [MailController::class, 'show'])->name('show');
+    Route::get('/create-training', [TrainingController::class, 'createTraining'])->name('training_create');
 
+    Route::get('/training', [TrainingController::class, 'showTraining'])->name('training');
+
+    Route::get('/{folder?}/{id?}', [MailController::class, 'show'])->name('show');
 });
 

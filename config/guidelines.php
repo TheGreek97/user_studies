@@ -164,7 +164,7 @@ $guidelines = [
             "Low" => "Use community-driven messaging, reinforcing \"security is a team effort\" and collective reinforcement such as \"Most employees who avoid phishing do this...\". Highlight how following established cybersecurity norms and best practices protects everyone."
         ],
         "Learning Content" => [
-            "High" => "Highlight phishing tactics offering “exclusive” deals or personalized opportunities. Briefly cover advance phishing tactics such as spear-phishing.",
+            "High" => "Highlight phishing tactics offering \"exclusive\" deals or personalized opportunities. Briefly cover advance phishing tactics such as spear-phishing.",
             "Low" => "Reinforce routine security practices and standard phishing detection techniques that have worked for the majority."
         ],
         "Phishing Scenario" => [
