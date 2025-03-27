@@ -37,6 +37,11 @@ class BFI2XSController extends Controller
             'fastClickCount' => ['required', 'integer'],
         ]);
 
+        //  If the user got the control question wrong, he is ejected
+        if ($validatedData['trivial_question'] == 0) {
+            return redirect()->route('expelUser');
+        }
+
         $alreadyAnswered = BFI2XS::where([
             'user_id' => Auth::id(),
         ])->exists();

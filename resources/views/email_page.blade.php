@@ -114,7 +114,7 @@ $show_details = Auth::user()->show_details;
 
         <div class="flex bg-gray-100 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }"  style="height: calc(100vh - 77px);">
             <!-- Desktop sidebar -->
-            <aside class="z-20 hidden w-56 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
+            <aside class="z-20 hidden w-56 overflow-y-auto bg-white dark:bg-gray-800 custom:block flex-shrink-0">
                 <div class="py-4 text-gray-500 dark:text-gray-400">
                     <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
                         {{ config('app.name', 'E-Mail Client') }}
@@ -207,18 +207,25 @@ $show_details = Auth::user()->show_details;
             </aside>
             <!-- Mobile sidebar -->
             <!-- Backdrop -->
-            <div x-show="isSideMenuOpen" x-transition:enter="transition ease-in-out duration-150"
-                x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                x-transition:leave="transition ease-in-out duration-150" x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0"
-                class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
+            <div x-show="isSideMenuOpen"
+                 x-transition:enter="transition ease-in-out duration-150"
+                 x-transition:enter-start="opacity-0" 
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="transition ease-in-out duration-150" 
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 class="fixed inset-0 z-25 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
             </div>
             <aside
-                class="fixed inset-y-0 z-20 flex-shrink-0 w-64 mt-16 overflow-y-auto bg-white dark:bg-gray-800 md:hidden"
-                x-show="isSideMenuOpen" x-transition:enter="transition ease-in-out duration-150"
-                x-transition:enter-start="opacity-0 transform -translate-x-20" x-transition:enter-end="opacity-100"
-                x-transition:leave="transition ease-in-out duration-150" x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0 transform -translate-x-20" @click.away="closeSideMenu"
+                class="fixed inset-y-0 z-20 flex-shrink-0 w-56 mt-16 overflow-y-auto bg-white dark:bg-gray-800 custom:hidden"
+                x-show="isSideMenuOpen" 
+                x-transition:enter="transition ease-in-out duration-150"
+                x-transition:enter-start="opacity-0 transform -translate-x-20" 
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in-out duration-150" 
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0 transform -translate-x-20" 
+                @click.away="closeSideMenu"
                 @keydown.escape="closeSideMenu">
                 <div class="py-4 text-gray-500 dark:text-gray-400">
                     <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
@@ -312,7 +319,7 @@ $show_details = Auth::user()->show_details;
                         class="container flex items-center justify-between h-full px-6 mx-auto text-blue-600 dark:text-blue-300">
                         <!-- Mobile hamburger -->
                         <button
-                            class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-blue"
+                            class="p-1 mr-5 -ml-1 rounded-md custom:hidden block focus:outline-none focus:shadow-outline-blue"
                             @click="toggleSideMenu" aria-label="Menu">
                             <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
@@ -460,8 +467,8 @@ $show_details = Auth::user()->show_details;
                                 </div>
                             </div>
                         @else
-                            <div
-                                class="h-auto rounded-lg shadow-xs my-10 p-3 bg-white dark:bg-gray-800 overflow-y-hidden mr-[240px] md:mr-[280px]">
+                        <div class="h-auto rounded-lg shadow-xs my-10 p-3 bg-white dark:bg-gray-800 overflow-y-hidden 
+                                    sm:mr-0 w-full md:w-auto md:mr-[280px]">
                                 <!-- Contenuti del primo div -->
                                 <div class="w-full flex flex-row space-x-2 pb-2">
                                     <a data-tooltip-target="tooltip-back" data-tooltip-placement="bottom"
@@ -600,8 +607,11 @@ $show_details = Auth::user()->show_details;
     
                                 
                             </div>
-                            <div
-                                class="w-[240px] md:w-[265px] h-[590px] md:h-[665px] border-2 border-blue-500 rounded-lg shadow-md p-4 fixed right-5 top-50 my-10 bg-white dark:bg-gray-800 z-20">
+                            <div class="w-full sm:w-[90%] md:w-[265px] h-auto md:h-[665px] border-2 border-blue-500 rounded-lg shadow-md p-4 
+                                        bg-white dark:bg-gray-800 z-20 
+                                        sm:relative sm:left-1/2 sm:-translate-x-1/2 
+                                        md:fixed md:right-5 md:top-50 md:left-auto md:translate-x-0">
+
                                 <h3 class="md:text-2xl font-bold text-gray-800">Evaluate this email</h3>
                                 <div x-data="{ phishing: '' }" class="space-y-3 my-6">
                                     <p class="md:text-lg text-gray-900 dark:text-white font-semibold">Do you think this
