@@ -11,9 +11,19 @@ use Illuminate\Support\Facades\Log;
 
 class QuestionnairesController extends Controller
 {
+    public function expelUser()
+    {
+        session(['expelled' => true]);
+        return view('expelled');
+    }
 
     public function showQuestionnaire($step)
     {
+        
+        if (session()->has('expelled')) {
+            return redirect(route('expelUser'));
+        }
+        
         $questionnaires = [
             1 => 'questionnaires.bfi2xs',
             2 => 'questionnaires.stp-ii-b',
@@ -63,7 +73,17 @@ class QuestionnairesController extends Controller
                 'time_spent' => 'required|numeric|min:1'
             ]);
 
-            $phase = session('post_phase') ? 'post' : 'pre';
+            // Check if the email has already been saved for the current user
+            $existingEntry = UserEmailQuestionnaire::where('email_id', $validatedData['emailId'])
+                ->where('user_id', Auth::id())
+                ->first();
+
+            if ($existingEntry) {
+                // Optionally, add a flash message or similar to notify the user
+                return redirect(route('show', ['folder' => 'inbox']));
+            }
+
+            $phase = session('pre_phase_done') ? 'post' : 'pre';
 
             $dataToInsert = [
                 'email_id'   => $validatedData['emailId'],

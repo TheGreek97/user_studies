@@ -13,6 +13,7 @@ class TrainingController extends Controller
     public function showTraining()
     {
         $user = Auth::user();
+        // session()->put('training_done', true);
         if (!session()->has('pre_phase_done') || session()->has('training_done')) {
             return redirect()->route('show', ['folder' => 'inbox']);
         }

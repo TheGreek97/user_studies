@@ -164,7 +164,12 @@ module.exports = {
             fontFamily: {
                 sans: ['Inter', ...defaultTheme.fontFamily.sans],
             },
+            screens: {
+                'custom': '1024px',
+            },
         },
     },
     plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography'), require('flowbite/plugin')],
 };
+
+  

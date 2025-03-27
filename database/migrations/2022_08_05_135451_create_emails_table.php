@@ -29,6 +29,11 @@ return new class extends Migration
             $table->enum('difficulty_level', ['easy', 'medium', 'hard']);
             $table->boolean('phishing')->default(0);  // 0 = false, 1 = true
             $table->boolean('counterpart')->default(0);  // 0 = false, 1 = true
+            $table->unsignedBigInteger('counterpart_email_id')->nullable();
+            $table->enum('topic', [
+                'Suspicious activity', 'Payment required', 'Failed login attempts',
+                'Gift card', 'Action required', 'Tracking information'
+            ]);
             //$table->unsignedBigInteger('user_id');
             //$table->timestamps();
             //$table->foreign('user_id')->references('id')->on('users');

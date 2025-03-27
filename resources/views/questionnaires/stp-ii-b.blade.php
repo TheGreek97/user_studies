@@ -14,7 +14,7 @@
                             $questionsPerTab = 10;
                             $totalQuestions = count($questions);
                             $correctAnswer = 2;
-                            $trivialPosition = rand(0, $totalQuestions - 1);
+                            $trivialPosition = rand(3, $totalQuestions - 3);
                         @endphp
 
                         <div>

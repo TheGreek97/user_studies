@@ -22,10 +22,15 @@ class MailController extends Controller
         //Log::info('Current route: ' . FRequest::url());
         //Log::info('Current session:', session()->all());
 
+        if (session()->has('expelled')) {
+            return redirect(route('expelUser'));
+        }
+
         if (!session()->has('consent')) {
             return redirect(route('welcome'));
         }
         $auth_user = Auth::user();
+        $seed = (int) Auth::id();  // Randomize according to user id
         info("ID " . $id);
 
         // session([
@@ -67,18 +72,41 @@ class MailController extends Controller
         }
         //Else: EMAIL CLASSIFICATION
 
+        session_start();
+        unset($_SESSION['emails']);
         //Divide emails proportionally into pre and post-test groups and return the appropriate group
-        $emails = $this->retrieveEmailsForThePhase($folder);
+        if (!isset($_SESSION['emails'])) {
+            $_SESSION['emails'] = $this->retrieveEmailsForThePhase($folder);
+        }
+        $emailGroups = $_SESSION['emails'];
+        
+         //ASSIGN A GROUP OF EMAILS
+        if(!session('pre_phase_done')){
+            //PRE-CLASSIFICATION
+            $emails = collect($emailGroups['pre']);
+            MailController::seededShuffle($emails, $seed);
+            // Shuffle again for pre-test group (to remove the predefinited order of groups)
+            Log::info("Final pre-test email count: " . $emails->count());
+        } else {
+            //POST-CLASSIFICATION
+            $emails = collect($emailGroups['post']);
+            MailController::seededShuffle($emails, $seed);
+            // Shuffle again for post-test group (to remove the predefinited order of groups)
+            Log::info("Final post-test email count: " . $emails->count());
+        }
 
-
+        $placeholders = ['{USER NAME}', '{USERNAME}', '{username}', '{user name}'];
         // preprocess the emails
         foreach ($emails as $k => $e) {
             // Set the date to the email
             $e->date = $this->get_near_date();
             // replace the name in the email parts with the name of the user
-            $e->content = str_replace("{USER NAME}", $auth_user->name, $e->content);
-            $e->subject = str_replace("{USER NAME}", $auth_user->name, $e->subject);
-            $e->preview_text = str_replace("{USER NAME}", $auth_user->name, $e->preview_text);
+            // Replace the placeholders in the content, subject, and preview_text
+            foreach ($placeholders as $placeholder) {
+                $e->content = str_replace($placeholder, $auth_user->name, $e->content);
+                $e->subject = str_replace($placeholder, $auth_user->name, $e->subject);
+                $e->preview_text = str_replace($placeholder, $auth_user->name, $e->preview_text);
+            }
 
             // RENDER DATES
             // Replace {now_email_datetime} with the current date time of the email - 3 minutes.
@@ -140,7 +168,7 @@ class MailController extends Controller
             }
         } else {
             //POST-CLASSIFICATION    (double the count of answers for user)
-            if (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) <  (22)) {
+            if (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) <  (self::MAILS_NUMBER*2)) {
                 if (session()->has('startStudy')) {
                     session()->remove('startStudy');
                     return view('email_page', ['folder' => $folder, 'emails' => $emails, 'startStudy' => true]);
@@ -297,7 +325,6 @@ class MailController extends Controller
             ->where('type', $folder)
             ->get();
         Log::info("Total emails retrieved: " . $emails->count());
-
         $seed = (int) Auth::id();  // Randomize according to user id
 
         // subdivision by phishing
@@ -334,35 +361,11 @@ class MailController extends Controller
             'genuine' => [
                 'counterpart' => [
                     'medium' => $c_genuine_emails->where('difficulty_level', 'medium'),
-                    'hard' => $c_genuine_emails->where('difficulty_level', 'hard'),
+                    'easy' => $c_genuine_emails->where('difficulty_level', 'easy'),
                 ],
                 'no_counterpart' => [
                     'medium' => $not_c_genuine_emails->where('difficulty_level', 'medium'),
-                    'hard' => $not_c_genuine_emails->where('difficulty_level', 'hard'),
-                ],
-            ],
-        ];
-        $splitPoints = [
-            'phishing' => [
-                'counterpart' => [
-                    'easy' => [1, 2],  // Primo split a 1, secondo a 2
-                    'medium' => [1, 2],
-                    'hard' => [1, 2],
-                ],
-                'no_counterpart' => [
-                    'easy' => [1, 2],
-                    'medium' => [1, 2],
-                    'hard' => [1, 2],
-                ],
-            ],
-            'genuine' => [
-                'counterpart' => [
-                    'medium' => [2, 4],
-                    'hard' => [1, 2],
-                ],
-                'no_counterpart' => [
-                    'medium' => [1, 2],
-                    'hard' => [2, 4],
+                    'easy' => $not_c_genuine_emails->where('difficulty_level', 'easy'),
                 ],
             ],
         ];
@@ -371,38 +374,296 @@ class MailController extends Controller
         $pre_test_emails = [];
         $post_test_emails = [];
 
-        foreach ($groupedEmails as $category => $types) { // phishing / genuine
-            foreach ($types as $counterpartType => $difficultyGroups) { // counterpart / no_counterpart
-                foreach ($difficultyGroups as $difficulty => $emails) { // low / medium / high
-                    MailController::seededShuffle($emails, $seed); // Shuffle the emails before splitting them into pre and post groups
-                    [$splitPoint, $secondSplitPoint] = $splitPoints[$category][$counterpartType][$difficulty];
-                    $splitPoint = min($splitPoint, $emails->count()); // we divide in half for pre and post groups
-
-                    $pre_test_emails[$category][$counterpartType][$difficulty] = collect($emails->slice(0, $splitPoint));
-                    $post_test_emails[$category][$counterpartType][$difficulty] = collect($emails->slice($splitPoint, $secondSplitPoint - $splitPoint));
-
-                    Log::info("Category: $category, Counterpart: $counterpartType, Difficulty: $difficulty");
-                    Log::info("Total: " . $emails->count() . ", Pre-test: " . $pre_test_emails[$category][$counterpartType][$difficulty]->count() . ", Post-test: " . $post_test_emails[$category][$counterpartType][$difficulty]->count());
+        //Shafle groupedEmails
+        foreach ($groupedEmails as $category => &$types) { // phishing / genuine
+            foreach ($types as $counterpartType => &$difficultyGroups) { // counterpart / no_counterpart
+                foreach ($difficultyGroups as $difficulty => &$emails) { // low / medium / high
+                    MailController::seededShuffle($emails, $seed); // Shuffle the emails
                 }
             }
         }
 
-        //ASSIGN A GROUP OF EMAILS
-        if(!session('pre_phase_done')){
-            //PRE-CLASSIFICATION
-            $emails = collect($pre_test_emails)->flatten(3);
-            MailController::seededShuffle($emails, $seed);
-            // Shuffle again for pre-test group (to remove the predefinited order of groups)
-            Log::info("Final pre-test email count: " . $emails->count());
+        // Prima di tutto appiattiamo i gruppi:
+        $flattenedGroups = $this->flattenGroups($groupedEmails);
+        
+        static $iterationCount = 0;
+        $allowedDeviations = 0; #per rilassare 2 email per topic per fase se necessario
+        $maxDeviations = 5; // massimo numero di deviazioni consentite
+        do {
+            // Eseguiamo la procedura per l'insieme "pre":
+            $assignmentPre = $this->backtrackAssignment($flattenedGroups, 0, [], [], [], 2, $allowedDeviations, $iterationCount, 0);
+            if ($assignmentPre === false) {
+                Log::warning("backtrackAssignment fallito con allowedDeviations={$allowedDeviations}, riprovo rilassando il vincolo...");
+                $allowedDeviations++;
+            }
+        } while ($assignmentPre === false && $allowedDeviations <= $maxDeviations);
+
+        if ($assignmentPre === false) {
+            Log::warning("backtrackAssignment PRE fallito del tutto!");
         } else {
-            //POST-CLASSIFICATION
-            $emails = collect($post_test_emails)->flatten(3);
-            MailController::seededShuffle($emails, $seed);
-            // Shuffle again for post-test group (to remove the predefinited order of groups)
-            Log::info("Final post-test email count: " . $emails->count());
+            Log::info("Numero totale di iterazioni di backtracking per PRE: " . $iterationCount);
+
+            // echo "Soluzione per PRE:\n";
+            // foreach ($assignmentPre as $groupKey => $emails) {
+            //     echo "Gruppo: $groupKey\n";
+            //     foreach ($emails as $email) {
+            //         echo "- Email: " . $email->id . " (Topic: " . $email->topic . ")\n";
+            //     }
+            // }
+    
+            $usedEmails = []; // Raccogliamo le email usate nell'assegnazione PRE
+            foreach ($assignmentPre as $groupKey => $emails) {
+                foreach ($emails as $email) {
+                    $usedEmails[] = $email->id;
+                    // Aggiungi la controparte, se esiste
+                    if (isset($email->Counterpart_Email_ID)) {
+                        $usedEmails[] = $email->Counterpart_Email_ID;
+                    }
+                }
+            }
+
+            // Rimuoviamo le email già usate dall'insieme per "post"
+            $flattenedGroupsForPost = $this->removeUsedEmails($flattenedGroups, $usedEmails);
+
+            // Analogamente, si esegue l'assegnazione per l'insieme "post".
+            static $iterationCount = 0;
+            $allowedDeviations = 0;
+            $maxDeviations = 5;
+            do {    
+                $assignmentPost = $this->backtrackAssignment($flattenedGroupsForPost, 0, [], [], [], 2, $allowedDeviations, $iterationCount, 1);
+                if ($assignmentPost === false) {
+                    Log::warning("backtrackAssignment fallito con allowedDeviations={$allowedDeviations}, riprovo aumentando...");
+                    $allowedDeviations++;
+                }
+            } while ($assignmentPost === false && $allowedDeviations <= $maxDeviations);
+
+            if ($assignmentPost === false) {
+                Log::warning("backtrackAssignment POST fallito del tutto!");
+            } else {
+                Log::info("Numero totale di iterazioni di backtracking per POST: " . $iterationCount);
+
+                $pre_test_emails = collect($assignmentPre)->flatten(1)->all();
+                $post_test_emails = collect($assignmentPost)->flatten(1)->all();
+            }
+
+            // if ($assignmentPost === false) {
+            //     echo "Nessuna soluzione valida trovata per l'insieme POST.";
+            // } else {
+            //     echo "Soluzione per POST:\n";
+            //     foreach ($assignmentPost as $groupKey => $emails) {
+            //         echo "Gruppo: $groupKey\n";
+            //         foreach ($emails as $email) {
+            //             echo "- Email: " . $email->id . " (Topic: " . $email->topic . ")\n";
+            //         }
+            //     }
+            // }
+
         }
 
         // Return the shuffled collection of emails
-        return $emails;
+        return [
+            'pre'  => $pre_test_emails,
+            'post' => $post_test_emails,
+        ];
     }
-}
+
+       /**
+         * Funzione per "appiattire" i gruppi in un array lineare, in modo da 
+         * poter iterare facilmente durante il backtracking.
+         */
+        function flattenGroups($groupedEmails) {
+            $groups = [];
+            foreach ($groupedEmails as $mainCategory => $types) {
+                foreach ($types as $counterpartStatus => $levels) {
+                    foreach ($levels as $difficulty => $emails) {
+                        // Ogni gruppo è identificato da una stringa unica (es. phishing_counterpart_easy)
+                        $groupKey = "{$mainCategory}_{$counterpartStatus}_{$difficulty}";
+                        // Imposta required = 2 per g_c_m e g_n_e
+                        $required_pre = ($groupKey === 'genuine_counterpart_easy' || $groupKey === 'genuine_no_counterpart_medium') ? 2 : 1;
+                        $required_post = ($groupKey === 'genuine_counterpart_medium' || $groupKey === 'genuine_no_counterpart_easy') ? 2 : 1;
+
+                        // Inseriamo anche metadati utili per i vincoli (es. se appartiene a counterpart)
+                        $groups[] = [
+                            'key' => $groupKey,
+                            'mainCategory' => $mainCategory,
+                            'counterpart' => ($counterpartStatus === 'counterpart'),
+                            'difficulty' => $difficulty,
+                            // La lista delle email per questo gruppo
+                            'emails' => $emails->all(), // supponendo che ->all() restituisca un array di email
+                            // Numero richiesto di email da estrarre (adattabile)
+                            'required_pre' => $required_pre, 
+                            'required_post' => $required_post 
+                        ];
+                    }
+                }
+            }
+            return $groups;
+        }
+
+        /**
+         * Genera tutte le combinazioni di dimensione $k da un array $arr.
+         */
+        function combinations(array $arr, int $k) {
+            if ($k === 0) {
+                return [[]];
+            }
+            if (count($arr) < $k) {
+                return [];
+            }
+            $result = [];
+            $keys = array_keys($arr); // Otteniamo le chiavi originali
+            for ($i = 0; $i <= count($arr) - $k; $i++) {
+                $key = $keys[$i]; // Usiamo la chiave originale
+                $head = $arr[$key];//$head = $arr[$i];
+                $tailCombs = $this->combinations(array_slice($arr, $i + 1), $k - 1);
+                foreach ($tailCombs as $comb) {
+                    array_unshift($comb, $head);//$comb[$key] = $head;//array_unshift($comb, $head);
+                    $result[] = $comb;
+                }
+            }
+            return $result;
+        }
+
+
+        /**
+         * Funzione di backtracking per assegnare le email a un insieme (pre o post)
+         *
+         * @param array $groups          Lista dei gruppi appiattiti
+         * @param int   $groupIndex      Indice corrente del gruppo da processare
+         * @param array $assignment      Soluzione parziale: array associativo group_key => [email scelte]
+         * @param array $topicCounts     Array che conta le occorrenze per topic nell'insieme corrente
+         * @param array $usedCounterparts Array per tracciare i Counterpart_Email_ID già usati in gruppi counterpart.
+         * @param int   $targetTopicCount Numero target per ciascun topic (ad es. 2)
+         * @param int   $allowedDeviations  Numero di Topic che possono violare la condizione di presenza 2 volte
+         * @param int   $iterationCount  Contatore globale delle iterazioni del backtracking
+         * @param int   $pre_or_post     Requisiti split, 0 per pre, 1 per post
+         *
+         * @return mixed                 Soluzione completa (assignment) oppure false se nessuna soluzione valida
+         */
+        function backtrackAssignment($groups, $groupIndex, $assignment, $topicCounts, $usedCounterparts, $targetTopicCount = 2, $allowedDeviations = 0, &$iterationCount, $pre_or_post) {
+            $iterationCount++;
+            Log::info("Entrata in backtrackAssignment - Group Index: {$groupIndex}");
+            if ($groupIndex === count($groups)) {
+                Log::info("Verifica finale topicCounts: " . json_encode($topicCounts));
+
+                $violations = 0; // Contatore per i topic che non rispettano esattamente $targetTopicCount
+                //$allowedDeviations = 1; // Numero massimo di topic che possono non rispettare il target
+
+                // Verifica finale: ogni topic deve comparire esattamente $targetTopicCount volte
+                foreach ($topicCounts as $topic => $count) {
+                    if ($count !== $targetTopicCount) {
+                        Log::warning("Topic '{$topic}' ha count {$count}, atteso: {$targetTopicCount}.");
+                        $violations++;
+                        //return false; //nel passo precedente prova un altra combinazione
+                    }
+                }
+
+                if ($violations > $allowedDeviations) {
+                    Log::warning("Troppe deviazioni ({$violations} su {$allowedDeviations} consentite). Fallimento!");
+                    return false; // Nel passo precedente prova un'altra combinazione
+                }
+
+                Log::info("Assegnamento finale valido con {$violations} deviazioni permesse: " . json_encode($assignment));
+                return $assignment;
+            }
+
+            $group =    $groups[$groupIndex];
+            $groupKey = $group['key'];
+            $required = ($pre_or_post == 0) ? $group['required_pre'] : $group['required_post'];
+
+            Log::info("Analizzando gruppo: {$groupKey}, richieste: {$required}, emails disponibili: " . count($group['emails']));
+            // Se il gruppo non ha abbastanza email, abortiamo.
+            if (count($group['emails']) < $required) {
+                Log::error("Gruppo {$groupKey} ha solo " . count($group['emails']) . " email, richieste: {$required}");
+                return false;
+            }
+
+            // Genera tutte le possibili combinazioni di email per il gruppo corrente.
+            $combinations = $this->combinations($group['emails'], $required);
+
+            // Stampa le combinazioni con solo gli ID
+            Log::info("Generato " . count($combinations) . " combinazioni per {$groupKey}");
+
+            foreach ($combinations as $comboIndex => $combo) {
+                Log::info("Analizzando combinazione #{$comboIndex} per {$groupKey}: ");
+                $validCombo = true;
+                $topicCountsCopy = $topicCounts;
+                $usedCounterpartsCopy = $usedCounterparts;
+
+                // Verifica i vincoli per ciascuna email nella combinazione
+                foreach ($combo as $email) {
+                    // Verifica il vincolo del topic: se aggiungendo questa email si supera il conteggio target, scarta.
+                    $emailTopic = $email->topic; //$email->topic;$email['topic'];
+                    $newCount = isset($topicCounts[$emailTopic]) ? $topicCounts[$emailTopic] + 1 : 1;
+                    Log::info("Email {$email->id} - Topic: '{$emailTopic}', Nuovo count: {$newCount}");
+
+                    if ($newCount > $targetTopicCount) {
+                        Log::warning("Scartata combinazione #{$comboIndex} per {$groupKey}, topic '{$emailTopic}' superato limite di {$targetTopicCount}");
+                        $validCombo = false;
+                        break;//continue; // scarta questa scelta
+                    }
+                    $topicCountsCopy[$emailTopic] = $newCount;
+
+                    // Se il gruppo fa parte dei counterpart, controlla la regola di esclusione
+                    if ($group['counterpart'] && isset($email->Counterpart_Email_ID)) { //$email->Counterpart_Email_ID $email['Counterpart_Email_ID']
+                        $counterpartID = $email['Counterpart_Email_ID']; //$email->Counterpart_Email_ID;
+                        // Se l'id è già usato nella controparte dell'altro gruppo, non è ammesso.
+                        // se $group['mainCategory'] è 'phishing', controlliamo quelli 'genuine' e viceversa.
+                        if (!empty($usedCounterparts)) {
+                            // Se il counterpart è già usato da un gruppo di mainCategory differente
+                            if (isset($usedCounterparts[$counterpartID]) && $usedCounterparts[$counterpartID] !== $group['mainCategory']) {
+                                Log::warning("Scartata combinazione #{$comboIndex} per {$groupKey}, email {$email->id} ha counterpart ID {$counterpartID} già usato in {$usedCounterparts[$counterpartID]}");
+                                $validCombo = false;
+                                break;//continue;
+                            }
+                            // Registra il mainCategory per questo counterpart
+                            $usedCounterpartsCopy[$counterpartID] = $group['mainCategory'];
+                        }
+                    }
+
+                }
+
+                if (!$validCombo) {
+                    continue; // Prova la prossima combinazione
+                }
+
+                Log::info("Combinazione #{$comboIndex} per {$groupKey} è valida, procedo con la ricorsione.");
+                // Aggiungi la combinazione (soluzione parziale) all'assegnazione corrente
+                $assignmentCopy = $assignment;
+                $assignmentCopy[$groupKey] = $combo; // per il momento scegliamo l'email
+
+                // Procedi ricorsivamente al gruppo successivo
+                $result = $this->backtrackAssignment($groups, $groupIndex + 1, $assignmentCopy, $topicCountsCopy, $usedCounterpartsCopy, $targetTopicCount, $allowedDeviations, $iterationCount, $pre_or_post);
+                if ($result !== false) {
+                    Log::info("Soluzione trovata e restituita.");
+                    return $result;
+                }
+    
+            }
+
+            // Se nessuna scelta porta a una soluzione valida, torna indietro
+            Log::warning("Nessuna combinazione valida trovata per {$groupKey}, ritorno al livello superiore.");
+            return false; //nessuna combinazione del passo precedente va bene, deve andare al passo prima
+        }
+
+        function removeUsedEmails($flattenedGroups, $usedEmails) {
+            foreach ($flattenedGroups as &$group) {
+                // Rimuovi le email già utilizzate
+                $group['emails'] = array_filter($group['emails'], function($email) use ($usedEmails) {
+                    return !in_array($email->id, $usedEmails);
+                });
+        
+                // Rimuovi anche le email che sono controparte nelle email già utilizzate
+                $group['emails'] = array_filter($group['emails'], function($email) use ($usedEmails) {
+                    // Controlla se la proprietà esiste
+                    if (isset($email->Counterpart_Email_ID)) {
+                        return !in_array($email->Counterpart_Email_ID, $usedEmails);
+                    }
+                    return true; // Se non esiste, non è da rimuovere
+                });
+            }
+        
+            return $flattenedGroups;
+        }
+        
+    }
