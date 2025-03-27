@@ -38,14 +38,16 @@ class ProcessTraining implements ShouldQueue
         // Get user conditions
         $personalization_condition = $training->user->training_personalization;
         $length_condition = $training->user->length_condition;
-        $developer_prompt = $this->getDeveloperPrompt($personalization_condition, $length_condition);
+        $user_name = $training->user->name;
+        $developer_prompt = $this->getDeveloperPrompt($personalization_condition, $length_condition, $user_name);
         $section_prompts = $this->getSectionPrompts($personalization_condition, $length_condition);
 
         $context = [['role' => 'developer', 'content' => $developer_prompt]];
 
         foreach (["introduction", "scenario", "defense_strategies", "exercises", "conclusions"]  as $section) {
             $prompt = $section_prompts[$section];
-            $response = Http::withHeaders([
+
+           $response = Http::withHeaders([
                 'Authorization' => "Bearer $apiKey",
                 'Content-Type' => 'application/json',
             ])->post('https://api.openai.com/v1/chat/completions', [
@@ -61,15 +63,18 @@ class ProcessTraining implements ShouldQueue
             // Maintain context
             $context[] = ['role' => 'user', 'content' => $prompt];
             $context[] = ['role' => 'assistant', 'content' => $generatedText];
+
+            /* DEBUG values:
+            sleep(2);
+            $training->$section = $section;*/
         }
 
         $training->completed = true;
         $training->save();
     }
 
-    private function getDeveloperPrompt($personalization_condition, $length_condition)
+    private function getDeveloperPrompt($personalization_condition, $length_condition, $user_name)
     {
-        $user_name = Auth::user()->first_name;
         $personalized_string = $personalization_condition == "no" ? "" : "personalized";
         $minutes = $length_condition == "short" ? "9" : "18";
 

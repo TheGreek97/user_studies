@@ -17,7 +17,9 @@ class TrainingController extends Controller
             return redirect()->route('show', ['folder' => 'inbox']);
         }
         $training = $user->training;
-        if (! $training->completed) {
+        if ($training == null) {
+            return redirect()->route('training_create');
+        } else if (! $training->completed) {
             return view("training.status_not_ready");
         }
         return view('training.training_show', ["training" => $training]);

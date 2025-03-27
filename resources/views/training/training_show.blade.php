@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="slot">
-        <div class="min-h-screen bg-gray-200 flex justify-center items-center">
+        <div x-data="load()" class="min-h-screen bg-gray-200 flex justify-center items-center">
             <div class="p-12 m-10 bg-white rounded-2xl shadow-xl z-20">
                 <div class="text-3xl font-bold text-left mb-5 cursor-pointer">Training</div>
                 <div x-show="step === 1" id="section-1">
