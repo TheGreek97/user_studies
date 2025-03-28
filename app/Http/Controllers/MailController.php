@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Request as FRequest;
 
 class MailController extends Controller
 {
-    const MAILS_NUMBER = 2;
+    const MAILS_NUMBER = 12;
 
     public function show($folder = 'inbox', $id = null)
     {
@@ -51,7 +51,7 @@ class MailController extends Controller
         }
 
         // Start training generation after questionnaire 3 is completed
-        if (session()->has("questionnaire_3done") && !session()->has("training_generation_started")){
+        if (session()->has("questionnaire_3done") && ! session()->has("generating_training")){
             return redirect()->route("training_create");
         }
 
@@ -72,38 +72,38 @@ class MailController extends Controller
         session_start();
         //unset($_SESSION['emails']);
         //Divide emails proportionally into pre- and post-test groups and return the appropriate group
+
         if (!isset($_SESSION['emails'])) {
             $_SESSION['emails'] = $this->retrieveEmailsForThePhase($folder);
         }
         $emailGroups = $_SESSION['emails'];
-
          //ASSIGN A GROUP OF EMAILS
         if(!session('pre_phase_done')){
             //PRE-CLASSIFICATION
             $emails = collect($emailGroups['pre']);
             MailController::seededShuffle($emails, $seed);
-            // Shuffle again for pre-test group (to remove the predefinited order of groups)
+            // Shuffle again for pre-test group (to remove the predefined order of groups)
             //Log::info("Final pre-test email count: " . $emails->count());
         } else {
             //POST-CLASSIFICATION
             $emails = collect($emailGroups['post']);
             MailController::seededShuffle($emails, $seed);
-            // Shuffle again for post-test group (to remove the predefinited order of groups)
+            // Shuffle again for post-test group (to remove the predefined order of groups)
             //Log::info("Final post-test email count: " . $emails->count());
         }
 
-        $placeholders = ['{USER NAME}', '{USERNAME}', '{username}', '{user name}'];
+        $placeholder = '{USER NAME}'; //s = ['{USER NAME}', '{USERNAME}', '{username}', '{user name}'];
         // preprocess the emails
+
         foreach ($emails as $k => $e) {
             // Set the date to the email
             $e->date = $this->get_near_date();
             // replace the name in the email parts with the name of the user
             // Replace the placeholders in the content, subject, and preview_text
-            foreach ($placeholders as $placeholder) {
-                $e->content = str_replace($placeholder, $auth_user->name, $e->content);
-                $e->subject = str_replace($placeholder, $auth_user->name, $e->subject);
-                $e->preview_text = str_replace($placeholder, $auth_user->name, $e->preview_text);
-            }
+            //foreach ($placeholders as $placeholder) {}
+            $e->content = str_replace($placeholder, $auth_user->name, $e->content);
+            $e->subject = str_replace($placeholder, $auth_user->name, $e->subject);
+            $e->preview_text = str_replace($placeholder, $auth_user->name, $e->preview_text);
 
             // RENDER DATES
             // Replace {now_email_datetime} with the current date time of the email - 3 minutes.

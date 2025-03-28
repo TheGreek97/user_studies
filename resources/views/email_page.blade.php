@@ -1,9 +1,5 @@
 <?php
 use Illuminate\Support\Facades\Auth;
-
-$warning_type = Auth::user()->warning_type;
-$show_explanation = Auth::user()->show_explanation;
-$show_details = Auth::user()->show_details;
 ?>
 <x-app-layout>
     <x-slot name="slot">
@@ -112,7 +108,7 @@ $show_details = Auth::user()->show_details;
             </script>
         @endif
 
-        <div class="flex bg-gray-100 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }"  style="height: calc(100vh - 77px);">
+        <div class="flex bg-gray-100 dark:bg-gray-900 overflow-x-hidden" :class="{ 'overflow-hidden': isSideMenuOpen }"  style="height: calc(100vh - 77px);">
             <!-- Desktop sidebar -->
             <aside class="z-20 hidden w-56 overflow-y-auto bg-white dark:bg-gray-800 custom:block flex-shrink-0">
                 <div class="py-4 text-gray-500 dark:text-gray-400">
@@ -315,8 +311,8 @@ $show_details = Auth::user()->show_details;
             </aside>
             <div class="flex flex-col flex-1 w-full">
                 <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
-                    <div
-                        class="container flex items-center justify-between h-full px-6 mx-auto text-blue-600 dark:text-blue-300">
+                    <div style="min-width:99%;"
+                        class="container flex justify-between w-full h-full px-6 ml-3 text-blue-600 dark:text-blue-300">
                         <!-- Mobile hamburger -->
                         <button
                             class="p-1 mr-5 -ml-1 rounded-md custom:hidden block focus:outline-none focus:shadow-outline-blue"
@@ -328,7 +324,7 @@ $show_details = Auth::user()->show_details;
                             </svg>
                         </button>
                         <!-- Search input -->
-                        <div class="flex justify-center flex-1 lg:mr-32 opacity-0">
+                        <!--div class="flex justify-center flex-1 lg:mr-32 opacity-0">
                             <div class="relative w-full max-w-xl mr-6 focus-within:text-blue-500">
                                 <div class="absolute inset-y-0 flex items-center pl-2">
                                     <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -342,6 +338,7 @@ $show_details = Auth::user()->show_details;
                                     type="text" placeholder="Search for projects" aria-label="Search" />
                             </div>
                         </div>
+                        -->
                         <ul class="flex items-center flex-shrink-0 space-x-6">
                             <li class="relative">
                                 <button class="align-middle rounded-full focus:shadow-outline-blue focus:outline-none"
@@ -434,11 +431,7 @@ $show_details = Auth::user()->show_details;
                                                 @else
                                                     <tr class="text-gray-700 cursor-pointer hover:bg-gray-200 hover:dark:bg-gray-600 dark:text-gray-400 border-2 border-blue-800"
                                                         @if ($email->type === 'inbox')
-                                                            @if ($email->show_warning && $warning_type === 'popup_email')
-                                                                onclick="open_warning('{{ route('show', ['folder' => $folder, 'id' => $email->id]) }}', {{ $email->id }}, '{!! $email->warning_explanation !!}')"
-                                                            @else
-                                                                onclick="window.location.href = '{{ route('show', ['folder' => $folder, 'id' => $email->id]) }}'"
-                                                            @endif
+                                                            onclick="window.location.href = '{{ route('show', ['folder' => $folder, 'id' => $email->id]) }}'"
                                                         @endif
                                                     >
                                                 @endif
@@ -467,9 +460,9 @@ $show_details = Auth::user()->show_details;
                                 </div>
                             </div>
                         @else
-                            <div class="h-auto rounded-lg shadow-xs my-10 p-3 bg-white dark:bg-gray-800 overflow-y-hidden sm:mr-0 w-full md:w-auto md:mr-[280px]">
+                            <div style="width:71%" class="h-auto rounded-lg shadow-xs my-10 p-3 bg-white dark:bg-gray-800 overflow-y-hidden sm:mr-0 w-full md:w-auto md:mr-[280px]">
                                 <!-- Contenuti del primo div -->
-                                <div class="w-full flex flex-row space-x-2 pb-2">
+                                <div class="flex flex-row space-x-2 pb-2">
                                     <a data-tooltip-target="tooltip-back" data-tooltip-placement="bottom"
                                         class="cursor-pointer hover:bg-gray-200 rounded-full p-2"
                                         href="{{ route('show', ['folder' => $folder]) }}">
@@ -609,16 +602,22 @@ $show_details = Auth::user()->show_details;
                             <style>
                                 /* Stile di base: applicato a tutte le viewport */
                                 .cssVersionDiv {
-                                background-color: #ffffff;            /* bg-white */
-                                border: 2px solid #3f83f8;            /* border-2 e border-blue-500 */
-                                border-radius: 8px;                     /* rounded-lg */
-                                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-                                            0 2px 4px -2px rgba(0, 0, 0, 0.1); /* shadow-md */
-                                padding: 16px;                          /* p-4 (16px) */
-                                width: 100%;                            /* w-full */
-                                height: auto;                           /* h-auto */
-                                position: static;                       /* Posizionamento di default */
-                                z-index: 20;                            /* z-20 */
+                                    background-color: #ffffff;            /* bg-white */
+                                    border: 2px solid #3f83f8;            /* border-2 e border-blue-500 */
+                                    border-radius: 8px;                     /* rounded-lg */
+                                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                                                0 2px 4px -2px rgba(0, 0, 0, 0.1); /* shadow-md */
+                                    padding: 16px;                          /* p-4 (16px) */
+                                    width: 27%;                            /* w-full */
+                                    height: auto;                           /* h-auto */
+                                    position: fixed;                       /* Posizionamento di default */
+                                    top: 15%;
+                                    left: auto;
+                                    right: 2.5%;
+
+                                    max-height: 80vh;
+                                    z-index: 41;                            /* z-20 */
+                                    overflow-y:auto;
                                 }
 
                                 /* Modalità dark: se un elemento genitore ha la classe "dark" */
@@ -626,28 +625,28 @@ $show_details = Auth::user()->show_details;
                                 background-color: #1a1c23;              /* dark:bg-gray-800 */
                                 }
 
-                                /* Breakpoint small (sm: min-width 640px) */
+                                /* Breakpoint small (sm: min-width 640px)
                                 @media (min-width: 640px) {
                                 .cssVersionDiv {
-                                    width: 90%;                         /* sm:w-[90%] */
-                                    position: relative;                 /* sm:relative */
-                                    left: 50%;                          /* sm:left-1/2 */
-                                    transform: translateX(-50%);        /* sm:-translate-x-1/2 */
-                                }
+                                    width: 90%;
+                                    position: relative;
+                                    left: 50%;
+                                    transform: translateX(-50%);
+                                } */
                                 }
 
-                                /* Breakpoint medium (md: min-width 768px) */
+                                /* Breakpoint medium (md: min-width 768px)
                                 @media (min-width: 768px) {
                                 .cssVersionDiv {
-                                    width: 265px;                       /* md:w-[265px] */
-                                    height: 665px;                      /* md:h-[665px] */
-                                    position: fixed;                    /* md:fixed */
-                                    right: 20px;                        /* md:right-5 (equivale a 20px) */
-                                    top: 150px;                          /* md:top-50*/
-                                    left: auto;                        /* md:left-auto */
-                                    transform: none;                    /* md:translate-x-0 */
+                                    width: 265px;
+                                    height: 665px;
+                                    position: fixed;
+                                    right: 20px;
+                                    top: 150px;
+                                    left: auto;
+                                    transform: none;
                                 }
-                                }
+                                }*/
 
                             </style>
                             <div class="cssVersionDiv">
@@ -655,7 +654,7 @@ $show_details = Auth::user()->show_details;
                                         bg-white dark:bg-gray-800 z-20
                                         sm:relative sm:left-1/2 sm:-translate-x-1/2
                                         md:fixed md:right-5 md:top-50 md:left-auto md:translate-x-0" --}}
-                                
+
 
                                 <h3 class="md:text-2xl font-bold text-gray-800">Evaluate this email</h3>
                                 <div x-data="{ phishing: '' }" class="space-y-3 my-6">
@@ -688,7 +687,7 @@ $show_details = Auth::user()->show_details;
                                             <input type="radio" name="confidence" value="1"
                                                 class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
                                             <span class="text-lg text-gray-900 dark:text-white">1</span>
-                                            <span class="ml-2 w-full md:text-lg text-gray-900 dark:text-white">Not
+                                            <span class="italic ml-2 w-full md:text-lg text-gray-900 dark:text-white" style="font-style: italic"> Not
                                                 confident at all</span>
                                         </label>
 
@@ -732,15 +731,15 @@ $show_details = Auth::user()->show_details;
                                             <input type="radio" name="confidence" value="7"
                                                 class="rounded-full w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
                                             <span class="md:text-lg text-gray-900 dark:text-white">7</span>
-                                            <span
-                                                class="ml-2 w-full md:text-lg text-gray-900 dark:text-white">Completely
+                                            <span style="font-style: italic"
+                                                class="ml-2 italic w-full md:text-lg text-gray-900 dark:text-white"> Completely
                                                 confident</span>
                                         </label>
                                     </div>
 
                                 </div>
 
-                                <div class="text-center my-6">
+                                <div class="text-center mt-6">
                                     <form method="POST" id="myForm"
                                         action="{{ route('save-email-classification') }}">
                                         @csrf
@@ -760,60 +759,6 @@ $show_details = Auth::user()->show_details;
                 </main>
             </div>
 
-            <!-- Active warning modal -->
-            <div id="warning_open" tabindex="-1" aria-hidden="true"
-                class="hidden bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-                <input type="hidden" value="" id="warning_id-1">
-                <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
-                    <!-- Modal content -->
-                    <div class="relative rounded-lg shadow" style="background-color: #b80000;">
-                        <!-- Modal header -->
-                        <div class="flex justify-between items-start px-5 py-6 rounded-t border-b">
-                            <h2 class="text-2xl font-bold text-white flex flex-row align-middle content-center">
-                                <div class="pr-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-8" viewBox="0 0 20 20"
-                                        fill="currentColor">
-                                        <path fill-rule="evenodd"
-                                            d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                                <div>Deceptive {{ $warning_type === 'popup_link' ? 'site' : 'email' }} ahead</div>
-                            </h2>
-                        </div>
-                        <!-- Modal body -->
-                        <div class="p-6 space-y-6">
-                            <p class="text-base leading-relaxed text-white" id="warning_text">
-                            </p>
-                        </div>
-                        <hr class="bg-white mx-auto" style="width: 96%;">
-                        <!-- Modal footer -->
-                        <div class="flex items-center p-6 justify-between rounded-b">
-                            <button id="button-advanced" type="button"
-                                class="text-white underline font-medium text-sm text-center">{{ $show_details != 'always' ? 'Show' : 'Hide' }}
-                                Details
-                            </button>
-                            <button id="button_hide_modal" type="button"
-                                class="bg-white hover:bg-gray-200 rounded-lg text-sm font-medium px-5 py-2.5"
-                                style="color: #b80000;">Back to safety
-                            </button>
-                        </div>
-                        <!-- if the condition is to always show the details, do not hide the footer by default -->
-                        <div id="div-advanced"
-                            class="{{ $show_details != 'always' ? 'hidden' : '' }} text-white px-6 pb-6">
-                            <div id="detailed_explanation"></div>
-                            <!--This email has a <b>fraudulent purpose</b> and may <b>steal your personal data</b>.
-                            <br/>-->
-                            <!-- This site is a <b>scam</b> with the purpose of <b>stealing your personal data</b>.-->
-                            Click
-                            <button id="warning_unsafe_link" class="text-white underline">here</button>
-                            (not safe) to
-                            {{ $warning_type === 'popup_link' ? 'visit the linked website' : 'read it' }}.
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End active warning modal -->
         </div>
 
         <div style="position: sticky; top: 0; left: 0; z-index: 99; height: 5px;"
@@ -826,7 +771,7 @@ $show_details = Auth::user()->show_details;
             </div>
         </x-modal>
 
-        <x-modal name="to-fast-modal" id="to-fast-modal" title="Compile all the questions slowly!" :show="false"
+        <x-modal name="too-fast-modal" id="too-fast-modal" title="Compile all the questions slowly!" :show="false"
             x-data="{ show: false }" x-show="show" @open-modal.window="show = true">
             <div class="p-4 rounded-lg relative text-center">
                 <p class="text-2xl font-semibold text-red-700 pb-8">You're going too fast!</p>
@@ -858,10 +803,11 @@ $show_details = Auth::user()->show_details;
 
                     let errors = [];
 
+                    // An email should be classified after at least 10 seconds
                     let elapsedTime = (Date.now() - startTime) / 1000;
-                    if (elapsedTime < 5) {
+                    if (elapsedTime < 8) {
                         window.dispatchEvent(new CustomEvent('open-modal', {
-                            detail: 'to-fast-modal'
+                            detail: 'too-fast-modal'
                         }));
                         return;
                     }
