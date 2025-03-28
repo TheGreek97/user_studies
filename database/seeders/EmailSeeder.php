@@ -45,7 +45,7 @@ class EmailSeeder extends Seeder
 //                 'phishing' => 1,
 //                 'counterpart' => false,
 //                 'counterpart_email_id' => null,
-//                 'topic' => $topic, 
+//                 'topic' => $topic,
 //             ]);
 //             $phishingEmails[$topic][$difficulty] = $email;
 //         }
@@ -79,7 +79,7 @@ class EmailSeeder extends Seeder
 //                 'phishing' => 0, // Email genuina
 //                 'counterpart' => $email->counterpart, // Stesso valore di counterpart dell'email di phishing
 //                 'counterpart_email_id' => $counterpartEmailId, // La controparte è l'ID dell'email di phishing
-//                 'topic' => $email->topic, 
+//                 'topic' => $email->topic,
 //             ]);
 //             $genuineEmails[$topic][$difficulty] = $genuineEmail;
 //         }
@@ -88,7 +88,7 @@ class EmailSeeder extends Seeder
 //     // **Step 3: Cambia la difficoltà a "easy" per le email genuine con counterpart**
 //     $counterpartEmails = Email::where('phishing', 0) // Solo email genuine
 //         ->where('counterpart', 1) // Con counterpart
-//         ->get(); 
+//         ->get();
 
 //     if ($counterpartEmails->count() >= 5) { // Assicuriamoci che ci siano almeno 5 email
 //         $counterpartEmailsToUpdate = $counterpartEmails->random(5);
@@ -104,7 +104,7 @@ class EmailSeeder extends Seeder
 //     // **Step 4: Cambia la difficoltà a "easy" per le email genuine senza counterpart**
 //     $nonCounterpartEmails = Email::where('phishing', 0) // Solo email genuine
 //         ->where('counterpart', 0) // Senza counterpart
-//         ->get(); 
+//         ->get();
 
 //     if ($nonCounterpartEmails->count() >= 4) { // Assicuriamoci che ci siano almeno 4 email
 //         $nonCounterpartEmailsToUpdate = $nonCounterpartEmails->random(4);
@@ -141,9 +141,10 @@ class EmailSeeder extends Seeder
     $email->subject = "Payment Declined – Order #1078945780";
     $email->preview_text = 'Hello, Your payment for the item listed below has been declined. Valid payment information must be received within 5 days, otherwise, your order will be cancelled.';
     $email->content = file_get_contents(EMAIL_DIR . "/amazon.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'medium';  // either 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
     $email->counterpart_email_id = 31;
@@ -158,9 +159,10 @@ class EmailSeeder extends Seeder
     $email->subject = "You have a new message from Leonardo Hotel Munich via Booking.com";
     $email->preview_text = 'Dear customer, weve received your request for the additional service for your reservation.';
     $email->content = file_get_contents(EMAIL_DIR . "/booking.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'medium';  // either 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 0;
     $email->counterpart_email_id = null;
@@ -175,10 +177,11 @@ class EmailSeeder extends Seeder
     $email->from_email = "ebay@ebay.com";
     $email->preview_text = 'Hello, {USER NAME}. We noticed a new login to your eBay.com account.';
     $email->content = file_get_contents(EMAIL_DIR . "/ebay.html");
+    $email->content = $this->minifyHTML($email->content);
     //$email->date = Carbon::parse('2022-08-19 15:28')->toDateTimeString();
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'medium';  // either 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 0;
     $email->counterpart_email_id = null;
@@ -193,9 +196,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "transaction@etsy.com";
     $email->preview_text = 'The seller will start working on this right away. Your order number is 23456726491799.';
     $email->content = file_get_contents(EMAIL_DIR . "/etsy.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'easy';  // either 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 0;
     $email->counterpart_email_id = null;
@@ -210,9 +214,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "no-reply@accounts.google.com";
     $email->preview_text = 'A new sign-in to your Google Account was detected on a Windows device.';
     $email->content = file_get_contents(EMAIL_DIR . "/google.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'easy';  // either 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
     $email->counterpart_email_id = 25;
@@ -227,9 +232,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "no-reply@mail.instagram.com";
     $email->preview_text = 'You recently added a new email address to your Instagram account.';
     $email->content = file_get_contents(EMAIL_DIR . "/instagram.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'easy';  // either 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
     $email->counterpart_email_id = 33;
@@ -244,9 +250,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "noreply@linkedin.com";
     $email->preview_text = 'Dear {USER NAME}, We noticed unusual activity from your account.';
     $email->content = file_get_contents(EMAIL_DIR . "/linkedin.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'easy';  // either 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
     $email->counterpart_email_id = 21;
@@ -261,9 +268,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "info@account.netflix.com";
     $email->preview_text = 'Hi {USER NAME}, A new device signed in to your Netflix account.';
     $email->content = file_get_contents(EMAIL_DIR . "/netflix.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'medium';  // either 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 0;
     $email->counterpart_email_id = null;
@@ -278,9 +286,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "support@nordaccount.com";
     $email->preview_text = 'Reset your Nord Account password. ';
     $email->content = file_get_contents(EMAIL_DIR . "/nordVPN.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'easy';  // either 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 0;
     $email->counterpart_email_id = null;
@@ -295,9 +304,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "service@paypal.com";
     $email->preview_text = 'Hello {USER NAME} You payed 259,99 € EUR to Ebay.com.';
     $email->content = file_get_contents(EMAIL_DIR . "/paypal.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'medium';  // either 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
     $email->counterpart_email_id = 35;
@@ -312,9 +322,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "no-reply@revolut.com";
     $email->preview_text = 'Hi {USER NAME}, We\'re required to collect some information about your financial status, in order to continue providing crypto products to you.';
     $email->content = file_get_contents(EMAIL_DIR . "/revolut.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'medium';  // either 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
     $email->counterpart_email_id = 23;
@@ -329,9 +340,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "service@ryanairemail.com";
     $email->preview_text = 'Hi {USER NAME}, Thanks for flying with Ryanair. Win a €100 Ryanair Gift Card.';
     $email->content = file_get_contents(EMAIL_DIR . "/ryanair.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'easy';  // either 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
     $email->counterpart_email_id = 22;
@@ -346,9 +358,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "noreply@notice.shein.com";
     $email->preview_text = 'Dear customer, Your order GSONWX57M00N3UB tracking number BDM000134200007789569 shows delivered.';
     $email->content = file_get_contents(EMAIL_DIR . "/shein.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'easy';  // either 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
     $email->counterpart_email_id = 24;
@@ -363,9 +376,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "mailto:no-reply@vinted.it";
     $email->preview_text = '{USER NAME}, there\'s been a login attempt from a new device.';
     $email->content = file_get_contents(EMAIL_DIR . "/vinted.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'medium';  // either 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
     $email->counterpart_email_id = 29;
@@ -380,9 +394,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "invoices@vodafone.com";
     $email->preview_text = 'Dear Customer, We invite you to settle your outstanding balance.';
     $email->content = file_get_contents(EMAIL_DIR . "/vodafone.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'easy';  // either 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
     $email->counterpart_email_id = 27;
@@ -397,9 +412,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "thank.you@wbstudiotour.co.uk";
     $email->preview_text = 'Dear {USER NAME}, This is your free ticket to Warner Bros. Studio Tour London - The Making of Harry Potter. ';
     $email->content = file_get_contents(EMAIL_DIR . "/warner bros.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'medium';  // either 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
     $email->counterpart_email_id = 28;
@@ -414,12 +430,13 @@ class EmailSeeder extends Seeder
     $email->from_email = "tracking@zalando.com";
     $email->preview_text = 'Hello, Your return is on its way. We will send you an email once the process is completed.';
     $email->content = file_get_contents(EMAIL_DIR . "/zalando.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'medium';  // either 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 1;
-    $email->counterpart_email_id = 30; 
+    $email->counterpart_email_id = 30;
     $email->topic = 'Tracking information';
     $email->save();
 
@@ -431,9 +448,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "noreply@zara.com";
     $email->preview_text = 'Hello {USER NAME}, Please note that your E-Gift Card has been shipped and includes the data shown below.';
     $email->content = file_get_contents(EMAIL_DIR . "/zara.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'easy';  // either 'medium' or 'hard'
     $email->phishing = 0;
     $email->counterpart = 0;
     $email->counterpart_email_id = null;
@@ -452,9 +470,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "support-dhlexpress@gmail.com";
     $email->preview_text = 'We regret to inform you that due to incomplet shipment clearance procedures, your package has been held at our facility.';
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/easy_dhl.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'easy';  // either 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 0;
     $email->counterpart_email_id = null;
@@ -469,9 +488,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "no-reply_faceb00k.com@live.com";
     $email->preview_text = 'Dear Facebook User, We have detect a suspecious activity on your account.';
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/easy_facebook.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'easy';  // either 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 0;
     $email->counterpart_email_id = null;
@@ -486,9 +506,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "alerts@243.108.10.100";
     $email->preview_text = 'Dear LinkedIn Member, We have noticed several failed login attempts on your LinkedIn account.';
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/easy_linkedin.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'easy';  // either 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->counterpart_email_id = 7;
@@ -503,9 +524,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "noreply@rynair.ru";
     $email->preview_text = 'Dear Valued Costumer, We are excited to inform you that an exclusive Ryanair gift card of 50€ has been issued to your account as ...';
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/easy_ryanair.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'easy';  // either 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->counterpart_email_id = 12;
@@ -520,9 +542,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "anna.kraviz91@gmail.com";
     $email->preview_text = 'We have detected that your credit card details on file require an update to ensure uninterrupted service.';
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/easy-revolut.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'easy';  // either 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->counterpart_email_id = 11;
@@ -537,9 +560,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "tracking@shien.com";
     $email->preview_text = 'We are pleased to inform you that your package has been processed and is now in transit.';
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/easy-shein.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'easy';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'easy';  // either 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->counterpart_email_id = 13;
@@ -554,9 +578,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "no-reply@accounts.google.com.secure-login.com";
     $email->preview_text = 'Dear {USER NAME}, We have detected suspicious activity on your Google Account.';
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/hard_google.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'hard';  // either 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->counterpart_email_id = 5;
@@ -571,9 +596,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "no-reply@nike.nike-notifications.com";
     $email->preview_text = 'Your password must be changed periodically for security reasons.';
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/hard_nike.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'hard';  // either 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 0;
     $email->counterpart_email_id = null;
@@ -588,9 +614,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "no-reply@vodafone-secure.it";
     $email->preview_text = 'Dear Valued Customer, We have recently identified a billing error on your account resulting from an overcharge.';
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/hard_vodafone.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'hard';  // either 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->counterpart_email_id = 15;
@@ -605,9 +632,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "no-reply@warner-service.com";
     $email->preview_text = 'Dear Valued Customer, As a token of our appreciation for your loyalty, we are delighted to offer you an exclusive ...';
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/hard_warnerbros.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'hard';  // either 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->counterpart_email_id = 16;
@@ -622,9 +650,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "no-reply@pws.vintd.fr";
     $email->preview_text = '{USER NAME}, there\'s been a login attempt from a new device.';
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/hard-vinted.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'hard';  // either 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->counterpart_email_id = 14;
@@ -639,9 +668,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "tracking@zalando.return-services.de";
     $email->preview_text = 'Hello {USER NAME}, Your return is on its way. We will send you an email once the process is completed.';
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/medium_zalando.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'medium';  // either 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->counterpart_email_id = 17;
@@ -656,9 +686,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "amazon-orders-support@gmail.com";
     $email->preview_text = 'We have verified that your payment was declined on your recent order and need to verify your payment information to ...';
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/medium_amazon.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'medium';  // either 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->counterpart_email_id = 1;
@@ -673,9 +704,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "gls-group-tracking@live.com";
     $email->preview_text = 'Dear Customer, Your package is scheduled for delivery soon.';
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/hard_GLS.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'hard';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'hard';  // either 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 0;
     $email->counterpart_email_id = null;
@@ -690,9 +722,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "security@instagrann.com";
     $email->preview_text = 'We noticed that you have not changed the password for your Instagram account in a while.';
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/medium_instagram.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'medium';  // either 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->counterpart_email_id = 6;
@@ -707,9 +740,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "no-reply@m1crosoft.com";
     $email->preview_text = 'Dear Microsoft Account Holder, We have recently detected many login attempts on your account.';
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/medium_microsoft.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'medium';  // either 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 0;
     $email->counterpart_email_id = null;
@@ -724,9 +758,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "security@pay-pal.com";
     $email->preview_text = 'We have detected a new login on your PayPal account from an unrecognized device and location: Google ... ';
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/medium_paypal.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'medium';  // either 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 1;
     $email->counterpart_email_id = 10;
@@ -741,9 +776,10 @@ class EmailSeeder extends Seeder
     $email->from_email = "support@temuu-secure.com";
     $email->preview_text = 'Dear Customer, We are excited to inform you that as a new member of our community, you have been selected to receive ...';
     $email->content = file_get_contents(EMAIL_DIR . "/phishing/medium_temu.html");
+    $email->content = $this->minifyHTML($email->content);
     $email->show_warning = false;
     $email->type = 'inbox';
-    $email->difficulty_level = 'medium';  // or 'medium' or 'hard'
+    $email->difficulty_level = 'medium';  // either 'medium' or 'hard'
     $email->phishing = 1;
     $email->counterpart = 0;
     $email->counterpart_email_id = null;
@@ -762,6 +798,21 @@ class EmailSeeder extends Seeder
       $email->type = $folder;
       $email->save();
     }
+  }
+
+  private function minifyHTML($html){
+    $html = preg_replace(
+    array(
+        '/ {2,}/',
+        '/<!--.*?-->|\t|(?:\r?\n[ \t]*)+/s'
+    ),
+    array(
+        ' ',
+        ''
+    ),
+    $html
+    );
+    return $html;
   }
 
 }
