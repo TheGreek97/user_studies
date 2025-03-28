@@ -134,9 +134,8 @@ Route::middleware([
     //Route::get('/final-data', [QuestionnairesController::class, 'finalData'])->name('final-data');
     Route::post('/save-final-data', [QuestionnairesController::class, 'saveFinalData'])->name('save-final-data');
 
-    Route::get('/create-training', [TrainingController::class, 'createTraining'])->name('training_create');
-
     Route::get('/training', [TrainingController::class, 'showTraining'])->name('training');
+    Route::get('/create-training', [TrainingController::class, 'createTraining'])->name('training_create');
 
     Route::get('/{folder?}/{id?}', [MailController::class, 'show'])->name('show');
 });

@@ -28,13 +28,15 @@ class TrainingController extends Controller
 
      public function createTraining()
     {
-        $training = Training::create([
-            'user_id' => Auth::id(),
-            'completed' => false
-        ]);
-
-        ProcessTraining::dispatch($training->id);
-        session(["training_generation_started" => true]);
+        $user = Auth::user();
+        if (! $user->training) {
+            $training = Training::create([
+                'user_id' => $user->id,
+                'completed' => false
+            ]);
+            ProcessTraining::dispatch($training->id);
+        }
+        session(['generating_training' => true]);
         return redirect()->route('show', ['folder' => 'inbox']);
     }
 }

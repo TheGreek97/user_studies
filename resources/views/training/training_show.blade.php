@@ -1,36 +1,36 @@
 <x-app-layout>
     <x-slot name="slot">
         <div x-data="load()" class="min-h-screen bg-gray-200 flex justify-center items-center">
-            <div class="p-12 m-10 bg-white rounded-2xl shadow-xl z-20">
-                <div class="text-3xl font-bold text-left mb-5 cursor-pointer">Training</div>
+            <div class="p-12 m-10 bg-white md:min-w-100 rounded-2xl shadow-xl z-20">
+                <h1 class="text-3xl font-bold text-center mb-5">Training</h1>
                 <div x-show="step === 1" id="section-1">
-                    <p class="text-2xl w-full text-center">Section 1 of 5</p>
-                    <h3>Introduction</h3>
+                    <h3 class="text-xl mt-5 mb-6">Introduction</h3>
                     {!! $training->introduction !!}
+                    <h2 class="text-l w-full text-center mt-10">Section 1 of 5</h2>
                 </div>
 
                 <div x-show="step === 2" id="section-2">
-                    <p class="text-2xl w-full text-center">Section 2 of 5</p>
-                    <h3>Phishing Scenario</h3>
+                    <h3 class="text-xl mt-5 mb-6">Phishing Scenario</h3>
                     {!! $training->scenario !!}
+                    <h2 class="text-l w-full text-center mt-10">Section 2 of 5</h2>
                 </div>
 
                 <div x-show="step === 3" id="section-3">
-                    <p class="text-2xl w-full text-center">Section 3 of 5</p>
-                    <h3>Defense Strategies</h3>
+                    <h3 class="text-xl mt-5 mb-6">Defense Strategies</h3>
                     {!! $training->defense_strategies !!}
+                    <h2 class="text-l w-full text-center mt-10">Section 3 of 5</h2>
                 </div>
 
                 <div x-show="step === 4" id="section-4">
-                    <p class="text-2xl w-full text-center">Section 4 of 5</p>
-                    <h3>Exercises</h3>
+                    <h3 class="text-xl mt-5 mb-6">Exercises</h3>
                     {!! $training->exercises !!}
+                    <h2 class="text-l w-full text-center mt-10">Section 4 of 5</h2>
                 </div>
 
                 <div x-show="step === 5" id="section-5">
-                    <p class="text-2xl w-full text-center">Section 5 of 5</p>
-                    <h3>Conclusion</h3>
+                    <h3 class="text-xl mt-5 mb-6">Conclusion</h3>
                     {!! $training->conclusion !!}
+                    <h2 class="text-l w-full text-center mt-10">Section 5 of 5</h2>
                 </div>
 
                 <!-- Loading view -->
@@ -45,7 +45,7 @@
                     </div>
                 </div>
 
-                <div class="text-center mt-14 mb-10">
+                <div class="text-center mt-4 ">
                     <div x-show="step !== 6" class="flex flex-row w-full" :class="{'space-x-6' : step > 0}">
                         <div x-show="step > 1">
                             <button type="button" id="back" @click="previous()"

@@ -5,6 +5,7 @@ namespace App\Jobs;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
@@ -22,6 +23,9 @@ class ProcessTraining implements ShouldQueue
         $this->trainingId = $trainingId;
     }
 
+    /**
+     * @throws RequestException
+     */
     public function handle()
     {
         $training = Training::find($this->trainingId);
@@ -56,12 +60,16 @@ class ProcessTraining implements ShouldQueue
                 'messages' => array_merge($context, [['role' => 'user', 'content' => $prompt]]),
                 'temperature' => $temperature,
             ]);
+           if ($response->successful()) {
+                $generatedText = $response['choices'][0]['message']['content'] ?? '<p>Failed to generate content.</p>';
+                $training->$section = $generatedText; // add the section text to the training model
+                // Maintain context
+                $context[] = ['role' => 'user', 'content' => $prompt];
+           } else {
+               $generatedText = $response->body(); //'<p>Failed to generate content.</p>';
+               $response->throw();
+           }
 
-            $generatedText = $response->json()['choices'][0]['message']['content'] ?? '<p>Failed to generate content.</p>';
-            $training->$section = $generatedText; // add the section text to the training model
-
-            // Maintain context
-            $context[] = ['role' => 'user', 'content' => $prompt];
             $context[] = ['role' => 'assistant', 'content' => $generatedText];
 
             /* DEBUG values:
