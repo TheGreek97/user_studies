@@ -22,7 +22,7 @@ return new class extends Migration
             $table->longText("exercises")->nullable();
             $table->longText("conclusions")->nullable();
 
-            $table->boolean("completed")->default(false);
+            $table->boolean("generated")->default(false);
             $table->foreignId("user_id")->constrained("users");
         });
     }

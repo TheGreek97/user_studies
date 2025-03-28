@@ -58,7 +58,7 @@ class ProcessTraining implements ShouldQueue
                 'model'    => $model,
                 'reasoning_effort' => $reasoning_effort,
                 'messages' => array_merge($context, [['role' => 'user', 'content' => $prompt]]),
-                'temperature' => $temperature,
+                //'temperature' => $temperature,
             ]);
            if ($response->successful()) {
                 $generatedText = $response['choices'][0]['message']['content'] ?? '<p>Failed to generate content.</p>';
@@ -222,16 +222,18 @@ Conclusions ($s_time minutes, approx. $s_words words):
             $mimicked_service = $services[array_rand($services, 1)];
             $prompt .= "
     -- The other email must mimic a real organization/service, including mimicking its real domains, namely $mimicked_service.
-- Also provide a genuine email that resembles one from $mimicked_service, also including a genuine URL. The genuine email must appear in random order among the phishing ones.";
+- Also provide a genuine email that resembles one from $mimicked_service, also including a genuine URL.";
         } else if ($n_exercises > 2){
             // Generate two more exercises
             $mimicked_services = array_intersect_key($services, array_flip(array_rand($services, 2)));  // take two random elements from $services
             $prompt .= "
     -- The other emails must mimic a real organization/service, including mimicking its real domains, namely ". implode(separator: ' and ', array:$mimicked_services).".
-- Also provide a genuine email that resembles one from ". array_key_first($mimicked_services) .", also including a genuine URL. The genuine email must appear in random order among the phishing ones.";
+- Also provide a genuine email that resembles one from ". array_key_first($mimicked_services) .", also including a genuine URL.";
         }
         $prompt .= "
-        - Include an interactive classification task where the user must decide if an email is “Phishing” or “Legitimate” using HTML form controls. Give immediate feedback for each exercise, explaining which cues indicated whether the email was a phishing attempt or not.";
+- Include an interactive classification task where the user must decide if an email is “Phishing” or “Legitimate” using HTML form controls.
+Give immediate feedback for each exercise, explaining which cues indicated whether the email was a phishing attempt or not.
+Be sure that any form submission is prevented to avoid refreshing the webpage.";
         return $prompt;
     }
 

@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropUnique('users_email_unique');
+        Schema::table('trainings', function (Blueprint $table) {
+            $table->integer('time_taken')->default(0);
+            $table->timestamp('completed_at')->nullable();
         });
     }
 
@@ -25,8 +26,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->unique('email');
+        Schema::table('trainings', function (Blueprint $table) {
+            $table->dropColumn('time_taken');
+            $table->dropColumn('completed_at');
         });
     }
 };

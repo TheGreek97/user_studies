@@ -56,6 +56,7 @@ class StudyAuth
         $user = User::find(1);
                 Auth::logout();  // logout any previous user and login as the new one (who completed the study)
                 Auth::login($user);
+        //session()->forget("generating_training");
         session([
             "questionnaire_0done" => true,
             "questionnaire_1done" => true,
@@ -64,7 +65,6 @@ class StudyAuth
         ]);
         /* User for debug purpose
 
-        //session()->forget("questionnaire_0done");
         */
         return $next($request);
     }

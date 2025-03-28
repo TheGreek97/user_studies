@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Jobs\ProcessTraining;
 use App\Models\Training;
+use DOMDocument;
+use DOMXPath;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -23,13 +25,15 @@ class TrainingController extends Controller
         } else if (! $training->completed) {
             return view("training.status_not_ready");
         }
+
+        $training = $this->addCSS($training);
         return view('training.training_show', ["training" => $training]);
     }
 
      public function createTraining()
     {
         $user = Auth::user();
-        if (! $user->training) {
+        if ($user->training == null) {
             $training = Training::create([
                 'user_id' => $user->id,
                 'completed' => false
@@ -37,6 +41,72 @@ class TrainingController extends Controller
             ProcessTraining::dispatch($training->id);
         }
         session(['generating_training' => true]);
+        return redirect()->route('show', ['folder' => 'inbox']);
+    }
+
+    private function addCSS($tranining) {
+        foreach (["introduction", "scenario", "defense_strategies", "conclusions"] as $section) {
+            $html = $tranining->$section;
+            $dom = new DOMDocument();
+            libxml_use_internal_errors(true); // Suppress warnings for malformed HTML
+            $dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+            libxml_clear_errors();
+
+            $xpath = new DOMXPath($dom);
+            // Add classes to <h1> and <h2>
+            foreach ($xpath->query('//h1 | //h2') as $heading) {
+                $existingClass = $heading->getAttribute('class');
+                $newClass = trim($existingClass . ' text-xl mt-8 mb-6 font-bold');
+                $heading->setAttribute('class', $newClass);
+            }
+            // Add classes to <h3>
+            foreach ($xpath->query('//h3') as $heading) {
+                $existingClass = $heading->getAttribute('class');
+                $newClass = trim($existingClass . ' text-l mt-8 mb-4 font-bold');
+                $heading->setAttribute('class', $newClass);
+            }
+            // Add classes to <p>
+            foreach ($xpath->query('//p') as $paragraph) {
+                $existingClass = $paragraph->getAttribute('class');
+                $newClass = trim($existingClass . ' mb-4');
+                $paragraph->setAttribute('class', $newClass);
+            }
+            // Add classes to <div>
+            foreach ($xpath->query('//div') as $div) {
+                $existingClass = $div->getAttribute('class');
+                $newClass = trim($existingClass . ' mb-10');
+                $div->setAttribute('class', $newClass);
+            }
+            // Add classes to <button>
+            foreach ($xpath->query('//button') as $button) {
+                $existingClass = $button->getAttribute('class');
+                $newClass = trim($existingClass . ' bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full');
+                $button->setAttribute('class', $newClass);
+            }
+            // Add style to <li>
+            foreach ($xpath->query('//li') as $li) {
+                $existingStyle = $li->getAttribute('style');
+                $newClass = trim($existingStyle . '; list-style: inside;');
+                $li->setAttribute('class', $newClass);
+            }
+
+            $updatedHtml = preg_replace('/^<!DOCTYPE.+?>/', '', $dom->saveHTML());
+            $tranining->$section = $updatedHtml;
+        }
+        return $tranining;
+    }
+
+    public function completeTraining(Request $request)
+    {
+        $timeSpent = $request->query('time', 0); // Get time from URL
+
+        // Save time spent in DB or perform necessary actions
+        $user_training = Auth::user()->training;
+        $user_training->update([
+            'training_completed_at' => now(),
+            'time_taken' => $timeSpent
+        ]);
+        session('training_completed', true);
         return redirect()->route('show', ['folder' => 'inbox']);
     }
 }

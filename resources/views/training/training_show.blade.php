@@ -3,33 +3,29 @@
         <div x-data="load()" class="min-h-screen bg-gray-200 flex justify-center items-center">
             <div class="p-12 m-10 bg-white md:min-w-100 rounded-2xl shadow-xl z-20">
                 <h1 class="text-3xl font-bold text-center mb-5">Training</h1>
-                <div x-show="step === 1" id="section-1">
-                    <h3 class="text-xl mt-5 mb-6">Introduction</h3>
+
+                <div x-show="step === 1" id="section-intro">
                     {!! $training->introduction !!}
                     <h2 class="text-l w-full text-center mt-10">Section 1 of 5</h2>
                 </div>
 
-                <div x-show="step === 2" id="section-2">
-                    <h3 class="text-xl mt-5 mb-6">Phishing Scenario</h3>
+                <div x-show="step === 2" id="section-scenario">
                     {!! $training->scenario !!}
                     <h2 class="text-l w-full text-center mt-10">Section 2 of 5</h2>
                 </div>
 
-                <div x-show="step === 3" id="section-3">
-                    <h3 class="text-xl mt-5 mb-6">Defense Strategies</h3>
+                <div x-show="step === 3" id="section-strategies">
                     {!! $training->defense_strategies !!}
                     <h2 class="text-l w-full text-center mt-10">Section 3 of 5</h2>
                 </div>
 
-                <div x-show="step === 4" id="section-4">
-                    <h3 class="text-xl mt-5 mb-6">Exercises</h3>
+                <div x-show="step === 4" id="section-exercises">
                     {!! $training->exercises !!}
                     <h2 class="text-l w-full text-center mt-10">Section 4 of 5</h2>
                 </div>
 
-                <div x-show="step === 5" id="section-5">
-                    <h3 class="text-xl mt-5 mb-6">Conclusion</h3>
-                    {!! $training->conclusion !!}
+                <div x-show="step === 5" id="section-conclusions">
+                    {!! $training->conclusions !!}
                     <h2 class="text-l w-full text-center mt-10">Section 5 of 5</h2>
                 </div>
 
@@ -64,33 +60,38 @@
                 </div>
             </div>
         </div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
         <script>
             function load() {
                 let num_steps = 5;
+                let startTime = Date.now(); // Capture start time
+
                 return {
                     step: 1,
-                    previous(e) {
-                        if (this.step > 1)
+
+                    previous() {
+                        if (this.step > 1) {
                             this.step--;
-
-                        $("#alert").hide();
-
+                        }
                         $(window).scrollTop(0);
-
                         if (this.step < num_steps) {
                             $("#next").text("Next");
                         }
                     },
-                    next(e) {
-                        if (this.step !== num_steps+1) {
+
+                    next() {
+                        if (this.step < num_steps) {
                             this.step++;
-                            $("#alert").hide();
+                            $("#next").text(this.step === num_steps ? "Proceed to last phase" : "Next");
+                        } else if (this.step === num_steps) {
+                            this.completeTraining(); // Redirect to controller
                         }
                         $(window).scrollTop(0);
-                        if (this.step === num_steps) {
-                            $("#next").text("Proceed to last phase");
-                        }
+                    },
+
+                    completeTraining() {
+                        let timeSpent = Math.floor((Date.now() - startTime) / 1000); // Calculate time in seconds
+                        window.location.href = "{{route('training_complete')}}?time=" + timeSpent;
                     }
                 }
             }

@@ -136,6 +136,7 @@ Route::middleware([
 
     Route::get('/training', [TrainingController::class, 'showTraining'])->name('training');
     Route::get('/create-training', [TrainingController::class, 'createTraining'])->name('training_create');
+    Route::get('/complete-training', [TrainingController::class, 'completeTraining'])->name('training_complete');
 
     Route::get('/{folder?}/{id?}', [MailController::class, 'show'])->name('show');
 });

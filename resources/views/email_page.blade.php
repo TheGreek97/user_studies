@@ -56,6 +56,7 @@ use Illuminate\Support\Facades\Auth;
                                 <br>- Determine whether you believe it is a <b>phishing attempt</b> or not.
                                 <br>- Rate how <b>confident</b> you are in your decision on a scale of 1 to 7.<br>
                             </p>
+                            <p>Note that the number of phishing emails among the others is random (i.e., you might see only phishing or only genuine emails). </p>
                         </div>
                     @endif
                     <!-- Modal footer -->
