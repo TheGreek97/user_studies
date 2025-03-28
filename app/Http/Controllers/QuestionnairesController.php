@@ -103,7 +103,11 @@ class QuestionnairesController extends Controller
     {
         // Demographic questionnaire
         $user = Auth::user();
-        $user->name = $request->first_name;
+        $user->name = str_replace(  // escape HTML characters in user input to avoid injections
+            ["&", "<", ">", '"', "'"],
+            ["&amp;", "&lt;", "&gt;", "&quot;", "&#39;"],
+            (string) $request->first_name
+        );
         $user->gender = $request->gender;
         $user->age = $request->age;
         $user->num_hours_day_internet = $request->num_hours_day_internet;
