@@ -39,7 +39,7 @@ class TrainingController extends Controller
     {
         $user = Auth::user();
         if ($user->training == null) {
-            if ($user->training_personalization !== "ono") {  // If training is personalized, generate it from scratch
+            if ($user->training_personalization !== "no") {  // If training is personalized, generate it from scratch
                 $training = Training::create([
                     'user_id' => $user->id,
                     'completed' => false
@@ -50,7 +50,7 @@ class TrainingController extends Controller
                     'user_id' => $user->id,
                     'completed' => true
                 ]);
-                $training->setToNonPersonalizedVersion();
+                $training->setNonCustomizedVersion();
             }
         } else {
             $training = $user->training;
@@ -123,6 +123,34 @@ class TrainingController extends Controller
                 $li->setAttribute('class', $newClass);
             }
 
+            $updatedHtml = preg_replace('/^<!DOCTYPE.+?>/', '', $dom->saveHTML());
+            $tranining->$section = $updatedHtml;
+        }
+        foreach (["exercises"] as $section) {
+            $html = $tranining->$section;
+            $dom = new DOMDocument();
+            libxml_use_internal_errors(true); // Suppress warnings for malformed HTML
+            $dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+            libxml_clear_errors();
+
+            $xpath = new DOMXPath($dom);
+            foreach ($xpath->query('//h1 | //h2') as $heading) {
+                $existingClass = $heading->getAttribute('class');
+                $newClass = trim($existingClass . ' text-xl mt-8 mb-6 font-bold');
+                $heading->setAttribute('class', $newClass);
+            }
+            // Add classes to <h3>
+            foreach ($xpath->query('//h3') as $heading) {
+                $existingClass = $heading->getAttribute('class');
+                $newClass = trim($existingClass . ' text-l mt-8 mb-4 font-bold');
+                $heading->setAttribute('class', $newClass);
+            }
+            // Add classes to <button>
+            foreach ($xpath->query('//button') as $btn) {
+                $existingClass = $btn->getAttribute('class');
+                $newClass = trim($existingClass . ' bg-gray-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full');
+                $btn->setAttribute('class', $newClass);
+            }
             $updatedHtml = preg_replace('/^<!DOCTYPE.+?>/', '', $dom->saveHTML());
             $tranining->$section = $updatedHtml;
         }
