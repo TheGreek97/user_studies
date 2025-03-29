@@ -3,7 +3,7 @@
         <div class="min-h-screen bg-gray-200 flex justify-center items-center">
             <div class="p-12 m-10 bg-white rounded-2xl shadow-xl z-20">
                 <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" 
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-20 h-20 mx-auto text-red-500">
                         <!-- Cerchio -->
                         <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" fill="none"/>
@@ -33,7 +33,6 @@
                             <img src="{{asset('/assets/img/UNIBA_logo.svg')}}" alt="University of Bari logo" style="max-width: 25%">
                             <img src="{{asset('/assets/img/UNICA_logo.png')}}" alt="University of Cagliari logo" style="max-width: 25%">
                             <img src="{{asset('/assets/img/KCL_logo.png')}}" alt="King's College London logo" style="max-width: 20%">
-                            <img src="{{asset('/assets/img/IVUx-Logo.svg')}}" alt="IVU Lab logo" style="max-width: 25%">
                         </div>
                     </div>
                 </div>

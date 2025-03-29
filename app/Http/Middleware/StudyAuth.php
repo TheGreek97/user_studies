@@ -25,26 +25,32 @@ class StudyAuth
             $user= User::userCompletedPreviousStudy($prolificId_request);
             if ($user !== null) {  //  user already executed the study on Prolific
                 session(['study_already_taken' => '1']);
-                session(['consent' => '1']);
                 Auth::logout();  // logout any previous user and login as the new one (who completed the study)
                 Auth::login($user);
             }
         }
         if (Auth::user() === null) {
            // create new user
-            $least_popular_condition = $this->getWarningTypeToAssign();
+            //$least_popular_condition = $this->getWarningTypeToAssign();
 
             $new_user = new User();
             $new_user->name = "Alice";
             $birth_year = now()->year - 28;  // Alice is 28 years old, according to the scenario
             $new_user->email = "alice$birth_year@livemail.it";
-            $new_user->password = Hash::make('prolific');  // dummy password -> not used
-            $new_user->warning_type = $least_popular_condition["type"];
-            $new_user->show_explanation = $least_popular_condition["show_explanation"];
-            $new_user->show_details = $least_popular_condition["show_details"];
-            $new_user->llm = $least_popular_condition["llm"];
-            $new_user->explanation_type = $least_popular_condition["explanation_type"];
             $new_user->prolific_id = $prolificId_request;
+
+            // Assign training condition from .env file
+            $new_user->training_personalization = env('CONDITION_PERSONALIZATION', 'no');
+            $new_user->training_length = env('CONDITION_LENGTH', 'short');
+
+            // Dummy values - not used
+            $new_user->password = Hash::make('prolific');
+            $new_user->warning_type = "popup_link";
+            $new_user->show_explanation = 1;
+            $new_user->show_details = "no";
+            $new_user->llm = "llama3_3";
+            $new_user->explanation_type = "feature_based";
+
             $new_user->save();
             Auth::login($new_user);
         } else {
@@ -53,6 +59,7 @@ class StudyAuth
                 Auth::user()->save();
             }
         }
+        // TODO remove this
         $user = User::find(1);
                 Auth::logout();  // logout any previous user and login as the new one (who completed the study)
                 Auth::login($user);

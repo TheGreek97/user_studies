@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Jobs\ProcessTraining;
 use App\Models\Training;
+use App\Models\User;
 use DOMDocument;
 use DOMXPath;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 
 class TrainingController extends Controller
 {
@@ -20,9 +21,12 @@ class TrainingController extends Controller
             //return redirect()->route('show', ['folder' => 'inbox']);
         //}
         $training = $user->training;
-        if ($training == null) {
-            return redirect()->route('training_create');
-        } else if (! $training->completed) {
+
+        if ($training == null) {  // this should not ever be reached (training is created beforehand
+            $training = $this->createTraining();
+        }
+
+        if (! $training->completed) {
             return view("training.status_not_ready");
         }
 
@@ -30,19 +34,48 @@ class TrainingController extends Controller
         return view('training.training_show', ["training" => $training]);
     }
 
-     public function createTraining()
+
+     public static function createTraining()
     {
         $user = Auth::user();
         if ($user->training == null) {
-            $training = Training::create([
-                'user_id' => $user->id,
-                'completed' => false
-            ]);
-            ProcessTraining::dispatch($training->id);
+            if ($user->training_personalization !== "ono") {  // If training is personalized, generate it from scratch
+                $training = Training::create([
+                    'user_id' => $user->id,
+                    'completed' => false
+                ]);
+                ProcessTraining::dispatch($training->id);
+            } else {  // otherwise, take the non-personalized one
+                $training = Training::create([
+                    'user_id' => $user->id,
+                    'completed' => true
+                ]);
+                $training->setToNonPersonalizedVersion();
+            }
+        } else {
+            $training = $user->training;
         }
-        session(['generating_training' => true]);
-        return redirect()->route('show', ['folder' => 'inbox']);
+        return $training;
+        //return redirect()->route('emails', ['folder' => 'inbox']);  // Start pre-train classification task
     }
+
+
+    public function completeTraining(Request $request)
+    {
+        $user = Auth::user();
+        $timeSpent = $request->query('time', 0); // Get time from URL
+
+        // Save time spent in DB or perform necessary actions
+        $user_training = $user->training;
+        $user_training->update([
+            'training_completed_at' => now(),
+            'time_taken' => $timeSpent
+        ]);
+        $user->training_completed = now();
+        $user->save();
+        return redirect()->route('emails', ['folder' => 'inbox']);  // Start post-train classification task
+    }
+
 
     private function addCSS($tranining) {
         foreach (["introduction", "scenario", "defense_strategies", "conclusions"] as $section) {
@@ -96,17 +129,4 @@ class TrainingController extends Controller
         return $tranining;
     }
 
-    public function completeTraining(Request $request)
-    {
-        $timeSpent = $request->query('time', 0); // Get time from URL
-
-        // Save time spent in DB or perform necessary actions
-        $user_training = Auth::user()->training;
-        $user_training->update([
-            'training_completed_at' => now(),
-            'time_taken' => $timeSpent
-        ]);
-        session('training_completed', true);
-        return redirect()->route('show', ['folder' => 'inbox']);
-    }
 }

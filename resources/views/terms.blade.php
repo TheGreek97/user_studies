@@ -10,7 +10,7 @@
             </div>
             <div class="text-center mt-10 p-2">
                 <div class="w-full">
-                    <button onclick="window.location.replace('{{ route('show', ['folder' => 'inbox']) }}')"
+                    <button onclick="window.location.replace('{{ route('questionnaire', ['step' => 0]) }}')"
                             class="p-3 w-full text-lg text-white bg-blue-500 hover:bg-blue-800 rounded-2xl">Start the study
                     </button>
                 </div>

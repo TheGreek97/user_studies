@@ -3,33 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\ActivityLogs;
-use App\Models\Email;
+use App\Models\UserEmailQuestionnaire;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Request as FRequest;
 
 class MailController extends Controller
 {
     const MAILS_NUMBER = 12;
 
-    public function show($folder = 'inbox', $id = null, $phase = 'pre')
+    public function show($folder = 'inbox', $id = null)
     {
+
         // Logging to track redirection logic along with session data for debugging
         //Log::info('Current route: ' . FRequest::url());
         //Log::info('Current session:', session()->all());
-
-        if (session()->has('expelled')) {
-            return redirect(route('expelUser'));
-        }
-
-        if (!session()->has('consent')) {
-            return redirect(route('welcome'));
-        }
         $user = Auth::user();
+
         $seed = (int) Auth::id();  // Randomize according to user id
         info("ID " . $id);
 
@@ -42,7 +34,7 @@ class MailController extends Controller
         }
         $emailGroups = $_SESSION['emails'];
          //ASSIGN A GROUP OF EMAILS
-        if(!session('pre_phase_done')){
+        if(! $user->pre_training_completed){
             //PRE-CLASSIFICATION
             $emails = collect($emailGroups['pre']);
             MailController::seededShuffle($emails, $seed);
@@ -94,8 +86,10 @@ class MailController extends Controller
             $emails[$k] = $e;
         }
         if (!in_array($folder, ['inbox', 'sent', 'draft', 'trash']))
-            return redirect(route('show', ['folder' => 'inbox', 'emails' => $emails]));
-        if ($id != null) {    // Show a specific e-mail (this can probably be optimized)
+            return view('email_page', ['folder' => $folder, 'emails' => $emails]);
+
+        // Show a specific e-mail (this can probably be optimized)
+        if ($id != null) {
             $email = null;
             // search the email in the collection of emails
             foreach($emails as $e) {
@@ -107,42 +101,88 @@ class MailController extends Controller
             if ($email != null) {
                 // if email was found, show the email page
                 $email->warning_type = $user->warning_type;
-                //  // Get the email file path
+                // Get the email file path
                 return view('email_page', ['folder' => $folder, 'emails' => $emails, 'selected_email' => $email, 'htmlContent' => $email->content]);
             } else {
                 // else show all the emails
-                return redirect(route('show', ['folder' => $folder, 'emails' => $emails]));
+                return view('email_page', ['folder' => $folder, 'emails' => $emails]);
             }
-        }  // Else, show the mails list
-        if(!session('pre_phase_done')){
-            //PRE-CLASSIFICATION
+        }
+        // Else, show the emails list
+        if(! $user->pre_training_completed){
+            //PRE-TRAIN CLASSIFICATION
             if (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) < self::MAILS_NUMBER) {
-                if (session()->has('startStudy')) {
+                if (session()->has('startStudy')) {  // startStudy flag shows the initial task instruction
                     session()->remove('startStudy');
                     return view('email_page', ['folder' => $folder, 'emails' => $emails, 'startStudy' => true]);
                 } else {
                     return view('email_page', ['folder' => $folder, 'emails' => $emails]);
                 }
-            } else {  // If all emails have been seen by the participant, show them the training
-                    session(['pre_phase_done' => true]);
-                    return redirect(route('training'));
+            } else {  // If all emails in the pre-training have been seen by the participant, show them the training
+                $user->pre_training_completed = now();
+                $user->save();
+                return redirect(route('training.show'));
             }
         } else {
-            //POST-CLASSIFICATION    (double the count of answers for user)
-            if (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) <  (self::MAILS_NUMBER*2)) {
+            //POST-TRAIN CLASSIFICATION  (double the count of answers per user, as there are already MAILS_NUMBER mails)
+            if (count(DB::table('useremailquestionnaire')->where('user_id', Auth::id())->get()) < (self::MAILS_NUMBER*2)) {
                 if (session()->has('startStudy')) {
                     session()->remove('startStudy');
                     return view('email_page', ['folder' => $folder, 'emails' => $emails, 'startStudy' => true]);
                 } else {
                     return view('email_page', ['folder' => $folder, 'emails' => $emails]);
                 }
-            } else {
-                //Training Reaction Questionnaire
-                session(['post_phase_done' => true]);
-                return redirect()->route('questionnaire', ['step' => 4]);
+            } else { // If all emails in the post-training phase have been shown, show the training reaction questionnaire
+                $user->post_training_completed = now();
+                $user->save();
+                return redirect(route('questionnaire', ['step' => 4]));
             }
         }
     }
+
+
+    public function saveEmailClassification(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $validatedData = $request->validate([
+                'emailId'    => 'required|integer|exists:emails,id',
+                'confidence' => 'required|integer|min:1|max:10',
+                'phishing'   => 'required|in:yes,no',
+                'time_spent' => 'required|numeric|min:1'
+            ]);
+
+            // Check if the email has already been saved for the current user
+            $existingEntry = UserEmailQuestionnaire::where('email_id', $validatedData['emailId'])
+                ->where('user_id', $user->id)
+                ->first();
+
+            if ($existingEntry) {
+                // Optionally, add a flash message or similar to notify the user
+                return redirect(route('emails', ['folder' => 'inbox']));
+            }
+            $phase = $user->pre_training_completed ? 'post' : 'pre';
+
+            $dataToInsert = [
+                'email_id'    => $validatedData['emailId'],
+                'confidence'  => $validatedData['confidence'],
+                'phishing'    => $validatedData['phishing'] === 'yes' ? 1 : 0,
+                'response_time_seconds' => min(999.99, $validatedData['time_spent']),
+                'user_id'     => $user->id,
+                'title_email' => 'null',
+                'phase'       => $phase,
+            ];
+            UserEmailQuestionnaire::create($dataToInsert);
+            $user->save();
+            return redirect()->route('emails', ['folder' => 'inbox']);
+        } catch (\Exception $e) {
+            // Catch any exceptions and return a JSON response with error details
+            return response()->json([
+                'error' => 'Server error: ' . $e->getMessage(),
+            ], 500); // Internal Server Error
+        }
+    }
+
 
     public function warningLog(Request $request)
     {
@@ -274,10 +314,10 @@ class MailController extends Controller
     }
 
     /**
-     * Subdivide emails into pre and post-test groups based on phishing, counterpart, and difficulty level.
+     * Subdivide emails into pre- and post-test groups based on phishing, counterpart, and difficulty level.
      *
      * @param string $folder The folder to filter emails by.
-     * @return \Illuminate\Support\Collection A shuffled collection of emails.
+     * @return array A shuffled collection of emails.
      */
     public function retrieveEmailsForThePhase($folder)
     {

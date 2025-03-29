@@ -134,7 +134,7 @@ use Illuminate\Support\Facades\Auth;
                                 <span class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
                                     aria-hidden="true"></span>
                             @endif
-                            <a href="{{ route('show', ['folder' => 'inbox']) }}"
+                            <a href="{{ route('emails', ['folder' => 'inbox']) }}"
                                 @if ($folder === 'inbox') class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                                 @else
                                 class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" @endif>
@@ -153,7 +153,7 @@ use Illuminate\Support\Facades\Auth;
                                 <span class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
                                     aria-hidden="true"></span>
                             @endif
-                            <a href="{{ route('show', ['folder' => 'sent']) }}"
+                            <a href="{{ route('emails', ['folder' => 'sent']) }}"
                                 @if ($folder === 'sent') class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                                 @else
                                 class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" @endif>
@@ -170,7 +170,7 @@ use Illuminate\Support\Facades\Auth;
                                 <span class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
                                     aria-hidden="true"></span>
                             @endif
-                            <a href="{{ route('show', ['folder' => 'draft']) }}"
+                            <a href="{{ route('emails', ['folder' => 'draft']) }}"
                                 @if ($folder === 'draft') class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                                 @else
                                 class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" @endif>
@@ -187,7 +187,7 @@ use Illuminate\Support\Facades\Auth;
                                 <span class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg"
                                     aria-hidden="true"></span>
                             @endif
-                            <a href="{{ route('show', ['folder' => 'trash']) }}"
+                            <a href="{{ route('emails', ['folder' => 'trash']) }}"
                                 @if ($folder === 'trash') class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                                 @else
                                 class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" @endif>
@@ -249,7 +249,7 @@ use Illuminate\Support\Facades\Auth;
                             <a @if ($folder === 'inbox') class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                                 @else
                                 class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" @endif
-                                href="{{ route('show', ['folder' => 'inbox']) }}">
+                                href="{{ route('emails', ['folder' => 'inbox']) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -432,7 +432,7 @@ use Illuminate\Support\Facades\Auth;
                                                 @else
                                                     <tr class="text-gray-700 cursor-pointer hover:bg-gray-200 hover:dark:bg-gray-600 dark:text-gray-400 border-2 border-blue-800"
                                                         @if ($email->type === 'inbox')
-                                                            onclick="window.location.href = '{{ route('show', ['folder' => $folder, 'id' => $email->id]) }}'"
+                                                            onclick="window.location.href = '{{ route('emails', ['folder' => $folder, 'id' => $email->id]) }}'"
                                                         @endif
                                                     >
                                                 @endif
@@ -466,7 +466,7 @@ use Illuminate\Support\Facades\Auth;
                                 <div class="flex flex-row space-x-2 pb-2">
                                     <a data-tooltip-target="tooltip-back" data-tooltip-placement="bottom"
                                         class="cursor-pointer hover:bg-gray-200 rounded-full p-2"
-                                        href="{{ route('show', ['folder' => $folder]) }}">
+                                        href="{{ route('emails', ['folder' => $folder]) }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -633,8 +633,8 @@ use Illuminate\Support\Facades\Auth;
                                     position: relative;
                                     left: 50%;
                                     transform: translateX(-50%);
-                                } */
                                 }
+                                }*/
 
                                 /* Breakpoint medium (md: min-width 768px)
                                 @media (min-width: 768px) {

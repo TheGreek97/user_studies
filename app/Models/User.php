@@ -5,7 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-    use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -34,11 +34,17 @@ class User extends Authenticatable
         'expertise_score',
         'study_completed',
         'prolific_id',
+        'demographics_completed',
+        'bfi_completed',
+        'stp_completed',
+        'teique_completed',
         'questionnaires_completed',
         'pre_training_completed',
         'training_completed',
         'post_training_completed',
-        'training_reaction_completed'
+        'training_reaction_completed',
+        'expelled',
+        'given_consent'
     ];
 
     protected $guarded = [

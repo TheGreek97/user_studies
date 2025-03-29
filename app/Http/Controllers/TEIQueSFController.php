@@ -4,19 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\UserQuestionnaireScale;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\TEIQueSF;
-use App\Models\Questionnaire;
-use App\Models\UserQuestionnaireAnswer;
-use App\Models\QuestionnaireCampaign;
-use App\Models\UserHfThreat;
-use App\Models\HumanFactor;
-use App\Models\Threat;
 
 class TEIQueSFController extends Controller
 {
     public function create(Request $request)
     {
+        $user = Auth::user();
         $validatedData = $request->validate([
             'q1' => ['required', 'integer'],
             'q2' => ['required', 'integer'],
@@ -58,27 +54,33 @@ class TEIQueSFController extends Controller
         }
 
         $alreadyAnswered = TEIQueSF::where([
-            'user_id' => Auth::id(),
+            'user_id' => $user->id,
         ])->exists();
 
         // Check if the user has already answered
         if (!$alreadyAnswered) {
-            $validatedData['user_id'] = Auth::id();
+            $validatedData['user_id'] = $user->id;
             $answer = TEIQueSF::create($validatedData);
 
             $scales = $this->calculateScales($answer->id);
-            $userScale = UserQuestionnaireScale::where('user_id', Auth::id())->first();
+            $userScale = UserQuestionnaireScale::where('user_id', $user->id)->first();
             if ($userScale) {
                 $userScale->update($scales);
             } else {
-                UserQuestionnaireScale::create(array_merge(['user_id' => Auth::id()], $scales));
+                UserQuestionnaireScale::create(array_merge(['user_id' => $user->id], $scales));
             }
 
-        } else {
-            return redirect(route('show', ['folder' => 'inbox']))->with('error', 'Already answered');
         }
-        session(['questionnaire_3done' => true]);
-        return redirect(route('show', ['folder' => 'inbox']))->with('success', 'Questionnaire 3 completed successfully!');
+        $user->teique_completed = now();
+        $user->save();
+
+        // Create the training as this is the last questionnaire
+        if (!session()->has("generating_training") && $user->training == null) {
+            TrainingController::createTraining();
+            session(['generating_training' => true]);
+        }
+
+        return redirect()->route("emails", ['folder' => 'inbox']);
     }
 
     public function calculateScales($id)

@@ -4,19 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\UserQuestionnaireScale;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\BFI2XS;
-use App\Models\Questionnaire;
-use App\Models\UserQuestionnaireAnswer;
-use App\Models\QuestionnaireCampaign;
-use App\Models\UserHfThreat;
-use App\Models\HumanFactor;
-use App\Models\Threat;
+
 
 class BFI2XSController extends Controller
 {
     public function create(Request $request)
     {
+        $user = Auth::user();
         $validatedData = $request->validate([
             'q1' => ['required', 'integer'],
             'q2' => ['required', 'integer'],
@@ -43,25 +40,26 @@ class BFI2XSController extends Controller
         }
 
         $alreadyAnswered = BFI2XS::where([
-            'user_id' => Auth::id(),
+            'user_id' => $user->id,
         ])->exists();
 
         if (!$alreadyAnswered) {
-            $validatedData['user_id'] = Auth::id();
+            $validatedData['user_id'] = $user->id;
             $answer = BFI2XS::create($validatedData);
 
             $scales = $this->calculateScales($answer->id);
-            $userScale = UserQuestionnaireScale::where('user_id', Auth::id())->first();
+            $userScale = UserQuestionnaireScale::where('user_id', $user->id)->first();
             if ($userScale) {
                 $userScale->update($scales);
             } else {
-                UserQuestionnaireScale::create(array_merge(['user_id' => Auth::id()], $scales));
+                UserQuestionnaireScale::create(array_merge(['user_id' => $user->id], $scales));
             }
 
         } else {
             return back()->with('error', 'Already answered');
         }
-        session(['questionnaire_1done' => true]);
+        $user->bfi_completed = now();
+        $user->save();
         return redirect()->route('questionnaire', ['step' => 2])->with('success', 'Questionnaire 1 completed successfully!');
     }
 

@@ -3,21 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\TrainingReaction;
-use App\Models\UserQuestionnaireScale;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Models\BFI2XS;
-use App\Models\Questionnaire;
-use App\Models\UserQuestionnaireAnswer;
-use App\Models\QuestionnaireCampaign;
-use App\Models\UserHfThreat;
-use App\Models\HumanFactor;
-use App\Models\Threat;
+
 
 class TrainingReactionController extends Controller
 {
     public function create(Request $request)
     {
+        $user = Auth::user();
         $validatedData = $request->validate([
             'q1' => ['required', 'integer'],
             'q2' => ['required', 'integer'],
@@ -25,21 +20,24 @@ class TrainingReactionController extends Controller
             'q4' => ['required', 'integer'],
             'q5' => ['required', 'integer'],
             'q6' => ['required', 'integer'],
-            'q7' => ['required', 'string'],
+            'q7' => ['max:255', 'string'],
+            'q8' => ['max:255', 'string'],
             'trivial_question' => ['required', 'boolean'],
             'fastClickCount' => ['required', 'integer'],
         ]);
 
         $alreadyAnswered = TrainingReaction::where([
-            'user_id' => Auth::id(),
+            'user_id' => $user->id,
         ])->exists();
 
         if (!$alreadyAnswered) {
-            $validatedData['user_id'] = Auth::id();
+            $validatedData['user_id'] = $user->id;
             TrainingReaction::create($validatedData);
         }
-        session(['questionnaire_4done' => true]);
-        return redirect()->route('save-final-data');
+
+        $user->training_reaction_completed = now();
+        $user->save();
+        return redirect()->route('goodbye');
     }
 }
 

@@ -47,7 +47,7 @@ class ProcessTraining implements ShouldQueue
         $section_prompts = $this->getSectionPrompts($personalization_condition, $length_condition);
 
         $context = [['role' => 'developer', 'content' => $developer_prompt]];
-
+        error_log($apiKey);
         foreach (["introduction", "scenario", "defense_strategies", "exercises", "conclusions"]  as $section) {
             $prompt = $section_prompts[$section];
 

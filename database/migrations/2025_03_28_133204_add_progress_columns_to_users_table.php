@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamp("stp_completed")->nullable();
             $table->timestamp("teique_completed")->nullable();
             $table->timestamp("training_reaction_completed")->nullable();
-            $table->timestamp("questionnaires_completed")->nullable();
+            //$table->timestamp("questionnaires_completed")->nullable();
             $table->timestamp("pre_training_completed")->nullable();
             $table->timestamp("training_completed")->nullable();
             $table->timestamp("post_training_completed")->nullable();
@@ -42,7 +42,7 @@ return new class extends Migration
             $table->dropColumn('teique_completed');
             $table->dropColumn('stp_completed');
             $table->dropColumn('training_reaction_completed');
-            $table->dropColumn("questionnaires_completed");
+            //$table->dropColumn("questionnaires_completed");
             $table->dropColumn("pre_training_completed");
             $table->dropColumn("training_completed");
             $table->dropColumn("post_training_completed");

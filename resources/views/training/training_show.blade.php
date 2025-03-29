@@ -91,7 +91,7 @@
 
                     completeTraining() {
                         let timeSpent = Math.floor((Date.now() - startTime) / 1000); // Calculate time in seconds
-                        window.location.href = "{{route('training_complete')}}?time=" + timeSpent;
+                        window.location.href = "{{route('training.complete')}}?time=" + timeSpent;
                     }
                 }
             }
