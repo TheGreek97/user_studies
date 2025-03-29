@@ -33,7 +33,12 @@ class User extends Authenticatable
         'shown_warning',
         'expertise_score',
         'study_completed',
-        'prolific_id'
+        'prolific_id',
+        'questionnaires_completed',
+        'pre_training_completed',
+        'training_completed',
+        'post_training_completed',
+        'training_reaction_completed'
     ];
 
     protected $guarded = [

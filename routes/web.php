@@ -117,10 +117,6 @@ Route::middleware([
         return redirect()->route('show', ['folder' => 'inbox']);
     })->name('setPostPhase');
 
-    Route::get('/end', [Questionnaire::class, 'showFollowUp'])->name('post_test');
-
-    Route::post('/end', [Questionnaire::class, 'storeFollowUp']);
-
     Route::post('/demographics', [QuestionnairesController::class, 'saveDemographicsData'])->name('demographics.create');
     Route::post('/big-five-inventory', [BFI2XSController::class, 'create'])->name('big-five-inventory.create');
     Route::post('/susceptibility-to-persuasion-ii', [StPIIBController::class, 'create'])->name('susceptibility-to-persuasion-ii.create');
@@ -134,10 +130,10 @@ Route::middleware([
     //Route::get('/final-data', [QuestionnairesController::class, 'finalData'])->name('final-data');
     Route::post('/save-final-data', [QuestionnairesController::class, 'saveFinalData'])->name('save-final-data');
 
-    Route::get('/training', [TrainingController::class, 'showTraining'])->name('training');
-    Route::get('/create-training', [TrainingController::class, 'createTraining'])->name('training_create');
-    Route::get('/complete-training', [TrainingController::class, 'completeTraining'])->name('training_complete');
+    Route::get('/training', [TrainingController::class, 'showTraining'])->name('training.show');
+    Route::get('/create-training', [TrainingController::class, 'createTraining'])->name('training.create');
+    Route::get('/complete-training', [TrainingController::class, 'completeTraining'])->name('training.complete');
 
-    Route::get('/{folder?}/{id?}', [MailController::class, 'show'])->name('show');
+    Route::get('/{folder?}/{id?}', [MailController::class, 'show'])->name('emails');
 });
 

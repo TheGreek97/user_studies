@@ -16,9 +16,9 @@ class TrainingController extends Controller
     {
         $user = Auth::user();
         // session()->put('training_done', true);
-        if (!session()->has('pre_phase_done') || session()->has('training_done')) {
-            return redirect()->route('show', ['folder' => 'inbox']);
-        }
+        //if (!session()->has('pre_phase_done') || session()->has('training_done')) {
+            //return redirect()->route('show', ['folder' => 'inbox']);
+        //}
         $training = $user->training;
         if ($training == null) {
             return redirect()->route('training_create');

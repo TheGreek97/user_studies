@@ -16,7 +16,7 @@ class MailController extends Controller
 {
     const MAILS_NUMBER = 12;
 
-    public function show($folder = 'inbox', $id = null)
+    public function show($folder = 'inbox', $id = null, $phase = 'pre')
     {
         // Logging to track redirection logic along with session data for debugging
         //Log::info('Current route: ' . FRequest::url());
@@ -29,46 +29,9 @@ class MailController extends Controller
         if (!session()->has('consent')) {
             return redirect(route('welcome'));
         }
-        $auth_user = Auth::user();
+        $user = Auth::user();
         $seed = (int) Auth::id();  // Randomize according to user id
         info("ID " . $id);
-
-        // session([
-        //     'questionnaire_1done' => true,
-        //     'questionnaire_2done' => true,
-        //     'questionnaire_3done' => true,
-        // ]);
-
-        //First show the 3 questionnaires
-        if (!session()->has('questionnaire_0done')) {
-            return redirect()->route('questionnaire', ['step' => 0]);
-        } elseif (!session()->has('questionnaire_1done')) {
-            return redirect()->route('questionnaire', ['step' => 1]);
-        } elseif (!session()->has('questionnaire_2done')) {
-            return redirect()->route('questionnaire', ['step' => 2]);
-        } elseif (!session()->has('questionnaire_3done')) {
-            return redirect()->route('questionnaire', ['step' => 3]);
-        }
-
-        // Start training generation after questionnaire 3 is completed
-        if (session()->has("questionnaire_3done") && ! session()->has("generating_training")){
-            return redirect()->route("training_create");
-        }
-
-        // Study completed
-        if(session()->has('questionnaire_4done') ) {
-            return redirect()->route('save-final-data');
-        }
-
-        //Training Reaction Questionnaire
-        if (session()->has('post_phase_done') ) {
-            return redirect()->route('questionnaire', ['step' => 4]);
-        }
-        if (session()->has('pre_phase_done') and !session()->has('training_completed')) {
-            return redirect()->route('training');
-        }
-
-        //Else: EMAIL CLASSIFICATION
 
         session_start();
         //unset($_SESSION['emails']);
@@ -102,9 +65,9 @@ class MailController extends Controller
             // replace the name in the email parts with the name of the user
             // Replace the placeholders in the content, subject, and preview_text
             //foreach ($placeholders as $placeholder) {}
-            $e->content = str_replace($placeholder, $auth_user->name, $e->content);
-            $e->subject = str_replace($placeholder, $auth_user->name, $e->subject);
-            $e->preview_text = str_replace($placeholder, $auth_user->name, $e->preview_text);
+            $e->content = str_replace($placeholder, $user->name, $e->content);
+            $e->subject = str_replace($placeholder, $user->name, $e->subject);
+            $e->preview_text = str_replace($placeholder, $user->name, $e->preview_text);
 
             // RENDER DATES
             // Replace {now_email_datetime} with the current date time of the email - 3 minutes.
@@ -116,12 +79,12 @@ class MailController extends Controller
 
             // Set the explanation message for phishing emails
             if ($e->show_warning) {
-                $counterfactual = $auth_user->explanation_type == "counterfactual";
-                if ($auth_user->show_explanation) {
-                    if ($auth_user->show_details == "no") {
-                        $e->warning_explanation = $this->get_explanation($e->phishing_feature, $auth_user->llm, $counterfactual);
+                $counterfactual = $user->explanation_type == "counterfactual";
+                if ($user->show_explanation) {
+                    if ($user->show_details == "no") {
+                        $e->warning_explanation = $this->get_explanation($e->phishing_feature, $user->llm, $counterfactual);
                     } else {
-                        $e->warning_explanation = $this->get_detailed_explanation($e->phishing_feature, $auth_user->llm, $counterfactual);
+                        $e->warning_explanation = $this->get_detailed_explanation($e->phishing_feature, $user->llm, $counterfactual);
                     }
                 } else {  // if no specific explanation will be shown, just show a generic message
                     $e->warning_explanation = "This email was blocked because it may trick you into doing something dangerous like installing software or revealing personal information like passwords or credit cards.";
@@ -143,7 +106,7 @@ class MailController extends Controller
             }
             if ($email != null) {
                 // if email was found, show the email page
-                $email->warning_type = $auth_user->warning_type;
+                $email->warning_type = $user->warning_type;
                 //  // Get the email file path
                 return view('email_page', ['folder' => $folder, 'emails' => $emails, 'selected_email' => $email, 'htmlContent' => $email->content]);
             } else {
