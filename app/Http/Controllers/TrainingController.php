@@ -70,8 +70,12 @@ class TrainingController extends Controller
             'training_completed_at' => now(),
             'time_taken' => $timeSpent
         ]);
+
         $user->training_completed = now();
         $user->save();
+
+        session(['startStudy' => true]);  // Needed to show instructions in the post-train phase
+
         return redirect()->route('emails', ['folder' => 'inbox']);  // Start post-train classification task
     }
 
@@ -112,7 +116,7 @@ class TrainingController extends Controller
             // Add classes to <button>
             foreach ($xpath->query('//button') as $button) {
                 $existingClass = $button->getAttribute('class');
-                $newClass = trim($existingClass . ' bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full');
+                $newClass = trim($existingClass . ' bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mb-4');
                 $button->setAttribute('class', $newClass);
             }
             // Add style to <ul>, <ol>

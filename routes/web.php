@@ -73,6 +73,7 @@ Route::middleware([
     ->name('questionnaire');
 
     Route::get('/', function(){
+        session(['startStudy' => true]);
         return view("welcome");
     })->name("welcome");
 

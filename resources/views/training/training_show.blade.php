@@ -2,31 +2,55 @@
     <x-slot name="slot">
         <div x-data="load()" class="min-h-screen bg-gray-200 flex justify-center items-center">
             <div class="p-12 m-10 bg-white md:min-w-100 rounded-2xl shadow-xl z-20">
-                <h1 class="text-3xl font-bold text-center mb-5">Training</h1>
+                <h1 class="text-3xl font-bold text-center mb-5">Anti-phishing Training</h1>
+
+                <div x-show="step === 0" id="section-training-descritpion">
+                    <p class="text-justify text-2xl">
+                        Now you will undergo the central part of our study, where you will be exposed to an AI-generated phishing training.
+                        <br>
+                        Please read the entire training content carefully, as it is essential for both the accuracy of the study’s results and the effectiveness of the research.
+                        <br>
+                        You should take about <b>{{\Illuminate\Support\Facades\Auth::user()?->training_length == "short" ? 8 : 15}} minutes </b> to read it at a medium/slow pace.
+                        <br>
+                        Your full attention will help ensure that the training is properly assessed and that the insights gained can contribute to improving cybersecurity education.
+                        <br><br>
+                        Thank you for your cooperation!
+                    </p>
+                </div>
 
                 <div x-show="step === 1" id="section-intro">
-                    {!! $training->introduction !!}
-                    <h2 class="text-l w-full text-center mt-10">Section 1 of 5</h2>
+                    <div class="text-2xl text-justify">
+                        {!! $training->introduction !!}
+                    </div>
+                    <h2 class="text-xl w-full text-center mt-10">Section 1 of 5</h2>
                 </div>
 
                 <div x-show="step === 2" id="section-scenario">
-                    {!! $training->scenario !!}
-                    <h2 class="text-l w-full text-center mt-10">Section 2 of 5</h2>
+                    <div class="text-2xl text-justify">
+                        {!! $training->scenario !!}
+                    </div>
+                    <h2 class="text-xl w-full text-center mt-10">Section 2 of 5</h2>
                 </div>
 
                 <div x-show="step === 3" id="section-strategies">
-                    {!! $training->defense_strategies !!}
-                    <h2 class="text-l w-full text-center mt-10">Section 3 of 5</h2>
+                    <div class="text-2xl text-justify">
+                        {!! $training->defense_strategies !!}
+                    </div>
+                    <h2 class="text-xl w-full text-center mt-10">Section 3 of 5</h2>
                 </div>
 
                 <div x-show="step === 4" id="section-exercises">
-                    {!! $training->exercises !!}
-                    <h2 class="text-l w-full text-center mt-10">Section 4 of 5</h2>
+                    <div class="text-2xl text-justify">
+                        {!! $training->exercises !!}
+                    </div>
+                    <h2 class="text-xl w-full text-center mt-10">Section 4 of 5</h2>
                 </div>
 
                 <div x-show="step === 5" id="section-conclusions">
-                    {!! $training->conclusions !!}
-                    <h2 class="text-l w-full text-center mt-10">Section 5 of 5</h2>
+                    <div class="text-2xl text-justify">
+                        {!! $training->conclusions !!}
+                    </div>
+                    <h2 class="text-xl w-full text-center mt-10">Section 5 of 5</h2>
                 </div>
 
                 <!-- Loading view -->
@@ -49,7 +73,7 @@
                                 Previous
                             </button>
                         </div>
-                        <div x-show="step > 0" class="flex-1"></div>
+                        <div x-show="step >= 0" class="flex-1"></div>
                         <div :class="{'flex-1 w-full': step === 0}">
                             <button type="button" id="next" @click="next()"
                                     :class="{'w-full' : step === 0, 'w-64' : step > 0}"
@@ -67,7 +91,7 @@
                 let startTime = Date.now(); // Capture start time
 
                 return {
-                    step: 1,
+                    step: 0,
 
                     previous() {
                         if (this.step > 1) {

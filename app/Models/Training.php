@@ -57,7 +57,7 @@ class Training extends Model
 
         if ($length == "long") {
             $scenario = '<div>
-  <h2>Realistic Phishing Scenario Presentation</h2>
+  <h2>Phishing Scenario</h2>
   <p>Let\'s imagine this scenario: It’s a regular workday, you’re busy with your tasks when suddenly you receive an unexpected email. The subject line reads “Urgent: Update Your Account Information Immediately” in bold red letters. You feel a bit uneasy, but you’re curious because the email seems to come from a familiar name. The sender’s email address appears as <span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="showDescription(\'desc1\')">support@amazonsupport.com</span>, which looks similar to an address you might expect from a reputable company. However, before you proceed, pause and analyze the situation.</p>
 
   <p>The body of the email warns you that due to unusual activity on your account, immediate verification is needed. Below the message, you see a button-styled link that says: <span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="showDescription(\'desc2\')">Verify Your Account Now</span>. The link itself directs you to a web address that looks almost legitimate: <span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="showDescription(\'desc3\')">http://amazonsupport.secure-login.com</span>. At first glance, every part of this email seems urgent and important.</p>
@@ -149,7 +149,7 @@ class Training extends Model
 </div>';
         } else {
             $scenario = '<div>
-  <h2>Realistic Phishing Scenario Presentation</h2>
+  <h2>Phishing Scenario</h2>
   <p>{USER_NAME}, imagine starting your day as usual only to receive an unexpected email. It appears to be from PayPal, warning you of suspicious activity on your account and urging you to verify your details immediately. The urgency of the message creates a sense of alarm, prompting a rapid reaction without time to think it through. This is a typical scenario used by attackers to exploit psychological vulnerabilities such as trust and fear.</p>
 
   <div style="border:1px solid #ccc; padding: 10px; background-color:#f9f9f9;">

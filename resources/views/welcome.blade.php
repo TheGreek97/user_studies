@@ -57,7 +57,7 @@
                 <div class="text-lg pt-3 font-bold italic mt-8" style="color:darkred"> STUDY DESCRIPTION
                 </div>
                 <p class="text-xl max-w-4xl text-left pt-4">
-                    The participation to the study takes <b>about 20 minutes</b> and will have 4 main phases:
+                    The participation to the study takes <b>about {{\Illuminate\Support\Facades\Auth::user()?->training_length == "short" ? 20 : 25}} minutes</b> and will have 4 main phases:
                     <ol class="text-xl max-w-4xl text-left pt-4" style="list-style-type: decimal; list-style-position: inside">
                         <li>
                             <b>Profiling questionnaires (&#126;7 min):</b> Participants will complete a demographic questionnaire and three standardized questionnaires (BFI-2 XS, StP-II B, TEIQue-SF) to assess personality traits, susceptibility to persuasion, and emotional intelligence. No personal or sensitive data will be collected.
@@ -66,7 +66,7 @@
                             <b>Pre-training assessment (&#126;3 min):</b> Participants will evaluate 12 static emails (a mix of phishing and genuine) and indicate whether each is “phishing” or “non-phishing.”.
                         </li>
                         <li>
-                            <b>Training (&#126;10 min):</b> Participants will receive AI-customized training on phishing attacks, tailored to their profile based on questionnaire responses.
+                            <b>Training (&#126;{{\Illuminate\Support\Facades\Auth::user()?->training_length == "short" ? 10 : 15}} min):</b> Participants will receive AI-customized training on phishing attacks, tailored to their profile based on questionnaire responses.
                         </li>
                         <li>
                             <b>Post-training assessment (&#126;3 min):</b> Participants will evaluate 12 more emails to measure changes in phishing detection accuracy.
