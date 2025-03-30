@@ -59,7 +59,8 @@ class StudyAuth
                 Auth::user()->save();
             }
         }
-        // TODO remove this
+
+        /* User for debug purposes
         $user = User::find(1);
                 Auth::logout();  // logout any previous user and login as the new one (who completed the study)
                 Auth::login($user);
@@ -70,8 +71,6 @@ class StudyAuth
             "questionnaire_2done" => true,
             "questionnaire_3done" => true
         ]);
-        /* User for debug purpose
-
         */
         return $next($request);
     }

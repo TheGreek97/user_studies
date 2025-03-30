@@ -69,12 +69,12 @@ Route::middleware([
     RedirectToTheRightPhase::class,
     //'log'  //removed since we don't need to save URL logs
 ])->group(function () {
+    Route::get('/questionnaire/{step}', [QuestionnairesController::class, 'showQuestionnaire'])
+    ->name('questionnaire');
+
     Route::get('/', function(){
         return view("welcome");
     })->name("welcome");
-
-    Route::get('/questionnaire/{step}', [QuestionnairesController::class, 'showQuestionnaire'])
-    ->name('questionnaire');
 
     Route::get('/training', [TrainingController::class, 'showTraining'])->name('training.show');
 

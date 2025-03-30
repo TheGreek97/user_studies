@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('training_reaction', function (Blueprint $table) {
-            $table->string('q8');
+            $table->string('q7')->nullable()->change();
+            $table->string('q8')->nullable()->after('q7');
         });
     }
 
@@ -25,7 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('training_reaction_questionnaire', function (Blueprint $table) {
+        Schema::table('training_reaction', function (Blueprint $table) {
+            $table->string('q7')->change();
             $table->dropColumn('q8');
         });
     }

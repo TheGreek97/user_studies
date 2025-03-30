@@ -22,7 +22,7 @@ class TrainingReaction extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id','q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'trivial_question', 'fastClickCount', 'updated_at', 'created_at'
+        'user_id','q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'trivial_question', 'fastClickCount', 'updated_at', 'created_at'
     ];
 
     /**

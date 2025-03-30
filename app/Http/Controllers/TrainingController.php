@@ -21,7 +21,6 @@ class TrainingController extends Controller
             //return redirect()->route('show', ['folder' => 'inbox']);
         //}
         $training = $user->training;
-
         if ($training == null) {  // this should not ever be reached (training is created beforehand
             $training = $this->createTraining();
         }
@@ -44,7 +43,7 @@ class TrainingController extends Controller
                     'user_id' => $user->id,
                     'completed' => false
                 ]);
-                ProcessTraining::dispatch($training->id);
+                ProcessTraining::dispatch($training->id, $user);
             } else {  // otherwise, take the non-personalized one
                 $training = Training::create([
                     'user_id' => $user->id,
@@ -116,11 +115,14 @@ class TrainingController extends Controller
                 $newClass = trim($existingClass . ' bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full');
                 $button->setAttribute('class', $newClass);
             }
-            // Add style to <li>
-            foreach ($xpath->query('//li') as $li) {
+            // Add style to <ul>, <ol>
+            foreach ($xpath->query('//ul | //ol') as $li) {
                 $existingStyle = $li->getAttribute('style');
-                $newClass = trim($existingStyle . '; list-style: inside;');
+                $existingClass = $li->getAttribute('class');
+                $newStyle = trim($existingStyle . '; list-style-position: inside; list-style-type: initial');
+                $newClass = trim($existingClass . ' mb-6');
                 $li->setAttribute('class', $newClass);
+                $li->setAttribute('style', $newStyle);
             }
 
             $updatedHtml = preg_replace('/^<!DOCTYPE.+?>/', '', $dom->saveHTML());

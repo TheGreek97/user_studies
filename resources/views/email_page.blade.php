@@ -804,9 +804,9 @@ use Illuminate\Support\Facades\Auth;
 
                     let errors = [];
 
-                    // An email should be classified after at least 10 seconds
+                    // An email should be classified after at least 5 seconds
                     let elapsedTime = (Date.now() - startTime) / 1000;
-                    if (elapsedTime < 8) {
+                    if (elapsedTime < 5) {
                         window.dispatchEvent(new CustomEvent('open-modal', {
                             detail: 'too-fast-modal'
                         }));

@@ -9,18 +9,22 @@ use Illuminate\Http\Client\RequestException;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Auth;
+
 use App\Models\Training;
 
 class ProcessTraining implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $trainingId;
+    protected $trainingId, $training_length, $training_personalization, $user_name, $personalization_prompt;
 
-    public function __construct($trainingId)
+    public function __construct($trainingId, $user)
     {
         $this->trainingId = $trainingId;
+        $this->training_length = $user->training_length;
+        $this->training_personalization = $user->training_personalization;
+        $this->user_name = $user->name;
+        $this->personalization_prompt = $user->getUserProfilePrompt();
     }
 
     /**
@@ -40,11 +44,8 @@ class ProcessTraining implements ShouldQueue
         $temperature = 0.00001;
 
         // Get user conditions
-        $personalization_condition = $training->user->training_personalization;
-        $length_condition = $training->user->length_condition;
-        $user_name = $training->user->name;
-        $developer_prompt = $this->getDeveloperPrompt($personalization_condition, $length_condition, $user_name);
-        $section_prompts = $this->getSectionPrompts($personalization_condition, $length_condition);
+        $developer_prompt = $this->getDeveloperPrompt();
+        $section_prompts = $this->getSectionPrompts();
 
         $context = [['role' => 'developer', 'content' => $developer_prompt]];
         //error_log($apiKey);
@@ -71,26 +72,22 @@ class ProcessTraining implements ShouldQueue
            }
 
             $context[] = ['role' => 'assistant', 'content' => $generatedText];
-
-            /* DEBUG values:
-            sleep(2);
-            $training->$section = $section;*/
         }
 
         $training->completed = true;
         $training->save();
     }
 
-    private function getDeveloperPrompt($personalization_condition, $length_condition, $user_name)
+    private function getDeveloperPrompt()
     {
-        $personalized_string = $personalization_condition == "no" ? "" : "personalized";
-        $minutes = $length_condition == "short" ? "9" : "18";
-
+        $personalized_string = $this->training_personalization == "no" ? "" : "personalized";
+        $minutes = $this->training_length == "short" ? "9" : "18";
+        error_log("length condition: $this->training_length - $minutes minutes, personalization: $this->training_personalization");
         $prompt = "
 CONTEXT
 You are asked to generate $personalized_string educational material for an anti‑phishing training module. This training module will last about $minutes minutes and will be split into 5 submodules. The training module will have the following structure:
 - Introduction to the Phishing Problem
-- Realistic Phishing Scenario Presentation
+- Phishing Scenario
 - Defense Strategies
 - Interactive Exercises
 - Conclusions
@@ -102,15 +99,16 @@ Each submodule will be embedded in a webpage, so it must be valid HTML and wrapp
 
 CONTENT AND STYLE REQUIREMENTS
 - The language must be accessible and simple to make the concepts understandable by users with no expertise in cybersecurity.
-- The content should be clear, engaging, and educational, and the user must be addressed by their first name, which is $user_name.
+- The content should be clear, engaging, and educational, and the user must be addressed by their first name, which is $this->user_name.
 - The content should provide the hard facts and clear guidance expected from an “expert” while also incorporating relatable narratives and examples that create a more personal connection.
 - The content should flow logically, ensuring a smooth and engaging user experience.
+- The submodules are shown by the user in the same session, one after the other. Therefore, generate each subsequent submodule as the continuation of the previous one(s).
+- Do not greet the user at the start of every submodule, but just in the introduction.
 ";
-        if ($personalization_condition !== "no"){
-            $personalization_prompt = Auth::user()->getUserProfilePrompt();
+        if ($this->training_personalization !== "no"){
             $prompt .= "
             PERSONALIZATION REQUIREMENTS
-            $personalization_prompt
+            $this->personalization_prompt
             ";
             /*if ($personalization_condition == "primed"){
                 $main_traits = $user->getUserMainTraits();
@@ -121,9 +119,9 @@ CONTENT AND STYLE REQUIREMENTS
         return $prompt;
     }
 
-    private function getSectionPrompts($personalization, $length)
+    private function getSectionPrompts()
     {
-        if ($length == "short") {
+        if ($this->training_length == "short") {
             $sections_times = ["introduction" => 1, "scenario" => 2, "defense_strategies" => 3, "exercises" => 2, "conclusions" => 1];
             $n_exercises = 2;
         } else {
@@ -141,13 +139,15 @@ CONTENT AND STYLE REQUIREMENTS
                      $prompt = "GOAL
 Generate the Introduction sub-module, which must be structured as follows.
 Introduction to the Phishing Problem ($s_time min, approx. $s_words words):";
-                    if ($personalization == "no"){
+                    if ($this->training_personalization == "no"){
                        $prompt .= "
+- Briefly introduce the user to the training course.
 - Explain what the problem of phishing is and why it’s dangerous.
 - Include a statement that presents some psychological vulnerabilities exploited by attackers.
 - Give an overview of what the whole training module will cover.";
                     } else {
                         $prompt .= "
+- Briefly introduce the user to the training course.
 - Explain what the problem of phishing is and why it’s dangerous.
 - Include a statement that presents some possible user vulnerabilities to phishing techniques based on the user’s psychological profile.
 - Give an overview of what the whole training module will cover.";
@@ -156,8 +156,8 @@ Introduction to the Phishing Problem ($s_time min, approx. $s_words words):";
                 case "scenario":
                     $prompt = "GOAL
                         Generate the Phishing Scenario sub-module, which must be structured as follows.
-                        Realistic Phishing Scenario Presentation ($s_time minutes, approx. $s_words words):";
-                    if ($personalization == "no"){
+                        Phishing Scenario ($s_time minutes, approx. $s_words words):";
+                    if ($this->training_personalization == "no"){
                        $prompt .= "
 - Scenario Introduction: Briefly introduce a scenario with a realistic narrative that users might relate to, in which an email is suddenly received.
 - Interactive Phishing Email: Create a realistic, simulated phishing email in HTML containing common phishing techniques (e.g., deceptive URL, spoofed sender details, etc.). The email parts that contain a phishing technique must be reactive on mouse click showing a description of the technique (see next bullet point).
@@ -176,7 +176,7 @@ Introduction to the Phishing Problem ($s_time min, approx. $s_words words):";
 Generate the Defense Strategies sub-module, which must be structured as follows.
 Defense Strategies ($s_time minutes, approx. $s_words words):
                         ";
-                    if ($personalization == "no"){
+                    if ($this->training_personalization == "no"){
                        $prompt .= "
 - Present defense strategies against common phishing techniques (e.g., “Double-check the sender’s domain carefully”, “Check the actual URL by hovering on a link”, etc.).
 - Give clear actionable items that participants can easily follow to protect themselves.

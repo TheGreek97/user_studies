@@ -91,13 +91,14 @@
                                     <textarea class="w-full p-3 border-2 border-gray-300 rounded-md focus:outline-none focus:border-sky-500"
                                             name="q7"
                                             rows="4"
+                                              required
                                             placeholder="Write your response here..."
                                             ></textarea>
                                 </div>
                                 <hr>
                                 <div class="py-6">
                                     <p class="text-left md:text-center text-lg md:text-xl font-semibold text-gray-800 py-3">
-                                        Would you like to report any error in the training content? (e.g., display errors, inaccuracies, etc.)
+                                        (optional) Would you like to report any error in the training content? (e.g., display errors, inaccuracies, etc.)
                                     </p>
                                     <textarea class="w-full p-3 border-2 border-gray-300 rounded-md focus:outline-none focus:border-sky-500"
                                               name="q8"

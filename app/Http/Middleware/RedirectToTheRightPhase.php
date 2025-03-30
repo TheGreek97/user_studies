@@ -33,29 +33,32 @@ class RedirectToTheRightPhase
         if ($user && $user->expelled
             && $currentRoute !== "expelUser") {
             return redirect()->route('expelUser');
-        }
-
-        // Redirect the user to the welcome page + consent agreement
-        if (! $user->given_consent) {
-            if ($currentRoute !== 'welcome') {
-                return redirect()->route('welcome')->with(['PROLIFIC_PID' => $request->input('PROLIFIC_PID')]);
-            }
-        }
-
-        if ($user->study_completed) {
+        } elseif ($user && $user->study_completed) {
+            // Redirect the user to the goodbye page if they have completed the study already
             if ($currentRoute !== 'goodbye') {
                 return redirect()->route('goodbye');
             }
-        }
-
-        if (!$user->demographics_completed && $currentRoute !== 'questionnaire') {
-            return redirect()->route('questionnaire', ['step' => 0]);
-        } elseif (!$user->bfi_completed && $currentRoute !== 'questionnaire') {
-            return redirect()->route('questionnaire', ['step' => 1]);
-        } elseif (!$user->stp_completed && $currentRoute !== 'questionnaire') {
-            return redirect()->route('questionnaire', ['step' => 2]);
-        } elseif (!$user->teique_completed && $currentRoute !== 'questionnaire') {
-            return redirect()->route('questionnaire', ['step' => 3]);
+        } elseif (! $user->given_consent) {
+            // Redirect the user to the welcome page + consent agreement
+            if ($currentRoute !== 'welcome') {
+                return redirect()->route('welcome')->with(['PROLIFIC_PID' => $request->input('PROLIFIC_PID')]);
+            }
+        } elseif (!$user->demographics_completed){
+            if ($currentRoute !== 'questionnaire') {
+                return redirect()->route('questionnaire', ['step' => 0]);
+            }
+        } elseif (!$user->bfi_completed) {
+            if ($currentRoute !== 'questionnaire') {
+                return redirect()->route('questionnaire', ['step' => 1]);
+            }
+        } elseif (!$user->stp_completed){
+            if ($currentRoute !== 'questionnaire') {
+                return redirect()->route('questionnaire', ['step' => 2]);
+            }
+        } elseif (!$user->teique_completed){
+            if ($currentRoute !== 'questionnaire') {
+                return redirect()->route('questionnaire', ['step' => 3]);
+            }
         } elseif (!$user->pre_training_completed) {
             if ($currentRoute !== 'emails') {
                 error_log("Redirecting to emails (pre-train) from ". $currentRoute);

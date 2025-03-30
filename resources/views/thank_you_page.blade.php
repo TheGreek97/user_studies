@@ -12,18 +12,18 @@
                         Thank you for taking the test!
                     </div>
                     <div class="text-xl max-w-2xl text-left pt-3">
-                        We want to reassure you once again that the actions taken during the test will not have any consequence for you,
-                        as all the emails have been manually produced by our team and are not actually harmful.
+                        We want to reassure you once again that all the information you submitted through the questionnaires and the actions taken during the test are not linkable to your identity in any case.
                         <br><br>
                         <b>IMPORTANT!</b> In order to prove your participation to this study and be rewarded, <b>you must go back to ©Prolific</b> by <br/>
                         <div class="text-center mt-2">
-                            <a href="https://app.prolific.com/submissions/complete?cc=CNC6Y0RK" style="color:dodgerblue; text-decoration: underline; font-weight: bold">CLICKING HERE</a>
+                            <a href="https://app.prolific.com/submissions/complete?cc={{env('PROLIFIC_STUDY_CODE')}}" style="color:dodgerblue; text-decoration: underline; font-weight: bold">CLICKING HERE</a>
                         </div>
                         <div class="text-center mt-2">
                             If the link is not working, copy the following URL in the address bar of your browser: <br>
-                            https://app.prolific.com/submissions/complete?cc=CNC6Y0RK
+                            https://app.prolific.com/submissions/complete?cc={{env('PROLIFIC_STUDY_CODE')}}
                         </div>
                         <br>
+                        <hr class="my-4">
                         Goodbye!<br>
                         <div style="font-style: italic">
                             IVU Lab, University of Bari, Italy, <br>

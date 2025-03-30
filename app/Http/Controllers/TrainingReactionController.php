@@ -20,8 +20,8 @@ class TrainingReactionController extends Controller
             'q4' => ['required', 'integer'],
             'q5' => ['required', 'integer'],
             'q6' => ['required', 'integer'],
-            'q7' => ['max:255', 'string'],
-            'q8' => ['max:255', 'string'],
+            'q7' => ['max:255', 'nullable', 'string'],
+            'q8' => ['max:255', 'nullable', 'string'],
             'trivial_question' => ['required', 'boolean'],
             'fastClickCount' => ['required', 'integer'],
         ]);
