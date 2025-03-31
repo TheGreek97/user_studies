@@ -25,7 +25,7 @@ class TrainingController extends Controller
             $training = $this->createTraining();
         }
 
-        if (! $training->completed) {
+        if (! $training->generated) {
             return view("training.status_not_ready");
         }
 

@@ -39,6 +39,7 @@ class StudyController extends Controller
         $user = Auth::user();
         if ($user) {
             $user->expelled = true;
+            $user->save();
         }
         return view('expelled');
     }

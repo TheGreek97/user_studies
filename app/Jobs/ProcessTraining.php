@@ -74,7 +74,7 @@ class ProcessTraining implements ShouldQueue
             $context[] = ['role' => 'assistant', 'content' => $generatedText];
         }
 
-        $training->completed = true;
+        $training->generated = true;
         $training->save();
     }
 
