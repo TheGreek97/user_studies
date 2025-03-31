@@ -34,6 +34,11 @@ class StudyController extends Controller
         }
     }
 
+    public function welcomeUser(Request $request) {
+        session(['startStudy' => true]);
+        return view("welcome");
+    }
+
     public function expelUser(Request $request)
     {
         $user = Auth::user();

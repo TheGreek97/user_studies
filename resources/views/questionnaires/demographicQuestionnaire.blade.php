@@ -65,6 +65,13 @@
                                             class="block text-sm px-4 rounded-lg py-3 border outline-none"/>
                                     </div>
                                 </div>
+                                @if(Auth::user()->prolific_id == null)
+                                <div class="my-5">
+                                    <p class="font-bold pb-1">We could not get your Prolific ID automatically, please insert it manually:</p>
+                                    <input required type="text" name="prolific_id" min="24" max="24" placeholder="Prolific ID (24 characters)"
+                                           class="block text-sm px-4 rounded-lg py-3 border outline-none"/>
+                                </div>
+                                @endif
                             </div>
                             <div>
                                 <div class="flex w-full justify-center">

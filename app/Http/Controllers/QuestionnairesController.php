@@ -37,6 +37,9 @@ class QuestionnairesController extends Controller
         $user->age = $request->age;
         $user->num_hours_day_internet = $request->num_hours_day_internet;
         $user->demographics_completed = now();
+        if ($request->prolific_id) {
+            $user->prolific_id = $request->prolific_id;
+        }
         $user->save();
         return redirect(route('questionnaire', ['step' => 1]));  // show BFI questionnaire after demographics
     }

@@ -20,7 +20,8 @@ class StudyAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        $prolificId_request = $request->query('PROLIFIC_PID');
+        $prolificId_request = $request->get('PROLIFIC_PID');
+        $study_id = $request->get('STUDY_ID');
         if ($prolificId_request) {
             $user= User::userCompletedPreviousStudy($prolificId_request);
             if ($user !== null) {  //  user already executed the study on Prolific

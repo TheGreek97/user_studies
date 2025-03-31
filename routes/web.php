@@ -72,10 +72,7 @@ Route::middleware([
     Route::get('/questionnaire/{step}', [QuestionnairesController::class, 'showQuestionnaire'])
     ->name('questionnaire');
 
-    Route::get('/', function(){
-        session(['startStudy' => true]);
-        return view("welcome");
-    })->name("welcome");
+    Route::get('/', [StudyController::class, 'welcomeUser'])->name("welcome");
 
     Route::get('/training', [TrainingController::class, 'showTraining'])->name('training.show');
 
