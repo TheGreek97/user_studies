@@ -140,14 +140,14 @@
 </x-app-layout>
 
 <!-- Error modal -->
-<x-modal name="error-modal" id="error-modal" title="Compile all the questions!" :show="false">
+<x-modal name="error-modal" id="error-modal" title="Please answer all the questions!" :show="false">
     <div class="p-4 rounded-lg relative text-center">
         <p class="text-2xl font-semibold text-red-700 pb-8">@lang('questionnaire-campaign.trainingReactionQuestionnaire.compileError')</p>
         <x-primary-button x-on:click="$dispatch('close')">Close</x-primary-button>
     </div>
 </x-modal>
 
-<x-modal name="to-fast-modal" id="to-fast-modal" title="Compile all the questions slowly!" :show="false" x-data="{ show: false }" x-show="show" @open-modal.window="show = true">
+<x-modal name="too-fast-modal" id="too-fast-modal" title="Compile all the questions slowly!" :show="false" x-data="{ show: false }" x-show="show" @open-modal.window="show = true">
     <div class="p-4 rounded-lg relative text-center">
         <p class="text-2xl font-semibold text-red-700 pb-8">You're going too fast!</p>
         <p class="text-lg text-gray-800 pb-8">

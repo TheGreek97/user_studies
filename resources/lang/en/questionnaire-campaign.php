@@ -123,7 +123,7 @@ return [
         'damocles' => 'DAMOCLES',
         'damoclesQuestionnaire' => 'DAMOCLES Questionnaire',
         'submit' => 'Submit',
-        'compileError' => 'Compile all the questions!',
+        'compileError' => 'Please answer all the questions!',
         'stronglyDisagree' => 'Strongly Disagree',
         'disagree' => 'Disagree',
         'neutral' => 'Neutral',
@@ -141,7 +141,7 @@ return [
         'hais' => 'HAIS',
         'haisQuestionnaire' => 'HAIS Questionnaire',
         'submit' => 'Submit',
-        'compileError' => 'Compile all the questions!',
+        'compileError' => 'Please answer all the questions!',
         'stronglyDisagree' => 'Strongly Disagree',
         'disagree' => 'Disagree',
         'neutral' => 'Neutral',
@@ -159,7 +159,7 @@ return [
         'stpIIB' => 'Susceptibility to Persuasion-II',
         'stpIIBQuestionnaire' => 'Susceptibility to Persuasion-II Questionnaire',
         'submit' => 'Submit',
-        'compileError' => 'Compile all the questions!',
+        'compileError' => 'Please answer all the questions!',
         'scale' => [
             '1' => 'Strongly Disagree',
             '2' => 'Disagree',
@@ -296,7 +296,7 @@ return [
         'bfi2xs' => 'Big Five Inventory',
         'bfi2xsQuestionnaire' => 'Big Five Inventory Questionnaire',
         'submit' => 'Submit',
-        'compileError' => 'Compile all the questions!',
+        'compileError' => 'Please answer all the questions!',
         'scale' => [
             '1' => 'Disagree strongly',
             '2' => 'Disagree a little',
@@ -371,7 +371,7 @@ return [
         'teiQueSF' => 'Trait Emotional Intelligence Questionnaire',
         'teiQueSFQuestionnaire' => 'Trait Emotional Intelligence Questionnaire',
         'submit' => 'Submit',
-        'compileError' => 'Compile all the questions!',
+        'compileError' => 'Please answer all the questions!',
         'scale' => [
             '1' => 'Completely Disagree',
             '2' => 'Disagree',
@@ -507,7 +507,7 @@ return [
     'trainingReactionQuestionnaire' => [
         'trainingReactionQuestionnaire' => 'Training Reaction Questionnaire',
         'submit' => 'Submit',
-        'compileError' => 'Compile all the questions!',
+        'compileError' => 'Please answer all the questions!',
         'scale' => [
             '1' => 'Not at all',
             '2' => 'Slightly',

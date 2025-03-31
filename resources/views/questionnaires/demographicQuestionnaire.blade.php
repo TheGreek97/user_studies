@@ -82,7 +82,7 @@
 </x-app-layout>
 
 <!-- Error modal -->
-<x-modal name="error-modal" id="error-modal" title="Compile all the questions!" :show="false">
+<x-modal name="error-modal" id="error-modal" title="Please answer all the questions!" :show="false">
     <div class="p-4 rounded-lg relative text-center">
         <p class="text-2xl font-semibold text-red-700 pb-8">@lang('questionnaire-campaign.bfi2xs.compileError')</p>
         <x-primary-button x-on:click="$dispatch('close')">Close</x-primary-button>

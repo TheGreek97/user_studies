@@ -764,7 +764,7 @@ use Illuminate\Support\Facades\Auth;
 
         <div style="position: sticky; top: 0; left: 0; z-index: 99; height: 5px;"
         class="shadow-lg bg-gray-700 text-white">
-        <x-modal name="error-modal" id="errorModal" title="Compile all the questions!" :show="false">
+        <x-modal name="error-modal" id="errorModal" title="Please answer all the questions!" :show="false">
             <div class="p-4 rounded-lg relative text-center">
                 <p class="text-2xl font-semibold text-red-700 pb-8">Evaluate the email !</p>
                 <p id="modalMessage" class="text-lg text-gray-800 pb-8"></p>

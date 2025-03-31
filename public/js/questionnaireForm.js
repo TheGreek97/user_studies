@@ -106,24 +106,24 @@ function updateSectionCounter(currentTab, totalSteps) {
 document.addEventListener("DOMContentLoaded", function () {
     let isDisabled = false;
     let timerStartedForQuestion = null;
-    let disabledClickCount = 0;  
+    let disabledClickCount = 0;
 
     document.querySelectorAll("input[type='radio']").forEach(radio => {
         radio.addEventListener("click", function () {
-            const questionId = this.name;  
+            const questionId = this.name;
             // If a timer has already started for this question, do nothing
             if (timerStartedForQuestion === questionId) {
-                return; 
+                return;
             }
 
             if (isDisabled) {
                 this.checked = false;  // Uncheck the radio button if clicked
-                disabledClickCount++; 
+                disabledClickCount++;
                 document.getElementById("fastClickCount").value = disabledClickCount;
 
                 // Trigger the the modal
                 const modalEvent = new CustomEvent('open-modal', {
-                    detail: 'to-fast-modal'
+                    detail: 'too-fast-modal'
                 });
                 window.dispatchEvent(modalEvent);
                 return;

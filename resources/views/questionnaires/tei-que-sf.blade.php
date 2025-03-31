@@ -35,7 +35,7 @@
                                                         @for ($i = 1; $i <= 7; $i++)
                                                             <div class="flex flex-row md:flex-col items-start md:items-center md:w-1/7">
                                                                 <input
-                                                                    class="cursor-pointer appearance-none w-5 h-5 border-2 border-gray-400 rounded-full 
+                                                                    class="cursor-pointer appearance-none w-5 h-5 border-2 border-gray-400 rounded-full
                                                                         checked:bg-sky-600 hover:border-sky-500 transition-all duration-200"
                                                                     type="radio"
                                                                     id="trivial_question_{{ $i }}"
@@ -114,18 +114,18 @@
 </x-app-layout>
 
 <!-- Error modal -->
-<x-modal name="error-modal" id="error-modal" title="Compile all the questions!" :show="false">
+<x-modal name="error-modal" id="error-modal" title="Please answer all the questions!" :show="false">
     <div class="p-4 rounded-lg relative text-center">
         <p class="text-2xl font-semibold text-red-700 pb-8">@lang('questionnaire-campaign.tei-que-sf.compileError')</p>
         <x-primary-button x-on:click="$dispatch('close')">Close</x-primary-button>
     </div>
 </x-modal>
 
-<x-modal name="to-fast-modal" id="to-fast-modal" title="Compile all the questions slowly!" :show="false" x-data="{ show: false }" x-show="show" @open-modal.window="show = true">
+<x-modal name="too-fast-modal" id="too-fast-modal" title="Compile all the questions slowly!" :show="false" x-data="{ show: false }" x-show="show" @open-modal.window="show = true">
     <div class="p-4 rounded-lg relative text-center">
         <p class="text-2xl font-semibold text-red-700 pb-8">You're going too fast!</p>
         <p class="text-lg text-gray-800 pb-8">
-            Please slow down and carefully read each question before selecting an answer. <br> 
+            Please slow down and carefully read each question before selecting an answer. <br>
             Your thoughtful responses matter to us.
         </p>
         <x-primary-button x-on:click="$dispatch('close')">Close</x-primary-button>
