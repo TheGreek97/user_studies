@@ -20,6 +20,7 @@ class StudyAuth
      */
     public function handle(Request $request, Closure $next)
     {
+        //session(["startStudy" => 1]);
         $prolificId_request = $request->get('PROLIFIC_PID');
         $study_id = $request->get('STUDY_ID');
         if ($prolificId_request) {

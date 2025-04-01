@@ -17,9 +17,55 @@ use Illuminate\Support\Facades\Auth;
                 </p>
             @endif
         </div>
+        @if (isset($startStudy))
+        <div x-data="debuffModal()" x-init="startTimer()">
+        <!-- Modal -->
+        <div x-show="showFirstModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" style="z-index:50;">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-1/3 text-center">
+                <h2 class="text-xl font-semibold">Please Wait</h2>
+                <p class="mt-2 text-gray-600">
+                    You must wait <span x-text="remainingTime"></span> seconds before proceeding.
+                    This will help to reduce overload. <br>
+                    Feel free to have a break, a coffee or a walk!
+                </p>
+                <div class="mt-4">
+                    <button @click="proceedToNextModal()"
+                            :disabled="remainingTime > 0"
+                            class="px-4 py-2 rounded-lg text-white"
+                            :class="remainingTime > 0 ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700'">
+                        Continue
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function debuffModal() {
+                return {
+                    showFirstModal: true,  // First modal is visible initially
+                    showSecondModal: false, // Second modal is hidden initially
+                    remainingTime: 5, // 30-second debuff
+
+                    startTimer() {
+                        let interval = setInterval(() => {
+                            if (this.remainingTime > 0) {
+                                this.remainingTime--;
+                            } else {
+                                clearInterval(interval);
+                            }
+                        }, 1000);
+                    },
+
+                    proceedToNextModal() {
+                        this.showFirstModal = false; // Hide first modal
+                        this.showSecondModal = true; // Show second modal
+                    }
+                };
+            }
+        </script>
 
         <!-- Task presentation modal -->
-        <div id="task-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+        <div x-show="showSecondModal" id="task-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
             style="z-index: 99; background: rgba(0,0,0,30%);"
             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative p-4 w-full max-w-2xl max-h-full">
@@ -69,44 +115,43 @@ use Illuminate\Support\Facades\Auth;
             </div>
         </div>
 
+        <script type="module">
+            { // show the modal
+                // set the modal menu element
+                const $targetEl = document.getElementById('task-modal')
 
-        @if (isset($startStudy))
-            <script type="module">
-                { // show the modal
-                    // set the modal menu element
-                    const $targetEl = document.getElementById('task-modal')
-
-                    // options with default values
-                    const options = {
-                        placement: 'bottom-right',
-                        backdrop: 'static',
-                        backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
-                        closable: true,
-                        onHide: () => {
-                            console.log('modal is hidden');
-                        }
-                    };
-
-                    // instance options object
-                    const instanceOptions = {
-                        id: 'modalEl',
-                        override: true
-                    };
-                    /*
-                     * $targetEl: required
-                     * options: optional
-                     */
-                    const modal = new Modal($targetEl, options, instanceOptions);
-
-                    function shrinkModalToNavbar() {
-                        $targetEl.firstElementChild.classList.add("modal-shrink") // add the animation to the modal
-                        setTimeout(() => modal.hide(), 1100) // wait 2 second for the animation to complete, then hide the modal
+                // options with default values
+                const options = {
+                    placement: 'bottom-right',
+                    backdrop: 'static',
+                    backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
+                    closable: true,
+                    onHide: () => {
+                        console.log('modal is hidden');
                     }
+                };
 
-                    modal.show()
-                    document.getElementById('close-task-modal-btn').onclick = shrinkModalToNavbar
+                // instance options object
+                const instanceOptions = {
+                    id: 'modalEl',
+                    override: true
+                };
+                /*
+                 * $targetEl: required
+                 * options: optional
+                 */
+                const modal = new Modal($targetEl, options, instanceOptions);
+
+                function shrinkModalToNavbar() {
+                    $targetEl.firstElementChild.classList.add("modal-shrink") // add the animation to the modal
+                    setTimeout(() => modal.hide(), 1000) // wait 1 second for the animation to complete, then hide the modal
                 }
-            </script>
+
+                document.getElementById('close-task-modal-btn').onclick = shrinkModalToNavbar
+            }
+        </script>
+
+        </div>
         @endif
 
         <div class="flex bg-gray-100 dark:bg-gray-900 overflow-x-hidden" :class="{ 'overflow-hidden': isSideMenuOpen }"  style="height: calc(100vh - 77px);">

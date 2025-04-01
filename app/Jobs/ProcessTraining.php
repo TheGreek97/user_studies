@@ -24,7 +24,7 @@ class ProcessTraining implements ShouldQueue
         $this->training_length = $user->training_length;
         $this->training_personalization = $user->training_personalization;
         $this->user_name = $user->name;
-        $this->personalization_prompt = $user->getUserProfilePrompt();
+        $this->personalization_prompt = "";//TODO $user->getUserProfilePrompt();
     }
 
     /**
@@ -52,7 +52,8 @@ class ProcessTraining implements ShouldQueue
         foreach (["introduction", "scenario", "defense_strategies", "exercises", "conclusions"]  as $section) {
             $prompt = $section_prompts[$section];
 
-           $response = Http::withHeaders([
+            // 2 min timeout
+            $response = Http::timeout(180)->withHeaders([
                 'Authorization' => "Bearer $apiKey",
                 'Content-Type' => 'application/json',
             ])->post('https://api.openai.com/v1/chat/completions', [
@@ -61,16 +62,15 @@ class ProcessTraining implements ShouldQueue
                 'messages' => array_merge($context, [['role' => 'user', 'content' => $prompt]]),
                 //'temperature' => $temperature,
             ]);
-           if ($response->successful()) {
+            if ($response->successful()) {
                 $generatedText = $response['choices'][0]['message']['content'] ?? '<p>Failed to generate content.</p>';
                 $training->$section = $generatedText; // add the section text to the training model
                 // Maintain context
                 $context[] = ['role' => 'user', 'content' => $prompt];
-           } else {
+            } else {
                $generatedText = $response->body(); //'<p>Failed to generate content.</p>';
                $response->throw();
-           }
-
+            }
             $context[] = ['role' => 'assistant', 'content' => $generatedText];
         }
 
@@ -94,7 +94,8 @@ You are asked to generate $personalized_string educational material for an anti�
 
 
 OUTPUT FORMAT
-Each submodule will be embedded in a webpage, so it must be valid HTML and wrapped in a <div> tag.
+Each submodule will be embedded in a webpage, so it must be valid HTML and wrapped in a <div> tag. Do NOT include a heading of the section (such as <h2>Introduction</h2>).
+Any <a> tag that you generate in the scenario and in the exercises must have both a valid href attribute, but must prevent the default action of redirecting the user to another website, as the user must never leave the current webpage.
 
 
 CONTENT AND STYLE REQUIREMENTS
@@ -155,20 +156,24 @@ Introduction to the Phishing Problem ($s_time min, approx. $s_words words):";
                     break;
                 case "scenario":
                     $prompt = "GOAL
-                        Generate the Phishing Scenario sub-module, which must be structured as follows.
-                        Phishing Scenario ($s_time minutes, approx. $s_words words):";
+Generate the Phishing Scenario sub-module, which must be structured as follows.
+Phishing Scenario ($s_time minutes, approx. $s_words words):";
                     if ($this->training_personalization == "no"){
                        $prompt .= "
 - Scenario Introduction: Briefly introduce a scenario with a realistic narrative that users might relate to, in which an email is suddenly received.
-- Interactive Phishing Email: Create a realistic, simulated phishing email in HTML containing common phishing techniques (e.g., deceptive URL, spoofed sender details, etc.). The email parts that contain a phishing technique must be reactive on mouse click showing a description of the technique (see next bullet point).
+- Interactive Phishing Email: Create a realistic, simulated phishing email in HTML containing common phishing techniques (e.g., deceptive URL, spoofed sender details, etc.).
+The email parts that contain a phishing technique must be reactive on mouse click showing a description of the technique (see next bullet point). Be sure that the link(s) in the email is an <a> tag, as the user should be able to hover over it and preview the URL as usual.
 - Description of Techniques: the mouse click on a suspicious element of the email triggers the appearance of a detailed description of the phishing technique used in that part of the email.
 - Interactive decision point: Insert an interactive prompt that asks the user what they would do in that situation, with a close-ended question (using HTML form elements like radio buttons).
 - Reflection & Learning: Provide immediate feedback based on the decision point, explaining why certain choices may lead to a compromise and reinforcing learning outcomes.";
                     } else {
                         $prompt .= "
-- Explain what the problem of phishing is and why it’s dangerous.
-- Include a statement that presents some possible user vulnerabilities to phishing techniques based on the user’s psychological profile.
-- Give an overview of what the whole training module will cover.";
+- Scenario Introduction: Briefly introduce a scenario with a realistic narrative that users might relate to, in which an email is suddenly received.
+- Interactive Phishing Email: Create a realistic, simulated phishing email in HTML containing common phishing techniques (e.g., deceptive URL, spoofed sender details, etc.), making sure to include phishing techniques the user is most susceptible to, according to the PERSONALIZATION REQUIREMENTS.
+The email parts that contain a phishing technique must be reactive on mouse click showing a description of the technique (see next bullet point). Be sure that the link(s) in the email is an <a> tag, as the user should be able to hover over it and preview the URL as usual.
+- Description of Techniques: the mouse click on a suspicious element of the email triggers the appearance of a detailed description of the phishing technique used in that part of the email.
+- Interactive decision point: Insert an interactive prompt that asks the user what they would do in that situation, with a close-ended question (using HTML form elements like radio buttons).
+- Reflection & Learning: Provide immediate feedback based on the decision point, explaining why certain choices may lead to a compromise and reinforcing learning outcomes.";
                     }
                     break;
                 case "defense_strategies":
@@ -233,7 +238,8 @@ Conclusions ($s_time minutes, approx. $s_words words):
         $prompt .= "
 - Include an interactive classification task where the user must decide if an email is “Phishing” or “Legitimate” using HTML form controls.
 Give immediate feedback for each exercise, explaining which cues indicated whether the email was a phishing attempt or not.
-Be sure that any form submission is prevented to avoid refreshing the webpage.";
+Be sure that any form submission is prevented to avoid refreshing the webpage.
+- Be sure that all the links in the emails must be <a> tags, as the user should be able to hover over each link and preview the URL as usual.";
         return $prompt;
     }
 

@@ -21,18 +21,16 @@ class MailController extends Controller
         //Log::info('Current route: ' . FRequest::url());
         //Log::info('Current session:', session()->all());
         $user = Auth::user();
-
         $seed = (int) Auth::id();  // Randomize according to user id
         info("ID " . $id);
 
-        session_start();
-        //unset($_SESSION['emails']);
         //Divide emails proportionally into pre- and post-test groups and return the appropriate group
-
-        if (!isset($_SESSION['emails'])) {
-            $_SESSION['emails'] = $this->retrieveEmailsForThePhase($folder);
+        // session()->forget('emails');
+        if (! session()->has('emails')) {
+            session(['emails' => $this->retrieveEmailsForThePhase($folder)]);
         }
-        $emailGroups = $_SESSION['emails'];
+        $emailGroups = session('emails');
+
          //ASSIGN A GROUP OF EMAILS
         if(! $user->pre_training_completed){
             //PRE-CLASSIFICATION

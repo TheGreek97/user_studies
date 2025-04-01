@@ -28,9 +28,17 @@ class TrainingController extends Controller
         if (! $training->generated) {
             return view("training.status_not_ready");
         }
+        $training_length = $user->training_length;
+        $wait_times = [
+          "introduction" => 3, // $training_length == "short" ? 20 : 40,
+          "scenario" => 3, // $training_length == "short" ? 40 : 80,
+          "defense_strategies" => 3, // $training_length == "short" ? 90 : 180,
+          "exercises" => 3, // $training_length == "short" ? 45 : 90,
+          "conclusions" => 3, // $training_length == "short" ? 15 : 30
+        ];
 
         $training = $this->addCSS($training);
-        return view('training.training_show', ["training" => $training]);
+        return view('training.training_show', ["training" => $training, "wait_times" => $wait_times]);
     }
 
 
@@ -41,13 +49,13 @@ class TrainingController extends Controller
             if ($user->training_personalization !== "no") {  // If training is personalized, generate it from scratch
                 $training = Training::create([
                     'user_id' => $user->id,
-                    'completed' => false
+                    'generated' => false
                 ]);
                 ProcessTraining::dispatch($training->id, $user);
             } else {  // otherwise, take the non-personalized one
                 $training = Training::create([
                     'user_id' => $user->id,
-                    'completed' => true
+                    'generated' => true
                 ]);
                 $training->setNonCustomizedVersion();
             }
