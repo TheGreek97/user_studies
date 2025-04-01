@@ -32,9 +32,9 @@ class Training extends Model
         $length = $this->user->training_length;
         if ($length == "long") {
             $intro = "<div>
-  <p>Hello Alice, and welcome to our training course on recognizing phishing attacks. In today’s ever-connected digital world, phishing remains one of the most common and dangerous threats. Phishing is a form of cyber attack where malicious individuals or groups try to trick you into sharing personal information or downloading harmful software. They often disguise themselves as trustworthy entities—like banks, social media platforms, or even friends—to lure you into their trap.</p>
+  <p>Hello {USER_NAME}, and welcome to our training course on recognizing phishing attacks. In today’s ever-connected digital world, phishing remains one of the most common and dangerous threats. Phishing is a form of cyber attack where malicious individuals or groups try to trick you into sharing personal information or downloading harmful software. They often disguise themselves as trustworthy entities—like banks, social media platforms, or even friends—to lure you into their trap.</p>
 
-  <p>This problem is dangerous because the attackers are not just using technology; they are also exploiting the natural human emotions and biases. For example, phishing emails often create a sense of urgency by warning you that your account will be locked or that you have won a prize if you act immediately. These tactics tap into psychological vulnerabilities such as fear, curiosity, and trust. As a result, even careful users like you, Alice, might sometimes fall for these well-crafted deceptions.</p>
+  <p>This problem is dangerous because the attackers are not just using technology; they are also exploiting the natural human emotions and biases. For example, phishing emails often create a sense of urgency by warning you that your account will be locked or that you have won a prize if you act immediately. These tactics tap into psychological vulnerabilities such as fear, curiosity, and trust. As a result, even careful users like you, {USER_NAME}, might sometimes fall for these well-crafted deceptions.</p>
 
   <p>Throughout this course, we will guide you step by step on how to recognize and avoid these types of attacks. In the next parts of our module, you will journey through several key areas:</p>
 
@@ -45,7 +45,7 @@ class Training extends Model
     <li>Clear conclusions and actionable takeaways that will reinforce your ability to prevent phishing attacks.</li>
   </ul>
 
-  <p>By the end of this training, you will be more informed, confident, and equipped with the practical tips you need to navigate the web safely. Thank you for joining us in this important conversation, Alice. Let’s dive in and start strengthening your defenses against phishing.</p>
+  <p>By the end of this training, you will be more informed, confident, and equipped with the practical tips you need to navigate the web safely. Thank you for joining us in this important conversation, {USER_NAME}. Let’s dive in and start strengthening your defenses against phishing.</p>
 </div>";
         } else {
             $intro = "<div>
@@ -58,7 +58,7 @@ class Training extends Model
 
         if ($length == "long") {
             $scenario = '<div>
-  <p>Alice, imagine this scenario: You’ve just finished your morning coffee and are about to start your work when you notice a new email pop up in your inbox. At first glance, it appears to be from your bank—a trusted institution you rely on every day. The email immediately catches your attention with its urgent tone and bold message. However, as you read on, you begin to notice a few red flags that raise your doubts about whether this email is genuine.</p>
+  <p>{USER_NAME}, imagine this scenario: You’ve just finished your morning coffee and are about to start your work when you notice a new email pop up in your inbox. At first glance, it appears to be from your bank—a trusted institution you rely on every day. The email immediately catches your attention with its urgent tone and bold message. However, as you read on, you begin to notice a few red flags that raise your doubts about whether this email is genuine.</p>
 
   <p>The email begins with details that seem professional at first. It shows a “From” field with an address that looks almost familiar: <span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="toggleDescription(\'descSender\');">support@yourbank.com</span>. Yet, when you consider it more carefully, you wonder if the sender’s email address might have been manipulated to appear trustworthy—a common tactic in phishing attacks known as email spoofing.</p>
 
@@ -69,7 +69,7 @@ class Training extends Model
   <div style="border:1px solid #ccc; padding: 10px; background-color: #fafafa;">
     <p><strong>From:</strong> <span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="toggleDescription(\'descSender\');">support@yourbank.com</span></p>
     <p><strong>Subject:</strong> Urgent: Your account has been compromised!</p>
-    <p>Dear Alice,</p>
+    <p>Dear {USER_NAME},</p>
     <p>We have detected unusual activity on your account. Due to these suspicious activities, we have temporarily suspended your account to protect your personal data. To restore access, please verify your account immediately by clicking the link below:</p>
     <p><a href="http://www.secure-your-bank-update.com" onclick="event.preventDefault(); toggleDescription(\'descLink\');" style="color: blue; text-decoration: underline;">Click here to verify your account</a></p>
     <p>If you do not verify your account within the next 24 hours, your account will be permanently locked.</p>
@@ -94,7 +94,7 @@ class Training extends Model
     <p>Phishing emails typically create a false sense of urgency. By stating that immediate action is required, they attempt to rush your decision-making process. This urgency might override your usual caution, making you more vulnerable to providing personal information without proper verification.</p>
   </div>
 
-  <p>After reading the email, you, Alice, are now at an interactive decision point. What would you do if you received an email like this?</p>
+  <p>After reading the email, you, {USER_NAME}, are now at an interactive decision point. What would you do if you received an email like this?</p>
 
   <form id="decisionForm">
     <fieldset>
@@ -128,15 +128,15 @@ class Training extends Model
 
       if (!decision) {
         feedbackDiv.style.display = "block";
-        feedbackDiv.innerHTML = "<p>Please select an option before submitting your decision, Alice.</p>";
+        feedbackDiv.innerHTML = "<p>Please select an option before submitting your decision, {USER_NAME}.</p>";
         return;
       }
 
       var decisionValue = decision.value;
       if (decisionValue === "click") {
-        feedbackDiv.innerHTML = "<p><strong>Feedback:</strong> Clicking the link immediately could lead to exposing your personal information to attackers. This choice takes advantage of the urgency created by the email, putting you at risk of malware or data theft. It\'s important, Alice, to resist the pressure and verify the legitimacy of the email before taking any action.</p>";
+        feedbackDiv.innerHTML = "<p><strong>Feedback:</strong> Clicking the link immediately could lead to exposing your personal information to attackers. This choice takes advantage of the urgency created by the email, putting you at risk of malware or data theft. It\'s important, {USER_NAME}, to resist the pressure and verify the legitimacy of the email before taking any action.</p>";
       } else if (decisionValue === "report") {
-        feedbackDiv.innerHTML = "<p><strong>Feedback:</strong> Reporting the email to your IT or security team is a wise decision, Alice. It helps your organization track such attempts and protect others from falling victim to similar scams. Remember, sharing suspicious emails can play a critical role in your company\'s cybersecurity defense.</p>";
+        feedbackDiv.innerHTML = "<p><strong>Feedback:</strong> Reporting the email to your IT or security team is a wise decision, {USER_NAME}. It helps your organization track such attempts and protect others from falling victim to similar scams. Remember, sharing suspicious emails can play a critical role in your company\'s cybersecurity defense.</p>";
       } else if (decisionValue === "ignore") {
         feedbackDiv.innerHTML = "<p><strong>Feedback:</strong> Simply deleting the email might keep you safe for the moment, but it doesn\'t help your organization understand the threat. By reporting such emails, you contribute to a broader awareness of phishing tactics, which in turn strengthens the overall defense against these scams.</p>";
       }
@@ -217,7 +217,7 @@ class Training extends Model
 
         if ($length == "long") {
             $defense_strategies = '<div>
-  <p>Alice, in this section we will explore practical defense strategies to help you stay one step ahead of phishing attacks. Understanding and implementing these strategies can mean the difference between keeping your sensitive data safe or falling victim to a sophisticated scam. Let’s dive into clear, actionable steps that you can incorporate into your daily digital habits.</p>
+  <p>{USER_NAME}, in this section we will explore practical defense strategies to help you stay one step ahead of phishing attacks. Understanding and implementing these strategies can mean the difference between keeping your sensitive data safe or falling victim to a sophisticated scam. Let’s dive into clear, actionable steps that you can incorporate into your daily digital habits.</p>
 
   <p>One of the first lines of defense is to always double-check the information presented in any email that raises your suspicion. For instance, a critical strategy is to verify the sender’s email address. Attackers often use spoofed email addresses that mimic those of reputable organizations. When examining an email, hover your cursor over the sender’s address to display the full email string. This can help you detect subtle errors or unusual domains. For example, if you expect an email from “support@yourbank.com” but notice a slight variation, such as “support@yourbank-security.com,” that discrepancy is an immediate red flag.</p>
 
@@ -250,7 +250,7 @@ class Training extends Model
 
   <p>It is also important to stay informed about the latest phishing techniques and scams. Cybersecurity threats are constantly evolving, and so should your vigilance. Consider subscribing to security newsletters or regularly checking reputable cybersecurity websites for updates. This continuous learning will further empower you to discern genuine communications from fraudulent ones.</p>
 
-  <p>Moreover, be skeptical of emails that do not address you by your correct name. Genuine institutions tend to personalize their communications. For instance, if your bank typically addresses you as “Alice” or uses details from your account, and you instead receive a generic salutation like “Dear Valued Customer,” that should prompt you to take extra precautions before proceeding.</p>
+  <p>Moreover, be skeptical of emails that do not address you by your correct name. Genuine institutions tend to personalize their communications. For instance, if your bank typically addresses you as “{USER_NAME}” or uses details from your account, and you instead receive a generic salutation like “Dear Valued Customer,” that should prompt you to take extra precautions before proceeding.</p>
 
   <p>A significant part of defending against phishing is understanding the psychological tactics at work. Phishers count on emotional manipulation—fear, urgency, and even a false sense of security—to manipulate you into making a mistake. Recognize these tactics for what they are, and remind yourself that no matter how convincing an email may appear, taking a moment to verify its legitimacy is always the smarter choice.</p>
 
@@ -260,7 +260,7 @@ class Training extends Model
 
   <p>In summary, by combining careful inspection of email headers and domains, a skeptical view of urgent calls to action, and vigilant personal habits, you bolster your defenses against phishing. These strategies provide a comprehensive approach that helps you verify the integrity of communications and protect your personal data from malicious actors. Each step you integrate into your daily routine—whether it’s verifying sender details, checking URLs, or reporting suspicious messages—plays a crucial role in creating a safer digital environment.</p>
 
-  <p>Keep these strategies in mind, Alice, and remember that the overall goal is to empower you with the ability to recognize and respond to potential phishing threats confidently. Stay alert, ask questions when something doesn’t feel right, and don\'t hesitate to engage your IT or security advisors for further clarification. With these measures in place, you are taking significant steps toward securing your digital life.</p>
+  <p>Keep these strategies in mind, {USER_NAME}, and remember that the overall goal is to empower you with the ability to recognize and respond to potential phishing threats confidently. Stay alert, ask questions when something doesn’t feel right, and don\'t hesitate to engage your IT or security advisors for further clarification. With these measures in place, you are taking significant steps toward securing your digital life.</p>
 </div>';
         } else {
             $defense_strategies = '<div>
@@ -286,13 +286,13 @@ class Training extends Model
 
         if ($length == "long") {
             $exercises = '<div>
-  <p>Alice, it’s time to put your new skills to the test with some interactive exercises. Below you will find four email simulations. For each email, review the sender details, subject line, content, and particularly the URL links. Then use the interactive classification task to decide if the email is “Phishing” or “Legitimate”. Remember, hover over any link to preview its URL before making your decision.</p>
+  <p>{USER_NAME}, it’s time to put your new skills to the test with some interactive exercises. Below you will find four email simulations. For each email, review the sender details, subject line, content, and particularly the URL links. Then use the interactive classification task to decide if the email is “Phishing” or “Legitimate”. Remember, hover over any link to preview its URL before making your decision.</p>
 
   <!-- Email 1: Work Colleague (Phishing) -->
   <div style="border:1px solid #ccc; padding:10px; margin-bottom:20px; background-color:#f9f9f9;">
     <p><strong>From:</strong> <span style="color: blue; text-decoration: underline;">john.doe@acme-corp.com</span></p>
     <p><strong>Subject:</strong> Urgent: Problem with the Shared Drive Access</p>
-    <p>Hi Alice,</p>
+    <p>Hi {USER_NAME},</p>
     <p>I’m having trouble accessing our shared drive and need you to immediately update your access credentials to help troubleshoot the issue. Please click the link below to verify your information:</p>
     <p><a href="http://acme-drive-update.com" onclick="event.preventDefault();" style="color: blue; text-decoration: underline;">Verify Your Access</a></p>
     <p>Thanks,<br>John</p>
@@ -309,7 +309,7 @@ class Training extends Model
   <div style="border:1px solid #ccc; padding:10px; margin-bottom:20px; background-color:#f9f9f9;">
     <p><strong>From:</strong> <span style="color: blue; text-decoration: underline;">service@paypal-security.com</span></p>
     <p><strong>Subject:</strong> Important: Confirm Your PayPal Account Information</p>
-    <p>Dear Alice,</p>
+    <p>Dear {USER_NAME},</p>
     <p>We recently noticed unusual activity on your PayPal account. To protect your account, we have temporarily limited its functionality. To restore full access, please confirm your account details by clicking the link below:</p>
     <p><a href="http://paypal.verify-info.com" onclick="event.preventDefault();" style="color: blue; text-decoration: underline;">Confirm Your Account</a></p>
     <p>Failure to update your information within 24 hours may result in permanent suspension of your account.</p>
@@ -327,7 +327,7 @@ class Training extends Model
   <div style="border:1px solid #ccc; padding:10px; margin-bottom:20px; background-color:#f9f9f9;">
     <p><strong>From:</strong> <span style="color: blue; text-decoration: underline;">noreply@netfl1x.com</span></p>
     <p><strong>Subject:</strong> Account Issue: Reactivate Your Netflix Membership</p>
-    <p>Dear Alice,</p>
+    <p>Dear {USER_NAME},</p>
     <p>Your Netflix account has encountered a billing issue. To avoid service interruption, please update your billing details immediately by visiting the link below:</p>
     <p><a href="http://netflix-confirmation-update.com" onclick="event.preventDefault();" style="color: blue; text-decoration: underline;">Update Billing Information</a></p>
     <p>If you do not update your details within the next 12 hours, your account may be suspended.</p>
@@ -345,7 +345,7 @@ class Training extends Model
   <div style="border:1px solid #ccc; padding:10px; margin-bottom:20px; background-color:#f9f9f9;">
     <p><strong>From:</strong> <span style="color: blue; text-decoration: underline;">service@paypal.com</span></p>
     <p><strong>Subject:</strong> Important Notice: Your Recent Transaction</p>
-    <p>Dear Alice,</p>
+    <p>Dear {USER_NAME},</p>
     <p>Thank you for your recent transaction with PayPal. We wanted to let you know that your payment of $59.99 was processed successfully. You can view the details of this transaction by visiting your account page through the secure link below:</p>
     <p><a href="https://www.paypal.com/myaccount/transactions" onclick="event.preventDefault();" style="color: blue; text-decoration: underline;">View Transaction Details</a></p>
     <p>If you did not authorize this payment or notice any discrepancies, please contact our support team immediately through your official PayPal account.</p>
@@ -368,7 +368,7 @@ class Training extends Model
         var userChoice = document.querySelector(\'input[name="\' + groupName + \'"]:checked\');
         if (!userChoice) {
           feedbackDiv.style.display = "block";
-          feedbackDiv.innerHTML = "<p>Please select an option before submitting your decision, Alice.</p>";
+          feedbackDiv.innerHTML = "<p>Please select an option before submitting your decision, {USER_NAME}.</p>";
           return;
         }
         var answer = userChoice.value;
@@ -396,7 +396,7 @@ class Training extends Model
 
   <p>As you complete these exercises, remember to review each opportunity in the emails that served as cues—from mismatched domains, deceptive URLs, to the tone and urgency of the messages. Your keen observation plays a critical role in preventing phishing attacks, and each insight reinforces your cybersecurity skills.</p>
 
-  <p>Great job practicing, Alice! Each exercise is a step towards becoming more confident in spotting phishing attempts before they cause harm.</p>
+  <p>Great job practicing, {USER_NAME}! Each exercise is a step towards becoming more confident in spotting phishing attempts before they cause harm.</p>
 </div>';
         }
         else {
@@ -516,7 +516,7 @@ class Training extends Model
 
         if ($length == "long") {
             $conclusions = "<div>
-  <p>Alice, as we wrap up this session, let’s quickly recap the critical importance of phishing awareness. Phishing remains one of the most dangerous cyber threats because attackers exploit our natural curiosity, urgency, and even trust. By understanding how these deceptive tactics work, you become better equipped to identify subtle warning signs that may otherwise lead to costly mistakes.</p>
+  <p>{USER_NAME}, as we wrap up this session, let’s quickly recap the critical importance of phishing awareness. Phishing remains one of the most dangerous cyber threats because attackers exploit our natural curiosity, urgency, and even trust. By understanding how these deceptive tactics work, you become better equipped to identify subtle warning signs that may otherwise lead to costly mistakes.</p>
   <p>Throughout this course, we explored key actions you can take to defend yourself. You learned to carefully inspect the sender’s address for signs of spoofing and to hover over links to verify their actual destinations. We emphasized the importance of recognizing deceptive URL structures—especially when urgent requests prompt you into making hasty decisions. You also practiced with simulated phishing emails, applying your skills to distinguish between genuine communications and fraudulent ones. These practical steps, from checking for personalized details to analyzing the tone and urgency of a message, are your best tools against cyber attackers.</p>
   <p>Remember, the cornerstone of cybersecurity is a healthy dose of skepticism. By consistently verifying senders, checking links, and questioning the legitimacy of urgent messages, you can stop phishing attempts before they compromise your information. These everyday actions are critical defenses in a digital world where threats are constantly evolving.</p>
   <p>Thank you for dedicating your time and attention to this training session. Your active participation and commitment to learning these practical strategies not only protect you, but also contribute to a safer digital community. Stay vigilant, keep practicing the steps we discussed, and always remember that your awareness is the first line of defense against phishing attacks.</p>
