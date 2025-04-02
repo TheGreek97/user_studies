@@ -72,7 +72,7 @@ class StPIIBController extends Controller
             }
 
         } else {
-            return redirect()->route('questionnaire3')->with('error', 'Already answered');
+            return redirect()->route('questionnaire', ['step' => 3])->with('error', 'Already answered');
         }
         $user->stp_completed = now();
         $user->save();

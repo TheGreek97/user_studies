@@ -132,11 +132,12 @@ document.addEventListener("DOMContentLoaded", function () {
             // Set isDisabled to true for 2 seconds for this question
             isDisabled = true;
             timerStartedForQuestion = questionId;
+            const disableTimers = window.appConfig?.disableTimers ?? false;
 
             setTimeout(() => {
                 isDisabled = false;
                 timerStartedForQuestion = null;
-            }, 2000); //TIMER 2 SECONDS
+            }, disableTimers ? 0 : 2000); //TIMER 2 SECONDS
         });
     });
 });

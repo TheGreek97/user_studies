@@ -30,9 +30,9 @@
                                                 <p class="text-left md:text-center text-lg md:text-xl font-semibold text-gray-800 py-3">
                                                     This item is a quality control check, please select {{ __("questionnaire-campaign.stp-ii-b.scale.$correctAnswer") }}.
                                                 </p>
-                                                <div class="flex flex-col md:flex-row items-start md:items-start w-full md:justify-around gap-4">
-                                                    @for ($i = 1; $i <= 7; $i++)
-                                                        <div class="flex flex-row md:flex-col items-start md:items-center md:w-1/7">
+                                                <div class="flex sm:flex-col md:flex-row items-start md:items-start w-full gap-4 my-4" style="justify-content: space-around">
+                                                   @for ($i = 1; $i <= 7; $i++)
+                                                        <div class="flex flex-col items items-center md:w-1/7">
                                                             <input
                                                                 class="cursor-pointer appearance-none w-5 h-5 border-2 border-gray-400 rounded-full
                                                                     checked:bg-sky-600 hover:border-sky-500 transition-all duration-200"
@@ -57,9 +57,9 @@
                                             </p>
 
                                             <!-- Answer Options -->
-                                            <div class="flex flex-col md:flex-row items-start md:items-start w-full md:justify-around gap-4">
+                                            <div class="flex sm:flex-col md:flex-row items-start md:items-start w-full gap-4 my-4" style="justify-content: space-around">
                                                 @for ($i = 1; $i <= 7; $i++)
-                                                    <div class="flex flex-row md:flex-col items-center md:w-1/7">
+                                                    <div class="flex flex-col items items-center md:w-1/7">
                                                         <input
                                                             class="cursor-pointer appearance-none w-5 h-5 border-2 border-gray-400 rounded-full
                                                                     checked:bg-sky-600 hover:border-sky-500 transition-all duration-200"
@@ -131,7 +131,13 @@
     </div>
 </x-modal>
 
+<script>
+    window.appConfig = {
+        disableTimers: @json(env('DISABLE_TIMERS', false))
+    };
+</script>
 <script src="{{ asset('js/questionnaireForm.js') }}"></script>
+
 <!-- CSS for the steps -->
 <style>
     .step {

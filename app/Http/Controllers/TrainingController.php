@@ -29,13 +29,23 @@ class TrainingController extends Controller
             return view("training.status_not_ready");
         }
         $training_length = $user->training_length;
-        $wait_times = [
-          "introduction" => 3, // $training_length == "short" ? 20 : 40,
-          "scenario" => 3, // $training_length == "short" ? 40 : 80,
-          "defense_strategies" => 3, // $training_length == "short" ? 90 : 180,
-          "exercises" => 3, // $training_length == "short" ? 45 : 90,
-          "conclusions" => 3, // $training_length == "short" ? 15 : 30
-        ];
+        if (env("DISABLE_TIMERS") == "true") {
+            $wait_times = [
+              "introduction" => 0,
+              "scenario" => 0,
+              "defense_strategies" => 0,
+              "exercises" => 0,
+              "conclusions" => 0
+            ];
+        } else {
+            $wait_times = [
+              "introduction" => $training_length == "short" ? 20 : 40,
+              "scenario" => $training_length == "short" ? 40 : 80,
+              "defense_strategies" => $training_length == "short" ? 90 : 180,
+              "exercises" => $training_length == "short" ? 45 : 90,
+              "conclusions" => $training_length == "short" ? 15 : 30
+            ];
+        }
 
         $training = $this->addCSS($training);
         return view('training.training_show', ["training" => $training, "wait_times" => $wait_times]);

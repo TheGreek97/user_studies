@@ -36,7 +36,7 @@
                                                 </p>
                                                 <div class="flex flex-col md:flex-row items-start md:items-start w-full md:justify-around gap-4">
                                                     @for ($i = 1; $i <= 5; $i++)
-                                                        <div class="flex flex-row md:flex-col items-start md:items-center md:w-1/5">
+                                                        <div class="flex flex-col items items-center md:w-1/5">
                                                             <input
                                                                 class="cursor-pointer appearance-none w-5 h-5 border-2 border-gray-400 rounded-full
                                                                     checked:bg-sky-600 hover:border-sky-500 transition-all duration-200"
@@ -63,7 +63,7 @@
                                                 <!-- Answer Options -->
                                                 <div class="flex flex-col md:flex-row items-start md:items-start w-full md:justify-around gap-4">
                                                     @for ($i = 1; $i <= 5; $i++)
-                                                        <div class="flex flex-row md:flex-col items-start md:items-center md:w-1/5">
+                                                        <div class="flex flex-col items items-center md:w-1/5">
                                                             <input class="cursor-pointer appearance-none w-5 h-5 border-2 border-gray-400 rounded-full
                                                                         checked:bg-sky-600 hover:border-sky-500 transition-all duration-200"
                                                                 type="radio"
@@ -158,4 +158,9 @@
     </div>
 </x-modal>
 
+<script>
+    window.appConfig = {
+        disableTimers: @json(env('DISABLE_TIMERS', false))
+    };
+</script>
 <script src="{{ asset('js/questionnaireForm.js') }}"></script>

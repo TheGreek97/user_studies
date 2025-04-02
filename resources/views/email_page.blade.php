@@ -44,7 +44,7 @@ use Illuminate\Support\Facades\Auth;
                 return {
                     showFirstModal: true,  // First modal is visible initially
                     showSecondModal: false, // Second modal is hidden initially
-                    remainingTime: 5, // 30-second debuff
+                    remainingTime: {{  env("DISABLE_TIMERS") == "true" ? 3 : 30 }}, // 30-second debuff
 
                     startTimer() {
                         let interval = setInterval(() => {
@@ -851,7 +851,7 @@ use Illuminate\Support\Facades\Auth;
 
                     // An email should be classified after at least 6 seconds
                     let elapsedTime = (Date.now() - startTime) / 1000;
-                    if (elapsedTime < 6) {
+                    if (elapsedTime < {{  env("DISABLE_TIMERS") == "true" ? 0 : 6 }}) {
                         window.dispatchEvent(new CustomEvent('open-modal', {
                             detail: 'too-fast-modal'
                         }));
