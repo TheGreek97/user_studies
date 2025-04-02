@@ -45,7 +45,7 @@
                         </div>
                         <br>
                         As a result, we stopped the session early to not make you lose any more time. Based on these criteria, we cannot proceed to paying you.
-                        However, we will proceed to delete all the data related to this session and not include it in our analysis
+                        However, we will proceed to delete all the data related to this session and not include it in our analysis.
                         <br><br>
                         <div class="text-center mt-6">
                             We're sorry for the inconvenience. Thank you for your time.

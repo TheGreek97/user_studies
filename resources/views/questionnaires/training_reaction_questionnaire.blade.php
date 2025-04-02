@@ -34,7 +34,7 @@
                                                 <p class="text-left md:text-center text-lg md:text-xl font-semibold text-gray-800 py-3">
                                                     This item is a quality control check, please select {{ __("questionnaire-campaign.trainingReactionQuestionnaire.scale.$correctAnswer") }}.
                                                 </p>
-                                                <div class="flex flex-col md:flex-row items-start md:items-start w-full md:justify-around gap-4">
+                                                <div class="flex sm:flex-col md:flex-row items-start md:items-start w-full gap-4 my-4" style="justify-content: space-around">
                                                     @for ($i = 1; $i <= 5; $i++)
                                                         <div class="flex flex-col items items-center md:w-1/5">
                                                             <input
@@ -61,7 +61,7 @@
                                                 </p>
 
                                                 <!-- Answer Options -->
-                                                <div class="flex flex-col md:flex-row items-start md:items-start w-full md:justify-around gap-4">
+                                                <div class="flex sm:flex-col md:flex-row items-start md:items-start w-full gap-4 my-4" style="justify-content: space-around">
                                                     @for ($i = 1; $i <= 5; $i++)
                                                         <div class="flex flex-col items items-center md:w-1/5">
                                                             <input class="cursor-pointer appearance-none w-5 h-5 border-2 border-gray-400 rounded-full
@@ -98,7 +98,7 @@
                                 <hr>
                                 <div class="py-6">
                                     <p class="text-left md:text-center text-lg md:text-xl font-semibold text-gray-800 py-3">
-                                        (optional) Would you like to report any error in the training content? (e.g., display errors, inaccuracies, etc.)
+                                        [Optional] Would you like to report any error in the training content? (e.g., display errors, inaccuracies, problem with the platform, etc.)
                                     </p>
                                     <textarea class="w-full p-3 border-2 border-gray-300 rounded-md focus:outline-none focus:border-sky-500"
                                               name="q8"
