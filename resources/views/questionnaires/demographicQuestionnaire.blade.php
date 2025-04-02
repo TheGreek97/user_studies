@@ -3,6 +3,13 @@
         <div class="min-h-screen bg-gray-200 flex justify-center items-center">
             <div class="pt-12 px-12 m-10 bg-white rounded-2xl shadow-xl z-20" style="max-width: 75%">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+
+                    @if ($errors->any())
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                          <strong class="font-bold">Error:</strong>
+                          <span class="block sm:inline">Please be sure to compile all the fields, including the reCAPTCHA.</span>
+                        </div>
+                    @endif
                     <div class="p-6 text-sky-900">
                         <!-- Questionnaire -->
                         <form class="pb-4" action="{{ route('demographics.create') }}" method="POST">
@@ -61,10 +68,12 @@
                                     </div>
                                     <div class="my-5">
                                         <p class="font-bold pb-1">How many hours do you spend on the Internet each day?</p>
-                                        <input required type="number" name="num_hours_day_internet" min="0" max="20" value="0"
+                                        <input required type="number" name="num_hours_day_internet" min="0" max="24" value="0"
                                             class="block text-sm px-4 rounded-lg py-3 border outline-none"/>
                                     </div>
                                 </div>
+
+                                <div class="g-recaptcha" data-sitekey="{{ env('NOCAPTCHA_SITEKEY') }}"></div>
                                 {{--@if(Auth::user()->prolific_id == null)
                                 <div class="my-5">
                                     <p class="font-bold pb-1">We could not get your Prolific ID automatically, please insert it manually:</p>
@@ -95,3 +104,5 @@
         <x-primary-button x-on:click="$dispatch('close')">Close</x-primary-button>
     </div>
 </x-modal>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Anhskohbo\NoCaptcha\Facades\NoCaptcha;
 
 
 class QuestionnairesController extends Controller
@@ -26,6 +28,20 @@ class QuestionnairesController extends Controller
 
     public function saveDemographicsData(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'g-recaptcha-response' => 'required|captcha',
+            'first_name' => 'between:2,50|required|string',
+            'age' => 'between:18,100|required|integer',
+            'gender' => 'required',
+            'num_hours_day_internet' => 'between:0,24|required|integer',
+            'prolific_id' => 'nullable|size:24'
+        ]);
+        //dd($validator);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         // Save demographic questionnaire
         $user = Auth::user();
         $user->name = str_replace(  // escape HTML characters in user input to avoid injections
