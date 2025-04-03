@@ -239,7 +239,7 @@ Conclusions ($s_time minutes, approx. $s_words words):
 - Include an interactive classification task where the user must decide if an email is “Phishing” or “Legitimate” using HTML form controls.
 Give immediate feedback for each exercise, explaining which cues indicated whether the email was a phishing attempt or not.
 Be sure that any form submission is prevented to avoid refreshing the webpage.
-- Be sure that all the links in the emails must be <a> tags, as the user should be able to hover over each link and preview the URL as usual.";
+- Be sure that all the links in the emails must be <a> tags with the href attribute containing the phishing/genuine URL (i.e., no \"#\"), as the user should be able to hover over each link and preview the URL as usual. However, prevent any redirect by clicking on the links in the emails.";
         return $prompt;
     }
 
