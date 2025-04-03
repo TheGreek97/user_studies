@@ -24,7 +24,7 @@ class ProcessTraining implements ShouldQueue
         $this->training_length = $user->training_length;
         $this->training_personalization = $user->training_personalization;
         $this->user_name = $user->name;
-        $this->personalization_prompt = "";//TODO $user->getUserProfilePrompt();
+        $this->personalization_prompt = $user->getUserProfilePrompt();
     }
 
     /**
@@ -53,10 +53,10 @@ class ProcessTraining implements ShouldQueue
             $prompt = $section_prompts[$section];
 
             // 2 min timeout
-            $response = Http::timeout(180)->withHeaders([
+            $response = Http::withHeaders([
                 'Authorization' => "Bearer $apiKey",
                 'Content-Type' => 'application/json',
-            ])->post('https://api.openai.com/v1/chat/completions', [
+            ])->timeout(300)->post('https://api.openai.com/v1/chat/completions', [
                 'model'    => $model,
                 'reasoning_effort' => $reasoning_effort,
                 'messages' => array_merge($context, [['role' => 'user', 'content' => $prompt]]),
