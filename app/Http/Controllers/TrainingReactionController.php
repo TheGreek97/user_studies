@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Str;
 
 class TrainingReactionController extends Controller
 {
@@ -27,8 +28,8 @@ class TrainingReactionController extends Controller
             $questionnaire->q4 = $request->input('q4');
             $questionnaire->q5 = $request->input('q5');
             $questionnaire->q6 = $request->input('q6');
-            $questionnaire->q7 = $request->input('q7');
-            $questionnaire->q8 = $request->input('q8');
+            $questionnaire->q7 = Str::limit($request->input('q7'), 254);
+            $questionnaire->q8 = Str::limit($request->input('q8'), 254);
             $questionnaire->trivial_question = $request->input('trivial_question');
             $questionnaire->fastClickCount = $request->input('fastClickCount');
             $questionnaire->save();

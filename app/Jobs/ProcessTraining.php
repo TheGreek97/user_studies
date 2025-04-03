@@ -56,7 +56,7 @@ class ProcessTraining implements ShouldQueue
             $response = Http::withHeaders([
                 'Authorization' => "Bearer $apiKey",
                 'Content-Type' => 'application/json',
-            ])->timeout(300)->post('https://api.openai.com/v1/chat/completions', [
+            ])->timeout(600)->retry(3,200000)->post('https://api.openai.com/v1/chat/completions', [
                 'model'    => $model,
                 'reasoning_effort' => $reasoning_effort,
                 'messages' => array_merge($context, [['role' => 'user', 'content' => $prompt]]),
