@@ -200,14 +200,13 @@ Need for uniqueness = $profile->stp_need_for_uniqueness
         return $rankedTraits;
     }
 
-    public static function userCompletedPreviousStudy($prolificId)
+    public static function getExistingProlificParticipant($prolificId)
     {
         if ($prolificId == null) {
             return null;
         }
         // Query the database to find the user by the prolific_id column
         return User::where('prolific_id', $prolificId)
-            ->whereNotNull('study_completed')
             ->first();
     }
 }

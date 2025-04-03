@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 
-use Illuminate\Support\Str;
 
 class TrainingReactionController extends Controller
 {
@@ -19,7 +18,7 @@ class TrainingReactionController extends Controller
             'user_id' => $user->id,
         ])->exists();
 
-        if (!$alreadyAnswered) {
+        /*
             $questionnaire = new TrainingReaction();
             $questionnaire->user_id = $user->id;
             $questionnaire->q1 = $request->input('q1');
@@ -28,13 +27,14 @@ class TrainingReactionController extends Controller
             $questionnaire->q4 = $request->input('q4');
             $questionnaire->q5 = $request->input('q5');
             $questionnaire->q6 = $request->input('q6');
-            $questionnaire->q7 = Str::limit($request->input('q7'), 254);
-            $questionnaire->q8 = Str::limit($request->input('q8'), 254);
+            $questionnaire->q7 = $request->input('q7');
+            $questionnaire->q8 = $request->input('q8');
             $questionnaire->trivial_question = $request->input('trivial_question');
             $questionnaire->fastClickCount = $request->input('fastClickCount');
             $questionnaire->save();
         }
-        /*$validatedData = $request->validate([
+        */
+        $validatedData = $request->validate([
             'q1' => ['required', 'integer'],
             'q2' => ['required', 'integer'],
             'q3' => ['required', 'integer'],
@@ -47,11 +47,10 @@ class TrainingReactionController extends Controller
             'fastClickCount' => ['required', 'integer'],
         ]);
 
-
+        if (!$alreadyAnswered) {
             $validatedData['user_id'] = $user->id;
             TrainingReaction::create($validatedData);
         }
-        */
 
         $user->training_reaction_completed = now();
         $user->save();

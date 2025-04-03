@@ -24,15 +24,17 @@ class StudyAuth
         $prolificId_request = $request->get('PROLIFIC_PID');
         $study_id = $request->get('STUDY_ID');
         if ($prolificId_request) {
-            $user= User::userCompletedPreviousStudy($prolificId_request);
+            $user= User::getExistingProlificParticipant($prolificId_request);
             if ($user !== null) {  //  user already executed the study on Prolific
-                session(['study_already_taken' => '1']);
-                Auth::logout();  // logout any previous user and login as the new one (who completed the study)
+                if ($user->study_completed) {
+                    session(['study_already_taken' => '1']);
+                }
+                Auth::logout();  // logout any previous user and login as the new one
                 Auth::login($user);
             }
         }
         if (Auth::user() === null) {
-           // create new user
+            // create new user
             //$least_popular_condition = $this->getWarningTypeToAssign();
 
             $new_user = new User();
