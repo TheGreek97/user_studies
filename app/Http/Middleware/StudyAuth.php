@@ -36,7 +36,7 @@ class StudyAuth
             //$least_popular_condition = $this->getWarningTypeToAssign();
 
             $new_user = new User();
-            $new_user->name = "Alice";
+            $new_user->name = "User";
             $birth_year = now()->year - 28;  // Alice is 28 years old, according to the scenario
             $new_user->email = "alice$birth_year@livemail.it";
             $new_user->prolific_id = $prolificId_request;

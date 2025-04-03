@@ -44,15 +44,15 @@ class User extends Authenticatable
         'post_training_completed',
         'training_reaction_completed',
         'expelled',
-        'given_consent'
+        'given_consent',
+        'training_personalization',
+        'training_length'
     ];
 
     protected $guarded = [
         'warning_type',  // useless for branch
         'show_explanation',  // useless for branch
         'show_details',  // useless for branch
-        'training_personalization',
-        'training_length'
     ];
     /**
      * The attributes that should be hidden for serialization.
