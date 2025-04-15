@@ -107,7 +107,92 @@ CONTENT AND STYLE REQUIREMENTS
 - Do not greet the user at the start of every submodule, but just in the introduction.
 ";
         if ($this->training_personalization !== "no"){
+            //TODO
             $prompt .= "
+
+            TRAIT DESCRIPTIONS
+The definitions below establish a common framework for interpreting user profiles along three domains: the Big Five personality factors (OCEAN), emotional intelligence factors, and a set of Persuasion susceptibility factors (linked to scam compliance).
+
+### Big Five (OCEAN) Personality Traits
+
+- Open-Mindedness:
+  - High scorers: Curious, imaginative, creative, and receptive to new ideas, experiences, and unconventional viewpoints; they tend to be less judgmental.
+  - Low scorers: More conventional and practical, showing resistance to change and a preference for familiar, traditional approaches.
+
+- Conscientiousness:
+  - High scorers: Highly self-disciplined, organized, responsible, and detail-oriented, with a strong commitment to goal-directed behavior.
+  - Low scorers: Often impulsive, disorganized, and spontaneous, tending to prioritize immediate desires over long-term objectives.
+
+- Extraversion:
+  - High scorers: Outgoing, energetic, and assertive individuals who thrive on social stimulation and active engagement with others.
+  - Low scorers: More reserved, quiet, and introspective, preferring solitary activities or smaller, more intimate social interactions.
+
+- Agreeableness:
+  - High scorers: Compassionate, cooperative, and empathetic, inclined to trust others and prioritize social harmony.
+  - Low scorers: More competitive, skeptical, or even antagonistic; they may prioritize their own goals over group consensus.
+
+- Negative Emotionality:
+  - High scorers: Tend to experience frequent or intense negative emotions (e.g., anxiety, anger, or sadness) and are more reactive to stress, with pronounced mood fluctuations.
+  - Low scorers: Generally emotionally stable, calm, and resilient, maintaining equilibrium even in challenging situations.
+
+### Persuasion-Related Traits
+
+- Positive Attitudes Towards Advertising:
+  - High scorers: Possess a strong predisposition to respond favorably to advertising messages and are more likely to be influenced by marketing offers.
+  - Low scorers: Typically indifferent or even resistant to advertising, showing less inclination to be swayed by promotional content.
+
+- Social Influence:
+  - High scorers: Exhibit a pronounced desire for social inclusion and peer approval, making them more responsive to messaging that emphasizes group belonging and social validation.
+  - Low scorers: More independent in their decision-making and less driven by the need to conform to social expectations, showing reduced sensitivity to group influence.
+
+- Need for Uniqueness and Avoidance of Similarity:
+  - High scorers: Value distinctiveness and are particularly attracted to offers presented as unique or scarce, as these reinforce their self-perception of individuality.
+  - Low scorers: Generally less concerned with standing out, tending to feel comfortable with conventional choices and less swayed by uniqueness appeals.
+
+- Sensation Seeking:
+  - High scorers: Actively seek novel, intense experiences and are willing to take risks in pursuit of such stimulation, which can increase their responsiveness to arousing offers.
+  - Low scorers: Prefer predictable, familiar experiences and tend to be more risk-averse, making them less likely to be drawn to high-stimulation offers.
+
+- Risk Preferences:
+  - High scorers: Exhibit a lower aversion to risk and are more open to engaging in activities with uncertain outcomes if potential rewards seem attractive.
+  - Low scorers: Tend to be cautious, preferring safe and predictable choices over opportunities that involve significant risk.
+
+- Lack of Premeditation:
+  - High scorers: Often make decisions quickly without carefully considering the consequences, leading to more impulsive actions.
+  - Low scorers: Deliberate carefully on potential outcomes before acting, showing greater forethought and caution.
+
+- Lack of Self-Control:
+  - High scorers: Are less able to regulate their impulses and emotional responses, which may lead to rapid, unfiltered decision-making.
+  - Low scorers: Demonstrate strong self-control and the ability to delay gratification, contributing to more measured and thoughtful responses.
+
+- Need for Cognition:
+  - High scorers: Enjoy and engage readily in cognitive processing and complex thinking, often finding satisfaction in analyzing information deeply.
+  - Low scorers: Are less driven by a need for cognitive engagement, preferring simpler, more intuitive approaches to processing information.
+
+- Need for Consistency:
+  - High scorers: Place a high value on maintaining behavioral and perceptual consistency, making them more likely to comply with initial small commitments and follow through with larger actions in line with that pattern.
+  - Low scorers: Are more flexible and less concerned with aligning actions with past behavior, allowing for greater variation in decisions.
+
+### Emotional Intelligence Factors
+
+- Well-Being:
+  - High scorers: Possess strong self-esteem, maintain high levels of life satisfaction, and exhibit a hopeful, optimistic outlook.
+  - Low scorers: Often struggle with self-confidence, may report lower satisfaction with life, and exhibit a more pessimistic or subdued outlook.
+
+- Sociability:
+  - High scorers: Are adept at social interactions, possessing strong social awareness and effective skills in managing others’ emotions; they are typically assertive in social contexts.
+  - Low scorers: May find social interactions challenging, often displaying lower social awareness, less effective emotion management, and a more passive communication style.
+
+- Emotionality:
+  - High scorers: Excel in perceiving, expressing, and managing emotions (both their own and those of others); they are capable of maintaining healthy interpersonal relationships with considerable empathy.
+  - Low scorers: Often have difficulty recognizing or conveying emotions, potentially experiencing challenges in interpersonal communication and relationship management.
+
+- Self-Control:
+  - High scorers: Are proficient at regulating their emotions, managing stress effectively, and controlling impulses, contributing to balanced decision-making.
+  - Low scorers: May struggle with emotional regulation, experience higher stress levels, and exhibit more impulsive behavior.
+            ";
+            $prompt .= "
+
             PERSONALIZATION REQUIREMENTS
             $this->personalization_prompt
             ";
