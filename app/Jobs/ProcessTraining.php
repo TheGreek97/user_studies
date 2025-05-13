@@ -16,7 +16,8 @@ class ProcessTraining implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $trainingId, $training_length, $training_personalization, $user_name, $personalization_prompt;
+    protected $trainingId, $training_length, $training_personalization, $user_name,
+        $personalization_prompt, $priming_prompt_scenario;
 
     public function __construct($trainingId, $user)
     {
@@ -25,6 +26,7 @@ class ProcessTraining implements ShouldQueue
         $this->training_personalization = $user->training_personalization;
         $this->user_name = $user->name;
         $this->personalization_prompt = $user->getUserProfilePrompt();
+        $this->priming_prompt_scenario = $user->getPrimingPromptScenario();
     }
 
     /**
@@ -106,8 +108,7 @@ CONTENT AND STYLE REQUIREMENTS
 - The submodules are shown by the user in the same session, one after the other. Therefore, generate each subsequent submodule as the continuation of the previous one(s).
 - Do not greet the user at the start of every submodule, but just in the introduction.
 ";
-        if ($this->training_personalization !== "no"){
-            //TODO
+        if ($this->training_personalization === "yes"){
             $prompt .= "
 
             TRAIT DESCRIPTIONS
@@ -205,7 +206,7 @@ The definitions below establish a common framework for interpreting user profile
         return $prompt;
     }
 
-    private function getSectionPrompts()
+    private function getSectionPrompts(): array
     {
         if ($this->training_length == "short") {
             $sections_times = ["introduction" => 1, "scenario" => 2, "defense_strategies" => 3, "exercises" => 2, "conclusions" => 1];
@@ -247,7 +248,17 @@ Phishing Scenario ($s_time minutes, approx. $s_words words):";
                        $prompt .= "
 - Scenario Introduction: Briefly introduce a scenario with a realistic narrative that users might relate to, in which an email is suddenly received.
 - Interactive Phishing Email: Create a realistic, simulated phishing email in HTML containing common phishing techniques (e.g., deceptive URL, spoofed sender details, etc.).
-The email parts that contain a phishing technique must be reactive on mouse click showing a description of the technique (see next bullet point). Be sure that the link(s) in the email is an <a> tag, as the user should be able to hover over it and preview the URL as usual.
+The email parts that contain a phishing technique must be reactive on mouse click showing a description of the technique (see next bullet point). Be sure that the link(s) in the email is an <a> tag, as the user should be able to hover over it and preview the URL as usual. Clicking on any link must not ever make the user exit the current webpage.
+- Description of Techniques: the mouse click on a suspicious element of the email triggers the appearance of a detailed description of the phishing technique used in that part of the email.
+- Interactive decision point: Insert an interactive prompt that asks the user what they would do in that situation, with a close-ended question (using HTML form elements like radio buttons).
+- Reflection & Learning: Provide immediate feedback based on the decision point, explaining why certain choices may lead to a compromise and reinforcing learning outcomes.";
+                    } elseif ($this->training_personalization == "primed"){
+                        $prompt .= "
+- Scenario Introduction: Briefly introduce a scenario with a realistic narrative that users might relate to, in which an email is suddenly received.
+- Interactive Phishing Email: Create a realistic, simulated phishing email in HTML containing common phishing techniques (e.g., deceptive URL, spoofed sender details, etc.).
+In the phishing scenario, you must:
+    $this->priming_prompt_scenario
+The email parts that contain a phishing technique must be reactive on mouse click showing a description of the technique (see next bullet point). Be sure that the link(s) in the email is an <a> tag, as the user should be able to hover over it and preview the URL as usual. Clicking on any link must not ever make the user exit the current webpage.
 - Description of Techniques: the mouse click on a suspicious element of the email triggers the appearance of a detailed description of the phishing technique used in that part of the email.
 - Interactive decision point: Insert an interactive prompt that asks the user what they would do in that situation, with a close-ended question (using HTML form elements like radio buttons).
 - Reflection & Learning: Provide immediate feedback based on the decision point, explaining why certain choices may lead to a compromise and reinforcing learning outcomes.";
@@ -255,7 +266,7 @@ The email parts that contain a phishing technique must be reactive on mouse clic
                         $prompt .= "
 - Scenario Introduction: Briefly introduce a scenario with a realistic narrative that users might relate to, in which an email is suddenly received.
 - Interactive Phishing Email: Create a realistic, simulated phishing email in HTML containing common phishing techniques (e.g., deceptive URL, spoofed sender details, etc.), making sure to include phishing techniques the user is most susceptible to, according to the PERSONALIZATION REQUIREMENTS.
-The email parts that contain a phishing technique must be reactive on mouse click showing a description of the technique (see next bullet point). Be sure that the link(s) in the email is an <a> tag, as the user should be able to hover over it and preview the URL as usual.
+The email parts that contain a phishing technique must be reactive on mouse click showing a description of the technique (see next bullet point). Be sure that the link(s) in the email is an <a> tag, as the user should be able to hover over it and preview the URL as usual. Clicking on any link must not ever make the user exit the current webpage.
 - Description of Techniques: the mouse click on a suspicious element of the email triggers the appearance of a detailed description of the phishing technique used in that part of the email.
 - Interactive decision point: Insert an interactive prompt that asks the user what they would do in that situation, with a close-ended question (using HTML form elements like radio buttons).
 - Reflection & Learning: Provide immediate feedback based on the decision point, explaining why certain choices may lead to a compromise and reinforcing learning outcomes.";
@@ -294,7 +305,6 @@ Conclusions ($s_time minutes, approx. $s_words words):
 - Thank the user for attending the training and conclude the session.";
             break;
             }
-            // TODO: priming condition
             $prompts[$section] = $prompt;  // save the prompt
         }
         return $prompts;
