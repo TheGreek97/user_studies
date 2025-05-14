@@ -110,9 +110,32 @@ class User extends Authenticatable
         return $profile;
     }
 
-    public function getUserProfilePrompt(){
+    public function getUserProfilePrompt(): string
+    {
         $profile = $this->userProfile();
-        return "The training material must be tailored to the user’s profile, which is defined by the following characteristics:
+        if ($this->training_personalization == "primed") {
+            $guidelines = $this::getPrimingGuidelines();
+            $main_traits = $this->getUserMainTraits();
+            $content_guidelines = "";
+            $style_guidelines = "";
+            $i = 1;
+            foreach ($main_traits as $trait => $data) {
+                $polarity = $data['polarity'];
+                $content_guideline = $guidelines[$trait]["Learning Content"][$polarity];
+                $style_guideline = $guidelines[$trait]["Communication Style"][$polarity];
+                $content_guidelines .= "$i) $content_guideline\n";
+                $style_guidelines .= "$i) $style_guideline\n";
+                $i++;
+            }
+            $prompt = "
+The training material must:
+$content_guidelines
+
+The communication style should be:
+$style_guidelines
+";
+        } else {
+            $prompt = "The training material must be tailored to the user’s profile, which is defined by the following characteristics:
 - Personality traits, measured under the Big five factors from 1 (low) to 5 (high):
 Extraversion = $profile->bfi_extraversion
 Agreeableness = $profile->bfi_agreeableness
@@ -136,10 +159,28 @@ Risk preferences = $profile->stp_risk_preferences
 Need for cognition = $profile->stp_need_for_cognition
 Need for uniqueness = $profile->stp_need_for_uniqueness
 ";
+        }
+        return $prompt;
     }
 
 
-    public function getUserMainTraits()
+    public function getPrimingPromptScenario(): string
+    {
+        $guidelines = $this::getPrimingGuidelines();
+        $main_traits = $this->getUserMainTraits();
+        $prompt_string = "";
+        $i = 1;
+        foreach ($main_traits as $trait => $data) {
+            $polarity = $data['polarity'];
+            $guideline = $guidelines[$trait]["Phishing Scenario"][$polarity];
+            $prompt_string .= "$i) $guideline\r\n";
+            $i++;
+        }
+        return $prompt_string;
+    }
+
+
+    private function getUserMainTraits($n = 3): array
     {
         $profile = $this->userProfile();
          // Define all traits and their scales
@@ -169,7 +210,6 @@ Need for uniqueness = $profile->stp_need_for_uniqueness
             'Need for cognition' => ['value' => $profile->need_for_cognition, 'scale' => 6],
             'Need for uniqueness' => ['value' => $profile->need_for_uniqueness, 'scale' => 6],
         ];
-
         $rankedTraits = [];
 
         // Normalize values and calculate extremity & polarity
@@ -193,12 +233,14 @@ Need for uniqueness = $profile->stp_need_for_uniqueness
         }
 
         // Sort by extremity in descending order
-        usort($rankedTraits, function ($a, $b) {
+        uasort($rankedTraits, function ($a, $b) {
             return $b['extremity'] <=> $a['extremity'];
         });
 
-        return $rankedTraits;
+        $main_traits = array_slice($rankedTraits, 0, $n, true);
+        return $main_traits;
     }
+
 
     public static function getExistingProlificParticipant($prolificId)
     {
@@ -208,5 +250,10 @@ Need for uniqueness = $profile->stp_need_for_uniqueness
         // Query the database to find the user by the prolific_id column
         return User::where('prolific_id', $prolificId)
             ->first();
+    }
+
+    private static function getPrimingGuidelines()
+    {
+        return json_decode(file_get_contents(storage_path("personalization_priming_guidelines.json")), associative: true);
     }
 }

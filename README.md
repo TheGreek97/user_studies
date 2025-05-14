@@ -24,13 +24,18 @@ The <b>emails</b> are visible in the <b>emails_screens.pdf</b> file in the root 
     - DB_USERNAME with the username of the database created in the previous step
     - DB_PASSWORD with the password of the database created in the previous step
     - QUEUE_CONNECTION with "database"
+    - PROLIFIC_STUDY_CODE with the code of the study in Prolific
+    - (only if OpenAI is used) OPENAI_API_KEY with the api key of OpenAI
 - Execute the following commands within the root folder of this repo
-    - composer install --optimize-autoloader --no-dev
-    - npm install
-    - php artisan key:generate
-    - php artisan migrate:fresh
-    - php artisan config:cache (optional)
-    - php artisan route:cache (optional)
-    - php artisan view:cache (optional)
-    - php artisan db:seed
-    - php artisan queue:work
+    - `composer install --optimize-autoloader --no-dev`
+    - `npm install`
+    - `php artisan key:generate`
+    - `php artisan migrate:fresh`
+    - `php artisan config:cache` (optional)
+    - `php artisan route:cache` (optional)
+    - `php artisan view:cache` (optional)
+    - `php artisan db:seed`
+
+For LLM-generated training, run a job dispatcher in the background:
+
+`nohup php artisan queue:work --timeout 6000 > storage/logs/jobs.log 2>storage/logs/jobs.err < /dev/null &`
