@@ -128,11 +128,12 @@ class User extends Authenticatable
                 $i++;
             }
             $prompt = "
-                The training material must:
-                    $content_guidelines
-                The communication style should be:
-                    $style_guidelines
-            ";
+The training material must:
+$content_guidelines
+
+The communication style should be:
+$style_guidelines
+";
         } else {
             $prompt = "The training material must be tailored to the user’s profile, which is defined by the following characteristics:
 - Personality traits, measured under the Big five factors from 1 (low) to 5 (high):
@@ -172,7 +173,7 @@ Need for uniqueness = $profile->stp_need_for_uniqueness
         foreach ($main_traits as $trait => $data) {
             $polarity = $data['polarity'];
             $guideline = $guidelines[$trait]["Phishing Scenario"][$polarity];
-            $prompt_string .= "$i) $guideline\n";
+            $prompt_string .= "$i) $guideline\r\n";
             $i++;
         }
         return $prompt_string;
@@ -232,11 +233,11 @@ Need for uniqueness = $profile->stp_need_for_uniqueness
         }
 
         // Sort by extremity in descending order
-        usort($rankedTraits, function ($a, $b) {
+        uasort($rankedTraits, function ($a, $b) {
             return $b['extremity'] <=> $a['extremity'];
         });
 
-        $main_traits = array_slice($rankedTraits, 0, $n);
+        $main_traits = array_slice($rankedTraits, 0, $n, true);
         return $main_traits;
     }
 
@@ -253,6 +254,6 @@ Need for uniqueness = $profile->stp_need_for_uniqueness
 
     private static function getPrimingGuidelines()
     {
-        return json_decode(file_get_contents(storage_path("personalization_priming_guidelines.json")));
+        return json_decode(file_get_contents(storage_path("personalization_priming_guidelines.json")), associative: true);
     }
 }

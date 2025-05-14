@@ -108,10 +108,10 @@ CONTENT AND STYLE REQUIREMENTS
 - The submodules are shown by the user in the same session, one after the other. Therefore, generate each subsequent submodule as the continuation of the previous one(s).
 - Do not greet the user at the start of every submodule, but just in the introduction.
 ";
-        if ($this->training_personalization === "yes"){
+        if ($this->training_personalization === "yes") {
             $prompt .= "
 
-            TRAIT DESCRIPTIONS
+TRAIT DESCRIPTIONS
 The definitions below establish a common framework for interpreting user profiles along three domains: the Big Five personality factors (OCEAN), emotional intelligence factors, and a set of Persuasion susceptibility factors (linked to scam compliance).
 
 ### Big Five (OCEAN) Personality Traits
@@ -191,17 +191,32 @@ The definitions below establish a common framework for interpreting user profile
 - Self-Control:
   - High scorers: Are proficient at regulating their emotions, managing stress effectively, and controlling impulses, contributing to balanced decision-making.
   - Low scorers: May struggle with emotional regulation, experience higher stress levels, and exhibit more impulsive behavior.
-            ";
+";
             $prompt .= "
 
-            PERSONALIZATION REQUIREMENTS
-            $this->personalization_prompt
-            ";
+PERSONALIZATION REQUIREMENTS
+$this->personalization_prompt
+";
             /*if ($personalization_condition == "primed"){
                 $main_traits = $user->getUserMainTraits();
                 $priming_guidelines = $this->getPersonalizationGuidelines($main_traits);
                 $prompt .= "\n\nPERSONALIZATION REQUIREMENTS\n". $priming_guidelines;
             } else if ($personalization == "yes"){*/
+        }
+        elseif ($this->training_personalization === "yes_no_trait_desc") {
+            $prompt .="
+
+PERSONALIZATION REQUIREMENTS
+$this->personalization_prompt
+
+Use these traits to guide how content is framed, the tone and examples used, and the emphasis placed on emotional or rational appeals. For instance:
+- For users high in Agreeableness or Emotionality, include emotionally resonant stories or social impact.
+- For users high in Openness, offer slightly more reflective or conceptually interesting content.
+- For users more susceptible to social proof or authority, highlight how attackers might exploit those principles.
+- Adapt feedback in exercises to resonate with emotional triggers or confidence levels.
+
+Do not explicitly mention the psychological traits in the output; instead, implicitly adapt the message to suit such a profile.
+";
         }
         return $prompt;
     }

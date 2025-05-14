@@ -22,7 +22,7 @@ class RedirectToTheRightPhase
     {
         $user = Auth::user();
         $currentRoute = Route::currentRouteName(); // Get the current route name
-        error_log($currentRoute);
+        // error_log($currentRoute);
         /* Redirect if the user has completed the study
         if ($user && $user->study_completed && $currentRoute !== "goodbye") {
             //dd($user->study_completed, $currentRoute);
@@ -61,23 +61,23 @@ class RedirectToTheRightPhase
             }
         } elseif (!$user->pre_training_completed) {
             if ($currentRoute !== 'emails') {
-                error_log("Redirecting to emails (pre-train) from ". $currentRoute);
+                //error_log("Redirecting to emails (pre-train) from ". $currentRoute);
                 return redirect()->route("emails", ['folder' => 'inbox']);
             }
         }
         elseif (!$user->training_completed) {
             if ($currentRoute !== 'training.show') {
-                error_log("Redirecting to training.show from ". $currentRoute);
+                //error_log("Redirecting to training.show from ". $currentRoute);
                 return redirect()->route('training.show');
             }
         } elseif (!$user->post_training_completed){
             if ($currentRoute !== 'emails') {
-                error_log("Redirecting to emails (post-train) from ". $currentRoute);
+                //error_log("Redirecting to emails (post-train) from ". $currentRoute);
                 return redirect()->route('emails', ['folder' => 'inbox']);
             }
         } elseif (!$user->training_reaction_completed){
             if ($currentRoute !== 'questionnaire') {
-                error_log("Redirecting to training react (post-train) from ". $currentRoute);
+                //error_log("Redirecting to training react (post-train) from ". $currentRoute);
                 return redirect()->route('questionnaire', ['step' => 4]);
             }
         }
