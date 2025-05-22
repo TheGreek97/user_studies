@@ -134,9 +134,8 @@ $content_guidelines
 The communication style should be:
 $style_guidelines
 ";
-        } else {
-            $prompt = "The training material must be tailored to the user’s profile, which is defined by the following characteristics:
-- Personality traits, measured under the Big five factors from 1 (low) to 5 (high):
+        } else {  // training_personalization == "yes", "few_shot", "table"  - for "no" this will be ignored anyway
+            $prompt = "- Personality traits, measured under the Big five factors from 1 (low) to 5 (high):
 Extraversion = $profile->bfi_extraversion
 Agreeableness = $profile->bfi_agreeableness
 Conscientiousness = $profile->bfi_conscientiousness

@@ -26,7 +26,7 @@ class ProcessTraining implements ShouldQueue
         $this->training_personalization = $user->training_personalization;
         $this->user_name = $user->name;
         $this->personalization_prompt = $user->getUserProfilePrompt();
-        $this->priming_prompt_scenario = $user->getPrimingPromptScenario();
+        $this->priming_prompt_scenario = $user->getPrimingPromptScenario();  // used exclusively for the "primed" cond.
     }
 
     /**
@@ -191,22 +191,22 @@ The definitions below establish a common framework for interpreting user profile
 - Self-Control:
   - High scorers: Are proficient at regulating their emotions, managing stress effectively, and controlling impulses, contributing to balanced decision-making.
   - Low scorers: May struggle with emotional regulation, experience higher stress levels, and exhibit more impulsive behavior.
-";
-            $prompt .= "
 
 PERSONALIZATION REQUIREMENTS
+The training material must be tailored to the user’s profile, which is defined by the following characteristics:
 $this->personalization_prompt
 ";
-            /*if ($personalization_condition == "primed"){
-                $main_traits = $user->getUserMainTraits();
-                $priming_guidelines = $this->getPersonalizationGuidelines($main_traits);
-                $prompt .= "\n\nPERSONALIZATION REQUIREMENTS\n". $priming_guidelines;
-            } else if ($personalization == "yes"){*/
         }
-        elseif ($this->training_personalization === "yes_no_trait_desc") {
+        elseif ($this->training_personalization === "few_shot") {
             $prompt .="
 
 PERSONALIZATION REQUIREMENTS
+The training content must be personalized using the psychological profile of the digital twin, which includes:
+
+- **Big Five Personality Traits** (BFI-2): Openness, Conscientiousness, Extraversion, Agreeableness, Negative Emotionality
+- **Susceptibility to Persuasion** (STP-II): Authority, Liking, Scarcity, Social Influence, Reciprocity
+- **Emotional Intelligence** (TEIQue-SF): Emotionality, Self-control, Sociability, Well-being
+
 $this->personalization_prompt
 
 Use these traits to guide how content is framed, the tone and examples used, and the emphasis placed on emotional or rational appeals. For instance:
@@ -217,6 +217,41 @@ Use these traits to guide how content is framed, the tone and examples used, and
 
 Do not explicitly mention the psychological traits in the output; instead, implicitly adapt the message to suit such a profile.
 ";
+        } elseif ($this->training_personalization === "table") {
+            $prompt .="
+
+PERSONALIZATION REQUIREMENTS
+The training content must be personalized using the psychological profile of the digital twin, which includes:
+
+- **Big Five Personality Traits** (BFI-2): Openness, Conscientiousness, Extraversion, Agreeableness, Negative Emotionality
+- **Susceptibility to Persuasion** (STP-II): Authority, Liking, Scarcity, Social Influence, Reciprocity
+- **Emotional Intelligence** (TEIQue-SF): Emotionality, Self-control, Sociability, Well-being
+
+$this->personalization_prompt
+
+Use these traits to guide how content is framed, the tone and examples used, and the emphasis placed on emotional or rational appeals. The goal is to improve user engagement and learning effectiveness by aligning the training with their psychological predispositions.
+
+Use the table below for guidance:
+
+| Trait / Factor                | High Value – Content Strategy                                          | Low Value – Content Strategy                                           |
+|-------------------------------|------------------------------------------------------------------------|------------------------------------------------------------------------|
+| **Openness**                  | Use metaphors, scenarios involving novelty, abstract reasoning         | Use concrete facts, step-by-step logic, avoid abstraction              |
+| **Conscientiousness**         | Emphasize planning, orderliness, and consequences of negligence        | Keep content short and informal; highlight practical shortcuts         |
+| **Extraversion**              | Use socially framed examples, dialogues, and group implications        | Use solitary scenarios and personal reflection                         |
+| **Agreeableness**             | Highlight cooperation, trust, and social harm caused by phishing       | Focus on self-protection, autonomy, and individual consequences        |
+| **Negative Emotionality**     | Use reassuring tone, clear structure, reduce anxiety-inducing wording  | Use straightforward, direct style without over-explaining              |
+| **Authority Susceptibility**  | Emphasize how attackers mimic authority figures (e.g., CEO fraud)      | Stress verification over blind trust in authority                      |
+| **Liking Susceptibility**     | Show how friendly language and familiar logos can deceive              | Highlight how even likable elements can be forged                      |
+| **Scarcity Susceptibility**   | Warn about fake urgency or expiring offers                             | Less emphasis on urgency, more on reasoning                            |
+| **Social Influence Susceptibility** | Warn about messages claiming \"everyone is doing it\"            | Focus on technical cues, not social conformity                         |
+| **Reciprocity Susceptibility**| Highlight fake \"gifts\" or helpful gestures from attackers            | Emphasize critical thinking and skepticism                             |
+| **Emotionality (EI)**         | Use empathy, emotional narratives, and moral appeals                   | Prefer logical reasoning and evidence-based arguments                  |
+| **Self-control (EI)**         | Emphasize impulsive risks and how to pause before acting               | Focus on planning and internal motivation                              |
+| **Well-being (EI)**           | Frame phishing as a threat to personal safety and digital well-being   | Frame phishing as a cognitive and technical problem                    |
+| **Sociability (EI)**          | Emphasize interactions with others and public risks (e.g., group leaks)| Emphasize individual risks and responsibility                          |
+
+If a trait is not provided or unclear, default to a neutral, educational tone. When multiple traits are combined, resolve possible tensions by prioritizing **clarity**, **usability**, and **trust-building**, and avoid manipulative framings at all times.
+";
         }
         return $prompt;
     }
@@ -226,8 +261,8 @@ Do not explicitly mention the psychological traits in the output; instead, impli
         if ($this->training_length == "short") {
             $sections_times = ["introduction" => 1, "scenario" => 2, "defense_strategies" => 3, "exercises" => 2, "conclusions" => 1];
             $n_exercises = 2;
-        } else {
-            $sections_times = ["introduction" => 2, "scenario" =>5, "defense_strategies" => 6, "exercises" => 3, "conclusions" => 2];
+        } else {  // long
+            $sections_times = ["introduction" => 2, "scenario" => 5, "defense_strategies" => 6, "exercises" => 3, "conclusions" => 2];
             $n_exercises = 3;
         }
         $sections_words = array_map(function ($x) {return $x * 150;}, $sections_times);

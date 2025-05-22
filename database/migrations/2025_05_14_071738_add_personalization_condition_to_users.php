@@ -16,7 +16,7 @@ return new class extends Migration
     {
          DB::statement("ALTER TABLE users
             MODIFY training_personalization
-            ENUM('no', 'yes', 'primed', 'yes_no_trait_desc')
+            ENUM('no', 'yes', 'primed', 'few_shot', 'table')
             NOT NULL DEFAULT 'no'");
     }
 
@@ -29,7 +29,7 @@ return new class extends Migration
     {
         // Replace any 'yes_no_trait_desc' values to a fallback value 'yes'
         DB::table('users')
-            ->where('training_personalization', 'yes_no_trait_desc')
+            ->whereIn('training_personalization', ['few_shot', 'table'])
             ->update(['training_personalization' => 'yes']);
         // Change the column back
         DB::statement("ALTER TABLE users
