@@ -147,7 +147,7 @@
 	{
 		"Communication Style":
 		{
-			"high": "Use logical, structured messaging that reinforces the user's disciplined approach. Avoid alarmist tones and focus on practical, methodical security habits.",
+			"high": "Using logical, structured messaging that reinforces the user's disciplined approach. Avoid alarmist tones and focus on practical, methodical security habits.",
 			"low": "Dynamic and engaging, using short, digestible content to maintain attention."
 		},
 		"Learning Content":
@@ -201,7 +201,7 @@
 	{
 		"Communication Style":
 		{
-			"high": "Use messages that emphasize individual autonomy and independent thinking. Use a personalized tone rather than generic security advice.",
+			"high": "Using messages that emphasize individual autonomy and independent thinking. Use a personalized tone rather than generic security advice.",
 			"low": "Use community-driven messaging, reinforcing \"security is a team effort\" and collective reinforcement such as \"Most employees who avoid phishing do this...\". Highlight how following established cybersecurity norms and best practices protects everyone."
 		},
 		"Learning Content":
@@ -291,7 +291,7 @@
 	{
 		"Communication Style":
 		{
-			"high": "Emphasize the importance of consistency and adherence to policies in cybersecurity practices.",
+			"high": "Emphasizing the importance of consistency and adherence to policies in cybersecurity practices.",
 			"low": "Flexible, adaptive communication that allows room for creative problem-solving. Encourage critical thinking rather than strict rule-following."
 		},
 		"Learning Content":

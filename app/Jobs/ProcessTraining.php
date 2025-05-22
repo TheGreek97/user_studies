@@ -252,7 +252,14 @@ Use the table below for guidance:
 
 If a trait is not provided or unclear, default to a neutral, educational tone. When multiple traits are combined, resolve possible tensions by prioritizing **clarity**, **usability**, and **trust-building**, and avoid manipulative framings at all times.
 ";
+        } elseif ($this->training_personalization === "primed") {
+            $prompt .="
+
+PERSONALIZATION REQUIREMENTS
+$this->personalization_prompt
+            ";
         }
+        // error_log($prompt);
         return $prompt;
     }
 
@@ -388,22 +395,4 @@ Be sure that any form submission is prevented to avoid refreshing the webpage.
         return $prompt;
     }
 
-
-    private function getPersonalizationGuidelines($main_personality_traits, $max_guidelines = 3){
-        $guidelines = config('guidelines'); // Include the guidelines array
-        $counter = 1;
-        $prompt= "";
-        // remove traits with no guidelines
-        unset($main_personality_traits['Total Trait Emotional Intelligence']);
-        unset($main_personality_traits['Lack of self-control']);
-        foreach ($main_personality_traits as $trait) {
-            if ($counter > $max_guidelines)
-                break;
-            // Take the trait name and polarity
-
-            // Construct the prompt fragment with the Language, Training Content, and Scenario
-            $counter++;
-        }
-        return $prompt;
-    }
 }

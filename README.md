@@ -39,3 +39,5 @@ The <b>emails</b> are visible in the <b>emails_screens.pdf</b> file in the root 
 For LLM-generated training, run a job dispatcher in the background:
 
 `nohup php artisan queue:work --timeout 6000 > storage/logs/jobs.log 2>storage/logs/jobs.err < /dev/null &`
+
+The command `ps -xw | grep "php artisan"` can be used to verify the background job is running.

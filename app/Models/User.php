@@ -119,6 +119,7 @@ class User extends Authenticatable
             $content_guidelines = "";
             $style_guidelines = "";
             $i = 1;
+
             foreach ($main_traits as $trait => $data) {
                 $polarity = $data['polarity'];
                 $content_guideline = $guidelines[$trait]["Learning Content"][$polarity];
