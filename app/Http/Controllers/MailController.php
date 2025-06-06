@@ -177,7 +177,7 @@ class MailController extends Controller
                 ],
                 'link_mismatch' => [
                     "llama3_3" => "The link text \"protect your account\" hides the actual link https://www.facebook.com/hacked/disavow?u=100000125023309&nArdInDS2&lit_IT&ext1548538159. The email would have been considered safe if the link text matched the actual link, which helps ensure the link is trustworthy and not trying to trick you. A safe link might have looked like: https://www.facebook.com/account-security",
-                    "claude3_5" => "The email shows a Facebook link but actually takes you to a different website: appears as 'facebook.com/hacked' but leads to 'phish-site.net/fake-login'. The email would have been safe if the link you see matched exactly where it takes you, which helps ensure you're going to the real Facebook website. A safe link would show and lead to the same place, like: facebook.com/help/security"
+                    "claude3_5" => "The email shows a safe link but leads to 'facebook.com/hacked'. The email would have been safe if the link you see matched exactly where it takes you, which helps ensure you're going to the real Facebook website. A safe link would show and lead to the same place, like: facebook.com/help/security"
                 ],
                 'tld_mispositioned' => [
                     "llama3_3" => "The link https://amazonservices.com.cz/account.php has a suspicious web address with a \".com\" in the wrong place. The email could have been considered safe if the \".com\" was at the end of the address. A safe link might have looked like: https://amazon.com/account-update",
