@@ -5,7 +5,7 @@
 # mysql_password=""
 mysql_loginpath="local" # Set with mysql_config_editor set --login-path=local --host=localhost --user=laravel --password
 database_name="training_dt"
-remote_folder="/WarningMessagesStudyBackup/"
+remote_folder="/DigitalTwinTrainingBackup/"
 
 # Backup file name
 backup_file="backup_$(date +%Y%m%d%H%M%S).sql"
