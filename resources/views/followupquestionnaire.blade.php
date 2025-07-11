@@ -1213,11 +1213,11 @@
                     <div x-show="step === 5" class="pt-1">
                         <p class="text-2xl w-full text-center">Section 5 of 5</p>
                         @if(Illuminate\Support\Facades\Auth::user()->prolific_id == null)
-                            <div class="my-5">
+                            <!--<div class="my-5">
                             <p class="font-bold pb-1">What is your ©PROLIFIC ID?</p>
                             <input required type="text" name="prolific_id" min="10" max="100" placeholder="Prolific ID"
                                    class="block text-sm px-4 rounded-lg py-3 border outline-none"/>
-                            </div>
+                            </div>-->
                         @endif
                         <div class="my-5">
                             <p class="font-bold pb-1">How old are you?</p>

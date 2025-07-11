@@ -15,12 +15,12 @@
                         This test can only be taken once by each individual, therefore you cannot take it again! Thank you!
                         <br>
                         <br>
-                        <div class="text-left mt-2">
+                        <!--<div class="text-left mt-2">
                             If you are trying to redeem your reward, you have to click on the following link: <br>
                             <div class="text-center">
                                 <a href="https://app.prolific.com/submissions/complete?cc={{env('PROLIFIC_STUDY_CODE')}}" style="color:dodgerblue; text-decoration: underline; font-weight: bold">https://app.prolific.com/submissions/complete?cc={{env('PROLIFIC_STUDY_CODE')}}</a>
                             </div>
-                        </div>
+                        </div>-->
                         <br>
                         <hr class="my-4">
                         Goodbye!<br>

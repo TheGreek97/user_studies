@@ -83,14 +83,15 @@
                 <div class="text-lg pt-3 font-bold italic mt-8" style="color:darkred"> BENEFITS </div>
                 <p class="text-xl max-w-4xl text-left pt-4">
                     Participants who will take part in this study will learn concepts and skills about defense from phishing emails. <br>
-                    Moreover, a reward of <u>9£ per hour</u> will be granted via participation on Prolific.
+                    <!--Moreover, a reward of <u>9£ per hour</u> will be granted via participation on Prolific.-->
                 </p>
 
                 <div class="text-lg pt-3 font-bold italic mt-8" style="color:darkred"> RISKS </div>
                 <p class="text-xl max-w-4xl text-left pt-4">
                     No potential risk for the participants is expected throughout the study.
                     <br>
-                    The researchers will only have access to the user’s Prolific ID, and have no way of retrieving any identifying information from such identifier.
+                    <!--The researchers will only have access to the user’s Prolific ID, and have no way of retrieving any identifying information from such identifier.-->
+                    The researchers will have no way of retrieving any identifying information from the inserted data.
                 </p>
 
                 <div class="text-lg mt-8 max-w-4xl font-medium">Thank you for reading this information sheet and

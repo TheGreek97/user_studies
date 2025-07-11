@@ -32,8 +32,8 @@
                     study now by closing your browser (or this tab) or pressing the “I want to leave the study”
                     button at the bottom of this page. In the case you abandon the study, any information you
                     have submitted and any data related to your interaction with the system will be
-                    automatically deleted in a secure manner. However, if you decide to leave the study now,
-                    please consider that you won’t be able to receive your participation reward from Prolific.<br>
+                    automatically deleted in a secure manner. <!--However, if you decide to leave the study now,
+                    please consider that you won’t be able to receive your participation reward from Prolific.--><br>
                     For any further clarification about the study please contact:
                     <br><br>
                     Prof. Luca Viganò: <a href="mailto:luca.vigano@kcl.ac.uk">luca.vigano@kcl.ac.uk</a>, <a href="tel:+44 (0)20 78482078">+44 (0)20 78482078</a>
@@ -56,8 +56,8 @@
                     linked to specific individuals. <br>
                     The questions in the questionnaire will mostly be closed-ended and will regard the
                     evaluation of the warnings you were exposed to, plus some questions to evaluate your
-                    knowledge in cybersecurity. Finally, you will be asked to provide your Prolific ID to receive
-                    your reward for your participation.
+                    knowledge in cybersecurity. <!--Finally, you will be asked to provide your Prolific ID to receive
+                    your reward for your participation.-->
                     <br>
                     Examples of these questions are:
                     <i>“Please rate the extent of risk you feel you were warned about.”</i> and

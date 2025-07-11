@@ -16,7 +16,7 @@
                         We're sorry, but we have to terminate the study
                     </div>
                     <div class="text-xl max-w-2xl text-left pt-3">
-                        Unfortunately, due tue <a href="https://researcher-help.prolific.com/en/article/fb63bb">Prolific's attention and comprehension check policy</a>, you do not meet the requirements to complete this study.
+                        Unfortunately, due to our<!--<a href="https://researcher-help.prolific.com/en/article/fb63bb">Prolific's attention and comprehension check policy</a>--> attention and comprehension check policy, you do not meet the requirements to complete this study.
                         <br>This is because you answered to an attention check question incorrectly, indicating that your answers were given without the attention and focus required for this study. <br>
                         <br>The attention check questions in our study looked like:
                         <div class="py-4 flex flex-col border-b-2 border-gray-300">
