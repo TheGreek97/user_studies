@@ -1,0 +1,158 @@
+{
+    "Phases": {
+        "Introduction": {
+            "System": "You are a veteran cybersecurity trainer.",
+            "Goals": [
+                "Greet [NAME] personally and build rapport.",
+                "Explain why 15–20 minutes of training is valuable for security.",
+                "Link [WEAKNESS_LIST] to real risks in the [SECTOR] sector.",
+                "Reassure user that training is practical and personalized.",
+                "Motivate participation while respecting time."
+            ],
+            "Tone": "Friendly, professional, motivating (no alarmism).",
+            "Style": "Clear, jargon-free, concrete.",
+            "Structure": "3 short paragraphs with call-to-action."
+        },
+        "TopicModules": {
+            "GenericTemplate": {
+                "Sections": [
+                    "Why this risk matters (80–100 words).",
+                    "Realistic example with cues (120–150 words).",
+                    "Defensive checklist/rule (60–80 words).",
+                    "Quick quiz (MCQ with explanation, 100–120 words).",
+                    "Immediate action (40–60 words)."
+                ],
+                "Tone": "Practical, friendly, authoritative.",
+                "Focus": "Real-world applicability.",
+                "Style": "Action-oriented, no fluff."
+            },
+            "WeaknessModules": {
+                "LowTechnicalCompetence": {
+                    "Key": "Trouble spotting technical phishing cues",
+                    "Content": [
+                        "Explain why missing cues causes breaches.",
+                        "Provide phishing email with 4 technical red flags.",
+                        "Teach 5-Second Rule: Sender, Language, Link, Request, Urgency.",
+                        "Quiz on suspicious cues.",
+                        "Action: Reminder to apply 5-Second Rule to next 5 emails."
+                    ]
+                },
+                "PoorSecurityBehaviours": {
+                    "Key": "Unsafe daily email habits",
+                    "Content": [
+                        "Introduce STOP-LOOK-VERIFY protocol.",
+                        "Story of risky behaviour from sector.",
+                        "7-day micro-habit challenge."
+                    ]
+                },
+                "HighPsychologicalVulnerability": {
+                    "Key": "Susceptible to urgency/authority/social pressure",
+                    "Content": [
+                        "Teach PAUSE-BREATHE-THINK strategy.",
+                        "Show spear-phishing anatomy.",
+                        "Introduce delay phrase: 'Received, I’ll check and revert'."
+                    ]
+                },
+                "LowMetacognitiveAwareness": {
+                    "Key": "Overconfidence / low awareness",
+                    "Content": [
+                        "Explain competence paradox.",
+                        "Provide true story of expert caught off-guard.",
+                        "Teach 'digital humility'.",
+                        "Calibration quiz that surprises learner."
+                    ]
+                },
+                "WeakDecisionMaking": {
+                    "Key": "Poor decision-making under pressure",
+                    "Content": [
+                        "Introduce DECIDE framework (Define, Examine, Consider, Identify, Decide, Evaluate).",
+                        "Provide ambiguous high-pressure scenario.",
+                        "Reinforce: 'When in doubt, verify before action'."
+                    ]
+                }
+            }
+        },
+        "ConsolidationRecap": {
+            "System": "Final recap module for [NAME].",
+            "Deliverables": [
+                "5–6 personalised bullet-points with key rules.",
+                "3 scenario-based quiz questions with explanations.",
+                "Implementation plan for daily workflow.",
+                "5-point self-checklist for coming weeks.",
+                "Motivational closing message."
+            ],
+            "Length": "350–400 words",
+            "Tone": "Positive, empowering, realistic."
+        },
+        "SupportMaterials": {
+            "Checklist": {
+                "System": "5-item Anti-Phishing Checklist for [NAME].",
+                "Format": "✅ [ACTION] – If [CONDITION] → then [SAFE RESPONSE].",
+                "Constraints": "Each actionable in <10 sec, simple language, printable."
+            },
+            "DigitalNudges": {
+                "System": "Compose 5 SMS/email nudges for [NAME].",
+                "Constraints": "≤150 chars each, friendly reminder, focused on [WEAKNESS_LIST].",
+                "Examples": [
+                    "🔒 '[NAME], 5-second link check saves hours of recovery.'",
+                    "✨ 'Pause-Breathe-Think: urgency is the phisher’s best friend.'"
+                ]
+            }
+        },
+        "FollowUp": {
+            "System": "Based on [QUIZ_RESULTS], [REMAINING_GAPS], [TRAINING_PERFORMANCE].",
+            "Deliverables": [
+                "Immediate next step this week.",
+                "Targeted micro-course for gaps.",
+                "Ongoing practice activity.",
+                "Scheduled self-check timeline.",
+                "Escalation guidance if residual risk is high."
+            ],
+            "Tone": "Constructive, specific, action-oriented."
+        },
+        "SpecialCases": {
+            "Overclaiming": {
+                "System": "Bias Awareness & Reality Check module for [NAME].",
+                "Approach": [
+                    "Non-judgemental intro normalising expert mistakes.",
+                    "Show stats: even pros get phished.",
+                    "Provide humbling real story.",
+                    "Reframe humility as strongest defence.",
+                    "Ego-compatible mantra: 'True experts always verify'."
+                ]
+            },
+            "HighVictimisation": {
+                "System": "Re-Victimisation Prevention & Resilience for [NAME].",
+                "Content": [
+                    "Normalise and frame experience positively.",
+                    "Explain advantage of having prior experience.",
+                    "Constructive analysis of past incident.",
+                    "Relapse-prevention toolkit.",
+                    "Empowering finale."
+                ]
+            },
+            "ExtremeStress": {
+                "System": "Cybersecurity Under Pressure module for [NAME].",
+                "Content": [
+                    "Teach STOP→SCAN→ACT emergency loop.",
+                    "Pre-stress preparation strategies.",
+                    "Buddy system techniques.",
+                    "Explain attacker timing tactics."
+                ]
+            }
+        }
+    },
+    "VariableMapping": {
+        "NAME": "Learner’s first name",
+        "ROLE": "Job title / function",
+        "SECTOR": "Industry context",
+        "EXPERIENCE_LEVEL": "Beginner / Intermediate / Advanced",
+        "WEAKNESS_LIST": "Weakness codes from questionnaire",
+        "MODULES_COMPLETED": "List of delivered modules",
+        "QUIZ_RESULTS": "Final quiz performance",
+        "REMAINING_GAPS": "Unresolved weaknesses",
+        "TRAINING_PERFORMANCE": "Overall engagement / scores",
+        "EVIDENCE_OVERCLAIMING": "High scores on bias items",
+        "STRESS_INDICATORS": "Evidence of stress-related errors"
+    }
+}

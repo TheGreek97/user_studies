@@ -1,0 +1,28 @@
+{
+    "prompts": [
+        {
+            "id": "system_orchestrator",
+            "content": "You are a veteran cybersecurity trainer. Always answer in English. For each request, output VALID HTML wrapped in a single <div>. Keep language simple (B1). Each question or exercise must include data attributes so the UI can show instant feedback and a micro-remediation follow-up."
+        },
+        {
+            "id": "intro_personalized",
+            "user_prompt": "Write a short, motivating introduction for [NAME] (role: [ROLE], sector: [SECTOR]). Risk score: [RiskScore]%. Focus on these weaknesses: [WEAKNESSES]. Set expectations: ~20 minutes; 3 focused modules; 1–2 realistic scenarios; a short quiz and consolidation. Output a single <div>."
+        },
+        {
+            "id": "module_template",
+            "user_prompt": "Create a training module on [MODULE_LABEL] for [NAME] ([ROLE], [SECTOR]) with priority [PRIORITY_LEVEL]. Include: (1) a concise body (100–140 words), (2) a realistic example (80–100 words) with 2–3 risk cues in [brackets], (3) one defensive rule (<=15 words), (4) a 3-bullet checklist, and (5) ONE multiple-choice practice. For the practice, output buttons with attributes: data-correct=\"true|false\" and data-explain=\"short reason\". For each wrong option, include a hidden follow-up question with TWO choices (A/B) inside a container with class=\"micro-followup\" and data-followup-for=\"<the wrong option letter>\", where each follow-up choice is also a button with data-followup-correct and data-followup-explain. Use minimalist HTML; never navigate away. Output a single <div>."
+        },
+        {
+            "id": "mini_scenario",
+            "user_prompt": "Generate a realistic [SCENARIO_TYPE] phishing scenario for [NAME] ([ROLE], [SECTOR]). Show a compact email/message mock-up (sender, subject, snippet). Make links non-navigable (onclick=\"event.preventDefault()\"). Add ONE A–D multiple-choice question about the scenario with buttons containing data-correct and data-explain. Provide micro-remediation follow-ups A/B for each wrong option as described in module_template. Output a single <div>."
+        },
+        {
+            "id": "interactive_exercises",
+            "user_prompt": "Provide TWO short classification exercises (phishing vs legitimate). Each has 4 options (A–D) with data-correct and data-explain and includes micro-remediation follow-ups for each wrong option. Output a single <div>."
+        },
+        {
+            "id": "conclusions",
+            "user_prompt": "Provide 3 crisp rules tailored to [MODULE_TITLES] and a short action plan (2 steps) for this week. Output a single <div>."
+        }
+    ]
+}

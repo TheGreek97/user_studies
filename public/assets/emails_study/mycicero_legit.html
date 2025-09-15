@@ -1,0 +1,132 @@
+$email->from_name = "myCicero";
+$email->from_email = "no-reply@mycicero.eu";
+$email->subject = "End of parking confirmed";
+$email->preview_text = 'Your parking time is over. Dear user, your parking time is over.';
+$date = Carbon::today()->subDays(mt_rand(0, 15))->toDateTimeString();
+$email->content =
+<div>
+    <div class="adM"> </div>
+    <table style="border-collapse: collapse; max-width: 900px;" width="100%" align="center">
+        <tbody>
+        <tr>
+            <td style="min-width: 20px;" width="5%"> </td>
+            <td style="max-width: 810px; background-repeat: no-repeat; background-size: cover; background-position: center;" bgcolor="#F9F9F9" width="90%">
+                <table style="border-collapse: collapse; background: transparent;" width="100%" align="center">
+                    <tbody>
+                    <tr>
+                        <td style="background: transparent;" align="center"><img class="CToWUd a6T" style="width: 100%; max-width: 810px; max-height: 170px;" tabindex="0" src="/assets/img/email/mycicero.jpg" alt="header myCicero" data-bit="iit" />
+                            <div class="a6S" dir="ltr" style="opacity: 0.01; left: 524.195px; top: 75px;">
+                                <div id=":rx" class="T-I J-J5-Ji aQv T-I-ax7 L3 a5q" tabindex="0" role="button" aria-label="Download attachment " data-tooltip-class="a1V" data-tooltip="Download">
+                                    <div class="akn">
+                                        <div class="aSK J-J5-Ji aYr"> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br /><br />
+                <table width="100%">
+                    <tbody>
+                    <tr>
+                        <td style="min-width: 40px;" width="15%"> </td>
+                        <td width="70%">
+                            <table style="max-width: 568px; border-radius: 15px; border-spacing: 7px; text-align: justify; border: 1px solid #dfdfdf; width: 100%;" width="100%" align="center" bgcolor="white">
+                                <tbody>
+                                <tr>
+                                    <td style="max-width: 17px; background: white; border-color: white; border-radius: 20px; width: 3%;" width="3%"> </td>
+                                    <td style="max-width: 534px; background: white; border-color: white; border-radius: 20px; width: 94%;" width="94%"> </td>
+                                    <td style="max-width: 17px; background: white; border-color: white; border-radius: 20px; width: 3%;" width="3%"> </td>
+                                </tr>
+                                <tr>
+                                    <td style="max-width: 17px; background: white; border-color: white; width: 3%;" width="3%"> </td>
+                                    <td style="max-width: 534px; background: white; border-color: white; width: 94%;" width="94%"><center><span style="font-family: Calibri,sans-serif; color: #a45a95; font-size: 1.7em;"><strong>End of parking confirmed</strong></span></center><br /><br /><span style="font-family: Calibri,sans-serif; color: #4f4f4f; font-size: 1.1em;">Dear User, <br />your parking time is <strong>over</strong>. <br /><br />Here are all the details: <br /></span>
+                                        <table style="border-spacing: 0px; background: white; border-radius: 10px; border: 1px solid #e3e3e3;" width="100%" align="center">
+                                            <tbody>
+                                            <tr>
+                                                <td style="background: #a45a95; border-radius: 10px 0px 0px 0px;" width="10px"> </td>
+                                                <td style="text-align: center; background: #a45a95; padding-top: 8px; padding-bottom: 8px;" width="97%"><span style="color: #ffffff; font-family: Calibri, sans-serif;"><span style="font-size: 16.8px;"><strong>DETAILS</strong></span></span></td>
+                                                <td style="background: #a45a95; border-radius: 0px 10px 0px 0px;" width="10px"> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> </td>
+                                                <td style="padding-left: 10px; padding-top: 12px; padding-bottom: 3px; background: #white;" width="97%"><span style="font-family: Calibri,sans-serif; color: #a45a95; font-size: 1.1em;"> <strong> ID: 950/2715698</strong> </span></td>
+                                                <td> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> </td>
+                                                <td style="padding-left: 10px; padding-top: 3px; padding-bottom: 3px; background: #white;" width="97%"><span style="font-family: Calibri,sans-serif; color: #4f4f4f; font-size: 1.1em;"> <strong> Municipality</strong>: Rome </span></td>
+                                                <td> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> </td>
+                                                <td style="padding-left: 10px; padding-top: 3px; padding-bottom: 3px; background: #white;" width="97%"><span style="font-family: Calibri,sans-serif; color: #4f4f4f; font-size: 1.1em;"> <strong> Rest area</strong>: Termini Train Station </span></td>
+                                                <td> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> </td>
+                                                <td style="padding-left: 10px; padding-top: 3px; padding-bottom: 3px; background: #white;" width="97%"><span style="font-family: Calibri,sans-serif; color: #4f4f4f; font-size: 1.1em;"> <strong> Vehicle registration number</strong>: DA000DA </span></td>
+                                                <td> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> </td>
+                                                <td style="padding-left: 10px; padding-top: 3px; padding-bottom: 3px; background: #white;" width="97%"><span style="font-family: Calibri,sans-serif; color: #4f4f4f; font-size: 1.1em;">
+        <strong> Date and time</strong>: '. $date. ' 14:04 to '. $date.' 14:36</span></td>
+                                                <td> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> </td>
+                                                <td style="padding-left: 10px; padding-top: 3px; padding-bottom: 15px; background: #white;" width="97%"><span style="font-family: Calibri,sans-serif; color: #4f4f4f; font-size: 1.1em;"> <strong> IParking amount</strong>: € 0,53 </span></td>
+                                                <td> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> </td>
+                                                <td style="padding-left: 10px; border-top: 1px solid #dfdfdf; padding-top: 12px; padding-bottom: 12px; background: #white; border-radius: 0px 0px 10px 10px;" width="97%"><span style="font-family: Calibri,sans-serif; color: #4f4f4f; font-size: 1.1em;"> <strong> Your current credit</strong>: € 10,50 </span></td>
+                                                <td> </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <p> </p>
+                                        <p><span style="font-family: Calibri,sans-serif; color: #4f4f4f; font-size: 1.1em;">For any tax deduction it is necessary to keep this email. This operation is not subject to the obligation of invoicing pursuant to art. 74 1st paragraph letter e) of Presidential Decree 633/72.</span></p>
+                                        <p><span style="font-family: Calibri,sans-serif; color: #4f4f4f; font-size: 1.1em;"> If you need help or more details, consult our <a style="color: #a45a95;" href="https://www.mycicero.eu/details"> <span style="font-family: Calibri,sans-serif; color: #a45a95;"> <strong>FAQs</strong></span></a> or contact us at <a style="color: #a45a95;" href="mailto:support@mycicero.eu"> <span style="font-family: Calibri,sans-serif; color: #a45a95;"> <strong>support@mycicero.eu</strong></span></a> or at <a style="color: #a45a95; text-decoration: none;"> <span style="font-family: Calibri,sans-serif; color: #a45a95;"> <strong>071 920 7000</strong></span></a>.</span> <br /><br /><span style="font-family: Calibri,sans-serif; color: #4f4f4f; font-size: 1.1em;"> On our site you will also find: all the information regarding parking, the cities involved in the program , timetables of the public transport and an apposite section to buy the tickets and the transport companies adherent to <strong>myCicero</strong>. </span> <br /><br /><br /><span style="font-family: Calibri,sans-serif; color: #4f4f4f; font-size: 1.1em;"> Have a safe trip! <br /></span> <span style="font-family: Calibri,sans-serif; color: #a45a95; font-size: 1.1em;"> <strong>The myCicero team</strong> </span></p>
+                                    </td>
+                                    <td style="max-width: 17px; background: white; border-color: white; width: 3%;" width="3%"> </td>
+                                </tr>
+                                <tr>
+                                    <td style="max-width: 17px; background: white; border-color: white; width: 3%;" width="3%"> </td>
+                                    <td style="max-width: 534px; background: white; border-color: white; width: 94%;" width="94%">
+                                        <table style="background: white; border-color: white;" width="100%">
+                                            <tbody>
+                                            <tr>
+                                                <td style="background: white; border-color: white; color: white;" align="center" width="33%">_______________</td>
+                                                <td style="background: white; border-color: white; color: white;" align="center" width="34%">_______________</td>
+                                                <td style="background: white; border-color: white; color: white;" align="center" width="33%">_______________</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td style="max-width: 17px; background: white; border-color: white; width: 3%;" width="3%"> </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table width="100%">
+                                <tbody>
+                                <tr>
+                                    <td> </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td style="min-width: 40px;" width="15%"> </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td style="min-width: 20px;" width="5%"> </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="yj6qo"> </div>
+    <div class="adL"> </div>
+</div>

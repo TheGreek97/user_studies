@@ -1,0 +1,112 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\UserQuestionnaireScale;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Models\TEIQueSF;
+
+class TEIQueSFController extends Controller
+{
+    public function create(Request $request)
+    {
+        $user = Auth::user();
+        $validatedData = $request->validate([
+            'q1' => ['required', 'integer'],
+            'q2' => ['required', 'integer'],
+            'q3' => ['required', 'integer'],
+            'q4' => ['required', 'integer'],
+            'q5' => ['required', 'integer'],
+            'q6' => ['required', 'integer'],
+            'q7' => ['required', 'integer'],
+            'q8' => ['required', 'integer'],
+            'q9' => ['required', 'integer'],
+            'q10' => ['required', 'integer'],
+            'q11' => ['required', 'integer'],
+            'q12' => ['required', 'integer'],
+            'q13' => ['required', 'integer'],
+            'q14' => ['required', 'integer'],
+            'q15' => ['required', 'integer'],
+            'q16' => ['required', 'integer'],
+            'q17' => ['required', 'integer'],
+            'q18' => ['required', 'integer'],
+            'q19' => ['required', 'integer'],
+            'q20' => ['required', 'integer'],
+            'q21' => ['required', 'integer'],
+            'q22' => ['required', 'integer'],
+            'q23' => ['required', 'integer'],
+            'q24' => ['required', 'integer'],
+            'q25' => ['required', 'integer'],
+            'q26' => ['required', 'integer'],
+            'q27' => ['required', 'integer'],
+            'q28' => ['required', 'integer'],
+            'q29' => ['required', 'integer'],
+            'q30' => ['required', 'integer'],
+            'trivial_question' => ['required', 'boolean'],
+            'fastClickCount' => ['required', 'integer'],
+        ]);
+
+        //  If the user got the control question wrong, he is ejected
+        if ($validatedData['trivial_question'] == 0) {
+            return redirect()->route('expelUser');
+        }
+
+        $alreadyAnswered = TEIQueSF::where([
+            'user_id' => $user->id,
+        ])->exists();
+
+        // Check if the user has already answered
+        if (!$alreadyAnswered) {
+            $validatedData['user_id'] = $user->id;
+            $answer = TEIQueSF::create($validatedData);
+
+            $scales = $this->calculateScales($answer->id);
+            $userScale = UserQuestionnaireScale::where('user_id', $user->id)->first();
+            if ($userScale) {
+                $userScale->update($scales);
+            } else {
+                UserQuestionnaireScale::create(array_merge(['user_id' => $user->id], $scales));
+            }
+
+        }
+        $user->teique_completed = now();
+        $user->save();
+
+        // Create the training as this is the last questionnaire
+        if (!session()->has("generating_training") && $user->training == null) {
+            TrainingController::createTraining();
+            session(['generating_training' => true]);
+        }
+
+        return redirect()->route("emails", ['folder' => 'inbox']);
+    }
+
+    public function calculateScales($id)
+    {
+        $teiQueSf = TEIQueSF::findOrFail($id);
+        // Reverse-scored items:
+        $reverseItems = [16, 2, 18, 4, 5, 7, 22, 8, 10, 25, 26, 12, 13, 28, 14];
+        $maxScore = 7; // scores range
+
+        // Extract responses and apply reverse scoring
+        $responses = [];
+        for ($i = 1; $i <= 30; $i++) {
+            $question = 'q' . $i;
+            $responses[$i] = in_array($i, $reverseItems) ? ($maxScore + 1 - $teiQueSf->$question) : $teiQueSf->$question;
+        }
+
+        // Calculate scales
+        $scales = [
+            'tei_total_tei' => array_sum($responses) / count($responses),
+            'tei_well_being' => ($responses[5] + $responses[20] + $responses[9] + $responses[24] + $responses[12] + $responses[27]) / 6,
+            'tei_self_control' => ($responses[4] + $responses[19] + $responses[7] + $responses[22] + $responses[15] + $responses[30]) / 6,
+            'tei_emotionality' => ($responses[1] + $responses[16] + $responses[2] + $responses[17] + $responses[8] + $responses[23] + $responses[13] + $responses[28]) / 8,
+            'tei_sociability' => ($responses[6] + $responses[21] + $responses[10] + $responses[25] + $responses[11] + $responses[26]) / 6,
+        ];
+
+        return $scales;
+    }
+
+}

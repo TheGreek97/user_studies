@@ -1,0 +1,50 @@
+$email->subject = "Amazon Password Reset";
+$email->from_name = "Amazon.com";
+$email->from_email = "no-reply@amazon.com";
+$email->preview_text = 'Hi {user_name}, to reset your password follow the steps in this email.';
+$email->content =
+<div>
+    <table style="width:100%;" class="m_-4745720069737180512body" cellspacing="0" cellpadding="0" align="center">
+        <tbody>
+        <tr>
+            <td>
+                <table cellspacing="0" cellpadding="0">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <table style="height: 49px; padding: 5px;" width="100%" cellspacing="0" cellpadding="0">
+                                <tbody>
+                                <tr>
+                                    <td style="width: 50%;"><img id="m_-4745720069737180512amazonLogo" class="CToWUd" width="100"  src="/assets/img/email/amazon.jpg" data-bit="iit" /></td>
+                                    <td id="m_-4745720069737180512title" style="width: 50%;" align="right" valign="top">
+                                        <p>Password assistance</p>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px;">
+                            <p>Hi {user_name},</p>
+                            <br>
+                            <p>To reset your password click <a href="https://www.amazon.com/reset" style="text-decoration: underline; color: #0001F1;">here</a>.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px;">
+                            <p>Do not share this email with anyone. Our customer support team won\'t ask you; never your password, credit card or banking information.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px;">
+                            <p>Thank you.</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

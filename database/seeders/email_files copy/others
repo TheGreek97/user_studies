@@ -1,0 +1,211 @@
+
+        // 3 - Bad Phishing email
+        /*
+        $email = new Email();
+        $email->from_name = "TRENITALIA";
+        $email->from_email = "342urysj39Ije@mymail.cd.com";
+        $email->subject = "Customer, €10 for you. Use them now!";
+        $email->preview_text = 'CONGRATULATIONS!!!! We offer you a discount vaucher worth 10 €';
+        $email->content = "<div><p class=\"p1\">CONGRATULATIONS!!!!<br/><br/>For you, here is a discount voucher worth 10 €. To get the discount voucher click on the button and insert your personal data.</p>
+        <p class=\"p2\" style=\"text-align: center;\"><br/>
+        <div style=\"margin-left: auto; margin-right: auto; font-weight: bold; border-radius: 5px; background-color: #c41329; color: #ffffff; font-size: 14px; display: inline-block; text-align: center;\" align=\"center\">
+            <a style=\"color: #ffffff; text-decoration: none; display: block; padding: 14px 30px 15px;\" href=\"http://scam-you_.com.br/21322/details.php?id=98324hfduyu23vuyfeoIUhriunN$\"> Activate the discount cupon </a>
+        </div>
+        </p>
+        <p class=\"p2\" style=\"text-align: center;\"> </p>
+        <p class=\"p1\">The discount vaucher can be activated until 31/09/2023. Activate it and use it immidiately on your next purchase.</p>
+        </div>";
+        $email->warning_explanation_1 = get_explanation ('basic', "http://scam-you_.com.br/21322/details.php?id=98324hfduyu23vuyfeoIUhriunN$");
+        $email->warning_explanation_2 = get_explanation ('grammar');
+        $email->date = Carbon::today()->subDays(mt_rand(0, 365))->toDateTimeString();
+        $email->type = 'inbox';
+        $email->warning_type = 'popup_email';
+        $email->save();
+        */
+
+        // FALSE POSITIVE
+       /* $email = new Email();
+        $email->subject = "Password Reset";
+        $email->from_name = "Live Nation";
+        $email->from_email = "info@livenation.com";
+        $email->preview_text = 'Reset your password';
+        $email->content = "
+          <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=\"100%\"
+           style='width:100.0%;border-collapse:collapse;mso-yfti-tbllook:1184;
+           mso-padding-alt:0cm 0cm 0cm 0cm'>
+           <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+            <td valign=top style='padding:15.0pt 0cm 15.0pt 0cm'>
+            <div align=center>
+            <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+             style='border-collapse:collapse;mso-yfti-tbllook:1184;mso-padding-alt:
+             0cm 0cm 0cm 0cm'>
+             <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+              <td width=600 style='width:450.0pt;padding:0cm 0cm 0cm 0cm'>
+              <div>
+              <div align=center>
+              <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+               width=\"100%\" style='width:100.0%;border-collapse:collapse;mso-yfti-tbllook:
+               1184;mso-padding-alt:0cm 0cm 0cm 0cm'>
+               <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+                <td valign=top style='padding:0cm 0cm 15.0pt 0cm'>
+                <div align=center>
+                <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+                 style='border-collapse:collapse;mso-yfti-tbllook:1184;mso-padding-alt:
+                 0cm 0cm 0cm 0cm'>
+                 <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:
+                  yes'>
+                  <td width=600 valign=top style='width:450.0pt;padding:0cm 0cm 0cm 0cm'>
+                  <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+                   width=\"100%\" style='width:100.0%;border-collapse:collapse;
+                   mso-yfti-tbllook:1184;mso-padding-alt:0cm 0cm 0cm 0cm'>
+                   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:
+                    yes'>
+                    <td style='padding:0cm 0cm 0cm 0cm'>
+                    <div align=center>
+                    <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+                     style='border-collapse:collapse;mso-yfti-tbllook:1184;mso-padding-alt:
+                     0cm 0cm 0cm 0cm'>
+                     <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:
+                      yes'>
+                      <td width=152 style='width:114.0pt;padding:0cm 0cm 0cm 0cm'>
+                      <p class=MsoNormal align=center style='text-align:center'><span
+                      style='mso-fareast-font-family:\"Times New Roman\"'><img width=152
+                      height=32 id=\"_x0000_i1025\"
+                      src=\"https://staticmedia.livenationinternational.com/felix/images/logos/it_logo.png\"
+                      style='border-radius:0;outline:0;border-bottom-style:none;
+                      border-left-style:none;border-right-style:none;border-top-style:
+                      none;display:block;font-size:13px;height:32px;text-align:center;
+                      text-decoration:none;width:100%'><o:p></o:p></span></p>
+                      </td>
+                     </tr>
+                    </table>
+                    </div>
+                    </td>
+                   </tr>
+                  </table>
+                  </td>
+                 </tr>
+                </table>
+                </div>
+                </td>
+               </tr>
+              </table>
+              </div>
+              </div>
+              </td>
+             </tr>
+             <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
+              <td width=600 style='width:450.0pt;padding:0cm 0cm 0cm 0cm'>
+              <div align=center>
+              <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+               width=\"100%\" style='width:100.0%;border-collapse:collapse;mso-yfti-tbllook:
+               1184;mso-padding-alt:0cm 0cm 0cm 0cm' role=presentation>
+               <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+                <td valign=top style='padding:0cm 0cm 0cm 0cm'>
+                <div align=center>
+                <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+                 style='border-collapse:collapse;mso-yfti-tbllook:1184;mso-padding-alt:
+                 0cm 0cm 0cm 0cm' role=presentation>
+                 <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:
+                  yes'>
+                  <td width=600 valign=top style='width:450.0pt;padding:0cm 0cm 0cm 0cm'>
+                  <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+                   width=\"100%\" style='width:100.0%;border-collapse:collapse;
+                   mso-yfti-tbllook:1184;mso-padding-alt:0cm 0cm 0cm 0cm'
+                   role=presentation>
+                   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+                    <td style='padding:7.5pt 0cm 7.5pt 0cm'>
+                    <h3 align=center style='margin:0cm;text-align:center;line-height:
+                    24.0pt;mso-line-height-rule:exactly'><span style='font-size:21.0pt;
+                    font-family:Montserrat;mso-fareast-font-family:\"Times New Roman\";
+                    color:black'>Hi {user_name}<o:p></o:p></span></h3>
+                    </td>
+                   </tr>
+                   <tr style='mso-yfti-irow:1'>
+                    <td style='padding:7.5pt 0cm 7.5pt 0cm'>
+                    <p style='margin:0cm;line-height:19.5pt;mso-line-height-rule:exactly'><span
+                    style='font-size:12.0pt;font-family:Montserrat;color:black'> to change your password on www.livenation.com, click on the link below.<o:p></o:p></span></p>
+                    </td>
+                   </tr>
+                   <tr style='mso-yfti-irow:2'>
+                    <td style='padding:7.5pt 0cm 7.5pt 0cm'>
+                    <p class=MsoNormal style='line-height:19.5pt;mso-line-height-rule:
+                    exactly'><span style='font-size:12.0pt;font-family:Montserrat;
+                    mso-fareast-font-family:\"Times New Roman\";color:black'><a
+                    href=\"https://www.livenation.com/myln/resetpassword?mid=17cb06b7-6126-4be8-a7e5-351d1e9c8373&amp;auth=aba703yd-7f7c-479e-9305-b1fd5dcd50d1\"
+                    style='cursor:pointer;pointer-events:auto'><i><span
+                    style='color:#E21937;text-decoration:none;text-underline:none'>RESET PASSWORD</span></i></a><o:p></o:p></span></p>
+                    </td>
+                   </tr>
+                   <tr style='mso-yfti-irow:3'>
+                    <td style='padding:7.5pt 0cm 7.5pt 0cm'>
+                    <p style='margin:0cm;line-height:19.5pt;mso-line-height-rule:exactly'><span
+                    style='font-size:12.0pt;font-family:Montserrat;color:black'> Remember, your access data allows you to login in every LiveNation website of the world!
+                    <o:p></o:p></span></p>
+                    </td>
+                   </tr>
+                   <tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes'>
+                    <td style='padding:7.5pt 0cm 7.5pt 0cm'>
+                    <p style='margin:0cm;line-height:19.5pt;mso-line-height-rule:exactly'><span
+                    style='font-size:12.0pt;font-family:Montserrat;color:black'>See you in the next show,<o:p></o:p></span></p>
+                    <p style='margin:0cm;line-height:19.5pt;mso-line-height-rule:exactly'><span
+                    style='font-size:12.0pt;font-family:Montserrat;color:black'>the Live Nation team<o:p></o:p></span></p>
+                    </td>
+                   </tr>
+                  </table>
+                  </td>
+                 </tr>
+                </table>
+                </div>
+                </td>
+               </tr>
+              </table>
+              </div>
+              </td>
+             </tr>
+            </table>
+            </div>
+            </td>
+           </tr>
+          </table>";
+        $email->date = Carbon::today()->subDays(mt_rand(0, 365))->toDateTimeString();
+        $email->type = 'inbox';
+        $email->warning_explanation_1 = get_explanation("basic", "https://www.livenation.com/myln/resetpassword?mid=17cb06b7-6126-4be8-a7e5-351d1e9c8373&amp;auth=aba703yd-7f7c-479e-9305-b1fd5dcd50d1");
+        $email->warning_explanation_2 = get_explanation("link_mismatch");
+        $email->warning_type = 'popup_email';
+        $email->save();
+    */
+
+
+        // 3 - Bad Phishing email
+        /*
+        $email = new Email();
+        $email->from_name = "TRENITALIA";
+        $email->from_email = "342urysj39Ije@mymail.cd.com";
+        $email->subject = "Customer, €10 for you. Use them now!";
+        $email->preview_text = 'CONGRATULATIONS!!!! We offer you a discount vaucher worth 10 €';
+        $email->content = "<div><p class=\"p1\">CONGRATULATIONS!!!!<br/><br/>For you, here is a discount voucher worth 10 €. To get the discount voucher click on the button and insert your personal data.</p>
+        <p class=\"p2\" style=\"text-align: center;\"><br/>
+        <table class=\"tooltip\" data=\"link_trenitalia\" data-tool=\"classico\" >
+            <tbody>
+               <tr>
+                  <td>
+                    <div style=\"margin-left: auto; margin-right: auto; font-weight: bold; border-radius: 5px; background-color: #c41329; color: #ffffff; font-size: 14px; display: inline-block; text-align: center;\" align=\"center\">
+                        <a class='phishing_btn' href=\"#\"> Activate the discount cupon </a>
+                    </div>
+                    <span id=\"tooltip_link\" class=\"tooltiptext\">
+                    Link goes to: <a href=\"#\" \"><span class=\"s2\">http://scam-you_.com.br/21322/details.php?id=98324hfduyu23vuyfeoIUhriunN$</span></a>
+                    </span>
+                  </td>
+               </tr>
+            </tbody>
+        </table>
+        </p>
+        <p class=\"p2\" style=\"text-align: center;\"> </p>
+        <p class=\"p1\">The discount vaucher can be activated until 31/09/2023. Activate it and use it immidiately on your next purchase.</p>
+        </div>";
+        $email->date = Carbon::today()->subDays(mt_rand(0, 365))->toDateTimeString();
+        $email->type = 'inbox';
+        $email->warning_type = 'tooltip';
+        $email->save();
+        */
