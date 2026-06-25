@@ -62,7 +62,7 @@ class TrainingController extends Controller
                     'generated' => false
                 ]);
                 ProcessTraining::dispatch($training->id, $user);
-            } else {  // otherwise, take the non-personalized one
+            } else {  // otherwise, take the pre-defined non-personalized one
                 $training = Training::create([
                     'user_id' => $user->id,
                     'generated' => true

@@ -21,6 +21,14 @@ class ProcessTraining implements ShouldQueue
 
     public function __construct($trainingId, $user)
     {
+        /*
+        Condition names used in the paper:
+        - Baseline (training_personalization == "no")
+        - Direct Profile (training_personalization == "yes")
+        - Few-Shot (training_personalization == "few_shot")
+        - Table-Based (training_personalization == "table")
+        - Guideline-Based (training_personalization == "primed")
+        */
         $this->trainingId = $trainingId;
         $this->training_length = $user->training_length;
         $this->training_personalization = $user->training_personalization;
@@ -41,7 +49,7 @@ class ProcessTraining implements ShouldQueue
 
         // OpenAI API Config
         $apiKey = env('OPENAI_API_KEY');
-        $model = 'o3-mini';
+        $model = 'o3-mini';  // IF CHANGING THE MODEL, THE NON-CUSTOMIZED TRAINING SHOULD BE UPDATED (setNonCustomizedVersion@app/Models/Training.php)
         $reasoning_effort = 'medium';
         $temperature = 0.00001;
 
