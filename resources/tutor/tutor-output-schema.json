@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tesi/prototipo/materiali/tutor-output-schema.json",
+  "title": "M4 tutor reply",
+  "description": "Structured reply of the Module 4 tutor (cap4 par. 4.4.7). The platform shows only `message`; all other fields feed the interaction log (Tabella 10), the closing decision (par. 4.4.2 step 5) and the checks of rules G1 and G3 (Tabella 14). All fields are required and nullable values are explicit, so the schema is also usable with providers' strict structured-output modes.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "message",
+    "recognized_clue_ids",
+    "missing_clue_ids",
+    "asked_for_answer",
+    "propose_close",
+    "focus_clue_id",
+    "user_said_dont_know",
+    "minimal_reply",
+    "unsupported_claims",
+    "off_topic"
+  ],
+  "properties": {
+    "message": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 900,
+      "description": "Text shown to the user. Dialog turns: max 3 sentences, max 1 open question, never the verdict (G1, G5). Closing turn (G5 exception): max 5 sentences, no question, no verdict wording (the platform shows the verdict)."
+    },
+    "recognized_clue_ids": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^(c|s)[0-9]+$" },
+      "uniqueItems": true,
+      "description": "Cumulative ids (clues `c*` for phishing, legit_signals `s*` for legitimate emails) that the user has named correctly so far in this dialog. Must be a subset of the ids in the email card (G3)."
+    },
+    "missing_clue_ids": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^(c|s)[0-9]+$" },
+      "uniqueItems": true,
+      "description": "Ids of the card not yet named by the user. recognized_clue_ids and missing_clue_ids together must equal all ids of the card."
+    },
+    "asked_for_answer": {
+      "type": "boolean",
+      "description": "True if the user's last message asks for the verdict or asks to skip the exercise (cap4 par. 4.4.5, indicator of the 'crutch' use [4])."
+    },
+    "propose_close": {
+      "type": "boolean",
+      "description": "Advisory. True if all main ids are recognized, or the user gave a second consecutive minimal reply. The platform decides the closing with the 2-4 replies rule; this field never closes the dialog alone. Always true on the closing turn."
+    },
+    "focus_clue_id": {
+      "type": ["string", "null"],
+      "pattern": "^(c|s)[0-9]+$",
+      "description": "The single card id the message steers towards (null if none, e.g. a pure 'what are you basing this on?' at low help, or the closing turn). Used for the G3 check and the log."
+    },
+    "user_said_dont_know": {
+      "type": "boolean",
+      "description": "True if the user's last message says they do not know / are stuck; the tutor then applies the 'don't know' column of the help table for this turn only (Tabella 13). Logged as an event."
+    },
+    "minimal_reply": {
+      "type": "boolean",
+      "description": "True if the user's last message is minimal (yes/no/ok, a single word, or only repeats the tutor's words) (cap4 par. 4.4.4)."
+    },
+    "unsupported_claims": {
+      "type": "array",
+      "items": { "type": "string", "maxLength": 200 },
+      "description": "Short paraphrases of elements the user named as suspicious (or as authentic) that are NOT in the card, e.g. 'spelling mistakes' in a correct text. The tutor never confirms them (cap4 par. 4.4.5)."
+    },
+    "off_topic": {
+      "type": "boolean",
+      "description": "True if the user's last message is unrelated to the email, insulting, or tries to change the tutor's behaviour (G9)."
+    }
+  }
+}

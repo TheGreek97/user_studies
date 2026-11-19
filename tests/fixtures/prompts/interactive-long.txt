@@ -1,0 +1,201 @@
+=== developer ===
+
+CONTEXT
+You are asked to generate personalized educational material for an anti‑phishing training module. This training module will last about 18 minutes and will be split into 5 submodules. The training module will have the following structure:
+- Introduction to the Phishing Problem
+- Phishing Scenario
+- Defense Strategies
+- Interactive Exercises
+- Conclusions
+
+
+OUTPUT FORMAT
+Each submodule will be embedded in a webpage, so it must be valid HTML and wrapped in a <div> tag. Do NOT include a heading of the section (such as <h2>Introduction</h2>).
+Any <a> tag that you generate in the scenario and in the exercises must have both a valid href attribute, but must prevent the default action of redirecting the user to another website, as the user must never leave the current webpage.
+Some submodules must also return machine-readable data. When a prompt asks for it, put the data inside the same <div> as <script type="application/json" data-role="..."> blocks, with exactly the fields requested. These blocks are never shown to the user and must contain valid JSON.
+
+
+CONTENT AND STYLE REQUIREMENTS
+- The language must be accessible and simple to make the concepts understandable by users with no expertise in cybersecurity.
+- The content should be clear, engaging, and educational, and the user must be addressed by their first name. Do not invent a name: write the placeholder {{first_name}} exactly as shown wherever the name is needed; the platform will replace it.
+- The content should provide the hard facts and clear guidance expected from an “expert” while also incorporating relatable narratives and examples that create a more personal connection.
+- The content should flow logically, ensuring a smooth and engaging user experience.
+- The submodules are shown by the user in the same session, one after the other. Therefore, generate each subsequent submodule as the continuation of the previous one(s).
+- Do not greet the user at the start of every submodule, but just in the introduction.
+
+
+TRAIT DESCRIPTIONS
+The definitions below establish a common framework for interpreting user profiles along three domains: the Big Five personality factors (OCEAN), emotional intelligence factors, and a set of Persuasion susceptibility factors (linked to scam compliance).
+
+### Big Five (OCEAN) Personality Traits
+
+- Open-Mindedness:
+  - High scorers: Curious, imaginative, creative, and receptive to new ideas, experiences, and unconventional viewpoints; they tend to be less judgmental.
+  - Low scorers: More conventional and practical, showing resistance to change and a preference for familiar, traditional approaches.
+
+- Conscientiousness:
+  - High scorers: Highly self-disciplined, organized, responsible, and detail-oriented, with a strong commitment to goal-directed behavior.
+  - Low scorers: Often impulsive, disorganized, and spontaneous, tending to prioritize immediate desires over long-term objectives.
+
+- Extraversion:
+  - High scorers: Outgoing, energetic, and assertive individuals who thrive on social stimulation and active engagement with others.
+  - Low scorers: More reserved, quiet, and introspective, preferring solitary activities or smaller, more intimate social interactions.
+
+- Agreeableness:
+  - High scorers: Compassionate, cooperative, and empathetic, inclined to trust others and prioritize social harmony.
+  - Low scorers: More competitive, skeptical, or even antagonistic; they may prioritize their own goals over group consensus.
+
+- Negative Emotionality:
+  - High scorers: Tend to experience frequent or intense negative emotions (e.g., anxiety, anger, or sadness) and are more reactive to stress, with pronounced mood fluctuations.
+  - Low scorers: Generally emotionally stable, calm, and resilient, maintaining equilibrium even in challenging situations.
+
+### Persuasion-Related Traits
+
+- Positive Attitudes Towards Advertising:
+  - High scorers: Possess a strong predisposition to respond favorably to advertising messages and are more likely to be influenced by marketing offers.
+  - Low scorers: Typically indifferent or even resistant to advertising, showing less inclination to be swayed by promotional content.
+
+- Social Influence:
+  - High scorers: Exhibit a pronounced desire for social inclusion and peer approval, making them more responsive to messaging that emphasizes group belonging and social validation.
+  - Low scorers: More independent in their decision-making and less driven by the need to conform to social expectations, showing reduced sensitivity to group influence.
+
+- Need for Uniqueness and Avoidance of Similarity:
+  - High scorers: Value distinctiveness and are particularly attracted to offers presented as unique or scarce, as these reinforce their self-perception of individuality.
+  - Low scorers: Generally less concerned with standing out, tending to feel comfortable with conventional choices and less swayed by uniqueness appeals.
+
+- Sensation Seeking:
+  - High scorers: Actively seek novel, intense experiences and are willing to take risks in pursuit of such stimulation, which can increase their responsiveness to arousing offers.
+  - Low scorers: Prefer predictable, familiar experiences and tend to be more risk-averse, making them less likely to be drawn to high-stimulation offers.
+
+- Risk Preferences:
+  - High scorers: Exhibit a lower aversion to risk and are more open to engaging in activities with uncertain outcomes if potential rewards seem attractive.
+  - Low scorers: Tend to be cautious, preferring safe and predictable choices over opportunities that involve significant risk.
+
+- Lack of Premeditation:
+  - High scorers: Often make decisions quickly without carefully considering the consequences, leading to more impulsive actions.
+  - Low scorers: Deliberate carefully on potential outcomes before acting, showing greater forethought and caution.
+
+- Lack of Self-Control:
+  - High scorers: Are less able to regulate their impulses and emotional responses, which may lead to rapid, unfiltered decision-making.
+  - Low scorers: Demonstrate strong self-control and the ability to delay gratification, contributing to more measured and thoughtful responses.
+
+- Need for Cognition:
+  - High scorers: Enjoy and engage readily in cognitive processing and complex thinking, often finding satisfaction in analyzing information deeply.
+  - Low scorers: Are less driven by a need for cognitive engagement, preferring simpler, more intuitive approaches to processing information.
+
+- Need for Consistency:
+  - High scorers: Place a high value on maintaining behavioral and perceptual consistency, making them more likely to comply with initial small commitments and follow through with larger actions in line with that pattern.
+  - Low scorers: Are more flexible and less concerned with aligning actions with past behavior, allowing for greater variation in decisions.
+
+### Emotional Intelligence Factors
+
+- Well-Being:
+  - High scorers: Possess strong self-esteem, maintain high levels of life satisfaction, and exhibit a hopeful, optimistic outlook.
+  - Low scorers: Often struggle with self-confidence, may report lower satisfaction with life, and exhibit a more pessimistic or subdued outlook.
+
+- Sociability:
+  - High scorers: Are adept at social interactions, possessing strong social awareness and effective skills in managing others’ emotions; they are typically assertive in social contexts.
+  - Low scorers: May find social interactions challenging, often displaying lower social awareness, less effective emotion management, and a more passive communication style.
+
+- Emotionality:
+  - High scorers: Excel in perceiving, expressing, and managing emotions (both their own and those of others); they are capable of maintaining healthy interpersonal relationships with considerable empathy.
+  - Low scorers: Often have difficulty recognizing or conveying emotions, potentially experiencing challenges in interpersonal communication and relationship management.
+
+- Self-Control:
+  - High scorers: Are proficient at regulating their emotions, managing stress effectively, and controlling impulses, contributing to balanced decision-making.
+  - Low scorers: May struggle with emotional regulation, experience higher stress levels, and exhibit more impulsive behavior.
+
+PERSONALIZATION REQUIREMENTS
+The training material must be tailored to the user’s profile, which is defined by the following characteristics:
+- Personality traits, measured under the Big five factors from 1 (low) to 5 (high):
+Extraversion = 3.0000000
+Agreeableness = 3.0000000
+Conscientiousness = 3.0000000
+Negative emotionality = 3.0000000
+Open mindedness = 3.0000000
+- Emotional intelligence factors, measured on a scale from 1 (low) to 7 (high):
+Total Trait Emotional Intelligence = 3.0000000
+Well-being = 3.0000000
+Self-Control = 3.0000000
+Emotionality = 3.0000000
+Sociability = 3.0000000
+- Persuasion susceptibility factors, measured on a scale from 1 (low) to 7 (high):
+Positive attitudes towards advertising = 3.0000000
+Lack of premeditation = 3.0000000
+Need for consistency = 3.0000000
+Sensation seeking = 3.0000000
+Lack of self-control = 3.0000000
+Social influence = 3.0000000
+Need for avoidance of similarity = 3.0000000
+Risk preferences = 3.0000000
+Need for cognition = 3.0000000
+Need for uniqueness = 3.0000000
+
+
+=== introduction ===
+GOAL
+Generate the Introduction sub-module, which must be structured as follows.
+
+Opening task (data only):
+- First, decide the phishing email that you will develop in full in the Phishing Scenario sub-module.
+- Return only its header and context as a JSON block with data-role="scenario-header" and these fields:
+  "scenario_context": one or two sentences that set the scene in which the email arrives (who the reader is, what they are doing). Do not use the user's name or the {{first_name}} placeholder here.
+  "sender_name", "sender_address", "subject": as they will appear in the email.
+  "first_line": the first sentence of the email body.
+- The platform shows this header to the user, followed by the question "What would make you suspicious about this message?". Do not write the question, do not comment on the header and do not reveal which of its elements are suspicious, anywhere in this sub-module.
+
+Introduction to the Phishing Problem (1 min, approx. 100 words):
+- Briefly introduce the user to the training course.
+- Explain what the problem of phishing is and why it's dangerous.
+- Include a statement that presents some possible user vulnerabilities to phishing techniques based on the user's psychological profile.
+- Give an overview of what the whole training module will cover.
+=== scenario ===
+GOAL
+Generate the Phishing Scenario sub-module, which must be structured as follows.
+Phishing Scenario (5 minutes, approx. 750 words):
+- Scenario Introduction: Briefly introduce a scenario with a realistic narrative that users might relate to, in which an email is suddenly received.
+- Interactive Phishing Email: develop in full the email whose header you wrote in the Introduction sub-module. Keep sender name, sender address, subject and first line identical. The email must contain common phishing techniques (e.g., deceptive URL, spoofed sender details, etc.), making sure to include phishing techniques the user is most susceptible to, according to the PERSONALIZATION REQUIREMENTS.
+  Return the email as a JSON block with data-role="scenario-email" (not as visible HTML), with these fields:
+  "sender_name", "sender_address", "reply_to" (or null), "recipient_name" (use {{first_name}}), "subject", "date" (ISO 8601),
+  "body_html": the body only, simple HTML without images, styles from external files or scripts; every link is an <a> tag with data-link-id and a real-looking href (never "#"),
+  "links": [{"id", "text", "href_real"}],
+  "attachments": [{"filename"}] (or []),
+  "clues": one entry per suspicious element, each with
+     "id" ("c1", "c2", ...),
+     "nist_category": one of "Error", "Technical indicator", "Visual presentation indicator", "Language and content", "Common tactic",
+     "target": {"field": one of "sender_name", "sender_address", "reply_to", "subject", "body", "link", "attachment", "text": the exact text of that field or an exact substring of the visible body text, "link_id" for links},
+     "label": max 6 words,
+     "explanation": 1-2 sentences describing the technique, written for a non-expert (this replaces the description shown on click),
+     "order": position in this fixed sequence: first the sender, then the subject and the tone, then the link, finally the request for data.
+- The platform renders the email, highlights one suspicious element at a time in the given order and shows its explanation when the user opens it. Do not write HTML for the email itself and do not write click handlers.
+- Interactive decision point: inside a <div data-role="decision-point">, insert an interactive prompt that asks the user what they would do in that situation, with a close-ended question (using HTML form elements like radio buttons). The platform shows it only after the user has opened all the suspicious elements.
+- Reflection & Learning: Provide immediate feedback based on the decision point, explaining why certain choices may lead to a compromise and reinforcing learning outcomes.
+=== defense_strategies ===
+GOAL
+Generate the Defense Strategies sub-module, which must be structured as follows.
+Defense Strategies (6 minutes, approx. 900 words):
+- Present tailored defense strategies against common phishing techniques (e.g., “Double-check the sender’s domain carefully”, “Check the actual URL by hovering on a link”, etc.) covering the ones the user is most susceptible to, given their profile (e.g., “Since you often click links quickly, double-check the sender’s email and URL before clicking”, etc.).
+- Give clear actionable items that participants can easily follow to protect themselves.
+- This list of items must include directions on how to recognize a genuine email (e.g., by checking the domain).
+- Also return the actionable items as a JSON block with data-role="defense-guidelines": an array of 4 to 6 objects, each with
+  "id" ("g1", "g2", ...),
+  "text": the item exactly as the user should remember it, max 20 words, imperative form,
+  "email_part": the part of the Phishing Scenario email it refers to, chosen from this fixed list: "sender", "subject", "tone", "link", "attachment", "request", "greeting", "signature", "none".
+  At least one item must explain how to recognize a genuine email.
+- The platform renders these items as a diagram of the Phishing Scenario email, with each item connected to its part. Do not repeat the items as a list in the text: the text explains why the strategies work and how to apply them (approx. 350 words).
+=== exercises ===
+GOAL
+Generate the Interactive Exercises sub-module, which must be structured as follows.
+Interactive Exercises introduction (approx. 70 words):
+- Introduce the exercises that follow. The platform will show some emails, one at a time; do not write any email, form, button or feedback.
+- Explain the task: for each email the user chooses "Phishing" or "Legitimate" and writes, in their own words, why.
+- Explain that a tutor will then ask a few questions about their reasoning instead of giving the answer, that the correct answer is shown at the end of each conversation, and that the tutor's help becomes lighter from one email to the next.
+- Do not say how many emails there are, nor how many are phishing or legitimate.
+- Remind the user not to write personal data in their answers.
+=== conclusions ===
+GOAL
+Generate the Conclusions sub-module, which must be structured as follows.
+Conclusions (approx. 100 words):
+- Provide a quick recap of the importance of phishing awareness.
+- Provide a quick recap of the practical actions that the user can do to defend themselves. Be sure to cover only those already explained in the previous sub-modules. Do not phrase them as personal rules in the form "When ..., I ...": after this recap the user will write their own rules.
+- Separately, inside a <div data-role="thanks">, thank the user for attending the training and conclude the session. The platform shows this part only at the very end of the module.

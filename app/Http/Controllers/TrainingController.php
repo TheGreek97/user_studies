@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Livewire\ScenarioClues;
+use App\Http\Livewire\ScenarioQuestion;
 use App\Jobs\ProcessTraining;
 use App\Models\Training;
+use App\Models\TrainingResponse;
+use App\Models\TutorSession;
 use App\Models\User;
+use App\Services\Tutor\PersonalRules;
 use DOMDocument;
 use DOMXPath;
 use Illuminate\Http\Request;
@@ -26,7 +31,7 @@ class TrainingController extends Controller
         }
 
         if (! $training->generated) {
-            return view("training.status_not_ready");
+            return view("training.status_not_ready", ["training" => $training]);
         }
         $training_length = $user->training_length;
         if (env("DISABLE_TIMERS") == "true") {
@@ -48,7 +53,48 @@ class TrainingController extends Controller
         }
 
         $training = $this->addCSS($training);
-        return view('training.training_show', ["training" => $training, "wait_times" => $wait_times]);
+        return view('training.training_show', [
+            "training" => $training,
+            "wait_times" => $wait_times,
+            "initial_step" => $this->initialStep($training),
+        ]);
+    }
+
+
+    /**
+     * Step the training page opens at. Paper conditions always start at step 0. Interactive condition: a reload
+     * reopens the first gated module not completed yet, as far as the stored state proves the user got:
+     * - Module 1 answer saved -> Module 2 (step 2); Module 2 completed (decision saved) -> Module 3 (step 3), the
+     *   ungated module the user necessarily reached, not beyond;
+     * - Module 4 tutor chat started and not finished -> Module 4 (step 4). The tutor session row is created (with an
+     *   empty dialog state) when the chat mounts, on every page view, so "started" means at least one turn in the
+     *   dialog history or an email already closed (position > 1);
+     * - Module 4 completed -> the conclusions (step 5: personal rules to write, revise, or thanks).
+     * Otherwise the description (step 0).
+     */
+    private function initialStep(Training $training): int
+    {
+        if (! $training->isInteractive()) {
+            return 0;
+        }
+        $session = TutorSession::query()
+            ->where('user_id', $training->user_id)
+            ->where('training_id', $training->id)
+            ->first();
+        $started = $session !== null && ($session->position > 1 || ! empty($session->state['history'] ?? []));
+        if ($started) {
+            return $session->isCompleted() ? 5 : 4;
+        }
+        if (ScenarioClues::completedFor($training)) {
+            return 3;
+        }
+        $m1Answered = TrainingResponse::query()
+            ->where('user_id', $training->user_id)
+            ->where('module', ScenarioQuestion::MODULE)
+            ->where('item_key', ScenarioQuestion::ITEM)
+            ->exists();
+
+        return $m1Answered ? 2 : 0;
     }
 
 
@@ -56,7 +102,8 @@ class TrainingController extends Controller
     {
         $user = Auth::user();
         if ($user->training == null) {
-            if ($user->training_personalization !== "no") {  // If training is personalized, generate it from scratch
+            // Personalized conditions, including the thesis condition "interactive", are generated from scratch
+            if ($user->training_personalization !== "no") {
                 $training = Training::create([
                     'user_id' => $user->id,
                     'generated' => false
@@ -77,17 +124,79 @@ class TrainingController extends Controller
     }
 
 
+    /**
+     * JSON status of the current user's training generation, polled by the waiting page.
+     */
+    public function generationStatus()
+    {
+        $training = Auth::user()->training;
+        if ($training === null) {
+            return response()->json(['generated' => false, 'failed' => false], 404);
+        }
+
+        return response()->json([
+            'generated' => (bool) $training->generated,
+            'failed' => $training->generation_failed_at !== null,
+        ]);
+    }
+
+
+    /**
+     * Re-dispatches the generation of the current user's training after a failure.
+     * Only the authenticated user's own training is considered, and only if it failed.
+     */
+    public function retryGeneration(Request $request)
+    {
+        $user = Auth::user();
+        $training = $user->training;
+        if ($training === null || $training->generated || $training->generation_failed_at === null) {
+            abort(409, 'Training generation is not in a failed state.');
+        }
+
+        // Atomic compare-and-set: two concurrent retries must not dispatch two paid generation jobs.
+        $claimed = Training::whereKey($training->id)
+            ->where('generated', false)
+            ->whereNotNull('generation_failed_at')
+            ->update(['generation_failed_at' => null, 'generation_error' => null]);
+        if ($claimed !== 1) {
+            abort(409, 'Training generation is not in a failed state.');
+        }
+        ProcessTraining::dispatch($training->id, $user);
+
+        if ($request->expectsJson()) {
+            return response()->json(['generated' => false, 'failed' => false], 202);
+        }
+        return redirect()->route('training.show');
+    }
+
+
     public function completeTraining(Request $request)
     {
         $user = Auth::user();
-        $timeSpent = $request->query('time', 0); // Get time from URL
+        // Seconds spent, from the URL; integer column, so anything non-numeric becomes 0 instead of a SQL error.
+        $timeSpent = max(0, (int) $request->query('time', 0));
+
+        $user_training = $user->training;
+        if ($user_training === null) {
+            return redirect()->route('training.show');
+        }
+        // Interactive condition: Module 4 is complete only when the tutor says so. The "Next" gate in
+        // training_show is client-side (Alpine `tutorDone`), so it is enforced here too.
+        if ($user_training->isInteractive() && ! $this->tutorCompleted($user_training)) {
+            return redirect()->route('training.show')
+                ->with('error', 'Please complete the Module 4 exercises with the tutor before finishing the training.');
+        }
+        // Interactive condition, Module 5: the revised personal rules must be saved (rules_v2). The "Proceed" gate
+        // in training_show is client-side (Alpine `rulesDone`), so it is enforced here too.
+        if ($user_training->isInteractive() && ! PersonalRules::completed($user_training)) {
+            return redirect()->route('training.show')
+                ->with('error', 'Please write and save your personal rules in the Conclusion before finishing the training.');
+        }
 
         // Save time spent in DB or perform necessary actions
-        $user_training = $user->training;
-        $user_training->update([
-            'training_completed_at' => now(),
-            'time_taken' => $timeSpent
-        ]);
+        // The completion time is users.training_completed (trainings.completed_at was dropped upstream in
+        // 2025_03_28_133204); the training row keeps only the time spent.
+        $user_training->update(['time_taken' => $timeSpent]);
 
         $user->training_completed = now();
         $user->save();
@@ -98,7 +207,19 @@ class TrainingController extends Controller
     }
 
 
-    private function addCSS($tranining) {
+    /** Whether the user's Module 4 tutor conversation for this training is finished (TutorConversation). */
+    private function tutorCompleted(Training $training): bool
+    {
+        return TutorSession::query()
+            ->where('user_id', $training->user_id)
+            ->where('training_id', $training->id)
+            ->whereNotNull('completed_at')
+            ->exists();
+    }
+
+
+    // Public static: the interactive Module 2 component (ScenarioClues) styles the scenario HTML the same way.
+    public static function addCSS($tranining) {
         foreach (["introduction", "scenario", "defense_strategies", "conclusions"] as $section) {
             $html = $tranining->$section;
             $dom = new DOMDocument();

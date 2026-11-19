@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tesi/prototipo/materiali/rules-comment-output-schema.json",
+  "title": "M5 comment on the personal rules",
+  "description": "Structured reply of prompt 5b (cap4 4.3.5). The platform shows only `message`; the other fields feed the log (Tabella 10) and the G3 check against the ids of {{missed_clues}}. All fields required, nullable values explicit (strict structured-output modes).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["message", "covered_clue_ids", "focus_clue_id", "generic_rule"],
+  "properties": {
+    "message": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 900,
+      "description": "Comment shown to the user: max 3 sentences, max 1 open question, never a ready-made rule."
+    },
+    "covered_clue_ids": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 100 },
+      "uniqueItems": true,
+      "description": "Ids from block 3 covered by at least one of the user's rules."
+    },
+    "focus_clue_id": {
+      "type": ["string", "null"],
+      "maxLength": 100,
+      "description": "Id from block 3 of the uncovered cue the question is about, or null."
+    },
+    "generic_rule": {
+      "type": "boolean",
+      "description": "True if at least one rule only repeats a module 3 guideline without a concrete situation."
+    }
+  }
+}

@@ -9,3 +9,6 @@
 /.github export-ignore
 CHANGELOG.md export-ignore
 .styleci.yml export-ignore
+
+# Prompt snapshots must stay byte-identical (the primed guidelines contain CRLF)
+/tests/fixtures/prompts/*.txt -text

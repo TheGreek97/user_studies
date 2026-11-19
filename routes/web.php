@@ -49,6 +49,19 @@ Route::get('/expelled', [StudyController::class, 'expelUser'])->name('expelUser'
 //Route::get('/create-training', [TrainingController::class, 'createTraining'])->name('training.create');
 
 
+// Training generation status (polled by the waiting page) and retry after a failed generation.
+// Plain 'auth' (no StudyAuth, which would create a new participant, and no RedirectToTheRightPhase,
+// which redirects every route but training.show during the training phase).
+Route::middleware([
+    config('jetstream.auth_session'),
+    'auth',
+])->group(function () {
+    Route::get('/training/status', [TrainingController::class, 'generationStatus'])->name('training.status');
+    Route::post('/training/retry', [TrainingController::class, 'retryGeneration'])
+        ->middleware('throttle:5,1')
+        ->name('training.retry');
+});
+
 Route::middleware([
     config('jetstream.auth_session'),
     StudyAuth::class

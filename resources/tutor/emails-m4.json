@@ -1,0 +1,1250 @@
+{
+  "_meta": {
+    "description": "Exercise bank for Module 4 (cap4 par. 4.3.4, 4.2.2 item 3, 4.6). Server-side only: the solution card (fields listed in server_only_fields) must never reach the browser before the dialog is closed (cap4 par. 4.2.3).",
+    "language": "en",
+    "version": "0.1-draft",
+    "default_sequence": [
+      "m4-p1-icloud",
+      "m4-p2-airbnb",
+      "m4-p3-coworker"
+    ],
+    "legitimate_main": "m4-l1-airbnb",
+    "legitimate_position_rule": "Insert the legitimate email at a random position between 2 and 4 (cap4 par. 4.3.4).",
+    "spares": {
+      "m4-p2b-paypal": "alternative for slot P2",
+      "m4-l2-apple": "alternative for slot L"
+    },
+    "help_level_by_position": {
+      "1": "high",
+      "2": "medium",
+      "3": "low",
+      "4": "low"
+    },
+    "browser_safe_fields": [
+      "context",
+      "sender_name",
+      "sender_address",
+      "reply_to",
+      "recipient",
+      "subject",
+      "date",
+      "body_html",
+      "links[].id",
+      "links[].text",
+      "links[].href_real",
+      "attachments"
+    ],
+    "server_only_fields": [
+      "is_phishing",
+      "impersonates",
+      "service",
+      "spare",
+      "clues",
+      "legit_signals",
+      "suspicious_looking_features",
+      "difficulty",
+      "typical_errors",
+      "fallback_hints",
+      "closing_rule",
+      "static_feedback",
+      "links[].href_shown"
+    ],
+    "placeholders": {
+      "{{first_name}}": "Replaced by the platform at render time only; never sent to the LLM provider (cap4 par. 4.2.4)."
+    },
+    "target_fields": [
+      "sender_name",
+      "sender_address",
+      "reply_to",
+      "recipient",
+      "date",
+      "subject",
+      "body",
+      "link",
+      "attachment"
+    ],
+    "target_rule": "target.text is an exact substring of the field (for 'body': of the visible text of body_html, HTML entities decoded, <br> as newline; for 'link': the anchor text; for 'attachment': the filename).",
+    "nist_phish_scale_cues": {
+      "Error": [
+        "Spelling and grammar irregularities",
+        "Inconsistency"
+      ],
+      "Technical indicator": [
+        "Attachment type",
+        "Sender display name and email address",
+        "URL hyperlinking",
+        "Domain spoofing"
+      ],
+      "Visual presentation indicator": [
+        "No/minimal branding and logos",
+        "Logo imitation or out-of-date branding",
+        "Unprofessional looking design or formatting",
+        "Security indicators and icons"
+      ],
+      "Language and content": [
+        "Legal language/copyright info/disclaimers",
+        "Distracting detail",
+        "Requests for sensitive information",
+        "Sense of urgency",
+        "Threatening language",
+        "Generic greeting",
+        "Lack of signer details"
+      ],
+      "Common tactic": [
+        "Humanitarian appeals",
+        "Too good to be true offers",
+        "You're special",
+        "Limited time offer",
+        "Mimics a work or business process",
+        "Poses as friend, colleague, supervisor, authority figure"
+      ]
+    },
+    "difficulty_rule": "nist_distinct_cues = number of distinct NIST cue types annotated; bands as in [1, p. 9]: few 1-8, some 9-14, many 15+.",
+    "domains_note": "Phishing domains are realistic look-alikes (brand name plus extra words, brand as subdomain, company name with a different suffix) on common TLDs (.com, .net), so that the TLD alone never gives the answer away; the fictional company uses brightwave-logistics.com and the recipient a generic webmail address. Look-alike domains must be checked as not registered (or not active) before the study; links are never navigable. Legitimate emails use the services' real primary domains, to be re-verified before the study."
+  },
+  "emails": [
+    {
+      "id": "m4-p1-icloud",
+      "is_phishing": true,
+      "impersonates": "Apple (iCloud)",
+      "context": "You use an iPhone and back up your photos to iCloud.",
+      "sender_name": "iCloud Service Team",
+      "sender_address": "noreply@icloud-storage-alerts.com",
+      "reply_to": "billing-update@mailbox-secure.net",
+      "recipient": {
+        "name": "{{first_name}}",
+        "address": "you@gmail.com"
+      },
+      "subject": "URGENT: Your iCloud storage is full - photos will be deleted in 24 hours",
+      "date": "2026-04-07T08:41:00+02:00",
+      "body_html": "<div style='font-family:Arial,sans-serif;font-size:14px;color:#222;max-width:560px'><div style='font-size:22px;font-weight:bold;color:#1e6fd9;margin-bottom:14px'>I-Cloud Storage</div><p style='margin:0 0 12px'>Dear Customer,</p><p style='margin:0 0 12px'>Your iCloud storage is 100% full and your account have been flagged for suspension. All photos, videos and documents that are not backed up will be permanently deleted within 48 hours.</p><p style='margin:0 0 12px;color:#d00000;font-weight:bold;font-size:18px'>!!! FINAL WARNING !!!</p><p style='margin:0 0 12px'>As a loyal customer you can upgrade to 200 GB for only &euro;0.49 for the first year if you act today.</p><p style='margin:0 0 12px'>To keep your files, update your payment details and confirm your Apple ID password on our secure page:</p><p style='margin:0 0 12px'><a data-link-id='l1' href='http://apple-id.icloud-storage-alerts.com/renew?acc=4471' style='background:#1e6fd9;color:#fff;padding:10px 18px;text-decoration:none;border-radius:4px'>Keep My Photos</a></p><p style='margin:0 0 12px;font-size:12px;color:#2a7a2a'>&#128274; Verified Secure Payment</p><p style='margin:0 0 12px'>Regards,<br>Support</p><p style='margin:16px 0 0;font-size:11px;color:#888'>This message is confidential. Apple Inc. is not responsible for any lost data if the account is not updated. &copy; 2019 Apple Inc. All Rights Reserved.</p></div>",
+      "links": [
+        {
+          "id": "l1",
+          "text": "Keep My Photos",
+          "href_shown": null,
+          "href_real": "http://apple-id.icloud-storage-alerts.com/renew?acc=4471"
+        }
+      ],
+      "attachments": [],
+      "clues": [
+        {
+          "id": "c1",
+          "nist_category": "Technical indicator",
+          "nist_cue": "Sender display name and email address",
+          "main": true,
+          "target": {
+            "field": "sender_address",
+            "text": "noreply@icloud-storage-alerts.com"
+          },
+          "label": "Sender domain is not Apple's",
+          "explanation": "The display name says iCloud, but the address after the @ is icloud-storage-alerts.com, a domain that does not belong to Apple.",
+          "attacker_reason": "Anyone can type any display name; attackers rely on people reading the name and not the address."
+        },
+        {
+          "id": "c2",
+          "nist_category": "Technical indicator",
+          "nist_cue": "Sender display name and email address",
+          "main": false,
+          "target": {
+            "field": "reply_to",
+            "text": "billing-update@mailbox-secure.net"
+          },
+          "label": "Replies go to a different address",
+          "explanation": "Answering this email would send your reply to a third, unrelated domain, not to the sender and not to Apple.",
+          "attacker_reason": "A separate reply address lets the attacker receive answers on a mailbox they control."
+        },
+        {
+          "id": "c3",
+          "nist_category": "Technical indicator",
+          "nist_cue": "URL hyperlinking",
+          "main": true,
+          "target": {
+            "field": "link",
+            "text": "Keep My Photos",
+            "link_id": "l1"
+          },
+          "label": "Button hides the real address",
+          "explanation": "The button text does not show where it leads; hovering reveals http://apple-id.icloud-storage-alerts.com/renew.",
+          "attacker_reason": "A friendly button text hides a destination the user would not trust if they saw it."
+        },
+        {
+          "id": "c4",
+          "nist_category": "Technical indicator",
+          "nist_cue": "Domain spoofing",
+          "main": false,
+          "target": {
+            "field": "link",
+            "text": "Keep My Photos",
+            "link_id": "l1"
+          },
+          "label": "Apple's name used as a decoy in the link",
+          "explanation": "In apple-id.icloud-storage-alerts.com the real domain is the last part, icloud-storage-alerts.com; 'apple-id' at the start is only a label the attacker chose.",
+          "attacker_reason": "Putting a brand name at the start of the address makes a fake domain look official at a quick glance."
+        },
+        {
+          "id": "c5",
+          "nist_category": "Language and content",
+          "nist_cue": "Sense of urgency",
+          "main": false,
+          "target": {
+            "field": "subject",
+            "text": "photos will be deleted in 24 hours"
+          },
+          "label": "Deadline in the subject",
+          "explanation": "The subject sets a 24-hour deadline before you have even opened the email.",
+          "attacker_reason": "Time pressure pushes people to act before they check."
+        },
+        {
+          "id": "c6",
+          "nist_category": "Language and content",
+          "nist_cue": "Threatening language",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "will be permanently deleted"
+          },
+          "label": "Threat of losing your photos",
+          "explanation": "The email threatens the permanent loss of personal photos and documents.",
+          "attacker_reason": "Fear of losing something valuable lowers attention to details."
+        },
+        {
+          "id": "c7",
+          "nist_category": "Language and content",
+          "nist_cue": "Requests for sensitive information",
+          "main": true,
+          "target": {
+            "field": "body",
+            "text": "update your payment details and confirm your Apple ID password"
+          },
+          "label": "Asks for password and payment data",
+          "explanation": "The email asks for your account password and payment details through a link.",
+          "attacker_reason": "Credentials and card data are the attacker's goal; a real provider does not ask for your password by email."
+        },
+        {
+          "id": "c8",
+          "nist_category": "Language and content",
+          "nist_cue": "Generic greeting",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "Dear Customer,"
+          },
+          "label": "Generic greeting",
+          "explanation": "The message does not use your name, although your provider knows it.",
+          "attacker_reason": "Mass phishing is sent to many people at once, so it cannot address anyone by name."
+        },
+        {
+          "id": "c9",
+          "nist_category": "Error",
+          "nist_cue": "Spelling and grammar irregularities",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "your account have been flagged"
+          },
+          "label": "Grammar error",
+          "explanation": "'Your account have been' is a grammar mistake that a large company's templates would normally not contain.",
+          "attacker_reason": "Many phishing messages are written quickly or translated, and are not proofread."
+        },
+        {
+          "id": "c10",
+          "nist_category": "Error",
+          "nist_cue": "Inconsistency",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "within 48 hours"
+          },
+          "label": "Deadline does not match the subject",
+          "explanation": "The subject says 24 hours, the body says 48 hours.",
+          "attacker_reason": "Copied and edited templates often leave contradictory details."
+        },
+        {
+          "id": "c11",
+          "nist_category": "Common tactic",
+          "nist_cue": "Limited time offer",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "for only €0.49 for the first year if you act today"
+          },
+          "label": "Discount valid only today",
+          "explanation": "A very cheap upgrade that is only available if you act today.",
+          "attacker_reason": "A deal that expires soon adds a reward to the threat and discourages careful checks."
+        },
+        {
+          "id": "c12",
+          "nist_category": "Common tactic",
+          "nist_cue": "You're special",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "As a loyal customer"
+          },
+          "label": "Flattery",
+          "explanation": "The email singles you out as a 'loyal customer' to make the offer feel personal.",
+          "attacker_reason": "Feeling chosen makes people more willing to comply."
+        },
+        {
+          "id": "c13",
+          "nist_category": "Visual presentation indicator",
+          "nist_cue": "Logo imitation or out-of-date branding",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "I-Cloud Storage"
+          },
+          "label": "Wrong brand name style",
+          "explanation": "The header writes the brand as 'I-Cloud', which is not how the service writes its own name.",
+          "attacker_reason": "Imitated brand marks are often slightly wrong because the attacker recreates them by hand."
+        },
+        {
+          "id": "c14",
+          "nist_category": "Visual presentation indicator",
+          "nist_cue": "Unprofessional looking design or formatting",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "!!! FINAL WARNING !!!"
+          },
+          "label": "Alarmist formatting",
+          "explanation": "Large red capitals and repeated exclamation marks are unusual in service emails from large providers.",
+          "attacker_reason": "Shouting formatting is meant to alarm, not to inform."
+        },
+        {
+          "id": "c15",
+          "nist_category": "Visual presentation indicator",
+          "nist_cue": "Security indicators and icons",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "Verified Secure Payment"
+          },
+          "label": "Fake security badge",
+          "explanation": "A padlock and the words 'Verified Secure Payment' inside an email prove nothing; anyone can type them.",
+          "attacker_reason": "Security symbols create a false sense of safety."
+        },
+        {
+          "id": "c16",
+          "nist_category": "Language and content",
+          "nist_cue": "Legal language/copyright info/disclaimers",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "Apple Inc. is not responsible for any lost data"
+          },
+          "label": "Legal-sounding disclaimer",
+          "explanation": "The footer adds legal-sounding text and a copyright year (2019) that is out of date.",
+          "attacker_reason": "Legal language makes a message look official and shifts blame onto the reader."
+        },
+        {
+          "id": "c17",
+          "nist_category": "Language and content",
+          "nist_cue": "Lack of signer details",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "Regards,\nSupport"
+          },
+          "label": "No real signer or contact",
+          "explanation": "The email is signed only 'Support', with no team, address or way to contact the company.",
+          "attacker_reason": "Without contact details the reader cannot verify the message through another channel."
+        }
+      ],
+      "difficulty": {
+        "nist_distinct_cues": 16,
+        "nist_band": "many",
+        "sequence_slot": "P1",
+        "note": "Many cues: first exercise, high help."
+      },
+      "typical_errors": [
+        {
+          "id": "e1",
+          "description": "Names only the urgency or the threat and stops there, missing the technical cues (sender domain, real link address).",
+          "tutor_move": "Acknowledge the urgency, then steer towards the sender address or the link at the current help level."
+        },
+        {
+          "id": "e2",
+          "description": "Trusts the display name 'iCloud Service Team' or the padlock badge as proof of authenticity.",
+          "tutor_move": "Ask what in the email actually proves who sent it."
+        },
+        {
+          "id": "e3",
+          "description": "Reads 'apple-id' at the start of the link and concludes the link is Apple's.",
+          "tutor_move": "Ask which part of an address identifies the owner of the website."
+        }
+      ],
+      "fallback_hints": {
+        "high": [
+          "Look at the sender's address, after the @. Which company does that domain belong to?",
+          "Hover over the 'Keep My Photos' button and read the address that appears. Where does it really lead?",
+          "Read the paragraph just above the button: what does the email ask you to hand over?"
+        ],
+        "medium": [
+          "What else in this email would you check before clicking?"
+        ],
+        "low": [
+          "What are you basing your decision on?"
+        ]
+      },
+      "closing_rule": "Before acting on an email that threatens to delete or block something, read the sender's domain and hover over the link: if neither belongs to the service, do not click.",
+      "static_feedback": "The sender address and the link both use icloud-storage-alerts.com, which is not Apple's domain; the button hides that address. The email asks for your password and payment details, threatens to delete your photos and sets a deadline. Rule: check the sender's domain and hover over links before acting on a threatening message."
+    },
+    {
+      "id": "m4-p2-airbnb",
+      "is_phishing": true,
+      "impersonates": "Airbnb",
+      "context": "You sometimes book holiday homes on Airbnb.",
+      "sender_name": "Airbnb Resolution Center",
+      "sender_address": "resolutions@airbnb-guestcare.com",
+      "reply_to": null,
+      "recipient": {
+        "name": "{{first_name}}",
+        "address": "you@gmail.com"
+      },
+      "subject": "Your reservation HMRT4Q2X was cancelled - refund pending",
+      "date": "2026-04-09T17:05:00+02:00",
+      "body_html": "<div style='font-family:Helvetica,Arial,sans-serif;font-size:14px;color:#222;max-width:560px'><div style='font-size:20px;font-weight:bold;color:#e0565b;margin-bottom:14px'>airbnb</div><p style='margin:0 0 12px'>Hi there,</p><p style='margin:0 0 12px'>We're sorry to let you know that your host cancelled your reservation in Porto (24&ndash;27 April). This happens rarely, and we want to make it right.</p><p style='margin:0 0 12px'>You are eligible for a full refund of &euro;486.00. To receive it, open the attached refund form and confirm the card you used for the booking, including the 3-digit security code, within 48 hours. After this period the amount can only be issued as travel credit.</p><p style='margin:0 0 12px'><a data-link-id='l1' href='https://airbnb-guestcare.com/r/HMRT4Q2X' style='color:#e0565b'>View cancellation details</a></p><p style='margin:0 0 12px'>Thank you for travelling with us,<br>The Airbnb Guest Care Team</p><p style='margin:16px 0 0;font-size:11px;color:#888'>This is an automated message. Please do not reply.</p></div>",
+      "links": [
+        {
+          "id": "l1",
+          "text": "View cancellation details",
+          "href_shown": null,
+          "href_real": "https://airbnb-guestcare.com/r/HMRT4Q2X"
+        }
+      ],
+      "attachments": [
+        {
+          "filename": "Refund_Form_HMRT4Q2X.html",
+          "extension": "html",
+          "size_kb": 14
+        }
+      ],
+      "clues": [
+        {
+          "id": "c1",
+          "nist_category": "Technical indicator",
+          "nist_cue": "Sender display name and email address",
+          "main": true,
+          "target": {
+            "field": "sender_address",
+            "text": "resolutions@airbnb-guestcare.com"
+          },
+          "label": "Sender domain is not Airbnb's",
+          "explanation": "The name says Airbnb, but the address after the @ is airbnb-guestcare.com, not airbnb.com.",
+          "attacker_reason": "Attackers register domains that contain the brand name so that the address looks plausible."
+        },
+        {
+          "id": "c2",
+          "nist_category": "Technical indicator",
+          "nist_cue": "Domain spoofing",
+          "main": false,
+          "target": {
+            "field": "sender_address",
+            "text": "airbnb-guestcare.com"
+          },
+          "label": "Look-alike domain",
+          "explanation": "Adding a word such as 'guestcare' to the brand name creates a different domain that the brand does not own.",
+          "attacker_reason": "A look-alike domain passes a quick glance because the brand name is in it."
+        },
+        {
+          "id": "c3",
+          "nist_category": "Technical indicator",
+          "nist_cue": "URL hyperlinking",
+          "main": false,
+          "target": {
+            "field": "link",
+            "text": "View cancellation details",
+            "link_id": "l1"
+          },
+          "label": "Link leads to the look-alike domain",
+          "explanation": "Hovering over 'View cancellation details' shows https://airbnb-guestcare.com/r/HMRT4Q2X, the same fake domain as the sender.",
+          "attacker_reason": "The link text describes the content, not the destination."
+        },
+        {
+          "id": "c4",
+          "nist_category": "Technical indicator",
+          "nist_cue": "Attachment type",
+          "main": true,
+          "target": {
+            "field": "attachment",
+            "text": "Refund_Form_HMRT4Q2X.html",
+            "attachment": "Refund_Form_HMRT4Q2X.html"
+          },
+          "label": "Form sent as an HTML file",
+          "explanation": "The refund 'form' is an .html file: opening it shows a web page outside any official site, where whatever you type is sent to the sender.",
+          "attacker_reason": "HTML attachments are used to show fake login or payment forms without a link in the email."
+        },
+        {
+          "id": "c5",
+          "nist_category": "Language and content",
+          "nist_cue": "Requests for sensitive information",
+          "main": true,
+          "target": {
+            "field": "body",
+            "text": "confirm the card you used for the booking, including the 3-digit security code"
+          },
+          "label": "Asks for card details and security code",
+          "explanation": "To receive money you would never need to give the security code of your card; a refund goes back to the original payment automatically.",
+          "attacker_reason": "Card number plus security code is enough to make online payments with your card."
+        },
+        {
+          "id": "c6",
+          "nist_category": "Language and content",
+          "nist_cue": "Sense of urgency",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "within 48 hours"
+          },
+          "label": "48-hour deadline",
+          "explanation": "The refund is tied to a short deadline.",
+          "attacker_reason": "A deadline discourages you from checking the booking in the app first."
+        },
+        {
+          "id": "c7",
+          "nist_category": "Language and content",
+          "nist_cue": "Threatening language",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "can only be issued as travel credit"
+          },
+          "label": "Threat of losing the refund",
+          "explanation": "If you do not act in time you are told you will lose the cash refund.",
+          "attacker_reason": "Fear of losing money pushes people to comply quickly."
+        },
+        {
+          "id": "c8",
+          "nist_category": "Language and content",
+          "nist_cue": "Generic greeting",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "Hi there,"
+          },
+          "label": "No name in the greeting",
+          "explanation": "A booking platform knows the guest's name, yet the email does not use it.",
+          "attacker_reason": "The same message is sent to many people."
+        },
+        {
+          "id": "c9",
+          "nist_category": "Common tactic",
+          "nist_cue": "Mimics a work or business process",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "open the attached refund form"
+          },
+          "label": "Copies a real refund procedure",
+          "explanation": "Cancellations and refunds really happen, so the story is believable; the request to fill in a form is the attacker's addition.",
+          "attacker_reason": "A familiar procedure lowers suspicion."
+        }
+      ],
+      "difficulty": {
+        "nist_distinct_cues": 9,
+        "nist_band": "some",
+        "sequence_slot": "P2",
+        "note": "Some cues: polished layout and tone, cues mostly in addresses and in the request."
+      },
+      "typical_errors": [
+        {
+          "id": "e1",
+          "description": "Judges the email legitimate because the tone is polite and the story (a cancelled booking) is plausible.",
+          "tutor_move": "Ask what the email asks the user to do and whether that step is needed to receive a refund."
+        },
+        {
+          "id": "e2",
+          "description": "Accepts the sender because the brand name appears in the address.",
+          "tutor_move": "Ask what exactly comes after the @ and whether it is the service's own domain."
+        },
+        {
+          "id": "e3",
+          "description": "Ignores the attachment and looks only at the link.",
+          "tutor_move": "At high/medium help, ask whether there is anything else in the email besides text and link."
+        }
+      ],
+      "fallback_hints": {
+        "high": [
+          "Look at the sender's address, after the @. Which company does that domain belong to?",
+          "Look at the attachment's file name and extension. What would open if you clicked it?",
+          "Read what the email asks you to confirm to get the refund. Which piece of information stands out?"
+        ],
+        "medium": [
+          "What else in this email, besides the text, would you check?"
+        ],
+        "low": [
+          "What are you basing your decision on?"
+        ]
+      },
+      "closing_rule": "When an email asks for card details to send you money, check the booking in the official app or website instead: refunds never need your security code.",
+      "static_feedback": "The sender and the link use airbnb-guestcare.com, not airbnb.com. The refund form is an HTML attachment that asks for your card and its security code within 48 hours. Rule: check refunds in the official app; never give a card security code to receive money."
+    },
+    {
+      "id": "m4-p3-coworker",
+      "is_phishing": true,
+      "impersonates": "Coworker (Accounts Payable, Brightwave Logistics - fictional company)",
+      "context": "You work in the operations team at Brightwave Logistics (company email domain: brightwave-logistics.com). Laura Keller works in Accounts Payable.",
+      "sender_name": "Laura Keller",
+      "sender_address": "laura.keller@brightwave-billing.com",
+      "reply_to": null,
+      "recipient": {
+        "name": "{{first_name}}",
+        "address": "you@brightwave-logistics.com"
+      },
+      "subject": "Invoice INV-4471 - approval needed before 12:00",
+      "date": "2026-04-15T09:12:00+02:00",
+      "body_html": "<div style='font-family:Calibri,Arial,sans-serif;font-size:14px;color:#222;max-width:560px'><p style='margin:0 0 12px'>Hi {{first_name}},</p><p style='margin:0 0 12px'>Could you approve the Kessler Freight invoice for the March deliveries before 12:00 today? Finance closes the payment run at noon and I'm out of the office all afternoon, so I can't chase it later.</p><p style='margin:0 0 12px'>It's in the shared approvals folder: <a data-link-id='l1' href='https://brightwave-billing.com/docs/approvals/INV-4471/login'>Open INV-4471 in Brightwave Docs</a>. You'll need to sign in with your usual Brightwave account.</p><p style='margin:0 0 12px'>Thanks a lot,<br>Laura</p><p style='margin:12px 0 0;font-size:12px;color:#555'>Laura Keller<br>Accounts Payable | Brightwave Logistics<br>+44 20 7946 0158</p></div>",
+      "links": [
+        {
+          "id": "l1",
+          "text": "Open INV-4471 in Brightwave Docs",
+          "href_shown": null,
+          "href_real": "https://brightwave-billing.com/docs/approvals/INV-4471/login"
+        }
+      ],
+      "attachments": [],
+      "clues": [
+        {
+          "id": "c1",
+          "nist_category": "Technical indicator",
+          "nist_cue": "Sender display name and email address",
+          "main": true,
+          "target": {
+            "field": "sender_address",
+            "text": "laura.keller@brightwave-billing.com"
+          },
+          "label": "Colleague's name, outside domain",
+          "explanation": "The name and signature are Laura's, but the address ends in brightwave-billing.com instead of the company domain brightwave-logistics.com.",
+          "attacker_reason": "A colleague's real name is easy to find online; a different domain is the part the attacker cannot fake."
+        },
+        {
+          "id": "c2",
+          "nist_category": "Technical indicator",
+          "nist_cue": "Domain spoofing",
+          "main": false,
+          "target": {
+            "field": "sender_address",
+            "text": "brightwave-billing.com"
+          },
+          "label": "Look-alike company domain",
+          "explanation": "Adding '-billing' creates a separate domain that the company does not own, even if it looks like an internal department.",
+          "attacker_reason": "Look-alike domains pass a quick glance, especially on a phone."
+        },
+        {
+          "id": "c3",
+          "nist_category": "Technical indicator",
+          "nist_cue": "URL hyperlinking",
+          "main": true,
+          "target": {
+            "field": "link",
+            "text": "Open INV-4471 in Brightwave Docs",
+            "link_id": "l1"
+          },
+          "label": "Link does not lead to the company system",
+          "explanation": "The text says 'Brightwave Docs', but hovering shows https://brightwave-billing.com/.../login, the same outside domain as the sender.",
+          "attacker_reason": "Link text can say anything; only the real address tells where it goes."
+        },
+        {
+          "id": "c4",
+          "nist_category": "Language and content",
+          "nist_cue": "Requests for sensitive information",
+          "main": true,
+          "target": {
+            "field": "body",
+            "text": "sign in with your usual Brightwave account"
+          },
+          "label": "Asks for your work password",
+          "explanation": "The link leads to a login page on an outside domain, so signing in would hand your work password to whoever owns it.",
+          "attacker_reason": "Work credentials give access to email, documents and payments of the whole company."
+        },
+        {
+          "id": "c5",
+          "nist_category": "Language and content",
+          "nist_cue": "Sense of urgency",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "before 12:00 today"
+          },
+          "label": "Noon deadline",
+          "explanation": "The request must be done before noon, and the colleague says she cannot be reached later.",
+          "attacker_reason": "Urgency combined with 'I can't be reached' discourages you from checking with her."
+        },
+        {
+          "id": "c6",
+          "nist_category": "Common tactic",
+          "nist_cue": "Mimics a work or business process",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "approve the Kessler Freight invoice"
+          },
+          "label": "Routine invoice approval",
+          "explanation": "Approving invoices is a normal task, so the request does not stand out.",
+          "attacker_reason": "Routine tasks are done quickly and without suspicion."
+        },
+        {
+          "id": "c7",
+          "nist_category": "Common tactic",
+          "nist_cue": "Poses as friend, colleague, supervisor, authority figure",
+          "main": false,
+          "target": {
+            "field": "sender_name",
+            "text": "Laura Keller"
+          },
+          "label": "Uses a real colleague's name",
+          "explanation": "The email relies on trust in a known colleague rather than on the content.",
+          "attacker_reason": "People rarely question requests from colleagues they know."
+        }
+      ],
+      "difficulty": {
+        "nist_distinct_cues": 7,
+        "nist_band": "few",
+        "sequence_slot": "P3",
+        "note": "Few cues: natural tone, correct names and signature; cues only in domain, link and request."
+      },
+      "typical_errors": [
+        {
+          "id": "e1",
+          "description": "Classifies as legitimate because the colleague's name and signature are correct and invoices are routine.",
+          "tutor_move": "Ask which elements show that the message really comes from her (low help: no zone)."
+        },
+        {
+          "id": "e2",
+          "description": "Notices the urgency but considers it normal at work.",
+          "tutor_move": "Ask what the user would have to do, and on which site, to approve the invoice."
+        },
+        {
+          "id": "e3",
+          "description": "Reads 'Brightwave' in the domain and stops reading.",
+          "tutor_move": "Ask to compare the sender's domain with the recipient's own address."
+        }
+      ],
+      "fallback_hints": {
+        "high": [
+          "Compare the sender's address, after the @, with your own company address. How do they differ?",
+          "Hover over 'Open INV-4471 in Brightwave Docs'. Which domain does it open?",
+          "What does the email ask you to type once you open the link?"
+        ],
+        "medium": [
+          "What else would you check before approving?"
+        ],
+        "low": [
+          "What are you basing your decision on?"
+        ]
+      },
+      "closing_rule": "When a colleague urgently asks you to open a link and sign in, compare the sender's domain with your company's and confirm through another channel, such as a call or chat.",
+      "static_feedback": "The name and signature are correct, but the address and the link use brightwave-billing.com, not the company domain brightwave-logistics.com. The link leads to a login page that would collect your work password, and the noon deadline discourages checking. Rule: verify urgent requests from colleagues that contain a link through another channel."
+    },
+    {
+      "id": "m4-l1-airbnb",
+      "is_phishing": false,
+      "impersonates": null,
+      "service": "Airbnb",
+      "context": "You sometimes book holiday homes on Airbnb.",
+      "sender_name": "Airbnb",
+      "sender_address": "automated@airbnb.com",
+      "reply_to": null,
+      "recipient": {
+        "name": "{{first_name}}",
+        "address": "you@gmail.com"
+      },
+      "subject": "Your trip to Lisbon is coming up",
+      "date": "2026-04-12T10:30:00+02:00",
+      "body_html": "<div style='font-family:Helvetica,Arial,sans-serif;font-size:14px;color:#222;max-width:560px'><div style='font-size:20px;font-weight:bold;color:#e0565b;margin-bottom:14px'>airbnb</div><p style='margin:0 0 12px'>Hi {{first_name}},</p><p style='margin:0 0 12px'>Your stay at Marta's place in Alfama starts in 5 days. Here are the details for your trip.</p><table style='border-collapse:collapse;margin:0 0 12px;font-size:14px'><tr><td style='padding:2px 12px 2px 0;color:#666'>Check-in</td><td>Friday 17 April, after 15:00</td></tr><tr><td style='padding:2px 12px 2px 0;color:#666'>Checkout</td><td>Monday 20 April, before 11:00</td></tr><tr><td style='padding:2px 12px 2px 0;color:#666'>Guests</td><td>2</td></tr><tr><td style='padding:2px 12px 2px 0;color:#666'>Confirmation code</td><td>HM4KZ8P2QD</td></tr></table><p style='margin:0 0 12px'>Check-in instructions will appear in your itinerary 48 hours before arrival. If you have questions, you can message Marta in the app.</p><p style='margin:0 0 12px'><a data-link-id='l1' href='https://www.airbnb.com/trips' style='background:#e0565b;color:#fff;padding:10px 18px;text-decoration:none;border-radius:4px'>View your trip</a> &nbsp; <a data-link-id='l2' href='https://www.airbnb.com/messages' style='color:#e0565b'>Message Marta</a></p><p style='margin:0 0 12px'>Have a great trip,<br>The Airbnb team</p><p style='margin:16px 0 0;font-size:11px;color:#888'>You are receiving this email because you have an upcoming reservation. We will never ask you to pay or share card details outside the Airbnb website or app.</p></div>",
+      "links": [
+        {
+          "id": "l1",
+          "text": "View your trip",
+          "href_shown": null,
+          "href_real": "https://www.airbnb.com/trips"
+        },
+        {
+          "id": "l2",
+          "text": "Message Marta",
+          "href_shown": null,
+          "href_real": "https://www.airbnb.com/messages"
+        }
+      ],
+      "attachments": [],
+      "clues": [],
+      "legit_signals": [
+        {
+          "id": "s1",
+          "main": true,
+          "target": {
+            "field": "sender_address",
+            "text": "automated@airbnb.com"
+          },
+          "label": "Official domain",
+          "explanation": "The address after the @ is airbnb.com, the service's own domain, with nothing added before or after the brand name."
+        },
+        {
+          "id": "s2",
+          "main": true,
+          "target": {
+            "field": "link",
+            "text": "View your trip",
+            "link_id": "l1"
+          },
+          "label": "Links point to the official site",
+          "explanation": "Hovering over both links shows addresses on www.airbnb.com."
+        },
+        {
+          "id": "s3",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "Hi {{first_name}},"
+          },
+          "label": "Personal greeting",
+          "explanation": "The email uses your name, which the service knows."
+        },
+        {
+          "id": "s4",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "Friday 17 April, after 15:00"
+          },
+          "label": "Specific, consistent details",
+          "explanation": "Dates, guests and confirmation code are specific and consistent with each other, and can be checked in the app."
+        },
+        {
+          "id": "s5",
+          "main": true,
+          "target": {
+            "field": "body",
+            "text": "you can message Marta in the app"
+          },
+          "label": "No request for data, points to the app",
+          "explanation": "The email asks for no password, card or personal data and suggests using the app, another channel you control."
+        },
+        {
+          "id": "s6",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "starts in 5 days"
+          },
+          "label": "No pressure or threats",
+          "explanation": "Times are informative (when the stay starts), with no threat or deadline to act on."
+        }
+      ],
+      "suspicious_looking_features": [
+        {
+          "id": "f1",
+          "target": {
+            "field": "link",
+            "text": "View your trip",
+            "link_id": "l1"
+          },
+          "why_it_is_not_a_cue": "A button is normal in service emails; what matters is where it leads (airbnb.com)."
+        },
+        {
+          "id": "f2",
+          "target": {
+            "field": "body",
+            "text": "48 hours before arrival"
+          },
+          "why_it_is_not_a_cue": "This is information about when instructions appear, not a deadline you must meet."
+        }
+      ],
+      "difficulty": {
+        "nist_distinct_cues": 0,
+        "nist_band": "few",
+        "sequence_slot": "L",
+        "note": "Legitimate: few cue-like features, so relatively easy for a legitimate email ([1]: for legitimate emails more cues = harder)."
+      },
+      "typical_errors": [
+        {
+          "id": "e1",
+          "description": "Classifies as phishing because the email contains a link/button.",
+          "tutor_move": "Ask where the link actually leads and what that tells about the sender."
+        },
+        {
+          "id": "e2",
+          "description": "Reads '5 days' or '48 hours' as urgency.",
+          "tutor_move": "Ask what the email asks the user to do within that time."
+        },
+        {
+          "id": "e3",
+          "description": "Claims the sender domain is fake without checking it.",
+          "tutor_move": "Ask to read the part after the @ and say what is wrong with it."
+        }
+      ],
+      "fallback_hints": {
+        "high": [
+          "Read the sender's address after the @ and hover over the links. Which domain do you see?",
+          "Look for what the email asks you to do or to give. Which data, if any, does it ask you for?"
+        ],
+        "medium": [
+          "What else would you check to confirm your answer?"
+        ],
+        "low": [
+          "What are you basing your decision on?"
+        ]
+      },
+      "closing_rule": "A link alone does not make an email phishing: check that sender and links use the service's own domain and that no credentials or payments are requested.",
+      "static_feedback": "The sender and both links use airbnb.com, the greeting uses your name, the details are specific and the email asks for no data or payment. Rule: judge an email by its domains and requests, not by the presence of a link."
+    },
+    {
+      "id": "m4-p2b-paypal",
+      "is_phishing": true,
+      "impersonates": "PayPal",
+      "spare": true,
+      "context": "You have a PayPal account that you use for online shopping.",
+      "sender_name": "PayPal",
+      "sender_address": "service@paypal-payments-notice.com",
+      "reply_to": "claims.desk@mailbox-secure.net",
+      "recipient": {
+        "name": "{{first_name}}",
+        "address": "you@gmail.com"
+      },
+      "subject": "You've received €350.00 - action needed to release funds",
+      "date": "2026-04-13T14:22:00+02:00",
+      "body_html": "<div style='font-family:Arial,sans-serif;font-size:14px;color:#222;max-width:560px'><div style='font-size:20px;font-weight:bold;color:#1b3f8f;margin-bottom:14px'>PayPal</div><p style='margin:0 0 12px'>Hello Valued Member,</p><p style='margin:0 0 12px'>Good news! Your account has been selected to receive a &euro;350.00 loyalty reward from our partner programme. Your fund are waiting on hold until you verify your identity.</p><p style='margin:0 0 12px'>Please confirm your full card number, expiry date and online banking login on the release page:</p><p style='margin:0 0 12px'><a data-link-id='l1' href='https://paypal.com-release.paypal-payments-notice.com/claim'>https://www.paypal.com/rewards/claim</a></p><p style='margin:0 0 12px'>Unclaimed rewards are returned to the partner after 72 hours.</p><p style='margin:0 0 12px;font-size:12px;color:#2a7a2a'>&#128737; Protected by PayPal Buyer Security</p><p style='margin:0 0 12px'>Sincerely,<br>PayPal Customer Service</p><p style='margin:16px 0 0;font-size:11px;color:#888'>PayPal is a registered trademark. This email was sent to you because you are a valued member. Do not share this email with anyone.</p></div>",
+      "links": [
+        {
+          "id": "l1",
+          "text": "https://www.paypal.com/rewards/claim",
+          "href_shown": "https://www.paypal.com/rewards/claim",
+          "href_real": "https://paypal.com-release.paypal-payments-notice.com/claim"
+        }
+      ],
+      "attachments": [],
+      "clues": [
+        {
+          "id": "c1",
+          "nist_category": "Technical indicator",
+          "nist_cue": "Sender display name and email address",
+          "main": true,
+          "target": {
+            "field": "sender_address",
+            "text": "service@paypal-payments-notice.com"
+          },
+          "label": "Sender domain is not PayPal's",
+          "explanation": "The display name is PayPal, but the address uses paypal-payments-notice.com.",
+          "attacker_reason": "The display name is free text; the domain shows who really sent the email."
+        },
+        {
+          "id": "c2",
+          "nist_category": "Technical indicator",
+          "nist_cue": "Sender display name and email address",
+          "main": false,
+          "target": {
+            "field": "reply_to",
+            "text": "claims.desk@mailbox-secure.net"
+          },
+          "label": "Replies go elsewhere",
+          "explanation": "Replies would go to mailbox-secure.net, a third domain unrelated to the sender.",
+          "attacker_reason": "The attacker collects answers on a mailbox they control."
+        },
+        {
+          "id": "c3",
+          "nist_category": "Technical indicator",
+          "nist_cue": "URL hyperlinking",
+          "main": true,
+          "target": {
+            "field": "link",
+            "text": "https://www.paypal.com/rewards/claim",
+            "link_id": "l1"
+          },
+          "label": "Visible address differs from the real one",
+          "explanation": "The link text shows a paypal.com address, but hovering reveals https://paypal.com-release.paypal-payments-notice.com/claim.",
+          "attacker_reason": "Writing a trusted address as link text is a simple way to hide the real destination."
+        },
+        {
+          "id": "c4",
+          "nist_category": "Technical indicator",
+          "nist_cue": "Domain spoofing",
+          "main": false,
+          "target": {
+            "field": "link",
+            "text": "https://www.paypal.com/rewards/claim",
+            "link_id": "l1"
+          },
+          "label": "'paypal.com' used as a decoy prefix",
+          "explanation": "In paypal.com-release.paypal-payments-notice.com the real domain is the end, paypal-payments-notice.com; 'paypal.com-release' is just a label.",
+          "attacker_reason": "A brand domain at the start of the address fools a quick read."
+        },
+        {
+          "id": "c5",
+          "nist_category": "Common tactic",
+          "nist_cue": "Too good to be true offers",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "a €350.00 loyalty reward"
+          },
+          "label": "Unexpected money",
+          "explanation": "Money from a 'partner programme' you never joined.",
+          "attacker_reason": "The promise of a gain makes people less careful."
+        },
+        {
+          "id": "c6",
+          "nist_category": "Common tactic",
+          "nist_cue": "You're special",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "Your account has been selected"
+          },
+          "label": "Chosen among others",
+          "explanation": "The email says you were selected, to make you feel special.",
+          "attacker_reason": "Feeling chosen increases compliance."
+        },
+        {
+          "id": "c7",
+          "nist_category": "Language and content",
+          "nist_cue": "Requests for sensitive information",
+          "main": true,
+          "target": {
+            "field": "body",
+            "text": "confirm your full card number, expiry date and online banking login"
+          },
+          "label": "Asks for card and banking login",
+          "explanation": "To receive money nobody needs your full card number or your online banking login.",
+          "attacker_reason": "These data let the attacker spend your money or take over your bank account."
+        },
+        {
+          "id": "c8",
+          "nist_category": "Common tactic",
+          "nist_cue": "Limited time offer",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "returned to the partner after 72 hours"
+          },
+          "label": "Reward expires",
+          "explanation": "The reward disappears if not claimed within 72 hours.",
+          "attacker_reason": "A deadline stops people from checking in the app first."
+        },
+        {
+          "id": "c9",
+          "nist_category": "Error",
+          "nist_cue": "Spelling and grammar irregularities",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "Your fund are waiting"
+          },
+          "label": "Grammar error",
+          "explanation": "'Your fund are' is a grammar mistake.",
+          "attacker_reason": "Phishing texts are often not proofread."
+        },
+        {
+          "id": "c10",
+          "nist_category": "Language and content",
+          "nist_cue": "Generic greeting",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "Hello Valued Member,"
+          },
+          "label": "Generic greeting",
+          "explanation": "The email does not use your name.",
+          "attacker_reason": "Mass emails cannot address people by name."
+        },
+        {
+          "id": "c11",
+          "nist_category": "Visual presentation indicator",
+          "nist_cue": "Security indicators and icons",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "Protected by PayPal Buyer Security"
+          },
+          "label": "Security badge in the email",
+          "explanation": "A shield symbol and a protection claim inside an email prove nothing.",
+          "attacker_reason": "Security symbols create a false sense of safety."
+        },
+        {
+          "id": "c12",
+          "nist_category": "Language and content",
+          "nist_cue": "Legal language/copyright info/disclaimers",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "Do not share this email with anyone"
+          },
+          "label": "Legal-sounding footer that discourages checking",
+          "explanation": "The footer combines trademark text with a request not to share the email, which would stop you from asking someone.",
+          "attacker_reason": "Isolating the victim prevents a second opinion."
+        }
+      ],
+      "difficulty": {
+        "nist_distinct_cues": 11,
+        "nist_band": "some",
+        "sequence_slot": "P2",
+        "note": "Spare for slot 2 (alternative to m4-p2-airbnb)."
+      },
+      "typical_errors": [
+        {
+          "id": "e1",
+          "description": "Trusts the link because its text shows www.paypal.com.",
+          "tutor_move": "Ask whether the user hovered over the link and what appeared."
+        },
+        {
+          "id": "e2",
+          "description": "Names the 'too good to be true' reward but not the technical cues.",
+          "tutor_move": "Acknowledge, then steer towards sender or link at the current level."
+        }
+      ],
+      "fallback_hints": {
+        "high": [
+          "Hover over the link: how does the address that appears compare with the one written in the email?",
+          "Look at the sender's address after the @. Whose domain is it?",
+          "What does the email ask you to type on the release page?"
+        ],
+        "medium": [
+          "What else would you check before following the link?"
+        ],
+        "low": [
+          "What are you basing your decision on?"
+        ]
+      },
+      "closing_rule": "When a link shows a trusted address, hover over it before clicking: the address that appears is the one that counts.",
+      "static_feedback": "The visible link says paypal.com but leads to paypal-payments-notice.com, the same domain as the sender. The email offers unexpected money and asks for your full card number and banking login within 72 hours. Rule: hover over links before clicking; nobody needs your card or banking login to pay you."
+    },
+    {
+      "id": "m4-l2-apple",
+      "is_phishing": false,
+      "impersonates": null,
+      "service": "Apple",
+      "spare": true,
+      "context": "You pay a monthly subscription for extra iCloud storage.",
+      "sender_name": "Apple",
+      "sender_address": "no_reply@email.apple.com",
+      "reply_to": null,
+      "recipient": {
+        "name": "{{first_name}}",
+        "address": "you@gmail.com"
+      },
+      "subject": "Your receipt from Apple.",
+      "date": "2026-04-02T07:58:00+02:00",
+      "body_html": "<div style='font-family:Helvetica,Arial,sans-serif;font-size:14px;color:#222;max-width:560px'><div style='font-size:22px;font-weight:bold;margin-bottom:14px'>Receipt</div><table style='border-collapse:collapse;margin:0 0 12px;font-size:13px'><tr><td style='padding:2px 12px 2px 0;color:#666'>Date</td><td>2 April 2026</td></tr><tr><td style='padding:2px 12px 2px 0;color:#666'>Billed to</td><td>Visa &bull;&bull;&bull;&bull; 4821</td></tr><tr><td style='padding:2px 12px 2px 0;color:#666'>Order ID</td><td>MT4Q7XK2PL</td></tr></table><table style='border-collapse:collapse;margin:0 0 12px;font-size:14px;width:100%'><tr><td style='padding:4px 0'>iCloud+ with 50 GB storage (Monthly)<br><span style='color:#666;font-size:12px'>Renews 2 May 2026</span></td><td style='text-align:right'>&euro;0.99</td></tr><tr><td style='padding:4px 0;font-weight:bold'>Total</td><td style='text-align:right;font-weight:bold'>&euro;0.99</td></tr></table><p style='margin:0 0 12px'>To manage or cancel your subscriptions, go to Settings on your iPhone or iPad and tap your name, then Subscriptions.</p><p style='margin:0 0 12px'>If you have a problem with this purchase, visit <a data-link-id='l1' href='https://reportaproblem.apple.com'>Report a Problem</a>. For other questions, visit <a data-link-id='l2' href='https://support.apple.com'>Apple Support</a>.</p></div>",
+      "links": [
+        {
+          "id": "l1",
+          "text": "Report a Problem",
+          "href_shown": null,
+          "href_real": "https://reportaproblem.apple.com"
+        },
+        {
+          "id": "l2",
+          "text": "Apple Support",
+          "href_shown": null,
+          "href_real": "https://support.apple.com"
+        }
+      ],
+      "attachments": [],
+      "clues": [],
+      "legit_signals": [
+        {
+          "id": "s1",
+          "main": true,
+          "target": {
+            "field": "sender_address",
+            "text": "no_reply@email.apple.com"
+          },
+          "label": "Official domain",
+          "explanation": "The address ends in apple.com; 'email.' before it is a part of Apple's own domain, not a different domain."
+        },
+        {
+          "id": "s2",
+          "main": true,
+          "target": {
+            "field": "link",
+            "text": "Report a Problem",
+            "link_id": "l1"
+          },
+          "label": "Links point to the official domain",
+          "explanation": "Both links lead to addresses ending in apple.com."
+        },
+        {
+          "id": "s3",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "Visa •••• 4821"
+          },
+          "label": "Only the last card digits",
+          "explanation": "The receipt shows only the last four digits of the card and asks for no card data."
+        },
+        {
+          "id": "s4",
+          "main": true,
+          "target": {
+            "field": "body",
+            "text": "go to Settings on your iPhone or iPad"
+          },
+          "label": "Points to the device, not to a link",
+          "explanation": "To manage the subscription you are sent to your own device's settings, a channel you control, instead of a login link."
+        },
+        {
+          "id": "s5",
+          "main": false,
+          "target": {
+            "field": "body",
+            "text": "Renews 2 May 2026"
+          },
+          "label": "Consistent, expected details",
+          "explanation": "Amount, plan and renewal date match a monthly subscription you already pay; there is no threat or deadline."
+        }
+      ],
+      "suspicious_looking_features": [
+        {
+          "id": "f1",
+          "target": {
+            "field": "body",
+            "text": "If you have a problem with this purchase"
+          },
+          "why_it_is_not_a_cue": "Offering a way to report a problem is normal; the link leads to apple.com and asks for nothing in the email."
+        },
+        {
+          "id": "f2",
+          "target": {
+            "field": "subject",
+            "text": "Your receipt from Apple."
+          },
+          "why_it_is_not_a_cue": "Receipts are a common phishing theme, but here the content matches an expected small subscription and contains no request."
+        }
+      ],
+      "difficulty": {
+        "nist_distinct_cues": 0,
+        "nist_band": "few",
+        "sequence_slot": "L",
+        "note": "Spare legitimate email (alternative to m4-l1-airbnb). Pairs with the iCloud phishing theme of m4-p1-icloud."
+      },
+      "typical_errors": [
+        {
+          "id": "e1",
+          "description": "Classifies any receipt as phishing ('I did not buy this').",
+          "tutor_move": "Ask what the email asks the user to do and where its links lead."
+        },
+        {
+          "id": "e2",
+          "description": "Thinks 'email.apple.com' is a fake domain because of the 'email.' part.",
+          "tutor_move": "Ask which part of an address identifies the owner (G10: explain subdomains in general if asked)."
+        }
+      ],
+      "fallback_hints": {
+        "high": [
+          "Read the sender's address from the end: which domain does it belong to?",
+          "Hover over 'Report a Problem'. Where does it lead?"
+        ],
+        "medium": [
+          "What else would you check to confirm your answer?"
+        ],
+        "low": [
+          "What are you basing your decision on?"
+        ]
+      },
+      "closing_rule": "Read addresses from the end: what comes just before the last dot and the ending decides who owns the domain.",
+      "static_feedback": "The sender and links use apple.com, only the last four card digits are shown, nothing is requested and subscriptions are managed from the device. Rule: read domains from the end and look for requests, not for the word 'receipt'."
+    }
+  ]
+}

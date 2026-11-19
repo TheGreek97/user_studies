@@ -38,7 +38,8 @@ return [
             'driver' => 'database',
             'table' => 'jobs',
             'queue' => 'default',
-            'retry_after' => 600,
+            // Must exceed ProcessTraining::$timeout (5 x LLM_TIMEOUT + 60 s), or a running job is picked up twice.
+            'retry_after' => (int) env('DB_QUEUE_RETRY_AFTER', 1000),
             'after_commit' => false,
         ],
 

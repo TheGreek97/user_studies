@@ -135,7 +135,7 @@ $content_guidelines
 The communication style should be:
 $style_guidelines
 ";
-        } else {  // training_personalization == "yes", "few_shot", "table"  - for "no" this will be ignored anyway
+        } else {  // training_personalization == "yes", "few_shot", "table", "interactive"  - for "no" this will be ignored anyway
             $prompt = "- Personality traits, measured under the Big five factors from 1 (low) to 5 (high):
 Extraversion = $profile->bfi_extraversion
 Agreeableness = $profile->bfi_agreeableness
@@ -149,7 +149,10 @@ Self-Control = $profile->tei_self_control
 Emotionality = $profile->tei_emotionality
 Sociability = $profile->tei_sociability
 - Persuasion susceptibility factors, measured on a scale from 1 (low) to 7 (high):
-Lack of premeditation = $profile->stp_lack_of_premeditation
+" . ($this->training_personalization == "interactive"
+        // Thesis condition: the tenth subscale, described in TRAIT DESCRIPTIONS but missing from the paper's values.
+        ? "Positive attitudes towards advertising = $profile->stp_positive_attitudes_towards_advertising\n"
+        : "") . "Lack of premeditation = $profile->stp_lack_of_premeditation
 Need for consistency = $profile->stp_need_for_consistency
 Sensation seeking = $profile->stp_sensation_seeking
 Lack of self-control = $profile->stp_lack_of_self_control

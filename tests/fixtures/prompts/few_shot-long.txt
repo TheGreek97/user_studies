@@ -1,0 +1,111 @@
+=== developer ===
+
+CONTEXT
+You are asked to generate personalized educational material for an anti‑phishing training module. This training module will last about 18 minutes and will be split into 5 submodules. The training module will have the following structure:
+- Introduction to the Phishing Problem
+- Phishing Scenario
+- Defense Strategies
+- Interactive Exercises
+- Conclusions
+
+
+OUTPUT FORMAT
+Each submodule will be embedded in a webpage, so it must be valid HTML and wrapped in a <div> tag. Do NOT include a heading of the section (such as <h2>Introduction</h2>).
+Any <a> tag that you generate in the scenario and in the exercises must have both a valid href attribute, but must prevent the default action of redirecting the user to another website, as the user must never leave the current webpage.
+
+
+CONTENT AND STYLE REQUIREMENTS
+- The language must be accessible and simple to make the concepts understandable by users with no expertise in cybersecurity.
+- The content should be clear, engaging, and educational, and the user must be addressed by their first name, which is Alice.
+- The content should provide the hard facts and clear guidance expected from an “expert” while also incorporating relatable narratives and examples that create a more personal connection.
+- The content should flow logically, ensuring a smooth and engaging user experience.
+- The submodules are shown by the user in the same session, one after the other. Therefore, generate each subsequent submodule as the continuation of the previous one(s).
+- Do not greet the user at the start of every submodule, but just in the introduction.
+
+
+PERSONALIZATION REQUIREMENTS
+The training content must be personalized using the psychological profile of the digital twin, which includes:
+
+- **Big Five Personality Traits** (BFI-2): Openness, Conscientiousness, Extraversion, Agreeableness, Negative Emotionality
+- **Susceptibility to Persuasion** (STP-II): Authority, Liking, Scarcity, Social Influence, Reciprocity
+- **Emotional Intelligence** (TEIQue-SF): Emotionality, Self-control, Sociability, Well-being
+
+- Personality traits, measured under the Big five factors from 1 (low) to 5 (high):
+Extraversion = 3.0000000
+Agreeableness = 3.0000000
+Conscientiousness = 3.0000000
+Negative emotionality = 3.0000000
+Open mindedness = 3.0000000
+- Emotional intelligence factors, measured on a scale from 1 (low) to 7 (high):
+Total Trait Emotional Intelligence = 3.0000000
+Well-being = 3.0000000
+Self-Control = 3.0000000
+Emotionality = 3.0000000
+Sociability = 3.0000000
+- Persuasion susceptibility factors, measured on a scale from 1 (low) to 7 (high):
+Lack of premeditation = 3.0000000
+Need for consistency = 3.0000000
+Sensation seeking = 3.0000000
+Lack of self-control = 3.0000000
+Social influence = 3.0000000
+Need for avoidance of similarity = 3.0000000
+Risk preferences = 3.0000000
+Need for cognition = 3.0000000
+Need for uniqueness = 3.0000000
+
+
+Use these traits to guide how content is framed, the tone and examples used, and the emphasis placed on emotional or rational appeals. For instance:
+- For users high in Agreeableness or Emotionality, include emotionally resonant stories or social impact.
+- For users high in Openness, offer slightly more reflective or conceptually interesting content.
+- For users more susceptible to social proof or authority, highlight how attackers might exploit those principles.
+- Adapt feedback in exercises to resonate with emotional triggers or confidence levels.
+
+Do not explicitly mention the psychological traits in the output; instead, implicitly adapt the message to suit such a profile.
+
+=== introduction ===
+GOAL
+Generate the Introduction sub-module, which must be structured as follows.
+Introduction to the Phishing Problem (2 min, approx. 300 words):
+- Briefly introduce the user to the training course.
+- Explain what the problem of phishing is and why it’s dangerous.
+- Include a statement that presents some possible user vulnerabilities to phishing techniques based on the user’s psychological profile.
+- Give an overview of what the whole training module will cover.
+=== scenario ===
+GOAL
+Generate the Phishing Scenario sub-module, which must be structured as follows.
+Phishing Scenario (5 minutes, approx. 750 words):
+- Scenario Introduction: Briefly introduce a scenario with a realistic narrative that users might relate to, in which an email is suddenly received.
+- Interactive Phishing Email: Create a realistic, simulated phishing email in HTML containing common phishing techniques (e.g., deceptive URL, spoofed sender details, etc.), making sure to include phishing techniques the user is most susceptible to, according to the PERSONALIZATION REQUIREMENTS.
+The email parts that contain a phishing technique must be reactive on mouse click showing a description of the technique (see next bullet point). Be sure that the link(s) in the email is an <a> tag, as the user should be able to hover over it and preview the URL as usual. Clicking on any link must not ever make the user exit the current webpage.
+- Description of Techniques: the mouse click on a suspicious element of the email triggers the appearance of a detailed description of the phishing technique used in that part of the email.
+- Interactive decision point: Insert an interactive prompt that asks the user what they would do in that situation, with a close-ended question (using HTML form elements like radio buttons).
+- Reflection & Learning: Provide immediate feedback based on the decision point, explaining why certain choices may lead to a compromise and reinforcing learning outcomes.
+=== defense_strategies ===
+GOAL
+Generate the Defense Strategies sub-module, which must be structured as follows.
+Defense Strategies (6 minutes, approx. 900 words):
+                        
+- Present tailored defense strategies against common phishing techniques (e.g., “Double-check the sender’s domain carefully”, “Check the actual URL by hovering on a link”, etc.) covering the ones the user is most susceptible to, given their profile (e.g., “Since you often click links quickly, double-check the sender’s email and URL before clicking”, etc.).
+- Give clear actionable items that participants can easily follow to protect themselves.
+- This list of items must include directions on how to recognize a genuine email (e.g., by checking the domain).
+=== exercises ===
+GOAL
+Generate the Interactive Exercises sub-module, which must be structured as follows.
+Interactive Exercises (3 minutes):
+                        
+- Provide 3 simulated phishing emails in HTML format. The simulated phishing emails should include realistic elements such as sender information, subject lines, and email content.
+  The emails must implement a technique for which the user has been trained in the previous sub-modules, to put their new knowledge at test. The phishing emails must include a simulated phishing URL:
+  -- One of the emails must mimic an email coming from a work colleague from a real company.
+    -- The other emails must mimic a real organization/service, including mimicking its real domains, namely Apple and Amazon.
+- Also provide a genuine email that resembles one from 5, also including a genuine URL.
+- Include an interactive classification task where the user must decide if an email is “Phishing” or “Legitimate” using HTML form controls.
+Give immediate feedback for each exercise, explaining which cues indicated whether the email was a phishing attempt or not.
+Be sure that any form submission is prevented to avoid refreshing the webpage.
+- Be sure that all the links in the emails must be <a> tags with the href attribute containing the phishing/genuine URL (i.e., no "#"), as the user should be able to hover over each link and preview the URL as usual. However, prevent any redirect by clicking on the links in the emails.
+=== conclusions ===
+GOAL
+Generate the Conclusions sub-module, which must be structured as follows.
+Conclusions (2 minutes, approx. 300 words):
+- Provide a quick recap of the importance of phishing awareness.
+- Provide a quick recap of the practical actions that the user can do to defend themselves. Be sure to cover only those already explained in the previous sub-modules.
+- Thank the user for attending the training and conclude the session.
